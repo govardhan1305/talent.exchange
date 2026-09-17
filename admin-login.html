@@ -18,26 +18,14 @@
 
 body{
     min-height:100vh;
-
     background:
-        radial-gradient(
-            circle at top left,
-            rgba(124,58,237,.18),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            rgba(91,33,182,.16),
-            transparent 35%
-        ),
+        radial-gradient(circle at top left, rgba(124,58,237,.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(91,33,182,.16), transparent 35%),
         #07070b;
-
     color:#fff;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:20px;
 }
 
@@ -64,35 +52,23 @@ body{
 
 .card{
     background:rgba(18,18,25,.94);
-
     border:1px solid rgba(255,255,255,.08);
-
     border-radius:20px;
-
     padding:32px;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.45);
-
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
     backdrop-filter:blur(15px);
 }
 
 .admin-badge{
     width:58px;
     height:58px;
-
     margin:0 auto 20px;
-
     border-radius:16px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     background:rgba(124,58,237,.15);
-
     border:1px solid rgba(124,58,237,.35);
-
     font-size:24px;
     font-weight:bold;
 }
@@ -123,29 +99,19 @@ label{
 
 input{
     width:100%;
-
     padding:14px 15px;
-
     border-radius:11px;
-
     border:1px solid #292934;
-
     background:#101017;
-
     color:#fff;
-
     outline:none;
-
     font-size:14px;
-
     transition:.2s;
 }
 
 input:focus{
     border-color:#7c3aed;
-
-    box-shadow:
-        0 0 0 3px rgba(124,58,237,.12);
+    box-shadow:0 0 0 3px rgba(124,58,237,.12);
 }
 
 .password-wrap{
@@ -158,56 +124,33 @@ input:focus{
 
 .show-btn{
     position:absolute;
-
     right:10px;
     top:50%;
-
     transform:translateY(-50%);
-
     background:none;
     border:none;
-
     color:#9b7bea;
-
     cursor:pointer;
-
     font-size:12px;
 }
 
 .login-btn{
     width:100%;
-
     border:none;
-
     border-radius:11px;
-
     padding:14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7c3aed,
-            #5b21b6
-        );
-
+    background:linear-gradient(135deg,#7c3aed,#5b21b6);
     color:white;
-
     font-size:15px;
-
     font-weight:600;
-
     cursor:pointer;
-
     margin-top:5px;
-
     transition:.2s;
 }
 
 .login-btn:hover{
     transform:translateY(-1px);
-
-    box-shadow:
-        0 10px 25px rgba(124,58,237,.25);
+    box-shadow:0 10px 25px rgba(124,58,237,.25);
 }
 
 .login-btn:disabled{
@@ -218,55 +161,34 @@ input:focus{
 
 .message{
     display:none;
-
     margin-top:16px;
-
     padding:12px;
-
     border-radius:10px;
-
     font-size:13px;
-
     text-align:center;
-
     line-height:1.5;
 }
 
 .message.error{
     display:block;
-
-    background:
-        rgba(220,38,38,.12);
-
-    border:
-        1px solid rgba(220,38,38,.25);
-
+    background:rgba(220,38,38,.12);
+    border:1px solid rgba(220,38,38,.25);
     color:#fca5a5;
 }
 
 .message.success{
     display:block;
-
-    background:
-        rgba(34,197,94,.12);
-
-    border:
-        1px solid rgba(34,197,94,.25);
-
+    background:rgba(34,197,94,.12);
+    border:1px solid rgba(34,197,94,.25);
     color:#86efac;
 }
 
 .back{
     display:block;
-
     text-align:center;
-
     margin-top:22px;
-
     color:#8e8e98;
-
     text-decoration:none;
-
     font-size:13px;
 }
 
@@ -276,21 +198,13 @@ input:focus{
 
 .security-note{
     margin-top:20px;
-
     padding:12px;
-
     border-radius:10px;
-
     background:#0d0d13;
-
     border:1px solid #20202a;
-
     color:#777783;
-
     font-size:11px;
-
     line-height:1.5;
-
     text-align:center;
 }
 
@@ -310,44 +224,28 @@ input:focus{
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
-
     <div class="brand">
-
         <h1>Talent Exchange</h1>
-
-        <p>
-            Skill sharing platform
-        </p>
-
+        <p>Skill sharing platform</p>
     </div>
 
-
     <div class="card">
-
 
         <div class="admin-badge">
             A
         </div>
 
-
-        <h2>
-            Admin Login
-        </h2>
-
+        <h2>Admin Login</h2>
 
         <p class="subtitle">
             Sign in to manage the Talent Exchange platform
         </p>
 
-
         <form id="adminLoginForm">
-
 
             <div class="field">
 
@@ -365,13 +263,11 @@ input:focus{
 
             </div>
 
-
             <div class="field">
 
                 <label for="password">
                     Password
                 </label>
-
 
                 <div class="password-wrap">
 
@@ -395,7 +291,6 @@ input:focus{
 
             </div>
 
-
             <button
                 type="submit"
                 class="login-btn"
@@ -404,15 +299,12 @@ input:focus{
                 Sign In as Admin
             </button>
 
-
             <div
                 id="message"
                 class="message"
             ></div>
 
-
         </form>
-
 
         <div class="security-note">
 
@@ -422,7 +314,6 @@ input:focus{
 
         </div>
 
-
         <a
             href="login.html"
             class="back"
@@ -430,20 +321,12 @@ input:focus{
             ← Back to User Login
         </a>
 
-
     </div>
-
 
 </div>
 
 
-
-<!-- ==========================================
-     FIREBASE ADMIN LOGIN
-========================================== -->
-
 <script type="module">
-
 
 /* ==========================================
    FIREBASE IMPORTS
@@ -451,29 +334,19 @@ input:focus{
 
 import {
     initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
     getAuth,
     signInWithEmailAndPassword,
-    onAuthStateChanged,
     signOut
-}
-from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
     getFirestore,
     doc,
     getDoc
-}
-from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 /* ==========================================
@@ -483,7 +356,7 @@ from
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyArReAuSxobQHOprk87Fte6NmJSVAKcND0",
+        "YOUR_CURRENT_FIREBASE_API_KEY",
 
     authDomain:
         "talent-exchange-4456e.firebaseapp.com",
@@ -503,7 +376,6 @@ const firebaseConfig = {
 };
 
 
-
 /* ==========================================
    INITIALIZE FIREBASE
 ========================================== */
@@ -511,14 +383,11 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
-
 const auth =
     getAuth(app);
 
-
 const db =
     getFirestore(app);
-
 
 
 /* ==========================================
@@ -528,26 +397,20 @@ const db =
 const form =
     document.getElementById("adminLoginForm");
 
-
 const emailInput =
     document.getElementById("email");
-
 
 const passwordInput =
     document.getElementById("password");
 
-
 const showPassword =
     document.getElementById("showPassword");
-
 
 const message =
     document.getElementById("message");
 
-
 const loginButton =
     document.getElementById("loginButton");
-
 
 
 /* ==========================================
@@ -556,27 +419,18 @@ const loginButton =
 
 showPassword.addEventListener(
     "click",
-    function(){
+    () => {
 
-        if(
-            passwordInput.type ===
-            "password"
-        ){
+        if(passwordInput.type === "password"){
 
-            passwordInput.type =
-                "text";
-
-            showPassword.textContent =
-                "Hide";
+            passwordInput.type = "text";
+            showPassword.textContent = "Hide";
 
         }
         else{
 
-            passwordInput.type =
-                "password";
-
-            showPassword.textContent =
-                "Show";
+            passwordInput.type = "password";
+            showPassword.textContent = "Show";
 
         }
 
@@ -584,15 +438,11 @@ showPassword.addEventListener(
 );
 
 
-
 /* ==========================================
-   MESSAGE FUNCTION
+   MESSAGE
 ========================================== */
 
-function showMessage(
-    text,
-    type
-){
+function showMessage(text,type){
 
     message.className =
         "message " + type;
@@ -603,32 +453,24 @@ function showMessage(
 }
 
 
-
 /* ==========================================
-   ADMIN LOGIN
+   LOGIN
 ========================================== */
 
 form.addEventListener(
     "submit",
-    async function(e){
+    async (event) => {
 
-        e.preventDefault();
-
+        event.preventDefault();
 
         const email =
-            emailInput.value
-            .trim()
-            .toLowerCase();
-
+            emailInput.value.trim().toLowerCase();
 
         const password =
             passwordInput.value;
 
 
-        if(
-            email === "" ||
-            password === ""
-        ){
+        if(!email || !password){
 
             showMessage(
                 "Please enter email and password.",
@@ -636,12 +478,10 @@ form.addEventListener(
             );
 
             return;
-
         }
 
 
-        loginButton.disabled =
-            true;
+        loginButton.disabled = true;
 
         loginButton.textContent =
             "Checking...";
@@ -649,9 +489,9 @@ form.addEventListener(
 
         try{
 
-            /* ==================================
-               FIREBASE AUTHENTICATION
-            ================================== */
+            /* ==============================
+               STEP 1: FIREBASE AUTH
+            ============================== */
 
             const credential =
                 await signInWithEmailAndPassword(
@@ -661,14 +501,16 @@ form.addEventListener(
                 );
 
 
+            const user =
+                credential.user;
+
             const uid =
-                credential.user.uid;
+                user.uid;
 
 
-
-            /* ==================================
-               GET USER PROFILE
-            ================================== */
+            /* ==============================
+               STEP 2: FIRESTORE ADMIN PROFILE
+            ============================== */
 
             const userRef =
                 doc(
@@ -682,99 +524,58 @@ form.addEventListener(
                 await getDoc(userRef);
 
 
-
-            if(
-                !userSnap.exists()
-            ){
+            if(!userSnap.exists()){
 
                 await signOut(auth);
 
-                showMessage(
-                    "Admin profile not found in Firestore.",
-                    "error"
+                throw new Error(
+                    "Admin profile not found in Firestore."
                 );
 
-                loginButton.disabled =
-                    false;
-
-                loginButton.textContent =
-                    "Sign In as Admin";
-
-                return;
-
             }
-
 
 
             const userData =
                 userSnap.data();
 
 
+            /* ==============================
+               STEP 3: ADMIN ROLE
+            ============================== */
 
-            /* ==================================
-               CHECK ADMIN ROLE
-            ================================== */
-
-            if(
-                userData.role !==
-                "admin"
-            ){
+            if(userData.role !== "admin"){
 
                 await signOut(auth);
 
-                showMessage(
-                    "Access denied. This account is not an administrator.",
-                    "error"
+                throw new Error(
+                    "Access denied. This account does not have admin privileges."
                 );
-
-                loginButton.disabled =
-                    false;
-
-                loginButton.textContent =
-                    "Sign In as Admin";
-
-                return;
 
             }
 
 
+            /* ==============================
+               STEP 4: ACCOUNT STATUS
+            ============================== */
 
-            /* ==================================
-               CHECK ACCOUNT STATUS
-            ================================== */
-
-            if(
-                userData.status ===
-                "disabled"
-            ){
+            if(userData.status === "disabled"){
 
                 await signOut(auth);
 
-                showMessage(
-                    "This admin account has been disabled.",
-                    "error"
+                throw new Error(
+                    "This admin account has been disabled."
                 );
-
-                loginButton.disabled =
-                    false;
-
-                loginButton.textContent =
-                    "Sign In as Admin";
-
-                return;
 
             }
 
 
-
-            /* ==================================
-               SAVE ADMIN SESSION
-            ================================== */
+            /* ==============================
+               STEP 5: SAVE SESSION
+            ============================== */
 
             const adminProfile = {
 
-                uid:
-                    uid,
+                uid: uid,
 
                 name:
                     userData.name ||
@@ -782,10 +583,9 @@ form.addEventListener(
 
                 email:
                     userData.email ||
-                    credential.user.email,
+                    user.email,
 
-                role:
-                    "admin"
+                role: "admin"
 
             };
 
@@ -802,10 +602,9 @@ form.addEventListener(
             );
 
 
-
-            /* ==================================
+            /* ==============================
                SUCCESS
-            ================================== */
+            ============================== */
 
             showMessage(
                 "Login successful. Opening admin dashboard...",
@@ -814,17 +613,18 @@ form.addEventListener(
 
 
             setTimeout(
-                function(){
+                () => {
 
                     window.location.href =
                         "admin-dashboard.html";
 
                 },
-                700
+                500
             );
 
-
         }
+
+
         catch(error){
 
             console.error(
@@ -834,60 +634,21 @@ form.addEventListener(
 
 
             let errorMessage =
-    error.code + " — " + error.message;
+                "Unable to sign in.";
 
 
-            if(
-                error.code ===
-                "auth/invalid-credential"
-            ){
-
-                errorMessage.textContent = error.code + " — " + error.message;
-console.error(error);
-            }
-            else if(
-                error.code ===
-                "auth/user-not-found"
-            ){
+            if(error.code){
 
                 errorMessage =
-                    "No account found with this email.";
+                    error.code +
+                    " — " +
+                    error.message;
 
             }
-            else if(
-                error.code ===
-                "auth/wrong-password"
-            ){
+            else{
 
                 errorMessage =
-                    "Incorrect password.";
-
-            }
-            else if(
-                error.code ===
-                "auth/invalid-email"
-            ){
-
-                errorMessage =
-                    "Please enter a valid email address.";
-
-            }
-            else if(
-                error.code ===
-                "auth/too-many-requests"
-            ){
-
-                errorMessage =
-                    "Too many attempts. Please try again later.";
-
-            }
-            else if(
-                error.code ===
-                "permission-denied"
-            ){
-
-                errorMessage =
-                    "Firestore permission denied. Check your Firestore rules.";
+                    error.message;
 
             }
 
@@ -908,98 +669,6 @@ console.error(error);
 
     }
 );
-
-
-
-/* ==========================================
-   CHECK EXISTING AUTH SESSION
-========================================== */
-
-onAuthStateChanged(
-    auth,
-    async function(user){
-
-        if(!user){
-            return;
-        }
-
-
-        /*
-         If a user is already logged in,
-         check whether they are actually admin.
-        */
-
-        try{
-
-            const userRef =
-                doc(
-                    db,
-                    "users",
-                    user.uid
-                );
-
-
-            const userSnap =
-                await getDoc(userRef);
-
-
-            if(
-                userSnap.exists()
-            ){
-
-                const data =
-                    userSnap.data();
-
-
-                if(
-                    data.role ===
-                    "admin"
-                ){
-
-                    localStorage.setItem(
-                        "adminProfile",
-                        JSON.stringify({
-
-                            uid:
-                                user.uid,
-
-                            name:
-                                data.name ||
-                                "Talent Exchange Admin",
-
-                            email:
-                                data.email ||
-                                user.email,
-
-                            role:
-                                "admin"
-
-                        })
-                    );
-
-
-                    localStorage.setItem(
-                        "adminLoggedIn",
-                        "true"
-                    );
-
-                }
-
-            }
-
-        }
-        catch(error){
-
-            console.log(
-                "Session check:",
-                error
-            );
-
-        }
-
-    }
-);
-
 
 </script>
 
