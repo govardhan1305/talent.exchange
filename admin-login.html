@@ -842,9 +842,8 @@ form.addEventListener(
                 "auth/invalid-credential"
             ){
 
-                errorMessage =
-                    "Invalid admin email or password.";
-
+                errorMessage.textContent = error.code + " — " + error.message;
+console.error(error);
             }
             else if(
                 error.code ===
