@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +27,6 @@ body {
     padding: 25px;
 }
 
-/* ================= CONTAINER ================= */
-
 .container {
     width: 100%;
     max-width: 1050px;
@@ -42,8 +39,6 @@ body {
     overflow: hidden;
     box-shadow: 0 30px 80px rgba(0,0,0,.45);
 }
-
-/* ================= LEFT ================= */
 
 .left {
     padding: 55px;
@@ -126,8 +121,6 @@ body {
     font-size: 11px;
 }
 
-/* ================= RIGHT ================= */
-
 .right {
     padding: 55px;
     display: flex;
@@ -150,8 +143,6 @@ body {
     font-size: 13px;
     margin-bottom: 30px;
 }
-
-/* ================= FORM ================= */
 
 .form-group {
     margin-bottom: 18px;
@@ -205,8 +196,6 @@ input::placeholder {
     user-select: none;
 }
 
-/* ================= OPTIONS ================= */
-
 .options {
     display: flex;
     justify-content: space-between;
@@ -239,8 +228,6 @@ input::placeholder {
     text-decoration: underline;
 }
 
-/* ================= BUTTON ================= */
-
 .login-btn {
     width: 100%;
     padding: 13px;
@@ -265,8 +252,6 @@ input::placeholder {
     transform: none;
 }
 
-/* ================= DIVIDER ================= */
-
 .divider {
     display: flex;
     align-items: center;
@@ -284,8 +269,6 @@ input::placeholder {
     flex: 1;
 }
 
-/* ================= REGISTER ================= */
-
 .register {
     text-align: center;
     color: #777789;
@@ -301,8 +284,6 @@ input::placeholder {
 .register a:hover {
     text-decoration: underline;
 }
-
-/* ================= MESSAGE ================= */
 
 .message {
     display: none;
@@ -326,8 +307,6 @@ input::placeholder {
     border: 1px solid rgba(52,211,153,.15);
     color: #86efac;
 }
-
-/* ================= MOBILE ================= */
 
 @media(max-width:800px) {
 
@@ -389,20 +368,12 @@ input::placeholder {
 
 <div class="container">
 
-    <!-- ================= LEFT PANEL ================= -->
-
     <section class="left">
 
         <div class="logo">
-
-            <div class="logo-icon">
-                TE
-            </div>
-
+            <div class="logo-icon">TE</div>
             Talent Exchange
-
         </div>
-
 
         <div class="left-content">
 
@@ -418,56 +389,31 @@ input::placeholder {
                 knowledge exchanges through one platform.
             </p>
 
-
             <div class="features">
 
                 <div class="feature">
-
-                    <div class="feature-icon">
-                        ✦
-                    </div>
-
+                    <div class="feature-icon">✦</div>
                     Skill-based connections
-
                 </div>
 
-
                 <div class="feature">
-
-                    <div class="feature-icon">
-                        ✓
-                    </div>
-
+                    <div class="feature-icon">✓</div>
                     Verified skill evidence
-
                 </div>
 
-
                 <div class="feature">
-
-                    <div class="feature-icon">
-                        ◌
-                    </div>
-
+                    <div class="feature-icon">◌</div>
                     Real-time communication
-
                 </div>
 
-
                 <div class="feature">
-
-                    <div class="feature-icon">
-                        ◎
-                    </div>
-
+                    <div class="feature-icon">◎</div>
                     Audio & video calls
-
                 </div>
 
             </div>
 
         </div>
-
 
         <div class="footer-text">
             © 2026 Talent Exchange. All rights reserved.
@@ -476,28 +422,18 @@ input::placeholder {
     </section>
 
 
-    <!-- ================= RIGHT PANEL ================= -->
-
     <section class="right">
 
         <div class="form-box">
 
-            <h2>
-                Welcome back
-            </h2>
+            <h2>Welcome back</h2>
 
             <p class="subtitle">
                 Sign in to continue to your Talent Exchange account.
             </p>
 
+            <div id="message" class="message"></div>
 
-            <div
-                id="message"
-                class="message">
-            </div>
-
-
-            <!-- EMAIL -->
 
             <div class="form-group">
 
@@ -514,8 +450,6 @@ input::placeholder {
 
             </div>
 
-
-            <!-- PASSWORD -->
 
             <div class="form-group">
 
@@ -544,8 +478,6 @@ input::placeholder {
             </div>
 
 
-            <!-- OPTIONS -->
-
             <div class="options">
 
                 <label class="remember">
@@ -558,7 +490,6 @@ input::placeholder {
 
                 </label>
 
-
                 <a
                     href="#"
                     class="forgot"
@@ -570,8 +501,6 @@ input::placeholder {
 
             </div>
 
-
-            <!-- LOGIN -->
 
             <button
                 class="login-btn"
@@ -604,11 +533,23 @@ input::placeholder {
 </div>
 
 
-<script>
+<script type="module">
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+import { auth, db } from "./js/firebase-config.js";
+
+import {
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
 
 const emailInput =
     document.getElementById("email");
@@ -628,45 +569,11 @@ const showPassword =
 const forgotPassword =
     document.getElementById("forgotPassword");
 
-
-/* =========================================================
-   SHOW / HIDE PASSWORD
-========================================================= */
-
-showPassword.addEventListener(
-    "click",
-    function () {
-
-        if (
-            passwordInput.type === "password"
-        ) {
-
-            passwordInput.type = "text";
-
-            showPassword.textContent =
-                "Hide";
-
-        } else {
-
-            passwordInput.type =
-                "password";
-
-            showPassword.textContent =
-                "Show";
-        }
-
-    }
-);
+const remember =
+    document.getElementById("remember");
 
 
-/* =========================================================
-   MESSAGE
-========================================================= */
-
-function showMessage(
-    text,
-    type = "error"
-) {
+function showMessage(text, type = "error") {
 
     message.textContent = text;
 
@@ -676,300 +583,351 @@ function showMessage(
 }
 
 
-/* =========================================================
-   LOGIN
-========================================================= */
+showPassword.addEventListener("click", () => {
 
-loginBtn.addEventListener(
-    "click",
-    function () {
+    if (passwordInput.type === "password") {
 
-        const email =
-            emailInput.value.trim();
+        passwordInput.type = "text";
+        showPassword.textContent = "Hide";
 
-        const password =
-            passwordInput.value;
+    } else {
 
+        passwordInput.type = "password";
+        showPassword.textContent = "Show";
 
-        /* Validation */
+    }
 
-        if (!email || !password) {
-
-            showMessage(
-                "Please enter your email and password."
-            );
-
-            return;
-        }
+});
 
 
-        if (
-            !email.includes("@") ||
-            !email.includes(".")
-        ) {
+loginBtn.addEventListener("click", async () => {
 
-            showMessage(
-                "Please enter a valid email address."
-            );
+    const email =
+        emailInput.value.trim().toLowerCase();
 
-            return;
-        }
+    const password =
+        passwordInput.value;
 
+    if (!email || !password) {
 
-        loginBtn.disabled = true;
+        showMessage(
+            "Please enter your email and password."
+        );
 
-        loginBtn.textContent =
-            "Signing in...";
+        return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Signing in...";
+
+    try {
+
+        /*
+         * Remember-me controls how long
+         * Firebase keeps the login session.
+         */
+
+        await setPersistence(
+            auth,
+            remember.checked
+                ? browserLocalPersistence
+                : browserSessionPersistence
+        );
 
 
         /*
-         =====================================================
-         DEMO LOGIN
-         =====================================================
+         * Firebase Authentication
+         */
 
-         This is temporary frontend logic.
+        const userCredential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-         Later replace this section with:
+        const user =
+            userCredential.user;
 
-         POST /api/login
 
-         Example:
+        /*
+         * Get user's Firestore profile
+         */
 
-         fetch("YOUR_BACKEND_URL/api/login", {
-             method: "POST",
-             headers: {
-                 "Content-Type": "application/json"
-             },
-             body: JSON.stringify({
-                 email: email,
-                 password: password
-             })
-         })
+        const userRef =
+            doc(db, "users", user.uid);
 
-         =====================================================
-        */
+        const userSnapshot =
+            await getDoc(userRef);
+
+
+        if (!userSnapshot.exists()) {
+
+            showMessage(
+                "Your account profile was not found. Please contact the administrator."
+            );
+
+            await auth.signOut();
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Sign In";
+
+            return;
+        }
+
+
+        const profile =
+            userSnapshot.data();
+
+
+        /*
+         * Check account status
+         */
+
+        const accountStatus =
+            profile.status || "pending";
+
+
+        if (accountStatus === "pending") {
+
+            showMessage(
+                "Your account is waiting for admin approval."
+            );
+
+            await auth.signOut();
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Sign In";
+
+            return;
+        }
+
+
+        if (accountStatus === "rejected") {
+
+            showMessage(
+                "Your account registration was not approved."
+            );
+
+            await auth.signOut();
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Sign In";
+
+            return;
+        }
+
+
+        if (accountStatus === "disabled") {
+
+            showMessage(
+                "Your account has been disabled. Please contact the administrator."
+            );
+
+            await auth.signOut();
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Sign In";
+
+            return;
+        }
+
+
+        /*
+         * Save only basic profile information
+         * for the frontend UI.
+         */
+
+        localStorage.setItem(
+            "userProfile",
+            JSON.stringify({
+                id: user.uid,
+                name: profile.name || "",
+                email: user.email || "",
+                bio: profile.bio || "",
+                offeredSkills:
+                    profile.offeredSkills || [],
+                learningSkill:
+                    profile.learningSkill || [],
+                profilePhoto:
+                    profile.profilePhoto || "",
+                role:
+                    profile.role || "user",
+                status:
+                    accountStatus
+            })
+        );
+
+
+        localStorage.setItem(
+            "isLoggedIn",
+            "true"
+        );
+
+
+        showMessage(
+            "Login successful. Redirecting...",
+            "success"
+        );
 
 
         setTimeout(() => {
 
-            let storedUser =
-                JSON.parse(
-                    localStorage.getItem(
-                        "userProfile"
-                    )
-                );
-
-
-            /*
-             If register.html has already
-             saved a user, use that data.
-            */
-
-            if (
-                storedUser &&
-                storedUser.email &&
-                storedUser.email.toLowerCase() ===
-                email.toLowerCase()
-            ) {
-
-                localStorage.setItem(
-                    "isLoggedIn",
-                    "true"
-                );
-
-
-                if (
-                    document.getElementById(
-                        "remember"
-                    ).checked
-                ) {
-
-                    localStorage.setItem(
-                        "rememberLogin",
-                        "true"
-                    );
-
-                }
-
-
-                showMessage(
-                    "Login successful. Redirecting...",
-                    "success"
-                );
-
-
-                setTimeout(() => {
-
-                    window.location.href =
-                        "dashboard.html";
-
-                }, 700);
-
-
-                return;
-            }
-
-
-            /*
-             Temporary demo account.
-             Remove this after backend
-             authentication is connected.
-            */
-
-            if (
-                email.toLowerCase() ===
-                "demo@talentexchange.com"
-                &&
-                password ===
-                "123456"
-            ) {
-
-                const demoUser = {
-
-                    id: "demo-user",
-
-                    name: "Demo User",
-
-                    email:
-                        "demo@talentexchange.com",
-
-                    skill:
-                        "Python",
-
-                    learningSkill:
-                        "Guitar",
-
-                    bio:
-                        "Talent Exchange demo account."
-
-                };
-
-
-                localStorage.setItem(
-                    "userProfile",
-                    JSON.stringify(
-                        demoUser
-                    )
-                );
-
-
-                localStorage.setItem(
-                    "isLoggedIn",
-                    "true"
-                );
-
-
-                showMessage(
-                    "Login successful. Redirecting...",
-                    "success"
-                );
-
-
-                setTimeout(() => {
-
-                    window.location.href =
-                        "dashboard.html";
-
-                }, 700);
-
-
-                return;
-            }
-
-
-            loginBtn.disabled = false;
-
-            loginBtn.textContent =
-                "Sign In";
-
-
-            showMessage(
-                "Account not found. Please create an account or check your details."
-            );
+            window.location.href =
+                "dashboard.html";
 
         }, 700);
 
+
+    } catch (error) {
+
+        console.error(
+            "Firebase Login Error:",
+            error
+        );
+
+
+        let errorMessage =
+            "Unable to sign in. Please check your details and try again.";
+
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            errorMessage =
+                "Invalid email or password.";
+
+        } else if (
+            error.code ===
+            "auth/user-not-found"
+        ) {
+
+            errorMessage =
+                "No account exists with this email.";
+
+        } else if (
+            error.code ===
+            "auth/wrong-password"
+        ) {
+
+            errorMessage =
+                "Incorrect password.";
+
+        } else if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            errorMessage =
+                "Please enter a valid email address.";
+
+        } else if (
+            error.code ===
+            "auth/too-many-requests"
+        ) {
+
+            errorMessage =
+                "Too many attempts. Please try again later.";
+
+        } else if (
+            error.code ===
+            "auth/network-request-failed"
+        ) {
+
+            errorMessage =
+                "Network error. Please check your internet connection.";
+
+        }
+
+
+        showMessage(errorMessage);
+
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Sign In";
+
     }
-);
 
+});
 
-/* =========================================================
-   ENTER KEY LOGIN
-========================================================= */
 
 passwordInput.addEventListener(
     "keydown",
-    function (event) {
+    event => {
 
-        if (
-            event.key === "Enter"
-        ) {
-
+        if (event.key === "Enter") {
             loginBtn.click();
-
         }
 
     }
 );
 
 
-/* =========================================================
-   FORGOT PASSWORD
-========================================================= */
-
 forgotPassword.addEventListener(
     "click",
-    function (event) {
+    async event => {
 
         event.preventDefault();
 
+        const email =
+            emailInput.value.trim().toLowerCase();
 
-        showMessage(
-            "Password recovery will be connected to the backend soon."
-        );
+
+        if (!email) {
+
+            showMessage(
+                "Enter your email address first, then click Forgot password."
+            );
+
+            emailInput.focus();
+
+            return;
+        }
+
+
+        try {
+
+            await sendPasswordResetEmail(
+                auth,
+                email
+            );
+
+            showMessage(
+                "Password reset email sent. Check your inbox.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Password Reset Error:",
+                error
+            );
+
+            if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                showMessage(
+                    "No account exists with this email."
+                );
+
+            } else {
+
+                showMessage(
+                    "Unable to send password reset email. Please try again."
+                );
+
+            }
+
+        }
 
     }
 );
-
-
-/* =========================================================
-   AUTO-FILL REMEMBERED EMAIL
-========================================================= */
-
-const remembered =
-    localStorage.getItem(
-        "rememberLogin"
-    );
-
-
-if (remembered === "true") {
-
-    const storedUser =
-        JSON.parse(
-            localStorage.getItem(
-                "userProfile"
-            )
-        );
-
-
-    if (
-        storedUser &&
-        storedUser.email
-    ) {
-
-        emailInput.value =
-            storedUser.email;
-
-        document.getElementById(
-            "remember"
-        ).checked = true;
-
-    }
-
-}
 
 </script>
 
 </body>
 </html>
-```
