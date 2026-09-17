@@ -143,7 +143,7 @@
             background: #10101d;
         }
 
-        /* Profile photo */
+        /* PROFILE PHOTO */
 
         .profile-area {
             display: flex;
@@ -184,7 +184,7 @@
             margin-top: 5px;
         }
 
-        /* Skills */
+        /* SKILLS */
 
         .skill-box {
             background: #10101d;
@@ -217,6 +217,12 @@
             background: transparent;
             color: #aaa;
             cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .tag button:hover {
+            color: #fff;
         }
 
         .skill-input {
@@ -236,7 +242,7 @@
             margin-top: 7px;
         }
 
-        /* Evidence */
+        /* EVIDENCE */
 
         .evidence-options {
             display: grid;
@@ -316,6 +322,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
         }
 
         .evidence-item strong {
@@ -337,7 +344,7 @@
             font-size: 12px;
         }
 
-        /* Terms */
+        /* TERMS */
 
         .terms {
             display: flex;
@@ -363,7 +370,7 @@
             text-decoration: none;
         }
 
-        /* Button */
+        /* BUTTON */
 
         .submit-btn {
             width: 100%;
@@ -438,6 +445,10 @@
             .profile-area {
                 align-items: flex-start;
             }
+
+            .topbar {
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -468,9 +479,12 @@
 
             <div class="photo-info">
                 <label for="profilePhoto">Profile Photo</label>
-                <input type="file"
-                       id="profilePhoto"
-                       accept="image/png,image/jpeg,image/webp">
+
+                <input
+                    type="file"
+                    id="profilePhoto"
+                    accept="image/png,image/jpeg,image/webp">
+
                 <p>Use a clear profile picture. JPG, PNG or WebP.</p>
             </div>
 
@@ -482,6 +496,7 @@
         <div class="section">
 
             <h2 class="section-title">Basic Information</h2>
+
             <p class="section-description">
                 Enter the information that will appear on your Talent Exchange profile.
             </p>
@@ -490,28 +505,44 @@
 
                 <div>
                     <label for="fullName">Full Name *</label>
-                    <input type="text" id="fullName" placeholder="Enter your full name">
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Enter your full name">
                 </div>
 
                 <div>
                     <label for="email">Email Address *</label>
-                    <input type="email" id="email" placeholder="you@example.com">
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="you@example.com">
                 </div>
 
                 <div>
                     <label for="password">Password *</label>
-                    <input type="password" id="password" placeholder="Create a password">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create a password">
                 </div>
 
                 <div>
                     <label for="confirmPassword">Confirm Password *</label>
-                    <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm your password">
                 </div>
 
                 <div class="full">
+
                     <label for="bio">About You *</label>
-                    <textarea id="bio"
+
+                    <textarea
+                        id="bio"
                         placeholder="Tell other members about yourself, your experience and what you are interested in..."></textarea>
+
                 </div>
 
             </div>
@@ -524,11 +555,14 @@
         <div class="section">
 
             <h2 class="section-title">Your Skills</h2>
+
             <p class="section-description">
                 Add skills you can teach and skills you want to learn.
             </p>
 
             <div class="grid">
+
+                <!-- OFFERED SKILLS -->
 
                 <div>
 
@@ -536,7 +570,10 @@
 
                     <div class="skill-box">
 
-                        <div class="skill-tags" id="offerTags"></div>
+                        <div
+                            class="skill-tags"
+                            id="offerTags">
+                        </div>
 
                         <input
                             type="text"
@@ -553,13 +590,18 @@
                 </div>
 
 
+                <!-- LEARNING SKILLS -->
+
                 <div>
 
                     <label>Skills You Want To Learn *</label>
 
                     <div class="skill-box">
 
-                        <div class="skill-tags" id="learnTags"></div>
+                        <div
+                            class="skill-tags"
+                            id="learnTags">
+                        </div>
 
                         <input
                             type="text"
@@ -593,35 +635,66 @@
             <div class="evidence-options">
 
                 <div class="evidence-option">
-                    <input type="radio" name="evidenceType" id="certificate" value="Certificate">
+
+                    <input
+                        type="radio"
+                        name="evidenceType"
+                        id="certificate"
+                        value="Certificate">
+
                     <label for="certificate">
                         <strong>Certificate</strong>
                         <small>Certification proof</small>
                     </label>
+
                 </div>
 
+
                 <div class="evidence-option">
-                    <input type="radio" name="evidenceType" id="document" value="Document">
+
+                    <input
+                        type="radio"
+                        name="evidenceType"
+                        id="document"
+                        value="Document">
+
                     <label for="document">
                         <strong>Document</strong>
                         <small>Supporting document</small>
                     </label>
+
                 </div>
 
+
                 <div class="evidence-option">
-                    <input type="radio" name="evidenceType" id="video" value="Skill Video">
+
+                    <input
+                        type="radio"
+                        name="evidenceType"
+                        id="video"
+                        value="Skill Video">
+
                     <label for="video">
                         <strong>Skill Video</strong>
                         <small>Show your skill</small>
                     </label>
+
                 </div>
 
+
                 <div class="evidence-option">
-                    <input type="radio" name="evidenceType" id="project" value="Project Link">
+
+                    <input
+                        type="radio"
+                        name="evidenceType"
+                        id="project"
+                        value="Project Link">
+
                     <label for="project">
                         <strong>Project</strong>
                         <small>Project or portfolio</small>
                     </label>
+
                 </div>
 
             </div>
@@ -630,23 +703,43 @@
             <div class="grid">
 
                 <div>
-                    <label for="evidenceTitle">Evidence Title</label>
-                    <input type="text"
-                           id="evidenceTitle"
-                           placeholder="Example: Python Certification">
+
+                    <label for="evidenceTitle">
+                        Evidence Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="evidenceTitle"
+                        placeholder="Example: Python Certification">
+
                 </div>
+
 
                 <div>
-                    <label for="evidenceSkill">Related Skill</label>
-                    <input type="text"
-                           id="evidenceSkill"
-                           placeholder="Example: Python">
+
+                    <label for="evidenceSkill">
+                        Related Skill
+                    </label>
+
+                    <input
+                        type="text"
+                        id="evidenceSkill"
+                        placeholder="Example: Python">
+
                 </div>
 
+
                 <div class="full">
-                    <label for="evidenceDescription">Description</label>
-                    <textarea id="evidenceDescription"
+
+                    <label for="evidenceDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="evidenceDescription"
                         placeholder="Briefly describe this evidence or project..."></textarea>
+
                 </div>
 
             </div>
@@ -681,12 +774,20 @@
             </div>
 
 
-            <button type="button" class="submit-btn" id="addEvidence">
+            <button
+                type="button"
+                class="submit-btn"
+                id="addEvidence">
+
                 + Add Skill Evidence
+
             </button>
 
 
-            <div class="evidence-list" id="evidenceList"></div>
+            <div
+                class="evidence-list"
+                id="evidenceList">
+            </div>
 
         </div>
 
@@ -695,32 +796,46 @@
 
         <div class="terms">
 
-            <input type="checkbox" id="terms">
+            <input
+                type="checkbox"
+                id="terms">
 
             <label for="terms">
+
                 I agree to the
                 <a href="#">Terms of Service</a>
                 and
                 <a href="#">Privacy Policy</a>.
+
             </label>
 
         </div>
 
 
-        <button class="submit-btn" id="createAccount">
+        <!-- CREATE ACCOUNT -->
+
+        <button
+            class="submit-btn"
+            id="createAccount">
+
             Create Account
+
         </button>
 
 
         <div class="login-link">
+
             Already have an account?
             <a href="login.html">Login</a>
+
         </div>
 
 
         <div class="note">
+
             Your profile information, skill evidence and uploaded videos will later
             be securely connected to the Talent Exchange backend and database.
+
         </div>
 
     </div>
@@ -730,10 +845,16 @@
 
 <script>
 
-    /* PROFILE PHOTO PREVIEW */
+    /* ==========================================
+       PROFILE PHOTO PREVIEW
+    ========================================== */
 
-    const profilePhoto = document.getElementById("profilePhoto");
-    const avatar = document.getElementById("avatar");
+    const profilePhoto =
+        document.getElementById("profilePhoto");
+
+    const avatar =
+        document.getElementById("avatar");
+
 
     profilePhoto.addEventListener("change", function () {
 
@@ -742,49 +863,128 @@
         if (!file) return;
 
         if (!file.type.startsWith("image/")) {
+
             alert("Please select an image file.");
+
             this.value = "";
+
             return;
         }
 
+
         const reader = new FileReader();
+
 
         reader.onload = function (event) {
 
             avatar.innerHTML = `
-                <img src="${event.target.result}" alt="Profile Photo">
+                <img
+                    src="${event.target.result}"
+                    alt="Profile Photo">
             `;
 
         };
+
 
         reader.readAsDataURL(file);
 
     });
 
 
-    /* SKILL TAG SYSTEM */
+
+    /* ==========================================
+       SKILL TAG SYSTEM - FIXED
+    ========================================== */
 
     function setupSkills(inputId, tagsId) {
 
-        const input = document.getElementById(inputId);
-        const tags = document.getElementById(tagsId);
+        const input =
+            document.getElementById(inputId);
+
+        const tags =
+            document.getElementById(tagsId);
 
         let skills = [];
+
+
+        /* ADD SKILL */
+
+        function addSkill(value) {
+
+            value = value.trim();
+
+            if (!value) return;
+
+
+            /*
+                Supports:
+
+                Python
+
+                OR
+
+                Python, Java, SQL
+            */
+
+            const newSkills = value
+                .split(",")
+                .map(skill => skill.trim())
+                .filter(skill => skill.length > 0);
+
+
+            newSkills.forEach(skill => {
+
+                const exists = skills.some(
+                    existing =>
+                        existing.toLowerCase() ===
+                        skill.toLowerCase()
+                );
+
+
+                if (!exists) {
+
+                    skills.push(skill);
+
+                }
+
+            });
+
+
+            input.value = "";
+
+            render();
+
+        }
+
+
+        /* RENDER TAGS */
 
         function render() {
 
             tags.innerHTML = "";
 
+
             skills.forEach((skill, index) => {
 
-                const tag = document.createElement("div");
+                const tag =
+                    document.createElement("div");
+
 
                 tag.className = "tag";
 
+
                 tag.innerHTML = `
-                    ${skill}
-                    <button type="button" onclick="removeSkill('${inputId}', ${index})">×</button>
+                    <span>${escapeHtml(skill)}</span>
+
+                    <button
+                        type="button"
+                        onclick="removeSkill('${inputId}', ${index})">
+
+                        ×
+
+                    </button>
                 `;
+
 
                 tags.appendChild(tag);
 
@@ -792,226 +992,609 @@
 
         }
 
+
+        /* ENTER KEY */
+
         input.addEventListener("keydown", function (event) {
 
             if (event.key === "Enter") {
 
                 event.preventDefault();
 
-                const value = input.value.trim();
-
-                if (!value) return;
-
-                if (!skills.includes(value)) {
-                    skills.push(value);
-                }
-
-                input.value = "";
-
-                render();
+                addSkill(input.value);
 
             }
 
         });
 
-        window.removeSkill = function (targetInputId, index) {
 
-            if (targetInputId === inputId) {
+        /*
+            IMPORTANT FIX:
 
-                skills.splice(index, 1);
+            If user types a skill and directly clicks
+            Create Account without pressing Enter,
+            the typed skill will still be saved.
+        */
 
-                render();
+        input.addEventListener("blur", function () {
+
+            if (input.value.trim()) {
+
+                addSkill(input.value);
 
             }
 
-        };
+        });
+
+
+        /* REMOVE SKILL */
+
+        window.removeSkill =
+            function(targetInputId, index) {
+
+                if (targetInputId === inputId) {
+
+                    skills.splice(index, 1);
+
+                    render();
+
+                }
+
+            };
+
+
+        /* GET CURRENT SKILLS */
 
         return function () {
-            return skills;
+
+            /*
+                Capture anything currently typed
+                before validation.
+            */
+
+            if (input.value.trim()) {
+
+                addSkill(input.value);
+
+            }
+
+
+            return [...skills];
+
         };
 
     }
 
-    const getOfferedSkills = setupSkills("offerInput", "offerTags");
-    const getLearningSkills = setupSkills("learnInput", "learnTags");
+
+    const getOfferedSkills =
+        setupSkills(
+            "offerInput",
+            "offerTags"
+        );
 
 
-    /* EVIDENCE */
+    const getLearningSkills =
+        setupSkills(
+            "learnInput",
+            "learnTags"
+        );
 
-    const addEvidence = document.getElementById("addEvidence");
-    const evidenceList = document.getElementById("evidenceList");
+
+
+    /* ==========================================
+       HTML ESCAPE
+    ========================================== */
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = value;
+
+        return div.innerHTML;
+
+    }
+
+
+
+    /* ==========================================
+       EVIDENCE SYSTEM
+    ========================================== */
+
+    const addEvidence =
+        document.getElementById("addEvidence");
+
+    const evidenceList =
+        document.getElementById("evidenceList");
 
     let evidenceItems = [];
 
+
     addEvidence.addEventListener("click", function () {
 
-        const selected = document.querySelector(
-            'input[name="evidenceType"]:checked'
-        );
+        const selected =
+            document.querySelector(
+                'input[name="evidenceType"]:checked'
+            );
 
-        const title = document.getElementById("evidenceTitle").value.trim();
-        const skill = document.getElementById("evidenceSkill").value.trim();
-        const description = document.getElementById("evidenceDescription").value.trim();
-        const file = document.getElementById("evidenceFile").files[0];
-        const link = document.getElementById("projectLink").value.trim();
+
+        const title =
+            document
+                .getElementById("evidenceTitle")
+                .value
+                .trim();
+
+
+        const skill =
+            document
+                .getElementById("evidenceSkill")
+                .value
+                .trim();
+
+
+        const description =
+            document
+                .getElementById("evidenceDescription")
+                .value
+                .trim();
+
+
+        const file =
+            document
+                .getElementById("evidenceFile")
+                .files[0];
+
+
+        const link =
+            document
+                .getElementById("projectLink")
+                .value
+                .trim();
+
+
 
         if (!selected) {
-            alert("Please select an evidence type.");
+
+            alert(
+                "Please select an evidence type."
+            );
+
             return;
+
         }
+
 
         if (!title) {
-            alert("Please enter an evidence title.");
+
+            alert(
+                "Please enter an evidence title."
+            );
+
             return;
+
         }
+
 
         if (!skill) {
-            alert("Please enter the related skill.");
+
+            alert(
+                "Please enter the related skill."
+            );
+
             return;
+
         }
+
 
         if (!file && !link) {
-            alert("Please upload a file or add a project link.");
+
+            alert(
+                "Please upload a file or add a project link."
+            );
+
             return;
+
         }
 
+
         const item = {
+
             type: selected.value,
+
             title: title,
+
             skill: skill,
+
             description: description,
-            fileName: file ? file.name : "",
+
+            fileName: file
+                ? file.name
+                : "",
+
             link: link
+
         };
+
 
         evidenceItems.push(item);
 
+
         renderEvidence();
 
-        document.getElementById("evidenceTitle").value = "";
-        document.getElementById("evidenceSkill").value = "";
-        document.getElementById("evidenceDescription").value = "";
-        document.getElementById("evidenceFile").value = "";
-        document.getElementById("projectLink").value = "";
+
+        document
+            .getElementById("evidenceTitle")
+            .value = "";
+
+
+        document
+            .getElementById("evidenceSkill")
+            .value = "";
+
+
+        document
+            .getElementById("evidenceDescription")
+            .value = "";
+
+
+        document
+            .getElementById("evidenceFile")
+            .value = "";
+
+
+        document
+            .getElementById("projectLink")
+            .value = "";
+
+
+        /*
+            Unselect evidence type
+            after adding.
+        */
+
+        document
+            .querySelectorAll(
+                'input[name="evidenceType"]'
+            )
+            .forEach(radio => {
+                radio.checked = false;
+            });
 
     });
 
+
+
+    /* RENDER EVIDENCE */
 
     function renderEvidence() {
 
         evidenceList.innerHTML = "";
 
-        evidenceItems.forEach((item, index) => {
 
-            const div = document.createElement("div");
+        evidenceItems.forEach(
+            (item, index) => {
 
-            div.className = "evidence-item";
+                const div =
+                    document.createElement("div");
 
-            div.innerHTML = `
-                <div>
-                    <strong>${item.title}</strong>
-                    <span>${item.type} • ${item.skill}${item.fileName ? " • " + item.fileName : ""}</span>
-                </div>
 
-                <button
-                    class="remove-btn"
-                    type="button"
-                    onclick="deleteEvidence(${index})">
-                    Remove
-                </button>
-            `;
+                div.className =
+                    "evidence-item";
 
-            evidenceList.appendChild(div);
 
-        });
+                div.innerHTML = `
+
+                    <div>
+
+                        <strong>
+                            ${escapeHtml(item.title)}
+                        </strong>
+
+                        <span>
+                            ${escapeHtml(item.type)}
+                            •
+                            ${escapeHtml(item.skill)}
+                            ${
+                                item.fileName
+                                    ? " • " +
+                                      escapeHtml(item.fileName)
+                                    : ""
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="remove-btn"
+                        type="button"
+                        onclick="deleteEvidence(${index})">
+
+                        Remove
+
+                    </button>
+
+                `;
+
+
+                evidenceList.appendChild(div);
+
+            }
+        );
 
     }
 
 
-    window.deleteEvidence = function(index) {
 
-        evidenceItems.splice(index, 1);
+    /* DELETE EVIDENCE */
 
-        renderEvidence();
+    window.deleteEvidence =
+        function(index) {
 
-    };
+            evidenceItems.splice(
+                index,
+                1
+            );
 
+            renderEvidence();
 
-    /* CREATE ACCOUNT */
-
-    document.getElementById("createAccount").addEventListener("click", function () {
-
-        const name = document.getElementById("fullName").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
-        const bio = document.getElementById("bio").value.trim();
-        const terms = document.getElementById("terms").checked;
-
-        const offeredSkills = getOfferedSkills();
-        const learningSkills = getLearningSkills();
-
-        if (!name || !email || !password || !confirmPassword || !bio) {
-            alert("Please complete all required fields.");
-            return;
-        }
-
-        if (password.length < 8) {
-            alert("Password must contain at least 8 characters.");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            return;
-        }
-
-        if (offeredSkills.length === 0) {
-            alert("Please add at least one skill you can offer.");
-            return;
-        }
-
-        if (learningSkills.length === 0) {
-            alert("Please add at least one skill you want to learn.");
-            return;
-        }
-
-        if (!terms) {
-            alert("Please accept the Terms of Service and Privacy Policy.");
-            return;
-        }
-
-        const accountData = {
-            name,
-            email,
-            bio,
-            offeredSkills,
-            learningSkills,
-            evidence: evidenceItems
         };
 
-        /*
-            BACKEND CONNECTION WILL BE ADDED HERE.
 
-            Later this data will be sent to:
 
-            Flask Backend
-                ↓
-            PostgreSQL Database
-                ↓
-            Secure File Storage
-        */
+    /* ==========================================
+       CREATE ACCOUNT
+    ========================================== */
 
-        console.log("Account data:", accountData);
+    document
+        .getElementById("createAccount")
+        .addEventListener(
+            "click",
+            function () {
 
-        alert(
-            "Registration form is ready! Backend connection will be added next."
+
+                const name =
+                    document
+                        .getElementById("fullName")
+                        .value
+                        .trim();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const confirmPassword =
+                    document
+                        .getElementById("confirmPassword")
+                        .value;
+
+
+                const bio =
+                    document
+                        .getElementById("bio")
+                        .value
+                        .trim();
+
+
+                const terms =
+                    document
+                        .getElementById("terms")
+                        .checked;
+
+
+
+                /*
+                    FIX:
+
+                    These functions now also capture
+                    whatever is currently typed.
+                */
+
+                const offeredSkills =
+                    getOfferedSkills();
+
+
+                const learningSkills =
+                    getLearningSkills();
+
+
+
+                /* BASIC VALIDATION */
+
+                if (
+                    !name ||
+                    !email ||
+                    !password ||
+                    !confirmPassword ||
+                    !bio
+                ) {
+
+                    alert(
+                        "Please complete all required fields."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* PASSWORD */
+
+                if (password.length < 8) {
+
+                    alert(
+                        "Password must contain at least 8 characters."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* PASSWORD MATCH */
+
+                if (
+                    password !==
+                    confirmPassword
+                ) {
+
+                    alert(
+                        "Passwords do not match."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* OFFERED SKILLS */
+
+                if (
+                    offeredSkills.length === 0
+                ) {
+
+                    alert(
+                        "Please add at least one skill you can offer."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* LEARNING SKILLS */
+
+                if (
+                    learningSkills.length === 0
+                ) {
+
+                    alert(
+                        "Please add at least one skill you want to learn."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* TERMS */
+
+                if (!terms) {
+
+                    alert(
+                        "Please accept the Terms of Service and Privacy Policy."
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* ACCOUNT DATA */
+
+                const accountData = {
+
+                    name: name,
+
+                    email: email,
+
+                    bio: bio,
+
+                    offeredSkills:
+                        offeredSkills,
+
+                    learningSkills:
+                        learningSkills,
+
+                    evidence:
+                        evidenceItems
+
+                };
+
+
+
+                /*
+                    TEMPORARY LOCAL STORAGE
+
+                    This allows the frontend to work
+                    before backend integration.
+                */
+
+                localStorage.setItem(
+                    "registeredUser",
+                    JSON.stringify(accountData)
+                );
+
+
+                localStorage.setItem(
+                    "userProfile",
+                    JSON.stringify({
+
+                        id:
+                            "user_" +
+                            Date.now(),
+
+                        name:
+                            name,
+
+                        email:
+                            email,
+
+                        skill:
+                            offeredSkills.join(", "),
+
+                        learningSkill:
+                            learningSkills.join(", "),
+
+                        bio:
+                            bio
+
+                    })
+                );
+
+
+
+                console.log(
+                    "Account data:",
+                    accountData
+                );
+
+
+
+                alert(
+                    "Registration successful!"
+                );
+
+
+                /*
+                    Move user to login page.
+                */
+
+                window.location.href =
+                    "login.html";
+
+            }
         );
-
-    });
 
 </script>
 
 </body>
 </html>
-```
+
