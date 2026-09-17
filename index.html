@@ -1,0 +1,2626 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Talent Exchange - Connect, share skills, learn from others and grow together.">
+
+    <meta name="theme-color"
+          content="#111827">
+
+    <title>Talent Exchange | Learn. Share. Connect.</title>
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: #f8fafc;
+            color: #111827;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           VARIABLES
+        ========================================= */
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --purple: #7c3aed;
+
+            --dark: #111827;
+            --dark-2: #1e293b;
+
+            --text: #111827;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+            --background: #f8fafc;
+            --white: #ffffff;
+
+            --success: #16a34a;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+
+            z-index: 1000;
+
+            background: rgba(255,255,255,0.94);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid rgba(226,232,240,0.9);
+        }
+
+        .navbar {
+            max-width: 1240px;
+
+            height: 74px;
+
+            margin: auto;
+
+            padding:
+                0 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .logo {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            font-weight: 800;
+
+            font-size: 19px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-size: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--purple)
+                );
+
+            box-shadow:
+                0 8px 20px
+                rgba(79,70,229,0.22);
+        }
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        nav {
+            display: flex;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        nav a {
+            color: #475569;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .login-btn {
+            padding:
+                10px 18px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 8px;
+
+            background: white;
+
+            color: #334155;
+
+            font-weight: 700;
+
+            font-size: 14px;
+        }
+
+        .register-btn {
+            padding:
+                10px 18px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .register-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            min-height: 760px;
+
+            padding:
+                150px 24px 100px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 15%,
+                    rgba(99,102,241,0.16),
+                    transparent 32%
+                ),
+
+                radial-gradient(
+                    circle at 15% 70%,
+                    rgba(124,58,237,0.08),
+                    transparent 28%
+                ),
+
+                linear-gradient(
+                    180deg,
+                    #ffffff,
+                    #f8fafc
+                );
+        }
+
+        .hero-container {
+            max-width: 1240px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1.05fr 0.95fr;
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                7px 13px;
+
+            margin-bottom: 22px;
+
+            border-radius: 30px;
+
+            background: #eef2ff;
+
+            color: #4338ca;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.3px;
+        }
+
+        .hero-badge-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+        }
+
+        .hero h1 {
+            font-size:
+                clamp(44px, 6vw, 72px);
+
+            line-height: 1.02;
+
+            letter-spacing: -2.8px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero-description {
+            max-width: 600px;
+
+            font-size: 18px;
+
+            color: var(--muted);
+
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+        }
+
+        .primary-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                14px 23px;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--purple)
+                );
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 25px
+                rgba(79,70,229,0.22);
+
+            transition: 0.2s;
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(79,70,229,0.28);
+        }
+
+        .outline-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                14px 23px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            background: white;
+
+            color: #1e293b;
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+        /* =========================================
+           HERO APP PREVIEW
+        ========================================= */
+
+        .app-preview {
+            position: relative;
+
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 22px;
+
+            padding: 18px;
+
+            box-shadow:
+                0 30px 70px
+                rgba(15,23,42,0.11);
+        }
+
+        .preview-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                8px 7px 17px;
+
+            border-bottom:
+                1px solid #eef2f7;
+        }
+
+        .preview-title {
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+        .live-status {
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: var(--success);
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+        }
+
+        /* PROFILE PREVIEW */
+
+        .profile-preview {
+            padding: 20px 8px 8px;
+        }
+
+        .profile-main {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        .profile-avatar {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e0e7ff,
+                    #ede9fe
+                );
+
+            color: #4338ca;
+
+            font-size: 16px;
+
+            font-weight: 900;
+        }
+
+        .profile-name {
+            font-weight: 800;
+
+            font-size: 15px;
+        }
+
+        .profile-role {
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+        .verified {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+            margin-left: 5px;
+
+            color: #2563eb;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .skill-row {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 18px;
+        }
+
+        .skill {
+            padding:
+                6px 9px;
+
+            border-radius: 6px;
+
+            background: #eef2ff;
+
+            color: #4338ca;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .skill.want {
+            background: #f1f5f9;
+
+            color: #475569;
+        }
+
+        /* EVIDENCE */
+
+        .evidence-box {
+            padding: 14px;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 11px;
+
+            margin-bottom: 12px;
+        }
+
+        .evidence-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+        }
+
+        .evidence-title {
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+        .evidence-check {
+            color: var(--success);
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+        .evidence-content {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .evidence-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f1f5f9;
+
+            font-size: 16px;
+        }
+
+        .evidence-text strong {
+            display: block;
+
+            font-size: 11px;
+        }
+
+        .evidence-text span {
+            color: #94a3b8;
+
+            font-size: 10px;
+        }
+
+        /* VIDEO PREVIEW */
+
+        .video-preview {
+            position: relative;
+
+            height: 105px;
+
+            overflow: hidden;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e293b,
+                    #334155
+                );
+
+            margin-bottom: 12px;
+        }
+
+        .video-overlay {
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .play-button {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(255,255,255,0.92);
+
+            color: #4f46e5;
+
+            font-size: 17px;
+
+            padding-left: 3px;
+        }
+
+        .video-label {
+            position: absolute;
+
+            left: 10px;
+            bottom: 8px;
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+        /* COMMUNICATION */
+
+        .communication-preview {
+            display: flex;
+
+            gap: 8px;
+        }
+
+        .call-preview {
+            flex: 1;
+
+            padding: 9px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            background: #f8fafc;
+
+            color: #475569;
+
+            font-size: 10px;
+
+            font-weight: 800;
+        }
+
+        /* =========================================
+           TRUST BAR
+        ========================================= */
+
+        .trust {
+            background: white;
+
+            border-top:
+                1px solid #e2e8f0;
+
+            border-bottom:
+                1px solid #e2e8f0;
+        }
+
+        .trust-container {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding:
+                25px 24px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 20px;
+        }
+
+        .trust-item {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            color: #475569;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .trust-icon {
+            font-size: 18px;
+        }
+
+        /* =========================================
+           GENERAL SECTION
+        ========================================= */
+
+        section {
+            padding:
+                95px 24px;
+        }
+
+        .section-container {
+            max-width: 1240px;
+
+            margin: auto;
+        }
+
+        .section-heading {
+            max-width: 720px;
+
+            margin:
+                0 auto 55px;
+
+            text-align: center;
+        }
+
+        .section-heading h2 {
+            font-size:
+                clamp(30px,4vw,43px);
+
+            letter-spacing: -1px;
+
+            margin-bottom: 13px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+        /* =========================================
+           FEATURES
+        ========================================= */
+
+        .features {
+            background: #ffffff;
+        }
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 22px;
+        }
+
+        .feature-card {
+            padding: 29px;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 15px;
+
+            background: white;
+
+            transition: 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(15,23,42,0.08);
+        }
+
+        .feature-icon {
+            width: 49px;
+            height: 49px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eef2ff;
+
+            color: var(--primary);
+
+            font-size: 21px;
+
+            margin-bottom: 19px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+
+            margin-bottom: 9px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        /* =========================================
+           SKILL EVIDENCE SECTION
+        ========================================= */
+
+        .evidence-section {
+            background: #f8fafc;
+        }
+
+        .evidence-layout {
+            display: grid;
+
+            grid-template-columns:
+                0.9fr 1.1fr;
+
+            gap: 60px;
+
+            align-items: center;
+        }
+
+        .evidence-text h2 {
+            font-size: 40px;
+
+            line-height: 1.15;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 16px;
+        }
+
+        .evidence-text p {
+            color: #64748b;
+
+            margin-bottom: 25px;
+        }
+
+        .evidence-list {
+            list-style: none;
+        }
+
+        .evidence-list li {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            margin-bottom: 13px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #334155;
+        }
+
+        .check {
+            width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+            font-size: 12px;
+        }
+
+        .evidence-demo {
+            background: white;
+
+            padding: 25px;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 50px
+                rgba(15,23,42,0.07);
+        }
+
+        .demo-title {
+            font-size: 16px;
+
+            font-weight: 800;
+
+            margin-bottom: 18px;
+        }
+
+        .upload-area {
+            padding: 25px;
+
+            border:
+                2px dashed #cbd5e1;
+
+            border-radius: 13px;
+
+            text-align: center;
+
+            background: #f8fafc;
+        }
+
+        .upload-icon {
+            font-size: 27px;
+
+            margin-bottom: 8px;
+        }
+
+        .upload-area strong {
+            display: block;
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+        .upload-area span {
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+        .evidence-types {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+
+            margin-top: 12px;
+        }
+
+        .evidence-type {
+            padding: 12px;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            color: #475569;
+
+            text-align: center;
+        }
+
+        /* =========================================
+           HOW IT WORKS
+        ========================================= */
+
+        .how-it-works {
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap: 20px;
+        }
+
+        .step {
+            text-align: center;
+
+            padding: 20px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 50%;
+
+            margin:
+                0 auto 17px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--purple)
+                );
+
+            color: white;
+
+            font-weight: 900;
+
+            font-size: 13px;
+        }
+
+        .step h3 {
+            margin-bottom: 7px;
+
+            font-size: 17px;
+        }
+
+        .step p {
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        /* =========================================
+           COMMUNICATION SECTION
+        ========================================= */
+
+        .communication {
+            background: #f8fafc;
+        }
+
+        .communication-layout {
+            display: grid;
+
+            grid-template-columns:
+                1.1fr 0.9fr;
+
+            gap: 60px;
+
+            align-items: center;
+        }
+
+        .chat-window {
+            background: white;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 50px
+                rgba(15,23,42,0.07);
+        }
+
+        .chat-header {
+            padding: 16px;
+
+            border-bottom:
+                1px solid #eef2f7;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+        .chat-person {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .mini-avatar {
+            width: 37px;
+            height: 37px;
+
+            border-radius: 50%;
+
+            background: #e0e7ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #4338ca;
+
+            font-size: 11px;
+
+            font-weight: 900;
+        }
+
+        .chat-person strong {
+            display: block;
+
+            font-size: 12px;
+        }
+
+        .chat-person span {
+            color: #22c55e;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+        .call-buttons {
+            display: flex;
+
+            gap: 7px;
+        }
+
+        .call-button {
+            width: 34px;
+            height: 34px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #eef2ff;
+
+            color: #4338ca;
+
+            font-size: 14px;
+        }
+
+        .messages {
+            padding: 20px;
+
+            min-height: 210px;
+
+            background: #fafafa;
+        }
+
+        .message {
+            max-width: 70%;
+
+            padding: 9px 12px;
+
+            border-radius: 10px;
+
+            margin-bottom: 10px;
+
+            font-size: 11px;
+        }
+
+        .message.received {
+            background: #e2e8f0;
+
+            color: #334155;
+        }
+
+        .message.sent {
+            background: #4f46e5;
+
+            color: white;
+
+            margin-left: auto;
+        }
+
+        .chat-input {
+            display: flex;
+
+            padding: 12px;
+
+            gap: 8px;
+
+            border-top:
+                1px solid #eef2f7;
+        }
+
+        .chat-input-box {
+            flex: 1;
+
+            padding: 9px 11px;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 8px;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+        .send-button {
+            border: none;
+
+            border-radius: 8px;
+
+            padding:
+                0 15px;
+
+            background: #4f46e5;
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .communication-text h2 {
+            font-size: 40px;
+
+            line-height: 1.15;
+
+            margin-bottom: 15px;
+        }
+
+        .communication-text p {
+            color: #64748b;
+
+            margin-bottom: 22px;
+        }
+
+        .communication-features {
+            display: grid;
+
+            gap: 12px;
+        }
+
+        .communication-feature {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .communication-feature-icon {
+            width: 32px;
+            height: 32px;
+
+            border-radius: 8px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid #e2e8f0;
+        }
+
+        /* =========================================
+           CTA
+        ========================================= */
+
+        .cta {
+            padding:
+                90px 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111827,
+                    #1e1b4b
+                );
+
+            color: white;
+
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 750px;
+
+            margin: auto;
+        }
+
+        .cta h2 {
+            font-size:
+                clamp(32px,5vw,48px);
+
+            line-height: 1.1;
+
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #cbd5e1;
+
+            margin-bottom: 28px;
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            background: #0b1120;
+
+            color: #94a3b8;
+
+            padding:
+                50px 24px 25px;
+        }
+
+        .footer-container {
+            max-width: 1240px;
+
+            margin: auto;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 50px;
+
+            padding-bottom: 30px;
+
+            border-bottom:
+                1px solid #1e293b;
+        }
+
+        .footer-brand {
+            max-width: 350px;
+        }
+
+        .footer-brand h3 {
+            color: white;
+
+            font-size: 18px;
+
+            margin-bottom: 10px;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+
+            gap: 60px;
+        }
+
+        .footer-column h4 {
+            color: white;
+
+            font-size: 13px;
+
+            margin-bottom: 13px;
+        }
+
+        .footer-column a {
+            display: block;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+
+            transition: 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .copyright {
+            max-width: 1240px;
+
+            margin:
+                20px auto 0;
+
+            font-size: 11px;
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media(max-width: 950px) {
+
+            nav {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+
+                gap: 50px;
+            }
+
+            .evidence-layout {
+                grid-template-columns: 1fr;
+
+                gap: 40px;
+            }
+
+            .communication-layout {
+                grid-template-columns: 1fr;
+
+                gap: 40px;
+            }
+
+            .feature-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .steps {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .navbar {
+                padding:
+                    0 16px;
+            }
+
+            .logo span {
+                font-size: 16px;
+            }
+
+            .nav-actions .login-btn {
+                display: none;
+            }
+
+            .hero {
+                padding:
+                    125px 18px 70px;
+            }
+
+            section {
+                padding:
+                    70px 18px;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+
+                letter-spacing: -1.8px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-container {
+                grid-template-columns: 1fr;
+            }
+
+            .evidence-types {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-direction: column;
+
+                gap: 25px;
+            }
+
+            .communication-text h2,
+            .evidence-text h2 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header>
+
+    <div class="navbar">
+
+        <a href="index.html"
+           class="logo">
+
+            <div class="logo-icon">
+                TE
+            </div>
+
+            <span>
+                Talent Exchange
+            </span>
+
+        </a>
+
+
+        <nav>
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#how-it-works">
+                How It Works
+            </a>
+
+            <a href="#communication">
+                Communication
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <a href="login.html"
+               class="login-btn">
+                Login
+            </a>
+
+            <a href="register.html"
+               class="register-btn">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==================================================
+     HERO
+================================================== -->
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-container">
+
+
+        <!-- HERO TEXT -->
+
+        <div>
+
+            <div class="hero-badge">
+
+                <span class="hero-badge-dot"></span>
+
+                COMMUNITY-POWERED SKILL EXCHANGE
+
+            </div>
+
+
+            <h1>
+
+                Learn.
+
+                <span>
+                    Share.
+                </span>
+
+                Grow.
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Talent Exchange connects people who want
+                to learn with people who have skills to share.
+                Discover talent, exchange knowledge and build
+                meaningful learning connections.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a href="register.html"
+                   class="primary-button">
+
+                    Create Your Account →
+
+                </a>
+
+
+                <a href="#how-it-works"
+                   class="outline-button">
+
+                    Explore How It Works
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- APP PREVIEW -->
+
+        <div class="app-preview">
+
+
+            <div class="preview-top">
+
+                <div class="preview-title">
+                    Talent Profile
+                </div>
+
+                <div class="live-status">
+
+                    <span class="live-dot"></span>
+
+                    Community Online
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-preview">
+
+
+                <div class="profile-main">
+
+                    <div class="profile-avatar">
+                        RK
+                    </div>
+
+                    <div>
+
+                        <div class="profile-name">
+
+                            Rahul Kumar
+
+                            <span class="verified">
+                                ✓ Verified
+                            </span>
+
+                        </div>
+
+                        <div class="profile-role">
+                            Developer • Bangalore
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-row">
+
+                    <span class="skill">
+                        Python
+                    </span>
+
+                    <span class="skill">
+                        JavaScript
+                    </span>
+
+                    <span class="skill">
+                        Web Development
+                    </span>
+
+                    <span class="skill want">
+                        Wants: Guitar
+                    </span>
+
+                </div>
+
+
+                <!-- EVIDENCE -->
+
+                <div class="evidence-box">
+
+                    <div class="evidence-header">
+
+                        <div class="evidence-title">
+                            Skill Evidence
+                        </div>
+
+                        <div class="evidence-check">
+                            ✓ Added
+                        </div>
+
+                    </div>
+
+
+                    <div class="evidence-content">
+
+                        <div class="evidence-icon">
+                            📄
+                        </div>
+
+                        <div class="evidence-text">
+
+                            <strong>
+                                Python Certification
+                            </strong>
+
+                            <span>
+                                Skill evidence uploaded
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VIDEO -->
+
+                <div class="video-preview">
+
+                    <div class="video-overlay">
+
+                        <div class="play-button">
+                            ▶
+                        </div>
+
+                    </div>
+
+                    <div class="video-label">
+                        Python Project Demonstration
+                    </div>
+
+                </div>
+
+
+                <!-- CALL -->
+
+                <div class="communication-preview">
+
+                    <div class="call-preview">
+                        🎙 Audio Call
+                    </div>
+
+                    <div class="call-preview">
+                        🎥 Video Call
+                    </div>
+
+                    <div class="call-preview">
+                        💬 Chat
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     TRUST BAR
+================================================== -->
+
+<div class="trust">
+
+    <div class="trust-container">
+
+        <div class="trust-item">
+
+            <span class="trust-icon">
+                🔎
+            </span>
+
+            Discover Skills
+
+        </div>
+
+
+        <div class="trust-item">
+
+            <span class="trust-icon">
+                🤝
+            </span>
+
+            Connect & Exchange
+
+        </div>
+
+
+        <div class="trust-item">
+
+            <span class="trust-icon">
+                🎥
+            </span>
+
+            Learn Together
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     FEATURES
+================================================== -->
+
+<section class="features"
+         id="features">
+
+    <div class="section-container">
+
+
+        <div class="section-heading">
+
+            <h2>
+                A complete skill exchange platform
+            </h2>
+
+            <p>
+                Everything you need to discover people,
+                exchange knowledge and communicate.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔎
+                </div>
+
+                <h3>
+                    Find Skills
+                </h3>
+
+                <p>
+                    Search for people based on the skills
+                    they offer and the skills they want to learn.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🎓
+                </div>
+
+                <h3>
+                    Offer Your Skills
+                </h3>
+
+                <p>
+                    Add the skills you know and help other
+                    members learn from your experience.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📑
+                </div>
+
+                <h3>
+                    Skill Evidence
+                </h3>
+
+                <p>
+                    Add certificates, documents or other
+                    supporting evidence for your skills.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🎬
+                </div>
+
+                <h3>
+                    Skill Videos
+                </h3>
+
+                <p>
+                    Upload videos demonstrating your skills
+                    directly to your profile.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💬
+                </div>
+
+                <h3>
+                    Real-Time Chat
+                </h3>
+
+                <p>
+                    Chat instantly with accepted connections
+                    without manually refreshing the page.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🎥
+                </div>
+
+                <h3>
+                    Audio & Video Calls
+                </h3>
+
+                <p>
+                    Communicate directly through browser-based
+                    audio and video calls.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     SKILL EVIDENCE
+================================================== -->
+
+<section class="evidence-section"
+         id="about">
+
+    <div class="section-container">
+
+
+        <div class="evidence-layout">
+
+
+            <div class="evidence-text">
+
+                <h2>
+                    Show what you can actually do.
+                </h2>
+
+                <p>
+                    Talent Exchange lets members support
+                    their skills with evidence. Add certificates,
+                    project documents or skill demonstration
+                    videos to your profile.
+                </p>
+
+
+                <ul class="evidence-list">
+
+                    <li>
+
+                        <span class="check">
+                            ✓
+                        </span>
+
+                        Add certificates and documents
+
+                    </li>
+
+
+                    <li>
+
+                        <span class="check">
+                            ✓
+                        </span>
+
+                        Upload skill demonstration videos
+
+                    </li>
+
+
+                    <li>
+
+                        <span class="check">
+                            ✓
+                        </span>
+
+                        Display evidence on your profile
+
+                    </li>
+
+
+                    <li>
+
+                        <span class="check">
+                            ✓
+                        </span>
+
+                        Help others understand your expertise
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="evidence-demo">
+
+                <div class="demo-title">
+                    Add Skill Evidence
+                </div>
+
+
+                <div class="upload-area">
+
+                    <div class="upload-icon">
+                        ☁
+                    </div>
+
+                    <strong>
+                        Upload your evidence
+                    </strong>
+
+                    <span>
+                        Certificates, documents or skill videos
+                    </span>
+
+                </div>
+
+
+                <div class="evidence-types">
+
+                    <div class="evidence-type">
+                        📄 Certificate
+                    </div>
+
+                    <div class="evidence-type">
+                        📁 Document
+                    </div>
+
+                    <div class="evidence-type">
+                        🎥 Skill Video
+                    </div>
+
+                    <div class="evidence-type">
+                        🔗 Project Link
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     HOW IT WORKS
+================================================== -->
+
+<section class="how-it-works"
+         id="how-it-works">
+
+    <div class="section-container">
+
+
+        <div class="section-heading">
+
+            <h2>
+                How Talent Exchange works
+            </h2>
+
+            <p>
+                A simple process from creating your profile
+                to learning with another person.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>
+                    Create Profile
+                </h3>
+
+                <p>
+                    Add your skills, learning goals,
+                    bio and skill evidence.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>
+                    Find a Match
+                </h3>
+
+                <p>
+                    Discover people who offer skills
+                    you want to learn.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    Send Request
+                </h3>
+
+                <p>
+                    Send an exchange request and
+                    wait for the other person to accept.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    04
+                </div>
+
+                <h3>
+                    Learn Together
+                </h3>
+
+                <p>
+                    Chat and communicate using
+                    audio or video calls.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     COMMUNICATION
+================================================== -->
+
+<section class="communication"
+         id="communication">
+
+    <div class="section-container">
+
+
+        <div class="communication-layout">
+
+
+            <!-- CHAT DEMO -->
+
+            <div class="chat-window">
+
+
+                <div class="chat-header">
+
+
+                    <div class="chat-person">
+
+                        <div class="mini-avatar">
+                            AM
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Ananya M
+                            </strong>
+
+                            <span>
+                                ● Online
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="call-buttons">
+
+                        <button class="call-button"
+                                title="Audio Call">
+
+                            🎙
+
+                        </button>
+
+                        <button class="call-button"
+                                title="Video Call">
+
+                            🎥
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="messages">
+
+                    <div class="message received">
+
+                        Hi! I can help you learn UI/UX.
+
+                    </div>
+
+
+                    <div class="message sent">
+
+                        Great! I can teach you Python in return.
+
+                    </div>
+
+
+                    <div class="message received">
+
+                        Perfect. Let's start this week.
+
+                    </div>
+
+
+                    <div class="message sent">
+
+                        Sure! Let's connect on a video call.
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat-input">
+
+                    <div class="chat-input-box">
+                        Type a message...
+                    </div>
+
+                    <button class="send-button">
+                        Send
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMMUNICATION TEXT -->
+
+            <div class="communication-text">
+
+                <h2>
+                    Learn together, in real time.
+                </h2>
+
+                <p>
+                    Once two members accept an exchange request,
+                    they can communicate through real-time messaging
+                    and browser-based audio or video calls.
+                </p>
+
+
+                <div class="communication-features">
+
+
+                    <div class="communication-feature">
+
+                        <div class="communication-feature-icon">
+                            💬
+                        </div>
+
+                        Real-time messaging
+
+                    </div>
+
+
+                    <div class="communication-feature">
+
+                        <div class="communication-feature-icon">
+                            🎙
+                        </div>
+
+                        Browser microphone access
+
+                    </div>
+
+
+                    <div class="communication-feature">
+
+                        <div class="communication-feature-icon">
+                            🎥
+                        </div>
+
+                        Browser camera access
+
+                    </div>
+
+
+                    <div class="communication-feature">
+
+                        <div class="communication-feature-icon">
+                            🔒
+                        </div>
+
+                        Connection-based communication
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     CTA
+================================================== -->
+
+<section class="cta">
+
+    <div class="cta-container">
+
+        <h2>
+            Your next skill exchange starts here.
+        </h2>
+
+        <p>
+            Create your profile, showcase your skills
+            and connect with people who want to learn.
+        </p>
+
+
+        <a href="register.html"
+           class="primary-button">
+
+            Create Your Talent Exchange Account →
+
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <h3>
+                Talent Exchange
+            </h3>
+
+            <p>
+                A community platform designed to connect
+                people through skills, knowledge and learning.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Platform
+                </h4>
+
+                <a href="#features">
+                    Features
+                </a>
+
+                <a href="#how-it-works">
+                    How It Works
+                </a>
+
+                <a href="#communication">
+                    Communication
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Account
+                </h4>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+                <a href="register.html">
+                    Create Account
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Product
+                </h4>
+
+                <a href="#about">
+                    Skill Evidence
+                </a>
+
+                <a href="#features">
+                    Skill Videos
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 Talent Exchange. All rights reserved.
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>
+```
