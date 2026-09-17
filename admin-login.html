@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -64,7 +63,7 @@ body{
 }
 
 .card{
-    background:rgba(18,18,25,.92);
+    background:rgba(18,18,25,.94);
 
     border:1px solid rgba(255,255,255,.08);
 
@@ -79,7 +78,6 @@ body{
 }
 
 .admin-badge{
-
     width:58px;
     height:58px;
 
@@ -96,26 +94,19 @@ body{
     border:1px solid rgba(124,58,237,.35);
 
     font-size:24px;
-
     font-weight:bold;
 }
 
 h2{
     text-align:center;
-
     font-size:24px;
-
     margin-bottom:8px;
 }
 
 .subtitle{
-
     text-align:center;
-
     color:#8e8e98;
-
     font-size:14px;
-
     margin-bottom:28px;
 }
 
@@ -124,18 +115,13 @@ h2{
 }
 
 label{
-
     display:block;
-
     font-size:13px;
-
     color:#c8c8d0;
-
     margin-bottom:8px;
 }
 
 input{
-
     width:100%;
 
     padding:14px 15px;
@@ -156,7 +142,6 @@ input{
 }
 
 input:focus{
-
     border-color:#7c3aed;
 
     box-shadow:
@@ -172,17 +157,14 @@ input:focus{
 }
 
 .show-btn{
-
     position:absolute;
 
     right:10px;
-
     top:50%;
 
     transform:translateY(-50%);
 
     background:none;
-
     border:none;
 
     color:#9b7bea;
@@ -193,7 +175,6 @@ input:focus{
 }
 
 .login-btn{
-
     width:100%;
 
     border:none;
@@ -223,15 +204,19 @@ input:focus{
 }
 
 .login-btn:hover{
-
     transform:translateY(-1px);
 
     box-shadow:
         0 10px 25px rgba(124,58,237,.25);
 }
 
-.message{
+.login-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
 
+.message{
     display:none;
 
     margin-top:16px;
@@ -243,10 +228,11 @@ input:focus{
     font-size:13px;
 
     text-align:center;
+
+    line-height:1.5;
 }
 
 .message.error{
-
     display:block;
 
     background:
@@ -259,7 +245,6 @@ input:focus{
 }
 
 .message.success{
-
     display:block;
 
     background:
@@ -272,7 +257,6 @@ input:focus{
 }
 
 .back{
-
     display:block;
 
     text-align:center;
@@ -291,7 +275,6 @@ input:focus{
 }
 
 .security-note{
-
     margin-top:20px;
 
     padding:12px;
@@ -327,130 +310,215 @@ input:focus{
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
 
-<div class="brand">
+    <div class="brand">
 
-    <h1>Talent Exchange</h1>
+        <h1>Talent Exchange</h1>
 
-    <p>
-        Skill sharing platform
-    </p>
+        <p>
+            Skill sharing platform
+        </p>
 
-</div>
-
-
-<div class="card">
-
-
-    <div class="admin-badge">
-        A
     </div>
 
 
-    <h2>
-        Admin Login
-    </h2>
+    <div class="card">
 
 
-    <p class="subtitle">
-        Sign in to manage the Talent Exchange platform
-    </p>
-
-
-    <form id="adminLoginForm">
-
-
-        <div class="field">
-
-            <label for="email">
-                Admin Email
-            </label>
-
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter admin email"
-                autocomplete="username"
-                required
-            >
-
+        <div class="admin-badge">
+            A
         </div>
 
 
-        <div class="field">
-
-            <label for="password">
-                Password
-            </label>
+        <h2>
+            Admin Login
+        </h2>
 
 
-            <div class="password-wrap">
+        <p class="subtitle">
+            Sign in to manage the Talent Exchange platform
+        </p>
+
+
+        <form id="adminLoginForm">
+
+
+            <div class="field">
+
+                <label for="email">
+                    Admin Email
+                </label>
 
                 <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter admin password"
-                    autocomplete="current-password"
+                    type="email"
+                    id="email"
+                    placeholder="Enter admin email"
+                    autocomplete="username"
                     required
                 >
 
+            </div>
 
-                <button
-                    type="button"
-                    class="show-btn"
-                    id="showPassword"
-                >
-                    Show
-                </button>
+
+            <div class="field">
+
+                <label for="password">
+                    Password
+                </label>
+
+
+                <div class="password-wrap">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter admin password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show-btn"
+                        id="showPassword"
+                    >
+                        Show
+                    </button>
+
+                </div>
 
             </div>
+
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton"
+            >
+                Sign In as Admin
+            </button>
+
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+        </form>
+
+
+        <div class="security-note">
+
+            Admin access is restricted to authorized
+            administrators. Your account must have
+            an admin role.
 
         </div>
 
 
-        <button
-            type="submit"
-            class="login-btn"
+        <a
+            href="login.html"
+            class="back"
         >
-            Sign In as Admin
-        </button>
+            ← Back to User Login
+        </a>
 
-
-        <div
-            id="message"
-            class="message"
-        ></div>
-
-
-    </form>
-
-
-    <div class="security-note">
-
-        Admin access is restricted to
-        authorized administrators.
 
     </div>
 
 
-    <a
-        href="login.html"
-        class="back"
-    >
-        ← Back to User Login
-    </a>
-
-
 </div>
 
 
-</div>
 
-<script>
+<!-- ==========================================
+     FIREBASE ADMIN LOGIN
+========================================== -->
+
+<script type="module">
+
+
+/* ==========================================
+   FIREBASE IMPORTS
+========================================== */
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+
+/* ==========================================
+   FIREBASE CONFIG
+========================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyReArAuSxobQHOprk87Fe6NmJSVAKcND0",
+
+    authDomain:
+        "talent-exchange-4456e.firebaseapp.com",
+
+    projectId:
+        "talent-exchange-4456e",
+
+    storageBucket:
+        "talent-exchange-4456e.firebasestorage.app",
+
+    messagingSenderId:
+        "617029447041",
+
+    appId:
+        "1:617029447041:web:35beb28f9949e2fb594c80"
+
+};
+
+
+
+/* ==========================================
+   INITIALIZE FIREBASE
+========================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
 
 
 /* ==========================================
@@ -460,17 +528,26 @@ input:focus{
 const form =
     document.getElementById("adminLoginForm");
 
+
 const emailInput =
     document.getElementById("email");
+
 
 const passwordInput =
     document.getElementById("password");
 
+
 const showPassword =
     document.getElementById("showPassword");
 
+
 const message =
     document.getElementById("message");
+
+
+const loginButton =
+    document.getElementById("loginButton");
+
 
 
 /* ==========================================
@@ -481,23 +558,50 @@ showPassword.addEventListener(
     "click",
     function(){
 
-        if(passwordInput.type === "password"){
+        if(
+            passwordInput.type ===
+            "password"
+        ){
 
-            passwordInput.type = "text";
+            passwordInput.type =
+                "text";
 
-            showPassword.textContent = "Hide";
+            showPassword.textContent =
+                "Hide";
 
         }
         else{
 
-            passwordInput.type = "password";
+            passwordInput.type =
+                "password";
 
-            showPassword.textContent = "Show";
+            showPassword.textContent =
+                "Show";
 
         }
 
     }
 );
+
+
+
+/* ==========================================
+   MESSAGE FUNCTION
+========================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.className =
+        "message " + type;
+
+    message.textContent =
+        text;
+
+}
+
 
 
 /* ==========================================
@@ -506,7 +610,7 @@ showPassword.addEventListener(
 
 form.addEventListener(
     "submit",
-    function(e){
+    async function(e){
 
         e.preventDefault();
 
@@ -518,66 +622,173 @@ form.addEventListener(
 
 
         const password =
-            passwordInput.value.trim();
+            passwordInput.value;
 
 
-        message.className = "message";
+        if(
+            email === "" ||
+            password === ""
+        ){
 
-        message.textContent = "";
-
-
-        /* Check empty fields */
-
-        if(email === "" || password === ""){
-
-            message.className =
-                "message error";
-
-            message.textContent =
-                "Please enter email and password.";
+            showMessage(
+                "Please enter email and password.",
+                "error"
+            );
 
             return;
 
         }
 
 
-        /* ======================================
-           TEMPORARY TEST ADMIN ACCOUNT
+        loginButton.disabled =
+            true;
 
-           Backend integration will replace this.
-        ====================================== */
-
-        const adminEmail =
-            "admin@talentexchange.com";
-
-        const adminPassword =
-            "Admin@123";
+        loginButton.textContent =
+            "Checking...";
 
 
-        /* ======================================
-           CHECK CREDENTIALS
-        ====================================== */
+        try{
 
-        if(
-            email === adminEmail &&
-            password === adminPassword
-        ){
+            /* ==================================
+               FIREBASE AUTHENTICATION
+            ================================== */
+
+            const credential =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const uid =
+                credential.user.uid;
+
+
+
+            /* ==================================
+               GET USER PROFILE
+            ================================== */
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    uid
+                );
+
+
+            const userSnap =
+                await getDoc(userRef);
+
+
+
+            if(
+                !userSnap.exists()
+            ){
+
+                await signOut(auth);
+
+                showMessage(
+                    "Admin profile not found in Firestore.",
+                    "error"
+                );
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Sign In as Admin";
+
+                return;
+
+            }
+
+
+
+            const userData =
+                userSnap.data();
+
+
+
+            /* ==================================
+               CHECK ADMIN ROLE
+            ================================== */
+
+            if(
+                userData.role !==
+                "admin"
+            ){
+
+                await signOut(auth);
+
+                showMessage(
+                    "Access denied. This account is not an administrator.",
+                    "error"
+                );
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Sign In as Admin";
+
+                return;
+
+            }
+
+
+
+            /* ==================================
+               CHECK ACCOUNT STATUS
+            ================================== */
+
+            if(
+                userData.status ===
+                "disabled"
+            ){
+
+                await signOut(auth);
+
+                showMessage(
+                    "This admin account has been disabled.",
+                    "error"
+                );
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Sign In as Admin";
+
+                return;
+
+            }
+
+
+
+            /* ==================================
+               SAVE ADMIN SESSION
+            ================================== */
 
             const adminProfile = {
 
+                uid:
+                    uid,
+
                 name:
+                    userData.name ||
                     "Talent Exchange Admin",
 
                 email:
-                    adminEmail,
+                    userData.email ||
+                    credential.user.email,
 
                 role:
                     "admin"
 
             };
 
-
-            /* Save admin session */
 
             localStorage.setItem(
                 "adminProfile",
@@ -591,16 +802,16 @@ form.addEventListener(
             );
 
 
-            /* Success message */
 
-            message.className =
-                "message success";
+            /* ==================================
+               SUCCESS
+            ================================== */
 
-            message.textContent =
-                "Login successful. Opening dashboard...";
+            showMessage(
+                "Login successful. Opening admin dashboard...",
+                "success"
+            );
 
-
-            /* Open dashboard */
 
             setTimeout(
                 function(){
@@ -614,20 +825,185 @@ form.addEventListener(
 
 
         }
-        else{
+        catch(error){
 
-            message.className =
-                "message error";
+            console.error(
+                "Admin login error:",
+                error
+            );
 
-            message.textContent =
-                "Invalid admin email or password.";
+
+            let errorMessage =
+                "Unable to sign in.";
+
+
+            if(
+                error.code ===
+                "auth/invalid-credential"
+            ){
+
+                errorMessage =
+                    "Invalid admin email or password.";
+
+            }
+            else if(
+                error.code ===
+                "auth/user-not-found"
+            ){
+
+                errorMessage =
+                    "No account found with this email.";
+
+            }
+            else if(
+                error.code ===
+                "auth/wrong-password"
+            ){
+
+                errorMessage =
+                    "Incorrect password.";
+
+            }
+            else if(
+                error.code ===
+                "auth/invalid-email"
+            ){
+
+                errorMessage =
+                    "Please enter a valid email address.";
+
+            }
+            else if(
+                error.code ===
+                "auth/too-many-requests"
+            ){
+
+                errorMessage =
+                    "Too many attempts. Please try again later.";
+
+            }
+            else if(
+                error.code ===
+                "permission-denied"
+            ){
+
+                errorMessage =
+                    "Firestore permission denied. Check your Firestore rules.";
+
+            }
+
+
+            showMessage(
+                errorMessage,
+                "error"
+            );
+
+
+            loginButton.disabled =
+                false;
+
+            loginButton.textContent =
+                "Sign In as Admin";
 
         }
 
     }
 );
 
+
+
+/* ==========================================
+   CHECK EXISTING AUTH SESSION
+========================================== */
+
+onAuthStateChanged(
+    auth,
+    async function(user){
+
+        if(!user){
+            return;
+        }
+
+
+        /*
+         If a user is already logged in,
+         check whether they are actually admin.
+        */
+
+        try{
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                );
+
+
+            const userSnap =
+                await getDoc(userRef);
+
+
+            if(
+                userSnap.exists()
+            ){
+
+                const data =
+                    userSnap.data();
+
+
+                if(
+                    data.role ===
+                    "admin"
+                ){
+
+                    localStorage.setItem(
+                        "adminProfile",
+                        JSON.stringify({
+
+                            uid:
+                                user.uid,
+
+                            name:
+                                data.name ||
+                                "Talent Exchange Admin",
+
+                            email:
+                                data.email ||
+                                user.email,
+
+                            role:
+                                "admin"
+
+                        })
+                    );
+
+
+                    localStorage.setItem(
+                        "adminLoggedIn",
+                        "true"
+                    );
+
+                }
+
+            }
+
+        }
+        catch(error){
+
+            console.log(
+                "Session check:",
+                error
+            );
+
+        }
+
+    }
+);
+
+
 </script>
 
 </body>
+
 </html>
