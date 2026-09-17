@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Offer Your Skill | Talent Exchange</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #08080d;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 250px;
+            background: #0d0d15;
+            border-right: 1px solid #242431;
+            padding: 25px 16px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .logo {
+            padding: 0 12px 30px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .logo span {
+            color: #9b5cff;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #a5a5b5;
+            padding: 13px 14px;
+            border-radius: 10px;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            background: rgba(155, 92, 255, 0.13);
+            color: #ffffff;
+        }
+
+        .nav a.active {
+            border-left: 3px solid #9b5cff;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+        }
+
+        .topbar p {
+            color: #8f8f9f;
+            margin-top: 7px;
+            font-size: 14px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #11111a;
+            padding: 9px 14px;
+            border: 1px solid #242431;
+            border-radius: 12px;
+            color: #bdbdcc;
+            font-size: 14px;
+        }
+
+        .profile-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #c084fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* CARD */
+        .card {
+            max-width: 900px;
+            background: #101019;
+            border: 1px solid #262633;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .card-header {
+            margin-bottom: 28px;
+        }
+
+        .card-header h2 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .card-header p {
+            color: #8f8f9f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 23px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #e7e7ef;
+        }
+
+        .required {
+            color: #a66cff;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            background: #0b0b12;
+            color: #ffffff;
+            border: 1px solid #2c2c39;
+            border-radius: 10px;
+            padding: 13px 14px;
+            outline: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.08);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        select option {
+            background: #101019;
+        }
+
+        .hint {
+            margin-top: 7px;
+            font-size: 12px;
+            color: #777787;
+        }
+
+        /* SKILLS */
+        .skill-input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .skill-input-row input {
+            flex: 1;
+        }
+
+        .add-btn {
+            border: none;
+            background: #8b5cf6;
+            color: white;
+            padding: 0 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .add-btn:hover {
+            background: #7747df;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 13px;
+        }
+
+        .skill-tag {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+            color: #c8b5ff;
+            padding: 8px 11px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remove-skill {
+            cursor: pointer;
+            color: #aaa;
+            font-weight: bold;
+        }
+
+        .remove-skill:hover {
+            color: #ffffff;
+        }
+
+        /* EVIDENCE */
+        .evidence-box {
+            border: 1px dashed #353544;
+            background: #0b0b12;
+            border-radius: 13px;
+            padding: 20px;
+        }
+
+        .evidence-box p {
+            color: #8c8c9b;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .file-input {
+            padding: 10px;
+        }
+
+        /* BUTTONS */
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            border: none;
+            padding: 13px 23px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .primary-btn {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #7747df;
+        }
+
+        .secondary-btn {
+            background: #181821;
+            color: #bdbdcc;
+            border: 1px solid #2b2b38;
+        }
+
+        .secondary-btn:hover {
+            background: #20202b;
+            color: white;
+        }
+
+        /* MESSAGE */
+        .message {
+            display: none;
+            margin-top: 20px;
+            padding: 13px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #8ee6a8;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #ff9b9b;
+        }
+
+        /* MOBILE */
+        @media (max-width: 800px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #242431;
+                padding: 15px;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .logo {
+                padding: 5px 8px 15px;
+            }
+
+            .nav {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .nav a {
+                white-space: nowrap;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .topbar h1 {
+                font-size: 23px;
+            }
+
+            .profile {
+                display: none;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .skill-input-row {
+                flex-direction: column;
+            }
+
+            .add-btn {
+                padding: 12px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .primary-btn,
+            .secondary-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            Talent <span>Exchange</span>
+        </div>
+
+        <nav class="nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="find-skills.html">Find Skills</a>
+            <a href="offer-skill.html" class="active">Offer Your Skill</a>
+            <a href="requests.html">Requests</a>
+            <a href="connections.html">Connections</a>
+            <a href="chat.html">Chat</a>
+            <a href="profile.html">Edit Profile</a>
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Offer Your Skill</h1>
+                <p>Share your skills and help others learn.</p>
+            </div>
+
+            <div class="profile">
+                <div class="profile-dot" id="profileInitial">U</div>
+                <span id="profileName">User</span>
+            </div>
+
+        </div>
+
+
+        <section class="card">
+
+            <div class="card-header">
+                <h2>Create Your Skill Offer</h2>
+
+                <p>
+                    Add the skills you are confident in and would like
+                    to exchange with other members of Talent Exchange.
+                </p>
+            </div>
+
+
+            <!-- SKILLS -->
+            <div class="form-group">
+
+                <label>
+                    Skills You Can Offer <span class="required">*</span>
+                </label>
+
+                <div class="skill-input-row">
+
+                    <input
+                        type="text"
+                        id="skillInput"
+                        placeholder="Example: Python, Guitar, Photoshop"
+                    >
+
+                    <button
+                        type="button"
+                        class="add-btn"
+                        onclick="addSkill()">
+                        Add Skill
+                    </button>
+
+                </div>
+
+                <div class="skill-tags" id="skillTags"></div>
+
+                <div class="hint">
+                    Add one or more skills you can teach or help others with.
+                </div>
+
+            </div>
+
+
+            <!-- SKILL LEVEL -->
+            <div class="form-group">
+
+                <label for="skillLevel">
+                    Skill Level
+                </label>
+
+                <select id="skillLevel">
+
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate" selected>
+                        Intermediate
+                    </option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Expert">Expert</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- EXPERIENCE -->
+            <div class="form-group">
+
+                <label for="experience">
+                    Experience
+                </label>
+
+                <select id="experience">
+
+                    <option value="Less than 6 months">
+                        Less than 6 months
+                    </option>
+
+                    <option value="6 months - 1 year">
+                        6 months - 1 year
+                    </option>
+
+                    <option value="1 - 2 years">
+                        1 - 2 years
+                    </option>
+
+                    <option value="2 - 5 years">
+                        2 - 5 years
+                    </option>
+
+                    <option value="5+ years">
+                        5+ years
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+            <div class="form-group">
+
+                <label for="description">
+                    Skill Description <span class="required">*</span>
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Explain what you can teach, your experience, and what kind of help you can provide..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- EVIDENCE -->
+            <div class="form-group">
+
+                <label>
+                    Skill Evidence
+                </label>
+
+                <div class="evidence-box">
+
+                    <p>
+                        Upload a certificate, project document, or other
+                        evidence that supports your skill. This helps other
+                        users understand your experience.
+                    </p>
+
+                    <input
+                        type="file"
+                        id="evidenceFile"
+                        class="file-input"
+                        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                    >
+
+                </div>
+
+                <div class="hint">
+                    Maximum recommended size: 5 MB.
+                </div>
+
+            </div>
+
+
+            <!-- PROJECT LINK -->
+            <div class="form-group">
+
+                <label for="projectLink">
+                    Project / Portfolio Link
+                </label>
+
+                <input
+                    type="url"
+                    id="projectLink"
+                    placeholder="https://github.com/yourusername/project"
+                >
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="actions">
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="saveSkillOffer()">
+                    Save Skill Offer
+                </button>
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="window.location.href='dashboard.html'">
+                    Cancel
+                </button>
+
+            </div>
+
+
+            <div id="message" class="message"></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    let skills = [];
+
+
+    /* LOAD CURRENT USER */
+    function loadUser() {
+
+        const user =
+            JSON.parse(localStorage.getItem("userProfile")) || {};
+
+        const name =
+            user.name ||
+            user.fullName ||
+            "User";
+
+        document.getElementById("profileName").textContent = name;
+
+        document.getElementById("profileInitial").textContent =
+            name.charAt(0).toUpperCase();
+
+
+        /*
+            If profile already has offered skills,
+            load them here.
+        */
+
+        if (Array.isArray(user.offeredSkills)) {
+
+            skills = [...user.offeredSkills];
+
+            renderSkills();
+
+        }
+    }
+
+
+    /* ADD SKILL */
+    function addSkill() {
+
+        const input =
+            document.getElementById("skillInput");
+
+        const value =
+            input.value.trim();
+
+        if (!value) {
+            showMessage(
+                "Please enter a skill.",
+                "error"
+            );
+            return;
+        }
+
+
+        /*
+            Supports:
+            Python
+            Python, Java, HTML
+        */
+
+        const newSkills =
+            value
+                .split(",")
+                .map(skill => skill.trim())
+                .filter(skill => skill.length > 0);
+
+
+        newSkills.forEach(skill => {
+
+            const exists =
+                skills.some(
+                    existing =>
+                    existing.toLowerCase() === skill.toLowerCase()
+                );
+
+            if (!exists) {
+                skills.push(skill);
+            }
+
+        });
+
+
+        input.value = "";
+
+        renderSkills();
+
+        hideMessage();
+    }
+
+
+    /* ENTER KEY */
+    document
+        .getElementById("skillInput")
+        .addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                addSkill();
+
+            }
+
+        });
+
+
+    /* RENDER SKILLS */
+    function renderSkills() {
+
+        const container =
+            document.getElementById("skillTags");
+
+        container.innerHTML = "";
+
+        skills.forEach((skill, index) => {
+
+            const tag =
+                document.createElement("div");
+
+            tag.className = "skill-tag";
+
+            tag.innerHTML = `
+                <span>${escapeHtml(skill)}</span>
+                <span
+                    class="remove-skill"
+                    onclick="removeSkill(${index})">
+                    ×
+                </span>
+            `;
+
+            container.appendChild(tag);
+
+        });
+
+    }
+
+
+    /* REMOVE SKILL */
+    function removeSkill(index) {
+
+        skills.splice(index, 1);
+
+        renderSkills();
+
+    }
+
+
+    /* SAVE */
+    function saveSkillOffer() {
+
+        const description =
+            document
+                .getElementById("description")
+                .value
+                .trim();
+
+        const skillLevel =
+            document.getElementById("skillLevel").value;
+
+        const experience =
+            document.getElementById("experience").value;
+
+        const projectLink =
+            document
+                .getElementById("projectLink")
+                .value
+                .trim();
+
+        const evidenceFile =
+            document.getElementById("evidenceFile").files[0];
+
+
+        if (skills.length === 0) {
+
+            showMessage(
+                "Please add at least one skill you can offer.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!description) {
+
+            showMessage(
+                "Please describe the skill you are offering.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        /*
+            CURRENTLY SAVES TO LOCAL STORAGE.
+
+            Later Firebase will replace this section.
+        */
+
+        let user =
+            JSON.parse(localStorage.getItem("userProfile")) || {};
+
+        user.offeredSkills = skills;
+
+        user.skillOffer = {
+
+            skills: skills,
+
+            skillLevel: skillLevel,
+
+            experience: experience,
+
+            description: description,
+
+            projectLink: projectLink,
+
+            evidenceName:
+                evidenceFile
+                    ? evidenceFile.name
+                    : "",
+
+            updatedAt:
+                new Date().toISOString()
+
+        };
+
+
+        localStorage.setItem(
+            "userProfile",
+            JSON.stringify(user)
+        );
+
+
+        /*
+            Also keep a separate copy of the
+            skill offer.
+        */
+
+        localStorage.setItem(
+            "skillOffer",
+            JSON.stringify(user.skillOffer)
+        );
+
+
+        showMessage(
+            "Your skill offer has been saved successfully.",
+            "success"
+        );
+
+    }
+
+
+    /* MESSAGE */
+    function showMessage(text, type) {
+
+        const message =
+            document.getElementById("message");
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+    }
+
+
+    function hideMessage() {
+
+        const message =
+            document.getElementById("message");
+
+        message.className = "message";
+
+        message.textContent = "";
+
+    }
+
+
+    /* SAFE TEXT */
+    function escapeHtml(text) {
+
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    loadUser();
+
+</script>
+
+</body>
+</html>
