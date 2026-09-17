@@ -1,0 +1,1695 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile | Talent Exchange</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #070711;
+            color: #fff;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #0d0d19;
+            border-right: 1px solid rgba(255,255,255,.08);
+            padding: 25px 15px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            padding: 0 15px;
+            margin-bottom: 40px;
+        }
+
+        .logo span {
+            color: #8b5cf6;
+        }
+
+        .menu-title {
+            color: #656576;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0 15px;
+            margin-bottom: 12px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 15px;
+            border-radius: 11px;
+            color: #9b9baa;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(139,92,246,.12);
+            color: #fff;
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 25px;
+            left: 15px;
+            right: 15px;
+        }
+
+        .logout {
+            color: #f87171;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 75px;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            background: rgba(7,7,17,.9);
+        }
+
+        .topbar h1 {
+            font-size: 20px;
+        }
+
+        .topbar p {
+            color: #777789;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .back {
+            color: #a78bfa;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            max-width: 1100px;
+            margin: auto;
+            padding: 35px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            font-size: 27px;
+        }
+
+        .page-header p {
+            color: #858594;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+        .section {
+            background: #10101d;
+            border: 1px solid #222234;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            margin-bottom: 22px;
+        }
+
+        .section-header h3 {
+            font-size: 16px;
+        }
+
+        .section-header p {
+            color: #777789;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           PROFILE HEADER
+        ========================= */
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,#7c3aed,#4f46e5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 30px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-header h3 {
+            font-size: 18px;
+        }
+
+        .profile-header p {
+            color: #777789;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .upload-photo {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 9px 13px;
+            border: 1px solid #302c45;
+            border-radius: 8px;
+            color: #c4b5fd;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .upload-photo:hover {
+            background: rgba(139,92,246,.1);
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1/-1;
+        }
+
+        label {
+            display: block;
+            color: #d4d4dd;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: #0d0d19;
+            border: 1px solid #29293c;
+            color: #fff;
+            padding: 13px;
+            border-radius: 10px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139,92,246,.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .email-note {
+            color: #666678;
+            font-size: 10px;
+            margin-top: 6px;
+        }
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        .skill-box {
+            background: #0d0d19;
+            border: 1px solid #29293c;
+            border-radius: 10px;
+            padding: 9px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 5px;
+        }
+
+        .tag {
+            background: rgba(139,92,246,.12);
+            border: 1px solid rgba(139,92,246,.25);
+            color: #c4b5fd;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tag button {
+            border: none;
+            background: transparent;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .skill-input {
+            border: none;
+            background: transparent;
+            padding: 8px;
+        }
+
+        .skill-input:focus {
+            border: none;
+            box-shadow: none;
+        }
+
+        .hint {
+            color: #666678;
+            font-size: 10px;
+            margin-top: 7px;
+        }
+
+        /* =========================
+           EVIDENCE
+        ========================= */
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 13px;
+        }
+
+        .evidence-card {
+            background: #0d0d19;
+            border: 1px solid #29293c;
+            border-radius: 13px;
+            padding: 16px;
+        }
+
+        .evidence-icon {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .evidence-card h4 {
+            font-size: 12px;
+        }
+
+        .evidence-card p {
+            color: #777789;
+            font-size: 10px;
+            line-height: 1.5;
+            margin-top: 5px;
+        }
+
+        .evidence-card input {
+            margin-top: 12px;
+            font-size: 10px;
+        }
+
+        /* =========================
+           VIDEOS
+        ========================= */
+
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 15px;
+        }
+
+        .video-card {
+            background: #0d0d19;
+            border: 1px solid #29293c;
+            border-radius: 13px;
+            overflow: hidden;
+        }
+
+        .video-preview {
+            height: 145px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at center,
+                rgba(124,58,237,.35),
+                #0d0d19 70%);
+        }
+
+        .play {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-info {
+            padding: 14px;
+        }
+
+        .video-info h4 {
+            font-size: 12px;
+        }
+
+        .video-info p {
+            color: #777789;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 7px;
+            margin-top: 12px;
+        }
+
+        .small-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 7px;
+            border: 1px solid #302c45;
+            background: transparent;
+            color: #aaa;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        .small-btn:hover {
+            color: #fff;
+            border-color: #7c3aed;
+        }
+
+        .add-video {
+            margin-top: 15px;
+            width: 100%;
+            padding: 13px;
+            border-radius: 10px;
+            border: 1px dashed #3b3b52;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .add-video:hover {
+            color: #c4b5fd;
+            border-color: #7c3aed;
+        }
+
+        /* =========================
+           VIDEO MODAL
+        ========================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.75);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 500;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 500px;
+            background: #11111f;
+            border: 1px solid #29293c;
+            border-radius: 18px;
+            padding: 25px;
+        }
+
+        .modal-box h3 {
+            font-size: 18px;
+        }
+
+        .modal-box p {
+            color: #777789;
+            font-size: 11px;
+            margin: 6px 0 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .cancel {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #29293c;
+            border-radius: 9px;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .save-video {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 9px;
+            background: #7c3aed;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* =========================
+           SAVE
+        ========================= */
+
+        .save-area {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .save-btn {
+            padding: 13px 25px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg,#7c3aed,#5b21b6);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .discard-btn {
+            padding: 13px 20px;
+            border-radius: 10px;
+            border: 1px solid #29293c;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width:850px) {
+
+            .sidebar {
+                width: 70px;
+                padding: 20px 8px;
+            }
+
+            .logo {
+                font-size: 0;
+                text-align: center;
+            }
+
+            .logo::after {
+                content: "TE";
+                font-size: 18px;
+                color: #8b5cf6;
+            }
+
+            .menu-title,
+            .nav-item span:not(.nav-icon) {
+                display: none;
+            }
+
+            .nav-item {
+                justify-content: center;
+            }
+
+            .sidebar-bottom {
+                left: 8px;
+                right: 8px;
+            }
+
+            .main {
+                margin-left: 70px;
+            }
+
+            .content {
+                padding: 25px 18px;
+            }
+
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width:600px) {
+
+            .form-grid,
+            .video-list {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                align-items: flex-start;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .topbar p {
+                display: none;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        Talent<span>Exchange</span>
+    </div>
+
+
+    <div class="menu-title">
+        Workspace
+    </div>
+
+
+    <nav class="nav-menu">
+
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">⌂</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="find-skills.html" class="nav-item">
+            <span class="nav-icon">⌕</span>
+            <span>Find Skills</span>
+        </a>
+
+        <a href="requests.html" class="nav-item">
+            <span class="nav-icon">⇄</span>
+            <span>Requests</span>
+        </a>
+
+        <a href="connections.html" class="nav-item">
+            <span class="nav-icon">♧</span>
+            <span>Connections</span>
+        </a>
+
+        <a href="chat.html" class="nav-item">
+            <span class="nav-icon">◌</span>
+            <span>Chat</span>
+        </a>
+
+    </nav>
+
+
+    <div class="menu-title" style="margin-top:30px;">
+        Account
+    </div>
+
+
+    <nav class="nav-menu">
+
+        <a href="profile.html" class="nav-item active">
+            <span class="nav-icon">◎</span>
+            <span>Edit Profile</span>
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="login.html" class="nav-item logout">
+            <span class="nav-icon">↪</span>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+    <header class="topbar">
+
+        <div>
+
+            <h1>Edit Profile</h1>
+
+            <p>
+                Keep your professional skill profile up to date.
+            </p>
+
+        </div>
+
+
+        <a href="dashboard.html" class="back">
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+
+    <div class="content">
+
+
+        <div class="page-header">
+
+            <h2>Your Profile</h2>
+
+            <p>
+                Add your skills, experience, evidence and demonstration videos.
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             PROFILE PHOTO
+        ========================= -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h3>Profile Identity</h3>
+
+                <p>
+                    Your profile photo and basic account information.
+                </p>
+
+            </div>
+
+
+            <div class="profile-header">
+
+                <div class="avatar" id="avatar">
+                    U
+                </div>
+
+
+                <div>
+
+                    <h3 id="profileName">
+                        User
+                    </h3>
+
+                    <p id="profileEmail">
+                        user@example.com
+                    </p>
+
+
+                    <label
+                        for="photoInput"
+                        class="upload-photo">
+
+                        Change Profile Photo
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="photoInput"
+                        accept="image/png,image/jpeg,image/webp">
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             BASIC DETAILS
+        ========================= -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h3>Basic Information</h3>
+
+                <p>
+                    Information visible to other Talent Exchange members.
+                </p>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Your full name">
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="you@example.com">
+
+                    <div class="email-note">
+                        Email changes may require account verification.
+                    </div>
+
+                </div>
+
+
+                <div class="full">
+
+                    <label>
+                        About You
+                    </label>
+
+                    <textarea
+                        id="bio"
+                        placeholder="Tell people about your experience, interests and goals..."></textarea>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SKILLS
+        ========================= -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h3>Skills</h3>
+
+                <p>
+                    Tell the community what you can teach and what you want to learn.
+                </p>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label>
+                        Skills You Offer
+                    </label>
+
+
+                    <div class="skill-box">
+
+                        <div
+                            class="tags"
+                            id="offerTags">
+                        </div>
+
+
+                        <input
+                            class="skill-input"
+                            id="offerInput"
+                            placeholder="Type skill + Enter">
+
+                    </div>
+
+
+                    <div class="hint">
+                        Example: Python, Java, UI Design
+                    </div>
+
+                </div>
+
+
+
+                <div>
+
+                    <label>
+                        Skills You Want To Learn
+                    </label>
+
+
+                    <div class="skill-box">
+
+                        <div
+                            class="tags"
+                            id="learnTags">
+                        </div>
+
+
+                        <input
+                            class="skill-input"
+                            id="learnInput"
+                            placeholder="Type skill + Enter">
+
+                    </div>
+
+
+                    <div class="hint">
+                        Example: React, Guitar, Public Speaking
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SKILL EVIDENCE
+        ========================= -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h3>Skill Evidence</h3>
+
+                <p>
+                    Add proof that supports the skills listed on your profile.
+                </p>
+
+            </div>
+
+
+            <div class="evidence-grid">
+
+
+                <div class="evidence-card">
+
+                    <div class="evidence-icon">
+                        📜
+                    </div>
+
+                    <h4>
+                        Certificate
+                    </h4>
+
+                    <p>
+                        Upload certificates related to your skills.
+                    </p>
+
+                    <input
+                        type="file"
+                        id="certificateFile"
+                        accept=".pdf,.jpg,.jpeg,.png">
+
+                </div>
+
+
+
+                <div class="evidence-card">
+
+                    <div class="evidence-icon">
+                        📄
+                    </div>
+
+                    <h4>
+                        Supporting Document
+                    </h4>
+
+                    <p>
+                        Upload documents that demonstrate your experience.
+                    </p>
+
+                    <input
+                        type="file"
+                        id="documentFile"
+                        accept=".pdf,.jpg,.jpeg,.png">
+
+                </div>
+
+
+
+                <div class="evidence-card">
+
+                    <div class="evidence-icon">
+                        🔗
+                    </div>
+
+                    <h4>
+                        Project / Portfolio
+                    </h4>
+
+                    <p>
+                        Add a GitHub or portfolio link.
+                    </p>
+
+                    <input
+                        type="url"
+                        id="projectLink"
+                        placeholder="https://github.com/...">
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SKILL VIDEOS
+        ========================= -->
+
+        <section class="section" id="videos">
+
+            <div class="section-header">
+
+                <h3>
+                    Skill Demonstration Videos
+                </h3>
+
+                <p>
+                    Upload videos showing how you perform or teach your skill.
+                </p>
+
+            </div>
+
+
+            <div
+                class="video-list"
+                id="videoList">
+
+
+                <div class="video-card">
+
+                    <div class="video-preview">
+
+                        <div class="play">
+                            ▶
+                        </div>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <h4>
+                            No videos uploaded
+                        </h4>
+
+                        <p>
+                            Add a short video demonstrating one of your skills.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="add-video"
+                onclick="openVideoModal()">
+
+                + Add Skill Demonstration Video
+
+            </button>
+
+        </section>
+
+
+
+        <!-- =========================
+             SAVE
+        ========================= -->
+
+        <div class="save-area">
+
+            <button
+                class="discard-btn"
+                onclick="location.href='dashboard.html'">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                class="save-btn"
+                onclick="saveProfile()">
+
+                Save Profile
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     VIDEO MODAL
+========================= -->
+
+<div class="modal" id="videoModal">
+
+    <div class="modal-box">
+
+        <h3>
+            Add Skill Video
+        </h3>
+
+        <p>
+            Upload a short demonstration of your skill.
+        </p>
+
+
+        <label>
+            Video Title
+        </label>
+
+        <input
+            type="text"
+            id="videoTitle"
+            placeholder="Example: Python Project Demo">
+
+
+        <label style="margin-top:15px;">
+            Skill
+        </label>
+
+        <input
+            type="text"
+            id="videoSkill"
+            placeholder="Example: Python">
+
+
+        <label style="margin-top:15px;">
+            Video File
+        </label>
+
+        <input
+            type="file"
+            id="videoFile"
+            accept="video/mp4,video/webm,video/quicktime">
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel"
+                onclick="closeVideoModal()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                class="save-video"
+                onclick="addVideo()">
+
+                Add Video
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    /* =========================
+       LOAD USER
+    ========================= */
+
+    let user = null;
+
+    try {
+
+        user = JSON.parse(
+            localStorage.getItem("userProfile")
+        );
+
+    } catch (error) {
+
+        user = null;
+
+    }
+
+
+    if (!user) {
+
+        user = {
+
+            name: "User",
+
+            email: "user@example.com",
+
+            bio: "",
+
+            skill: "",
+
+            learningSkill: "",
+
+            offeredSkills: [],
+
+            learningSkills: []
+
+        };
+
+    }
+
+
+    document.getElementById("name").value =
+        user.name || "";
+
+    document.getElementById("email").value =
+        user.email || "";
+
+    document.getElementById("bio").value =
+        user.bio || "";
+
+    document.getElementById("profileName").textContent =
+        user.name || "User";
+
+    document.getElementById("profileEmail").textContent =
+        user.email || "user@example.com";
+
+
+    const firstLetter =
+        (user.name || "U").charAt(0).toUpperCase();
+
+    document.getElementById("avatar").textContent =
+        firstLetter;
+
+
+
+    /* =========================
+       SKILLS
+    ========================= */
+
+    let offeredSkills =
+        Array.isArray(user.offeredSkills)
+        ? [...user.offeredSkills]
+        : user.skill
+            ? user.skill.split(",").map(x => x.trim()).filter(Boolean)
+            : [];
+
+
+    let learningSkills =
+        Array.isArray(user.learningSkills)
+        ? [...user.learningSkills]
+        : user.learningSkill
+            ? user.learningSkill.split(",").map(x => x.trim()).filter(Boolean)
+            : [];
+
+
+    function renderSkills() {
+
+        const offerTags =
+            document.getElementById("offerTags");
+
+        const learnTags =
+            document.getElementById("learnTags");
+
+
+        offerTags.innerHTML = "";
+
+        learningSkills.length;
+
+
+        offeredSkills.forEach((skill,index) => {
+
+            const tag =
+                document.createElement("div");
+
+            tag.className = "tag";
+
+            tag.innerHTML = `
+                ${escapeHTML(skill)}
+                <button type="button"
+                        onclick="removeOfferedSkill(${index})">
+                    ×
+                </button>
+            `;
+
+            offerTags.appendChild(tag);
+
+        });
+
+
+        learnTags.innerHTML = "";
+
+        learningSkills.forEach((skill,index) => {
+
+            const tag =
+                document.createElement("div");
+
+            tag.className = "tag";
+
+            tag.innerHTML = `
+                ${escapeHTML(skill)}
+                <button type="button"
+                        onclick="removeLearningSkill(${index})">
+                    ×
+                </button>
+            `;
+
+            learnTags.appendChild(tag);
+
+        });
+
+    }
+
+
+    function escapeHTML(value) {
+
+        return value
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#039;");
+
+    }
+
+
+    document
+        .getElementById("offerInput")
+        .addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                const value =
+                    this.value.trim();
+
+                if (value && !offeredSkills.includes(value)) {
+
+                    offeredSkills.push(value);
+
+                }
+
+                this.value = "";
+
+                renderSkills();
+
+            }
+
+        });
+
+
+    document
+        .getElementById("learnInput")
+        .addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                const value =
+                    this.value.trim();
+
+                if (value && !learningSkills.includes(value)) {
+
+                    learningSkills.push(value);
+
+                }
+
+                this.value = "";
+
+                renderSkills();
+
+            }
+
+        });
+
+
+    function removeOfferedSkill(index) {
+
+        offeredSkills.splice(index,1);
+
+        renderSkills();
+
+    }
+
+
+    function removeLearningSkill(index) {
+
+        learningSkills.splice(index,1);
+
+        renderSkills();
+
+    }
+
+
+    renderSkills();
+
+
+
+    /* =========================
+       PROFILE PHOTO
+    ========================= */
+
+    document
+        .getElementById("photoInput")
+        .addEventListener("change", function() {
+
+            const file = this.files[0];
+
+            if (!file) return;
+
+            if (!file.type.startsWith("image/")) {
+
+                alert("Please select a valid image.");
+
+                return;
+
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload = function(event) {
+
+                document.getElementById("avatar").innerHTML = `
+                    <img src="${event.target.result}"
+                         alt="Profile Photo">
+                `;
+
+            };
+
+            reader.readAsDataURL(file);
+
+        });
+
+
+
+    /* =========================
+       VIDEO MODAL
+    ========================= */
+
+    function openVideoModal() {
+
+        document.getElementById("videoModal").style.display =
+            "flex";
+
+    }
+
+
+    function closeVideoModal() {
+
+        document.getElementById("videoModal").style.display =
+            "none";
+
+    }
+
+
+    function addVideo() {
+
+        const title =
+            document.getElementById("videoTitle").value.trim();
+
+        const skill =
+            document.getElementById("videoSkill").value.trim();
+
+        const file =
+            document.getElementById("videoFile").files[0];
+
+
+        if (!title || !skill || !file) {
+
+            alert("Please complete all video fields.");
+
+            return;
+
+        }
+
+
+        const videoURL =
+            URL.createObjectURL(file);
+
+
+        const videoList =
+            document.getElementById("videoList");
+
+
+        const card =
+            document.createElement("div");
+
+        card.className = "video-card";
+
+
+        card.innerHTML = `
+
+            <video
+                controls
+                style="width:100%;height:145px;object-fit:cover;background:#000;">
+
+                <source src="${videoURL}">
+            </video>
+
+            <div class="video-info">
+
+                <h4>
+                    ${escapeHTML(title)}
+                </h4>
+
+                <p>
+                    Skill: ${escapeHTML(skill)}
+                </p>
+
+                <div class="video-actions">
+
+                    <button
+                        class="small-btn"
+                        onclick="this.closest('.video-card').remove()">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        videoList.appendChild(card);
+
+
+        document.getElementById("videoTitle").value = "";
+
+        document.getElementById("videoSkill").value = "";
+
+        document.getElementById("videoFile").value = "";
+
+        closeVideoModal();
+
+    }
+
+
+
+    /* =========================
+       SAVE PROFILE
+    ========================= */
+
+    function saveProfile() {
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const bio =
+            document.getElementById("bio").value.trim();
+
+
+        if (!name || !email) {
+
+            alert("Name and email are required.");
+
+            return;
+
+        }
+
+
+        const updatedUser = {
+
+            ...user,
+
+            name: name,
+
+            email: email,
+
+            bio: bio,
+
+            offeredSkills: offeredSkills,
+
+            learningSkills: learningSkills,
+
+            skill: offeredSkills.join(", "),
+
+            learningSkill: learningSkills.join(", ")
+
+        };
+
+
+        localStorage.setItem(
+            "userProfile",
+            JSON.stringify(updatedUser)
+        );
+
+
+        alert(
+            "Profile updated successfully."
+        );
+
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+
+
+
+    /* =========================
+       CLOSE MODAL OUTSIDE
+    ========================= */
+
+    document
+        .getElementById("videoModal")
+        .addEventListener("click", function(event) {
+
+            if (event.target === this) {
+
+                closeVideoModal();
+
+            }
+
+        });
+
+</script>
+
+</body>
+</html>
+```
