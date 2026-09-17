@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Talent Exchange</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#08080d;
+    color:#fff;
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    background:#0e0e15;
+    border-right:1px solid #24242d;
+    padding:25px 16px;
+}
+
+.logo{
+    padding:5px 12px 28px;
+}
+
+.logo h2{
+    font-size:20px;
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.logo p{
+    color:#777783;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.nav button{
+    border:0;
+    background:transparent;
+    color:#9999a5;
+    text-align:left;
+    padding:13px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:rgba(124,58,237,.13);
+    color:#c4a8ff;
+}
+
+.logout{
+    position:absolute;
+    bottom:25px;
+    left:16px;
+    right:16px;
+}
+
+.logout button{
+    width:100%;
+    padding:12px;
+    border:1px solid #292934;
+    background:#15151d;
+    color:#aaa;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.main{
+    margin-left:240px;
+    padding:32px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    font-size:27px;
+}
+
+.topbar p{
+    color:#777783;
+    margin-top:5px;
+    font-size:13px;
+}
+
+.admin{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.admin-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7c3aed,#4c1d95);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.admin-name{
+    font-size:13px;
+}
+
+.admin-role{
+    color:#777783;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:28px;
+}
+
+.stat{
+    background:#101017;
+    border:1px solid #24242d;
+    border-radius:15px;
+    padding:20px;
+}
+
+.stat-label{
+    color:#858591;
+    font-size:12px;
+}
+
+.stat-value{
+    font-size:28px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.panel{
+    background:#101017;
+    border:1px solid #24242d;
+    border-radius:16px;
+    padding:22px;
+}
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.panel-header h2{
+    font-size:18px;
+}
+
+.search{
+    width:250px;
+    padding:11px 13px;
+    border-radius:9px;
+    border:1px solid #292934;
+    background:#0a0a0f;
+    color:#fff;
+    outline:none;
+}
+
+.search:focus{
+    border-color:#7c3aed;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th{
+    color:#777783;
+    font-size:11px;
+    text-align:left;
+    padding:12px;
+    border-bottom:1px solid #292934;
+}
+
+td{
+    padding:15px 12px;
+    border-bottom:1px solid #1d1d25;
+    font-size:13px;
+    color:#d4d4dc;
+}
+
+.user-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#21183a;
+    color:#b99aff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.user-name{
+    font-weight:600;
+}
+
+.user-email{
+    color:#70707c;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+}
+
+.badge.active{
+    background:rgba(34,197,94,.1);
+    color:#86efac;
+}
+
+.badge.disabled{
+    background:rgba(239,68,68,.1);
+    color:#fca5a5;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.action-btn{
+    padding:7px 10px;
+    border-radius:7px;
+    border:1px solid #2a2a34;
+    background:#17171f;
+    color:#aaa;
+    cursor:pointer;
+    font-size:11px;
+}
+
+.action-btn:hover{
+    border-color:#7c3aed;
+    color:#c4a8ff;
+}
+
+.delete-btn:hover{
+    border-color:#dc2626;
+    color:#fca5a5;
+}
+
+.empty{
+    text-align:center;
+    padding:45px 15px;
+    color:#777783;
+    font-size:13px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:20;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:420px;
+    background:#111119;
+    border:1px solid #2a2a35;
+    border-radius:17px;
+    padding:25px;
+}
+
+.modal-box h3{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.modal-box p{
+    color:#8b8b96;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:22px;
+}
+
+.modal-actions button{
+    padding:10px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    border:1px solid #292934;
+    background:#181820;
+    color:#aaa;
+}
+
+.modal-actions .danger{
+    background:#991b1b;
+    border-color:#991b1b;
+    color:white;
+}
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#17171f;
+    border:1px solid #30303b;
+    padding:13px 17px;
+    border-radius:10px;
+    font-size:12px;
+    display:none;
+    z-index:30;
+}
+
+.toast.show{
+    display:block;
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:190px;
+    }
+
+    .main{
+        margin-left:190px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        border-right:0;
+        border-bottom:1px solid #24242d;
+    }
+
+    .nav{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .logout{
+        position:static;
+        margin-top:15px;
+    }
+
+    .main{
+        margin-left:0;
+        padding:20px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .admin{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .panel-header{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .search{
+        width:100%;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+```
+<div class="logo">
+    <h2>Talent <span>Exchange</span></h2>
+    <p>Administration Panel</p>
+</div>
+
+<nav class="nav">
+    <button class="active" onclick="showSection('users')">
+        Users
+    </button>
+
+    <button onclick="comingSoon('Requests management')">
+        Requests
+    </button>
+
+    <button onclick="comingSoon('Platform activity')">
+        Activity
+    </button>
+
+    <button onclick="comingSoon('Reports')">
+        Reports
+    </button>
+</nav>
+
+<div class="logout">
+    <button onclick="logout()">Logout</button>
+</div>
+```
+
+</aside>
+
+<main class="main">
+
+```
+<div class="topbar">
+
+    <div>
+        <h1>Admin Dashboard</h1>
+        <p>Manage users and monitor the Talent Exchange platform.</p>
+    </div>
+
+    <div class="admin">
+        <div>
+            <div class="admin-name" id="adminName">
+                Administrator
+            </div>
+
+            <div class="admin-role">
+                Platform Admin
+            </div>
+        </div>
+
+        <div class="admin-avatar">A</div>
+    </div>
+
+</div>
+
+
+<section class="stats">
+
+    <div class="stat">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value" id="totalUsers">0</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-label">Active Users</div>
+        <div class="stat-value" id="activeUsers">0</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-label">Disabled Users</div>
+        <div class="stat-value" id="disabledUsers">0</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-label">Connections</div>
+        <div class="stat-value" id="totalConnections">0</div>
+    </div>
+
+</section>
+
+
+<section class="panel" id="usersSection">
+
+    <div class="panel-header">
+
+        <h2>Registered Users</h2>
+
+        <input
+            class="search"
+            id="searchInput"
+            type="text"
+            placeholder="Search users..."
+        >
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>USER</th>
+                    <th>SKILL</th>
+                    <th>STATUS</th>
+                    <th>JOINED</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+
+            <tbody id="usersTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+```
+
+</main>
+
+<!-- DELETE MODAL -->
+
+<div class="modal" id="deleteModal">
+
+```
+<div class="modal-box">
+
+    <h3>Delete User Account?</h3>
+
+    <p id="deleteText">
+        This action will permanently remove this user from this browser's demo data.
+    </p>
+
+    <div class="modal-actions">
+
+        <button onclick="closeDeleteModal()">
+            Cancel
+        </button>
+
+        <button class="danger" onclick="confirmDelete()">
+            Delete Account
+        </button>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/*
+====================================================
+ADMIN AUTH CHECK
+====================================================
+*/
+
+const adminLoggedIn = localStorage.getItem("adminLoggedIn");
+
+if(adminLoggedIn !== "true"){
+    window.location.href = "admin-login.html";
+}
+
+
+/*
+====================================================
+ADMIN PROFILE
+====================================================
+*/
+
+const adminProfile = JSON.parse(
+    localStorage.getItem("adminProfile") || "{}"
+);
+
+if(adminProfile.name){
+    document.getElementById("adminName").textContent =
+        adminProfile.name;
+}
+
+
+/*
+====================================================
+GET USERS
+====================================================
+
+Temporary browser-side users.
+
+Later this will be replaced with:
+
+GET /api/admin/users
+
+from Flask backend.
+====================================================
+*/
+
+function getUsers(){
+
+    let users = JSON.parse(
+        localStorage.getItem("registeredUsers") || "[]"
+    );
+
+    /*
+      Support the current registration system too.
+    */
+
+    const singleUser = JSON.parse(
+        localStorage.getItem("registeredUser") || "null"
+    );
+
+    if(singleUser){
+
+        const alreadyExists = users.some(
+            user => user.email === singleUser.email
+        );
+
+        if(!alreadyExists){
+            users.push(singleUser);
+        }
+    }
+
+    return users;
+}
+
+
+/*
+====================================================
+SAVE USERS
+====================================================
+*/
+
+function saveUsers(users){
+
+    localStorage.setItem(
+        "registeredUsers",
+        JSON.stringify(users)
+    );
+
+}
+
+
+/*
+====================================================
+NORMALIZE USER
+====================================================
+*/
+
+function normalizeUser(user){
+
+    return {
+
+        id: user.id || Date.now(),
+
+        name:
+            user.name ||
+            user.fullName ||
+            "User",
+
+        email:
+            user.email ||
+            "No email",
+
+        skill:
+            user.skill ||
+            user.offeredSkills?.[0] ||
+            "Not added",
+
+        status:
+            user.status ||
+            "active",
+
+        createdAt:
+            user.createdAt ||
+            new Date().toISOString()
+
+    };
+
+}
+
+
+/*
+====================================================
+RENDER USERS
+====================================================
+*/
+
+function renderUsers(){
+
+    const table =
+        document.getElementById("usersTable");
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    let users = getUsers().map(normalizeUser);
+
+    if(search){
+
+        users = users.filter(user =>
+
+            user.name.toLowerCase().includes(search) ||
+
+            user.email.toLowerCase().includes(search) ||
+
+            user.skill.toLowerCase().includes(search)
+
+        );
+
+    }
+
+    updateStats();
+
+    if(users.length === 0){
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    <div class="empty">
+                        No registered users found.
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    table.innerHTML = users.map(user => {
+
+        const initial =
+            user.name.charAt(0).toUpperCase();
+
+        const joined =
+            new Date(user.createdAt)
+            .toLocaleDateString();
+
+        const statusClass =
+            user.status === "disabled"
+            ? "disabled"
+            : "active";
+
+        const statusText =
+            user.status === "disabled"
+            ? "Disabled"
+            : "Active";
+
+        return `
+
+        <tr>
+
+            <td>
+
+                <div class="user-info">
+
+                    <div class="user-avatar">
+                        ${initial}
+                    </div>
+
+                    <div>
+
+                        <div class="user-name">
+                            ${escapeHTML(user.name)}
+                        </div>
+
+                        <div class="user-email">
+                            ${escapeHTML(user.email)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </td>
+
+            <td>
+                ${escapeHTML(user.skill)}
+            </td>
+
+            <td>
+
+                <span class="badge ${statusClass}">
+                    ${statusText}
+                </span>
+
+            </td>
+
+            <td>
+                ${joined}
+            </td>
+
+            <td>
+
+                <div class="actions">
+
+                    <button
+                        class="action-btn"
+                        onclick="viewUser(${user.id})"
+                    >
+                        View
+                    </button>
+
+                    <button
+                        class="action-btn"
+                        onclick="toggleUserStatus(${user.id})"
+                    >
+                        ${user.status === "disabled"
+                            ? "Enable"
+                            : "Disable"}
+                    </button>
+
+                    <button
+                        class="action-btn delete-btn"
+                        onclick="openDeleteModal(${user.id})"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/*
+====================================================
+STATS
+====================================================
+*/
+
+function updateStats(){
+
+    const users =
+        getUsers().map(normalizeUser);
+
+    const active =
+        users.filter(
+            user => user.status !== "disabled"
+        ).length;
+
+    const disabled =
+        users.filter(
+            user => user.status === "disabled"
+        ).length;
+
+    document.getElementById("totalUsers")
+        .textContent = users.length;
+
+    document.getElementById("activeUsers")
+        .textContent = active;
+
+    document.getElementById("disabledUsers")
+        .textContent = disabled;
+
+
+    const connections =
+        JSON.parse(
+            localStorage.getItem("connections") || "[]"
+        );
+
+    document.getElementById("totalConnections")
+        .textContent = connections.length;
+
+}
+
+
+/*
+====================================================
+VIEW USER
+====================================================
+*/
+
+function viewUser(id){
+
+    const users =
+        getUsers().map(normalizeUser);
+
+    const user =
+        users.find(
+            item => String(item.id) === String(id)
+        );
+
+    if(!user) return;
+
+    alert(
+        "User Profile\n\n" +
+        "Name: " + user.name + "\n" +
+        "Email: " + user.email + "\n" +
+        "Skill: " + user.skill + "\n" +
+        "Status: " + user.status
+    );
+
+}
+
+
+/*
+====================================================
+DISABLE / ENABLE USER
+====================================================
+*/
+
+function toggleUserStatus(id){
+
+    let users =
+        getUsers().map(normalizeUser);
+
+    const index =
+        users.findIndex(
+            user => String(user.id) === String(id)
+        );
+
+    if(index === -1) return;
+
+    users[index].status =
+        users[index].status === "disabled"
+        ? "active"
+        : "disabled";
+
+    saveUsers(users);
+
+    renderUsers();
+
+    showToast(
+        users[index].status === "disabled"
+        ? "User account disabled."
+        : "User account enabled."
+    );
+
+}
+
+
+/*
+====================================================
+DELETE
+====================================================
+*/
+
+let deleteUserId = null;
+
+function openDeleteModal(id){
+
+    deleteUserId = id;
+
+    const users =
+        getUsers().map(normalizeUser);
+
+    const user =
+        users.find(
+            item => String(item.id) === String(id)
+        );
+
+    if(user){
+
+        document.getElementById("deleteText")
+            .textContent =
+            `Are you sure you want to permanently delete ${user.name}'s account?`;
+
+    }
+
+    document.getElementById("deleteModal")
+        .classList.add("show");
+
+}
+
+
+function closeDeleteModal(){
+
+    deleteUserId = null;
+
+    document.getElementById("deleteModal")
+        .classList.remove("show");
+
+}
+
+
+function confirmDelete(){
+
+    if(deleteUserId === null) return;
+
+    let users =
+        getUsers().map(normalizeUser);
+
+    users =
+        users.filter(
+            user =>
+                String(user.id) !== String(deleteUserId)
+        );
+
+    saveUsers(users);
+
+    closeDeleteModal();
+
+    renderUsers();
+
+    showToast("User account deleted.");
+
+}
+
+
+/*
+====================================================
+SEARCH
+====================================================
+*/
+
+document.getElementById("searchInput")
+    .addEventListener("input", renderUsers);
+
+
+/*
+====================================================
+TOAST
+====================================================
+*/
+
+function showToast(text){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = text;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2500);
+
+}
+
+
+/*
+====================================================
+OTHER SECTIONS
+====================================================
+*/
+
+function comingSoon(section){
+
+    showToast(
+        section + " will be connected to the backend next."
+    );
+
+}
+
+
+/*
+====================================================
+LOGOUT
+====================================================
+*/
+
+function logout(){
+
+    localStorage.removeItem("adminLoggedIn");
+    localStorage.removeItem("adminProfile");
+
+    window.location.href = "admin-login.html";
+
+}
+
+
+/*
+====================================================
+HTML SAFETY
+====================================================
+*/
+
+function escapeHTML(value){
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+====================================================
+INITIAL LOAD
+====================================================
+*/
+
+renderUsers();
+
+</script>
+
+</body>
+</html>
