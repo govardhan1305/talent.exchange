@@ -1,763 +1,739 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Dashboard | Talent Exchange</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        body {
-            background: #070711;
-            color: #ffffff;
-            min-height: 100vh;
-        }
-
-        /* =========================
-           SIDEBAR
-        ========================= */
-
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 250px;
-            height: 100vh;
-            background: #0d0d19;
-            border-right: 1px solid rgba(255,255,255,0.08);
-            padding: 25px 15px;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 23px;
-            font-weight: 800;
-            padding: 0 15px;
-            margin-bottom: 40px;
-        }
-
-        .logo span {
-            color: #8b5cf6;
-        }
-
-        .menu-title {
-            color: #656576;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding: 0 15px;
-            margin-bottom: 12px;
-        }
-
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            padding: 13px 15px;
-            border-radius: 11px;
-            color: #9b9baa;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .nav-item:hover {
-            background: rgba(139,92,246,0.09);
-            color: #ffffff;
-        }
-
-        .nav-item.active {
-            background: rgba(139,92,246,0.15);
-            color: #ffffff;
-            border: 1px solid rgba(139,92,246,0.2);
-        }
-
-        .nav-icon {
-            width: 22px;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .badge {
-            margin-left: auto;
-            background: #7c3aed;
-            color: #fff;
-            border-radius: 20px;
-            padding: 3px 7px;
-            font-size: 10px;
-        }
-
-        .sidebar-bottom {
-            position: absolute;
-            bottom: 25px;
-            left: 15px;
-            right: 15px;
-        }
-
-        .logout {
-            color: #f87171;
-        }
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        .main {
-            margin-left: 250px;
-            min-height: 100vh;
-        }
-
-        /* =========================
-           TOPBAR
-        ========================= */
-
-        .topbar {
-            height: 75px;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 35px;
-            background: rgba(7,7,17,0.85);
-            backdrop-filter: blur(15px);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .page-title h1 {
-            font-size: 20px;
-        }
-
-        .page-title p {
-            color: #777789;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-
-        .top-actions {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .notification {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            border: 1px solid #29293c;
-            background: #10101d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .notification-dot {
-            position: absolute;
-            top: 7px;
-            right: 7px;
-            width: 6px;
-            height: 6px;
-            background: #a78bfa;
-            border-radius: 50%;
-        }
-
-        .user-mini {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg,#7c3aed,#4f46e5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .user-mini-text strong {
-            display: block;
-            font-size: 12px;
-        }
-
-        .user-mini-text span {
-            display: block;
-            color: #777789;
-            font-size: 10px;
-            margin-top: 2px;
-        }
-
-        /* =========================
-           CONTENT
-        ========================= */
-
-        .content {
-            padding: 32px 35px 50px;
-            max-width: 1500px;
-        }
-
-        /* =========================
-           WELCOME
-        ========================= */
-
-        .welcome {
-            padding: 28px;
-            border-radius: 20px;
-            background:
-                radial-gradient(circle at 90% 20%, rgba(124,58,237,0.22), transparent 30%),
-                linear-gradient(135deg,#131326,#0e0e1a);
-            border: 1px solid rgba(255,255,255,0.08);
-            margin-bottom: 25px;
-        }
-
-        .welcome h2 {
-            font-size: 25px;
-            margin-bottom: 7px;
-        }
-
-        .welcome p {
-            color: #8b8b9b;
-            font-size: 13px;
-        }
-
-        .quick-actions {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .quick-btn {
-            padding: 10px 15px;
-            border-radius: 9px;
-            border: 1px solid #302c45;
-            background: rgba(139,92,246,0.09);
-            color: #c4b5fd;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 12px;
-        }
-
-        .quick-btn.primary {
-            background: #7c3aed;
-            color: white;
-            border-color: #7c3aed;
-        }
-
-        /* =========================
-           STATS
-        ========================= */
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4,1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: #10101d;
-            border: 1px solid #222234;
-            border-radius: 16px;
-            padding: 20px;
-        }
-
-        .stat-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .stat-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: rgba(139,92,246,0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .stat-card h3 {
-            font-size: 25px;
-            margin-top: 13px;
-        }
-
-        .stat-card p {
-            color: #777789;
-            font-size: 11px;
-            margin-top: 4px;
-        }
-
-        /* =========================
-           GRID
-        ========================= */
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1.45fr 1fr;
-            gap: 20px;
-        }
-
-        .panel {
-            background: #10101d;
-            border: 1px solid #222234;
-            border-radius: 18px;
-            padding: 22px;
-        }
-
-        .panel-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .panel-header h3 {
-            font-size: 16px;
-        }
-
-        .panel-header a {
-            color: #a78bfa;
-            text-decoration: none;
-            font-size: 11px;
-        }
-
-        /* =========================
-           PROFILE
-        ========================= */
-
-        .profile {
-            display: flex;
-            gap: 18px;
-            align-items: flex-start;
-        }
-
-        .profile-avatar {
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            background: linear-gradient(135deg,#7c3aed,#4f46e5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 23px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .profile-info h2 {
-            font-size: 18px;
-        }
-
-        .profile-info p {
-            color: #777789;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .profile-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 9px;
-            color: #86efac;
-            font-size: 10px;
-        }
-
-        .online-dot {
-            width: 7px;
-            height: 7px;
-            background: #22c55e;
-            border-radius: 50%;
-        }
-
-        .profile-description {
-            color: #9696a5;
-            font-size: 12px;
-            line-height: 1.6;
-            margin-top: 18px;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-            margin-top: 15px;
-        }
-
-        .skill {
-            padding: 6px 9px;
-            border-radius: 20px;
-            background: rgba(139,92,246,0.1);
-            border: 1px solid rgba(139,92,246,0.2);
-            color: #c4b5fd;
-            font-size: 10px;
-        }
-
-        .edit-btn {
-            margin-top: 18px;
-            width: 100%;
-            padding: 10px;
-            border-radius: 9px;
-            border: 1px solid #302c45;
-            background: transparent;
-            color: #c4b5fd;
-            cursor: pointer;
-        }
-
-        .edit-btn:hover {
-            background: rgba(139,92,246,0.1);
-        }
-
-        /* =========================
-           SKILL VIDEOS
-        ========================= */
-
-        .video-card {
-            border: 1px solid #252538;
-            border-radius: 13px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .video-preview {
-            height: 110px;
-            background:
-                linear-gradient(135deg,rgba(124,58,237,.3),rgba(15,15,28,.9));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .play {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .video-info {
-            padding: 12px;
-        }
-
-        .video-info strong {
-            font-size: 12px;
-        }
-
-        .video-info p {
-            color: #777789;
-            font-size: 10px;
-            margin-top: 4px;
-        }
-
-        .add-video {
-            width: 100%;
-            padding: 10px;
-            border-radius: 9px;
-            border: 1px dashed #3b3b50;
-            background: transparent;
-            color: #8b8b9b;
-            cursor: pointer;
-        }
-
-        .add-video:hover {
-            color: #c4b5fd;
-            border-color: #7c3aed;
-        }
-
-        /* =========================
-           REQUESTS
-        ========================= */
-
-        .request {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #222234;
-        }
-
-        .request:last-child {
-            border-bottom: none;
-        }
-
-        .request-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #242438;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .request-info {
-            flex: 1;
-        }
-
-        .request-info strong {
-            display: block;
-            font-size: 12px;
-        }
-
-        .request-info span {
-            color: #777789;
-            font-size: 10px;
-        }
-
-        .request-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .accept,
-        .decline {
-            border: none;
-            border-radius: 7px;
-            padding: 7px 9px;
-            cursor: pointer;
-            font-size: 10px;
-        }
-
-        .accept {
-            background: #7c3aed;
-            color: white;
-        }
-
-        .decline {
-            background: #20202e;
-            color: #999;
-        }
-
-        /* =========================
-           CONNECTIONS
-        ========================= */
-
-        .connection {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #222234;
-        }
-
-        .connection:last-child {
-            border-bottom: none;
-        }
-
-        .connection-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg,#4338ca,#7c3aed);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 12px;
-        }
-
-        .connection-info {
-            flex: 1;
-        }
-
-        .connection-info strong {
-            display: block;
-            font-size: 12px;
-        }
-
-        .connection-info span {
-            color: #777789;
-            font-size: 10px;
-        }
-
-        .chat-btn {
-            padding: 7px 10px;
-            border-radius: 7px;
-            border: 1px solid #342d4c;
-            background: rgba(124,58,237,0.1);
-            color: #c4b5fd;
-            cursor: pointer;
-            font-size: 10px;
-        }
-
-        /* =========================
-           COMMUNICATION
-        ========================= */
-
-        .communication {
-            margin-top: 20px;
-        }
-
-        .communication-box {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-        }
-
-        .communication-card {
-            padding: 18px;
-            border-radius: 13px;
-            border: 1px solid #29293c;
-            background: #0d0d19;
-        }
-
-        .communication-card .icon {
-            font-size: 21px;
-            margin-bottom: 12px;
-        }
-
-        .communication-card h4 {
-            font-size: 13px;
-        }
-
-        .communication-card p {
-            color: #777789;
-            font-size: 10px;
-            line-height: 1.5;
-            margin-top: 5px;
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
-        .mobile-menu {
-            display: none;
-        }
-
-        @media(max-width:1100px) {
-
-            .stats {
-                grid-template-columns: repeat(2,1fr);
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media(max-width:800px) {
-
-            .sidebar {
-                width: 70px;
-                padding: 20px 8px;
-            }
-
-            .logo {
-                font-size: 0;
-                text-align: center;
-                padding: 0;
-            }
-
-            .logo::after {
-                content: "TE";
-                font-size: 18px;
-                color: #8b5cf6;
-            }
-
-            .menu-title,
-            .nav-item span:not(.nav-icon),
-            .badge {
-                display: none;
-            }
-
-            .nav-item {
-                justify-content: center;
-                padding: 13px 8px;
-            }
-
-            .sidebar-bottom {
-                left: 8px;
-                right: 8px;
-            }
-
-            .main {
-                margin-left: 70px;
-            }
-
-            .content {
-                padding: 25px 18px;
-            }
-
-            .topbar {
-                padding: 0 18px;
-            }
-
-            .user-mini-text {
-                display: none;
-            }
-
-        }
-
-        @media(max-width:550px) {
-
-            .stats {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            .stat-card {
-                padding: 15px;
-            }
-
-            .stat-card h3 {
-                font-size: 20px;
-            }
-
-            .welcome h2 {
-                font-size: 20px;
-            }
-
-            .communication-box {
-                grid-template-columns: 1fr;
-            }
-
-            .page-title p {
-                display: none;
-            }
-
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | Talent Exchange</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#070711;
+    color:#fff;
+    min-height:100vh;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    background:#0d0d19;
+    border-right:1px solid rgba(255,255,255,.08);
+    padding:25px 15px;
+    z-index:100;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:800;
+    padding:0 15px;
+    margin-bottom:40px;
+}
+
+.logo span{
+    color:#8b5cf6;
+}
+
+.menu-title{
+    color:#656576;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    padding:0 15px;
+    margin-bottom:12px;
+}
+
+.nav-menu{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px 15px;
+    border-radius:11px;
+    color:#9b9baa;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.nav-item:hover{
+    background:rgba(139,92,246,.09);
+    color:#fff;
+}
+
+.nav-item.active{
+    background:rgba(139,92,246,.15);
+    color:#fff;
+    border:1px solid rgba(139,92,246,.2);
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+    font-size:16px;
+}
+
+.badge{
+    margin-left:auto;
+    background:#7c3aed;
+    color:#fff;
+    border-radius:20px;
+    padding:3px 7px;
+    font-size:10px;
+}
+
+.sidebar-bottom{
+    position:absolute;
+    bottom:25px;
+    left:15px;
+    right:15px;
+}
+
+.logout{
+    color:#f87171;
+}
+
+.main{
+    margin-left:250px;
+    min-height:100vh;
+}
+
+.topbar{
+    height:75px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 35px;
+    background:rgba(7,7,17,.85);
+    backdrop-filter:blur(15px);
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.page-title h1{
+    font-size:20px;
+}
+
+.page-title p{
+    color:#777789;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.notification{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    border:1px solid #29293c;
+    background:#10101d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    position:relative;
+}
+
+.notification-dot{
+    position:absolute;
+    top:7px;
+    right:7px;
+    width:6px;
+    height:6px;
+    background:#a78bfa;
+    border-radius:50%;
+}
+
+.user-mini{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    font-weight:700;
+    overflow:hidden;
+}
+
+.user-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.user-mini-text strong{
+    display:block;
+    font-size:12px;
+}
+
+.user-mini-text span{
+    display:block;
+    color:#777789;
+    font-size:10px;
+    margin-top:2px;
+}
+
+.content{
+    padding:32px 35px 50px;
+    max-width:1500px;
+}
+
+.welcome{
+    padding:28px;
+    border-radius:20px;
+    background:
+        radial-gradient(circle at 90% 20%,rgba(124,58,237,.22),transparent 30%),
+        linear-gradient(135deg,#131326,#0e0e1a);
+    border:1px solid rgba(255,255,255,.08);
+    margin-bottom:25px;
+}
+
+.welcome h2{
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.welcome p{
+    color:#8b8b9b;
+    font-size:13px;
+}
+
+.quick-actions{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.quick-btn{
+    padding:10px 15px;
+    border-radius:9px;
+    border:1px solid #302c45;
+    background:rgba(139,92,246,.09);
+    color:#c4b5fd;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:12px;
+}
+
+.quick-btn.primary{
+    background:#7c3aed;
+    color:white;
+    border-color:#7c3aed;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:#10101d;
+    border:1px solid #222234;
+    border-radius:16px;
+    padding:20px;
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.stat-icon{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:rgba(139,92,246,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.stat-card h3{
+    font-size:25px;
+    margin-top:13px;
+}
+
+.stat-card p{
+    color:#777789;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.45fr 1fr;
+    gap:20px;
+}
+
+.panel{
+    background:#10101d;
+    border:1px solid #222234;
+    border-radius:18px;
+    padding:22px;
+}
+
+.panel-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.panel-header h3{
+    font-size:16px;
+}
+
+.panel-header a{
+    color:#a78bfa;
+    text-decoration:none;
+    font-size:11px;
+}
+
+.profile{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+}
+
+.profile-avatar{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    font-weight:700;
+    flex-shrink:0;
+    overflow:hidden;
+}
+
+.profile-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.profile-info h2{
+    font-size:18px;
+}
+
+.profile-info p{
+    color:#777789;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.profile-status{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-top:9px;
+    color:#86efac;
+    font-size:10px;
+}
+
+.online-dot{
+    width:7px;
+    height:7px;
+    background:#22c55e;
+    border-radius:50%;
+}
+
+.profile-description{
+    color:#9696a5;
+    font-size:12px;
+    line-height:1.6;
+    margin-top:18px;
+}
+
+.skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.skill{
+    padding:6px 9px;
+    border-radius:20px;
+    background:rgba(139,92,246,.1);
+    border:1px solid rgba(139,92,246,.2);
+    color:#c4b5fd;
+    font-size:10px;
+}
+
+.edit-btn{
+    margin-top:18px;
+    width:100%;
+    padding:10px;
+    border-radius:9px;
+    border:1px solid #302c45;
+    background:transparent;
+    color:#c4b5fd;
+    cursor:pointer;
+}
+
+.edit-btn:hover{
+    background:rgba(139,92,246,.1);
+}
+
+.video-card{
+    border:1px solid #252538;
+    border-radius:13px;
+    overflow:hidden;
+    margin-bottom:12px;
+}
+
+.video-preview{
+    height:110px;
+    background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(15,15,28,.9));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.play{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.video-info{
+    padding:12px;
+}
+
+.video-info strong{
+    font-size:12px;
+}
+
+.video-info p{
+    color:#777789;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.add-video{
+    width:100%;
+    padding:10px;
+    border-radius:9px;
+    border:1px dashed #3b3b50;
+    background:transparent;
+    color:#8b8b9b;
+    cursor:pointer;
+}
+
+.request-empty,
+.connection-empty{
+    color:#777789;
+    font-size:12px;
+    text-align:center;
+    padding:25px 10px;
+    border:1px dashed #29293c;
+    border-radius:12px;
+}
+
+.request{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid #222234;
+}
+
+.request:last-child{
+    border-bottom:none;
+}
+
+.request-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#242438;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:700;
+}
+
+.request-info{
+    flex:1;
+}
+
+.request-info strong{
+    display:block;
+    font-size:12px;
+}
+
+.request-info span{
+    color:#777789;
+    font-size:10px;
+}
+
+.request-actions{
+    display:flex;
+    gap:5px;
+}
+
+.accept,
+.decline{
+    border:none;
+    border-radius:7px;
+    padding:7px 9px;
+    cursor:pointer;
+    font-size:10px;
+}
+
+.accept{
+    background:#7c3aed;
+    color:white;
+}
+
+.decline{
+    background:#20202e;
+    color:#999;
+}
+
+.connection{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid #222234;
+}
+
+.connection:last-child{
+    border-bottom:none;
+}
+
+.connection-avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#4338ca,#7c3aed);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:12px;
+    overflow:hidden;
+}
+
+.connection-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.connection-info{
+    flex:1;
+}
+
+.connection-info strong{
+    display:block;
+    font-size:12px;
+}
+
+.connection-info span{
+    color:#777789;
+    font-size:10px;
+}
+
+.chat-btn{
+    padding:7px 10px;
+    border-radius:7px;
+    border:1px solid #342d4c;
+    background:rgba(124,58,237,.1);
+    color:#c4b5fd;
+    cursor:pointer;
+    font-size:10px;
+}
+
+.communication{
+    margin-top:20px;
+}
+
+.communication-box{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+}
+
+.communication-card{
+    padding:18px;
+    border-radius:13px;
+    border:1px solid #29293c;
+    background:#0d0d19;
+}
+
+.communication-card .icon{
+    font-size:21px;
+    margin-bottom:12px;
+}
+
+.communication-card h4{
+    font-size:13px;
+}
+
+.communication-card p{
+    color:#777789;
+    font-size:10px;
+    line-height:1.5;
+    margin-top:5px;
+}
+
+.loading{
+    color:#a78bfa;
+    font-size:12px;
+    padding:20px;
+    text-align:center;
+}
+
+.status-message{
+    display:none;
+    margin-bottom:20px;
+    padding:12px 15px;
+    border-radius:10px;
+    background:rgba(124,58,237,.1);
+    border:1px solid rgba(124,58,237,.25);
+    color:#c4b5fd;
+    font-size:12px;
+}
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:1100px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:800px){
+    .sidebar{
+        width:70px;
+        padding:20px 8px;
+    }
+
+    .logo{
+        font-size:0;
+        text-align:center;
+        padding:0;
+    }
+
+    .logo::after{
+        content:"TE";
+        font-size:18px;
+        color:#8b5cf6;
+    }
+
+    .menu-title,
+    .nav-item span:not(.nav-icon),
+    .badge{
+        display:none;
+    }
+
+    .nav-item{
+        justify-content:center;
+        padding:13px 8px;
+    }
+
+    .sidebar-bottom{
+        left:8px;
+        right:8px;
+    }
+
+    .main{
+        margin-left:70px;
+    }
+
+    .content{
+        padding:25px 18px;
+    }
+
+    .topbar{
+        padding:0 18px;
+    }
+
+    .user-mini-text{
+        display:none;
+    }
+}
+
+@media(max-width:550px){
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:15px;
+    }
+
+    .stat-card h3{
+        font-size:20px;
+    }
+
+    .welcome h2{
+        font-size:20px;
+    }
+
+    .communication-box{
+        grid-template-columns:1fr;
+    }
+
+    .page-title p{
+        display:none;
+    }
+}
+</style>
 </head>
 
-
 <body>
-
-
-<!-- =========================
-     SIDEBAR
-========================= -->
 
 <aside class="sidebar">
 
@@ -789,7 +765,6 @@
         <a href="requests.html" class="nav-item">
             <span class="nav-icon">⇄</span>
             <span>Requests</span>
-            <span class="badge">2</span>
         </a>
 
         <a href="connections.html" class="nav-item">
@@ -804,7 +779,6 @@
 
     </nav>
 
-
     <div class="menu-title" style="margin-top:30px;">
         Account
     </div>
@@ -816,17 +790,16 @@
             <span>Edit Profile</span>
         </a>
 
-        <a href="#" class="nav-item" onclick="openVideoUpload()">
+        <a href="profile.html#videos" class="nav-item">
             <span class="nav-icon">▶</span>
             <span>Add Videos</span>
         </a>
 
     </nav>
 
-
     <div class="sidebar-bottom">
 
-        <a href="login.html" class="nav-item logout">
+        <a href="#" class="nav-item logout" id="logoutBtn">
             <span class="nav-icon">↪</span>
             <span>Logout</span>
         </a>
@@ -835,836 +808,1331 @@
 
 </aside>
 
-
-
-<!-- =========================
-     MAIN
-========================= -->
-
 <main class="main">
 
+<header class="topbar">
 
-    <!-- TOPBAR -->
+    <div class="page-title">
+        <h1>Dashboard</h1>
 
-    <header class="topbar">
+        <p>
+            Manage your skills, connections and learning journey.
+        </p>
+    </div>
 
-        <div class="page-title">
+    <div class="top-actions">
 
-            <h1>Dashboard</h1>
-
-            <p>
-                Manage your skills, connections and learning journey.
-            </p>
-
+        <div class="notification">
+            ♢
+            <span class="notification-dot"></span>
         </div>
 
+        <div class="user-mini">
 
-        <div class="top-actions">
-
-            <div class="notification">
-
-                ♢
-
-                <span class="notification-dot"></span>
-
+            <div class="user-avatar" id="topAvatar">
+                U
             </div>
 
+            <div class="user-mini-text">
 
-            <div class="user-mini">
+                <strong id="topName">
+                    Loading...
+                </strong>
 
-                <div class="user-avatar" id="topAvatar">
-                    U
-                </div>
-
-                <div class="user-mini-text">
-
-                    <strong id="topName">
-                        User
-                    </strong>
-
-                    <span>
-                        Talent Exchange Member
-                    </span>
-
-                </div>
+                <span>
+                    Talent Exchange Member
+                </span>
 
             </div>
 
         </div>
-
-    </header>
-
-
-
-    <!-- CONTENT -->
-
-    <div class="content">
-
-
-        <!-- WELCOME -->
-
-        <section class="welcome">
-
-            <h2>
-                Welcome back, <span id="welcomeName">User</span> 👋
-            </h2>
-
-            <p>
-                Continue exchanging knowledge, discover new skills and connect with people.
-            </p>
-
-
-            <div class="quick-actions">
-
-                <a href="find-skills.html" class="quick-btn primary">
-                    + Find a Skill
-                </a>
-
-                <a href="offer-skill.html" class="quick-btn">
-                    + Offer Your Skill
-                </a>
-
-                <a href="connections.html" class="quick-btn">
-                    View Connections
-                </a>
-
-                <a href="chat.html" class="quick-btn">
-                    Open Chat
-                </a>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- STATISTICS -->
-
-        <section class="stats">
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span>Skills Offered</span>
-
-                    <div class="stat-icon">
-                        ◆
-                    </div>
-
-                </div>
-
-                <h3 id="offeredCount">0</h3>
-
-                <p>
-                    Skills you can teach
-                </p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span>Learning</span>
-
-                    <div class="stat-icon">
-                        ◇
-                    </div>
-
-                </div>
-
-                <h3 id="learningCount">0</h3>
-
-                <p>
-                    Skills you want to learn
-                </p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span>Connections</span>
-
-                    <div class="stat-icon">
-                        ♧
-                    </div>
-
-                </div>
-
-                <h3 id="connectionCount">0</h3>
-
-                <p>
-                    Active connections
-                </p>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-
-                    <span>Skill Evidence</span>
-
-                    <div class="stat-icon">
-                        ✓
-                    </div>
-
-                </div>
-
-                <h3 id="evidenceCount">0</h3>
-
-                <p>
-                    Certificates / videos
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- MAIN GRID -->
-
-        <section class="dashboard-grid">
-
-
-            <!-- PROFILE -->
-
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h3>Your Profile</h3>
-
-                    <a href="profile.html">
-                        Edit
-                    </a>
-
-                </div>
-
-
-                <div class="profile">
-
-                    <div class="profile-avatar" id="profileAvatar">
-                        U
-                    </div>
-
-
-                    <div class="profile-info">
-
-                        <h2 id="profileName">
-                            User
-                        </h2>
-
-                        <p id="profileEmail">
-                            user@example.com
-                        </p>
-
-                        <div class="profile-status">
-
-                            <span class="online-dot"></span>
-
-                            Profile active
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <p class="profile-description" id="profileBio">
-
-                    Add a short description about yourself and your interests.
-                    
-                </p>
-
-
-                <div class="skills" id="skillList">
-
-                    <span class="skill">
-                        Add your skills
-                    </span>
-
-                </div>
-
-
-                <button class="edit-btn"
-                        onclick="location.href='profile.html'">
-
-                    Edit Profile
-
-                </button>
-
-            </div>
-
-
-
-            <!-- SKILL VIDEOS -->
-
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h3>Skill Demonstration Videos</h3>
-
-                    <a href="#" onclick="openVideoUpload()">
-                        Add Video
-                    </a>
-
-                </div>
-
-
-                <div id="videoContainer">
-
-                    <div class="video-card">
-
-                        <div class="video-preview">
-
-                            <div class="play">
-                                ▶
-                            </div>
-
-                        </div>
-
-                        <div class="video-info">
-
-                            <strong>
-                                No skill videos added yet
-                            </strong>
-
-                            <p>
-                                Upload a video demonstrating one of your skills.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <button class="add-video"
-                        onclick="openVideoUpload()">
-
-                    + Add Skill Demonstration Video
-
-                </button>
-
-            </div>
-
-
-
-            <!-- REQUESTS -->
-
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h3>Exchange Requests</h3>
-
-                    <a href="requests.html">
-                        View All
-                    </a>
-
-                </div>
-
-
-                <div class="request">
-
-                    <div class="request-avatar">
-                        R
-                    </div>
-
-                    <div class="request-info">
-
-                        <strong>
-                            Rahul
-                        </strong>
-
-                        <span>
-                            Wants to learn Python
-                        </span>
-
-                    </div>
-
-                    <div class="request-actions">
-
-                        <button class="accept"
-                                onclick="acceptRequest(this)">
-                            Accept
-                        </button>
-
-                        <button class="decline"
-                                onclick="declineRequest(this)">
-                            ×
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="request">
-
-                    <div class="request-avatar">
-                        M
-                    </div>
-
-                    <div class="request-info">
-
-                        <strong>
-                            Mahadev
-                        </strong>
-
-                        <span>
-                            Offers Web Development
-                        </span>
-
-                    </div>
-
-                    <div class="request-actions">
-
-                        <button class="accept"
-                                onclick="acceptRequest(this)">
-                            Accept
-                        </button>
-
-                        <button class="decline"
-                                onclick="declineRequest(this)">
-                            ×
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- CONNECTIONS -->
-
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h3>My Connections</h3>
-
-                    <a href="connections.html">
-                        View All
-                    </a>
-
-                </div>
-
-
-                <div class="connection">
-
-                    <div class="connection-avatar">
-                        R
-                    </div>
-
-                    <div class="connection-info">
-
-                        <strong>
-                            Rahul
-                        </strong>
-
-                        <span>
-                            Python • Guitar
-                        </span>
-
-                    </div>
-
-                    <button class="chat-btn"
-                            onclick="openChat('Rahul')">
-
-                        Chat
-
-                    </button>
-
-                </div>
-
-
-                <div class="connection">
-
-                    <div class="connection-avatar">
-                        M
-                    </div>
-
-                    <div class="connection-info">
-
-                        <strong>
-                            Mahadev
-                        </strong>
-
-                        <span>
-                            Web Development • Java
-                        </span>
-
-                    </div>
-
-                    <button class="chat-btn"
-                            onclick="openChat('Mahadev')">
-
-                        Chat
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- COMMUNICATION -->
-
-        <section class="panel communication">
-
-            <div class="panel-header">
-
-                <div>
-
-                    <h3>
-                        Communication
-                    </h3>
-
-                    <p style="color:#777789;font-size:11px;margin-top:5px;">
-                        Communicate with accepted connections.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="communication-box">
-
-
-                <div class="communication-card">
-
-                    <div class="icon">
-                        ◌
-                    </div>
-
-                    <h4>
-                        Real-Time Chat
-                    </h4>
-
-                    <p>
-                        Send and receive messages instantly with your connections.
-                    </p>
-
-                </div>
-
-
-                <div class="communication-card">
-
-                    <div class="icon">
-                        🎙
-                    </div>
-
-                    <h4>
-                        Audio Call
-                    </h4>
-
-                    <p>
-                        Start a real-time audio conversation with another member.
-                    </p>
-
-                </div>
-
-
-                <div class="communication-card">
-
-                    <div class="icon">
-                        ▣
-                    </div>
-
-                    <h4>
-                        Video Call
-                    </h4>
-
-                    <p>
-                        Use your camera and microphone for real-time video communication.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
 
     </div>
 
+</header>
+
+<div class="content">
+
+    <div class="status-message" id="statusMessage"></div>
+
+    <section class="welcome">
+
+        <h2>
+            Welcome back, <span id="welcomeName">Loading...</span>
+        </h2>
+
+        <p>
+            Continue exchanging knowledge, discover new skills and connect with people.
+        </p>
+
+        <div class="quick-actions">
+
+            <a href="find-skills.html" class="quick-btn primary">
+                + Find a Skill
+            </a>
+
+            <a href="offer-skill.html" class="quick-btn">
+                + Offer Your Skill
+            </a>
+
+            <a href="connections.html" class="quick-btn">
+                View Connections
+            </a>
+
+            <a href="chat.html" class="quick-btn">
+                Open Chat
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span>Skills Offered</span>
+
+                <div class="stat-icon">
+                    ◆
+                </div>
+            </div>
+
+            <h3 id="offeredCount">0</h3>
+
+            <p>
+                Skills you can teach
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span>Learning</span>
+
+                <div class="stat-icon">
+                    ◇
+                </div>
+            </div>
+
+            <h3 id="learningCount">0</h3>
+
+            <p>
+                Skills you want to learn
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span>Connections</span>
+
+                <div class="stat-icon">
+                    ♧
+                </div>
+            </div>
+
+            <h3 id="connectionCount">0</h3>
+
+            <p>
+                Active connections
+            </p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span>Skill Evidence</span>
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+            </div>
+
+            <h3 id="evidenceCount">0</h3>
+
+            <p>
+                Certificates / videos
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="dashboard-grid">
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h3>Your Profile</h3>
+
+                <a href="profile.html">
+                    Edit
+                </a>
+
+            </div>
+
+            <div class="profile">
+
+                <div class="profile-avatar" id="profileAvatar">
+                    U
+                </div>
+
+                <div class="profile-info">
+
+                    <h2 id="profileName">
+                        Loading...
+                    </h2>
+
+                    <p id="profileEmail">
+                        Loading...
+                    </p>
+
+                    <div class="profile-status">
+
+                        <span class="online-dot"></span>
+
+                        Profile Active
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p class="profile-description" id="profileBio">
+                Loading profile...
+            </p>
+
+            <div class="skills" id="skillList">
+                <span class="skill">
+                    Loading skills...
+                </span>
+            </div>
+
+            <button class="edit-btn"
+                    onclick="location.href='profile.html'">
+
+                Edit Profile
+
+            </button>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h3>Skill Demonstration Videos</h3>
+
+                <a href="profile.html#videos">
+                    Add Video
+                </a>
+
+            </div>
+
+            <div id="videoContainer">
+
+                <div class="video-card">
+
+                    <div class="video-preview">
+
+                        <div class="play">
+                            ▶
+                        </div>
+
+                    </div>
+
+                    <div class="video-info">
+
+                        <strong>
+                            No skill videos added yet
+                        </strong>
+
+                        <p>
+                            Upload a video demonstrating one of your skills.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="add-video"
+                    onclick="location.href='profile.html#videos'">
+
+                + Add Skill Demonstration Video
+
+            </button>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h3>Exchange Requests</h3>
+
+                <a href="requests.html">
+                    View All
+                </a>
+
+            </div>
+
+            <div id="requestContainer">
+
+                <div class="loading">
+                    Loading requests...
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h3>My Connections</h3>
+
+                <a href="connections.html">
+                    View All
+                </a>
+
+            </div>
+
+            <div id="connectionContainer">
+
+                <div class="loading">
+                    Loading connections...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="panel communication">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h3>
+                    Communication
+                </h3>
+
+                <p style="color:#777789;font-size:11px;margin-top:5px;">
+                    Communicate with accepted connections.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="communication-box">
+
+            <div class="communication-card">
+
+                <div class="icon">
+                    ◌
+                </div>
+
+                <h4>
+                    Real-Time Chat
+                </h4>
+
+                <p>
+                    Send and receive messages instantly with your connections.
+                </p>
+
+            </div>
+
+            <div class="communication-card">
+
+                <div class="icon">
+                    🎙
+                </div>
+
+                <h4>
+                    Audio Call
+                </h4>
+
+                <p>
+                    Start a real-time audio conversation with another member.
+                </p>
+
+            </div>
+
+            <div class="communication-card">
+
+                <div class="icon">
+                    ▣
+                </div>
+
+                <h4>
+                    Video Call
+                </h4>
+
+                <p>
+                    Use your camera and microphone for real-time video communication.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
 </main>
 
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    collection,
+    query,
+    where,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
+const firebaseConfig = {
+    apiKey: "AIzaSyArReAuSxobQHOprk87Fte6NmJSVAKcND0",
+    authDomain: "talent-exchange-4456e.firebaseapp.com",
+    projectId: "talent-exchange-4456e",
+    storageBucket: "talent-exchange-4456e.firebasestorage.app",
+    messagingSenderId: "617029447041",
+    appId: "1:617029447041:web:35beb28f9949e2fb594c80"
+};
 
-<script>
 
-    /*
-       TEMPORARY USER DATA
+const app = initializeApp(firebaseConfig);
 
-       Later this will come from the backend/database.
-    */
+const auth = getAuth(app);
 
-    let user = null;
+const db = getFirestore(app);
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(auth, async (firebaseUser) => {
+
+    if (!firebaseUser) {
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+    await loadUserDashboard(firebaseUser);
+
+});
+
+
+/* =========================
+   LOAD USER
+========================= */
+
+async function loadUserDashboard(firebaseUser) {
 
     try {
 
-        user = JSON.parse(
-            localStorage.getItem("userProfile")
+        const userRef =
+            doc(db, "users", firebaseUser.uid);
+
+        const userSnap =
+            await getDoc(userRef);
+
+
+        if (!userSnap.exists()) {
+
+            showStatus(
+                "Your account profile was not found in the database."
+            );
+
+            return;
+        }
+
+
+        const user = userSnap.data();
+
+
+        /* =========================
+           ACCOUNT STATUS
+        ========================= */
+
+        if (
+            user.status &&
+            user.status !== "approved"
+        ) {
+
+            if (user.status === "pending") {
+
+                showStatus(
+                    "Your account is waiting for admin approval."
+                );
+
+            }
+
+            if (user.status === "rejected") {
+
+                showStatus(
+                    "Your account has not been approved."
+                );
+
+            }
+
+            if (user.status === "disabled") {
+
+                showStatus(
+                    "Your account has been disabled."
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           USER DETAILS
+        ========================= */
+
+        const name =
+            user.name ||
+            firebaseUser.displayName ||
+            "User";
+
+        const email =
+            user.email ||
+            firebaseUser.email ||
+            "No email";
+
+        const bio =
+            user.bio ||
+            "Add a short description about yourself.";
+
+
+        document.getElementById(
+            "welcomeName"
+        ).textContent = name;
+
+
+        document.getElementById(
+            "topName"
+        ).textContent = name;
+
+
+        document.getElementById(
+            "profileName"
+        ).textContent = name;
+
+
+        document.getElementById(
+            "profileEmail"
+        ).textContent = email;
+
+
+        document.getElementById(
+            "profileBio"
+        ).textContent = bio;
+
+
+        /* =========================
+           AVATAR
+        ========================= */
+
+        const firstLetter =
+            name.charAt(0).toUpperCase();
+
+
+        setAvatar(
+            "topAvatar",
+            firstLetter,
+            user.profilePhoto
         );
 
-    } catch (error) {
 
-        user = null;
+        setAvatar(
+            "profileAvatar",
+            firstLetter,
+            user.profilePhoto
+        );
+
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        const offeredSkills =
+            Array.isArray(user.offeredSkills)
+                ? user.offeredSkills
+                : [];
+
+
+        const learningSkills =
+            Array.isArray(user.learningSkills)
+                ? user.learningSkills
+                : (
+                    Array.isArray(user.learningSkill)
+                        ? user.learningSkill
+                        : []
+                );
+
+
+        document.getElementById(
+            "offeredCount"
+        ).textContent =
+            offeredSkills.length;
+
+
+        document.getElementById(
+            "learningCount"
+        ).textContent =
+            learningSkills.length;
+
+
+        renderSkills(
+            offeredSkills,
+            learningSkills
+        );
+
+
+        /* =========================
+           EVIDENCE
+        ========================= */
+
+        const evidence =
+            Array.isArray(user.evidence)
+                ? user.evidence
+                : [];
+
+
+        const videos =
+            Array.isArray(user.videos)
+                ? user.videos
+                : [];
+
+
+        document.getElementById(
+            "evidenceCount"
+        ).textContent =
+            evidence.length + videos.length;
+
+
+        renderVideos(videos);
+
+
+        /* =========================
+           REQUESTS
+        ========================= */
+
+        await loadRequests(firebaseUser.uid);
+
+
+        /* =========================
+           CONNECTIONS
+        ========================= */
+
+        await loadConnections(firebaseUser.uid);
 
     }
 
+    catch (error) {
 
-    /*
-       DEFAULT USER
-    */
+        console.error(error);
 
-    if (!user) {
-
-        user = {
-
-            name: "User",
-
-            email: "user@example.com",
-
-            bio: "Welcome to Talent Exchange.",
-
-            skill: "Python",
-
-            learningSkill: "Web Development"
-
-        };
+        showStatus(
+            "Unable to load your dashboard. Please try again."
+        );
 
     }
 
-
-    /* NAME */
-
-    document.getElementById("welcomeName").textContent =
-        user.name || "User";
-
-    document.getElementById("topName").textContent =
-        user.name || "User";
-
-    document.getElementById("profileName").textContent =
-        user.name || "User";
+}
 
 
-    /* EMAIL */
+/* =========================
+   AVATAR
+========================= */
 
-    document.getElementById("profileEmail").textContent =
-        user.email || "user@example.com";
+function setAvatar(
+    elementId,
+    letter,
+    photoUrl
+) {
 
-
-    /* BIO */
-
-    document.getElementById("profileBio").textContent =
-        user.bio || "Add a short description about yourself.";
-
-
-    /* AVATAR */
-
-    const firstLetter =
-        (user.name || "U").charAt(0).toUpperCase();
-
-    document.getElementById("topAvatar").textContent =
-        firstLetter;
-
-    document.getElementById("profileAvatar").textContent =
-        firstLetter;
+    const element =
+        document.getElementById(elementId);
 
 
-    /* SKILLS */
+    if (photoUrl) {
 
-    const skillList =
+        element.innerHTML =
+            `<img src="${photoUrl}" alt="Profile photo">`;
+
+    } else {
+
+        element.textContent =
+            letter;
+
+    }
+
+}
+
+
+/* =========================
+   SKILLS
+========================= */
+
+function renderSkills(
+    offeredSkills,
+    learningSkills
+) {
+
+    const container =
         document.getElementById("skillList");
 
-    skillList.innerHTML = "";
+
+    container.innerHTML = "";
 
 
-    let offeredSkills = [];
+    if (
+        offeredSkills.length === 0 &&
+        learningSkills.length === 0
+    ) {
 
-    let learningSkills = [];
+        container.innerHTML =
+            `<span class="skill">No skills added yet</span>`;
 
-
-    if (Array.isArray(user.offeredSkills)) {
-
-        offeredSkills = user.offeredSkills;
-
-    } else if (user.skill) {
-
-        offeredSkills =
-            user.skill.split(",").map(
-                skill => skill.trim()
-            );
-
-    }
-
-
-    if (Array.isArray(user.learningSkills)) {
-
-        learningSkills = user.learningSkills;
-
-    } else if (user.learningSkill) {
-
-        learningSkills =
-            user.learningSkill.split(",").map(
-                skill => skill.trim()
-            );
-
+        return;
     }
 
 
     offeredSkills.forEach(skill => {
 
-        const element =
-            document.createElement("span");
-
-        element.className = "skill";
-
-        element.textContent =
-            "Offers: " + skill;
-
-        skillList.appendChild(element);
+        addSkill(
+            container,
+            "Offers: " + skill
+        );
 
     });
 
 
     learningSkills.forEach(skill => {
 
-        const element =
-            document.createElement("span");
-
-        element.className = "skill";
-
-        element.textContent =
-            "Learning: " + skill;
-
-        skillList.appendChild(element);
+        addSkill(
+            container,
+            "Learning: " + skill
+        );
 
     });
 
-
-    /* COUNTERS */
-
-    document.getElementById("offeredCount").textContent =
-        offeredSkills.length;
-
-    document.getElementById("learningCount").textContent =
-        learningSkills.length;
+}
 
 
-    /*
-       These values will later be received
-       from the backend.
-    */
+function addSkill(
+    container,
+    text
+) {
 
-    document.getElementById("connectionCount").textContent =
-        "0";
+    const element =
+        document.createElement("span");
 
-    document.getElementById("evidenceCount").textContent =
-        "0";
+    element.className = "skill";
+
+    element.textContent = text;
+
+    container.appendChild(element);
+
+}
 
 
-    /* =========================
-       REQUEST ACTIONS
-    ========================= */
+/* =========================
+   VIDEOS
+========================= */
 
-    function acceptRequest(button) {
+function renderVideos(videos) {
 
-        const request =
-            button.closest(".request");
+    const container =
+        document.getElementById("videoContainer");
 
-        request.innerHTML = `
 
-            <div class="request-avatar">
-                ✓
+    if (
+        !Array.isArray(videos) ||
+        videos.length === 0
+    ) {
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    videos.forEach(video => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "video-card";
+
+
+        card.innerHTML = `
+
+            <div class="video-preview">
+
+                <div class="play">
+                    ▶
+                </div>
+
             </div>
 
-            <div class="request-info">
+            <div class="video-info">
 
                 <strong>
-                    Connection Accepted
+                    ${escapeHtml(
+                        video.title || "Skill Demonstration"
+                    )}
                 </strong>
 
-                <span>
-                    You can now start chatting.
-                </span>
+                <p>
+                    ${escapeHtml(
+                        video.skill || "Skill video"
+                    )}
+                </p>
 
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   REQUESTS
+========================= */
+
+async function loadRequests(uid) {
+
+    const container =
+        document.getElementById(
+            "requestContainer"
+        );
+
+
+    try {
+
+        const requestsRef =
+            collection(db, "Requests");
+
+
+        const requestQuery =
+            query(
+                requestsRef,
+                where("receiverId", "==", uid),
+                where("status", "==", "pending")
+            );
+
+
+        const snapshot =
+            await getDocs(requestQuery);
+
+
+        if (snapshot.empty) {
+
+            container.innerHTML = `
+
+                <div class="request-empty">
+                    No pending exchange requests.
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        snapshot.forEach(requestDoc => {
+
+            const request =
+                requestDoc.data();
+
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "request";
+
+
+            const senderName =
+                request.senderName ||
+                "Talent Exchange Member";
+
+
+            item.innerHTML = `
+
+                <div class="request-avatar">
+                    ${escapeHtml(
+                        senderName.charAt(0).toUpperCase()
+                    )}
+                </div>
+
+                <div class="request-info">
+
+                    <strong>
+                        ${escapeHtml(senderName)}
+                    </strong>
+
+                    <span>
+                        Exchange request
+                    </span>
+
+                </div>
+
+                <div class="request-actions">
+
+                    <button class="accept"
+                            data-id="${requestDoc.id}">
+                        Accept
+                    </button>
+
+                    <button class="decline"
+                            data-id="${requestDoc.id}">
+                        ×
+                    </button>
+
+                </div>
+
+            `;
+
+
+            item.querySelector(".accept")
+                .addEventListener(
+                    "click",
+                    () => acceptRequest(requestDoc.id)
+                );
+
+
+            item.querySelector(".decline")
+                .addEventListener(
+                    "click",
+                    () => declineRequest(requestDoc.id)
+                );
+
+
+            container.appendChild(item);
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Request loading error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="request-empty">
+                Requests will appear here.
             </div>
 
         `;
 
     }
 
-
-    function declineRequest(button) {
-
-        const request =
-            button.closest(".request");
-
-        request.remove();
-
-    }
+}
 
 
-    /* =========================
-       CHAT
-    ========================= */
+/* =========================
+   ACCEPT REQUEST
+========================= */
 
-    function openChat(name) {
+async function acceptRequest(requestId) {
 
-        localStorage.setItem(
-            "activeChatName",
-            name
+    alert(
+        "Request actions will be connected to Firebase next."
+    );
+
+}
+
+
+/* =========================
+   DECLINE REQUEST
+========================= */
+
+async function declineRequest(requestId) {
+
+    alert(
+        "Request actions will be connected to Firebase next."
+    );
+
+}
+
+
+/* =========================
+   CONNECTIONS
+========================= */
+
+async function loadConnections(uid) {
+
+    const container =
+        document.getElementById(
+            "connectionContainer"
         );
 
-        window.location.href =
-            "chat.html";
+
+    try {
+
+        const connectionsRef =
+            collection(db, "Connections");
+
+
+        const q1 =
+            query(
+                connectionsRef,
+                where("user1Id", "==", uid)
+            );
+
+
+        const q2 =
+            query(
+                connectionsRef,
+                where("user2Id", "==", uid)
+            );
+
+
+        const [
+            snapshot1,
+            snapshot2
+        ] =
+            await Promise.all([
+                getDocs(q1),
+                getDocs(q2)
+            ]);
+
+
+        const connections = [];
+
+
+        snapshot1.forEach(docSnap => {
+
+            connections.push({
+                id:docSnap.id,
+                data:docSnap.data(),
+                otherId:
+                    docSnap.data().user2Id
+            });
+
+        });
+
+
+        snapshot2.forEach(docSnap => {
+
+            connections.push({
+                id:docSnap.id,
+                data:docSnap.data(),
+                otherId:
+                    docSnap.data().user1Id
+            });
+
+        });
+
+
+        document.getElementById(
+            "connectionCount"
+        ).textContent =
+            connections.length;
+
+
+        if (connections.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="connection-empty">
+                    No connections yet.<br>
+                    Find a skill and start exchanging knowledge.
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        for (
+            const connection
+            of connections.slice(0,5)
+        ) {
+
+            let personName =
+                "Talent Exchange Member";
+
+
+            let personPhoto =
+                "";
+
+
+            try {
+
+                const personRef =
+                    doc(
+                        db,
+                        "users",
+                        connection.otherId
+                    );
+
+
+                const personSnap =
+                    await getDoc(personRef);
+
+
+                if (personSnap.exists()) {
+
+                    const person =
+                        personSnap.data();
+
+
+                    personName =
+                        person.name ||
+                        personName;
+
+
+                    personPhoto =
+                        person.profilePhoto ||
+                        "";
+
+                }
+
+            }
+
+            catch(error) {
+
+                console.error(error);
+
+            }
+
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "connection";
+
+
+            item.innerHTML = `
+
+                <div class="connection-avatar">
+
+                    ${
+                        personPhoto
+                        ? `<img src="${personPhoto}" alt="Profile photo">`
+                        : escapeHtml(
+                            personName
+                                .charAt(0)
+                                .toUpperCase()
+                        )
+                    }
+
+                </div>
+
+                <div class="connection-info">
+
+                    <strong>
+                        ${escapeHtml(personName)}
+                    </strong>
+
+                    <span>
+                        Connected member
+                    </span>
+
+                </div>
+
+                <button class="chat-btn">
+                    Chat
+                </button>
+
+            `;
+
+
+            item.querySelector(
+                ".chat-btn"
+            ).addEventListener(
+                "click",
+                () => {
+
+                    localStorage.setItem(
+                        "activeChatId",
+                        connection.otherId
+                    );
+
+                    localStorage.setItem(
+                        "activeChatName",
+                        personName
+                    );
+
+                    window.location.href =
+                        "chat.html";
+
+                }
+            );
+
+
+            container.appendChild(item);
+
+        }
 
     }
 
+    catch (error) {
 
-    /* =========================
-       VIDEO UPLOAD
-    ========================= */
+        console.error(
+            "Connection loading error:",
+            error
+        );
 
-    function openVideoUpload() {
 
-        /*
-            For now redirect to profile.
+        document.getElementById(
+            "connectionCount"
+        ).textContent = "0";
 
-            Later we can create a dedicated
-            video upload modal or page.
-        */
 
-        window.location.href =
-            "profile.html#videos";
+        container.innerHTML = `
+
+            <div class="connection-empty">
+                Connections will appear here.
+            </div>
+
+        `;
 
     }
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(message) {
+
+    const element =
+        document.getElementById(
+            "statusMessage"
+        );
+
+
+    element.textContent =
+        message;
+
+
+    element.style.display =
+        "block";
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document.getElementById(
+    "logoutBtn"
+).addEventListener(
+    "click",
+    async (event) => {
+
+        event.preventDefault();
+
+        try {
+
+            await signOut(auth);
+
+            localStorage.removeItem(
+                "userProfile"
+            );
+
+            localStorage.removeItem(
+                "activeChatId"
+            );
+
+            localStorage.removeItem(
+                "activeChatName"
+            );
+
+            window.location.href =
+                "login.html";
+
+        }
+
+        catch(error) {
+
+            console.error(error);
+
+            alert(
+                "Logout failed. Please try again."
+            );
+
+        }
+
+    }
+);
 
 </script>
 
