@@ -1,0 +1,1259 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Talent Exchange — Connections</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, Arial, sans-serif;
+}
+
+:root {
+    --purple: #8b5cf6;
+    --purple-light: #c4b5fd;
+    --bg: #09090f;
+    --card: #11111a;
+    --card2: #151520;
+    --border: rgba(255,255,255,.08);
+    --muted: #9696a8;
+    --green: #34d399;
+}
+
+body {
+    background: var(--bg);
+    color: #fff;
+    min-height: 100vh;
+}
+
+.app {
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background: #0d0d15;
+    border-right: 1px solid var(--border);
+    padding: 25px 16px;
+    z-index: 20;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 10px 28px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.logo-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#7c3aed,#a855f7);
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+}
+
+.nav-title {
+    color: #626273;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 0 12px 10px;
+}
+
+.nav a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    color: #9999aa;
+    text-decoration: none;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.nav a:hover {
+    background: rgba(139,92,246,.08);
+    color: #fff;
+}
+
+.nav a.active {
+    background: rgba(139,92,246,.16);
+    color: var(--purple-light);
+}
+
+.nav-icon {
+    width: 20px;
+    text-align: center;
+}
+
+.logout {
+    position: absolute;
+    bottom: 22px;
+    left: 16px;
+    right: 16px;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+    margin-left: 250px;
+    padding: 34px 40px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.topbar p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.profile-mini {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mini-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#7c3aed,#ec4899);
+    display: grid;
+    place-items: center;
+    font-weight: bold;
+}
+
+/* ================= STATS ================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.stat-icon {
+    font-size: 22px;
+    margin-bottom: 13px;
+}
+
+.stat-number {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ================= SEARCH ================= */
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.search {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+}
+
+.search input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 13px 15px 13px 42px;
+    border-radius: 11px;
+    outline: none;
+    font-size: 13px;
+}
+
+.search input:focus {
+    border-color: rgba(139,92,246,.5);
+}
+
+.search span {
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    color: #77778a;
+}
+
+/* ================= CONNECTION GRID ================= */
+
+.connections {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(330px,1fr));
+    gap: 18px;
+}
+
+.connection-card {
+    background: linear-gradient(145deg,#12121c,#0f0f17);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 21px;
+    transition: .2s;
+}
+
+.connection-card:hover {
+    border-color: rgba(139,92,246,.35);
+    transform: translateY(-2px);
+}
+
+.person {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 18px;
+}
+
+.avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#4f46e5,#9333ea);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.person h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.person span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.status {
+    margin-left: auto;
+    color: var(--green);
+    font-size: 11px;
+}
+
+.exchange {
+    background: rgba(139,92,246,.06);
+    border: 1px solid rgba(139,92,246,.1);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.exchange-title {
+    color: #77778a;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 9px;
+}
+
+.exchange-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.exchange-skill {
+    color: #c4b5fd;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.exchange-arrow {
+    color: #77778a;
+}
+
+.connected-date {
+    color: #77778a;
+    font-size: 11px;
+    margin-bottom: 15px;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 7px;
+}
+
+.btn {
+    border: none;
+    border-radius: 9px;
+    padding: 10px 7px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.chat-btn {
+    background: var(--purple);
+    color: white;
+}
+
+.audio-btn,
+.video-btn {
+    background: #191923;
+    color: #d7d7e1;
+    border: 1px solid var(--border);
+}
+
+/* ================= EMPTY ================= */
+
+.empty {
+    border: 1px dashed rgba(255,255,255,.1);
+    border-radius: 18px;
+    padding: 75px 20px;
+    text-align: center;
+    color: #77778a;
+}
+
+.empty-icon {
+    font-size: 43px;
+    margin-bottom: 14px;
+}
+
+.empty h3 {
+    color: #dddde7;
+    margin-bottom: 8px;
+}
+
+.empty p {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ================= TOAST ================= */
+
+.toast {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background: #181821;
+    border: 1px solid rgba(139,92,246,.3);
+    padding: 14px 18px;
+    border-radius: 11px;
+    display: none;
+    z-index: 100;
+    font-size: 13px;
+}
+
+/* ================= CALL MODAL ================= */
+
+.call-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.78);
+    z-index: 90;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.call-box {
+    width: min(600px,100%);
+    background: #11111a;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    text-align: center;
+}
+
+.call-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#7c3aed,#ec4899);
+    display: grid;
+    place-items: center;
+    margin: 10px auto 18px;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.call-box p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.call-status {
+    margin: 22px 0;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(139,92,246,.08);
+    color: #c4b5fd;
+    font-size: 13px;
+}
+
+.end-call {
+    background: #dc2626;
+    border: none;
+    color: white;
+    padding: 11px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+/* ================= MOBILE ================= */
+
+.mobile-header {
+    display: none;
+}
+
+@media(max-width:800px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-header {
+        display: flex;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--border);
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .mobile-logo {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-weight: 800;
+    }
+
+    .mobile-logo-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        background: linear-gradient(135deg,#7c3aed,#a855f7);
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 25px 18px;
+    }
+
+    .profile-mini {
+        display: none;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar {
+        flex-direction: column;
+    }
+
+    .search {
+        max-width: none;
+    }
+
+    .connections {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MOBILE HEADER -->
+
+<div class="mobile-header">
+
+    <div class="mobile-logo">
+        <div class="mobile-logo-icon">TE</div>
+        Talent Exchange
+    </div>
+
+    <a href="dashboard.html"
+       style="color:#aaa;text-decoration:none;font-size:13px;">
+       Dashboard
+    </a>
+
+</div>
+
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-icon">TE</div>
+        Talent Exchange
+    </div>
+
+    <div class="nav-title">
+        Workspace
+    </div>
+
+    <nav class="nav">
+
+        <a href="dashboard.html">
+            <span class="nav-icon">⌂</span>
+            Dashboard
+        </a>
+
+        <a href="find-skills.html">
+            <span class="nav-icon">⌕</span>
+            Find Skills
+        </a>
+
+        <a href="requests.html">
+            <span class="nav-icon">♢</span>
+            Requests
+        </a>
+
+        <a href="connections.html" class="active">
+            <span class="nav-icon">◎</span>
+            Connections
+        </a>
+
+        <a href="chat.html">
+            <span class="nav-icon">◌</span>
+            Chat
+        </a>
+
+        <a href="profile.html">
+            <span class="nav-icon">⚙</span>
+            Edit Profile
+        </a>
+
+    </nav>
+
+    <div class="logout">
+
+        <a href="login.html"
+           style="
+           display:flex;
+           align-items:center;
+           gap:13px;
+           color:#9999aa;
+           text-decoration:none;
+           padding:12px;
+           font-size:14px;">
+            <span class="nav-icon">↪</span>
+            Logout
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div>
+
+            <h1>Connections</h1>
+
+            <p>
+                People you have successfully connected with.
+            </p>
+
+        </div>
+
+
+        <div class="profile-mini">
+
+            <strong id="topName">
+                User
+            </strong>
+
+            <div class="mini-avatar" id="topAvatar">
+                U
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ◎
+            </div>
+
+            <div class="stat-number" id="connectionCount">
+                0
+            </div>
+
+            <div class="stat-label">
+                Total Connections
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💬
+            </div>
+
+            <div class="stat-number" id="activeCount">
+                0
+            </div>
+
+            <div class="stat-label">
+                Active Connections
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🔄
+            </div>
+
+            <div class="stat-number">
+                Skill Exchange
+            </div>
+
+            <div class="stat-label">
+                Learn • Share • Grow
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="toolbar">
+
+        <div class="search">
+
+            <span>⌕</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search connections..."
+                oninput="renderConnections()">
+
+        </div>
+
+    </div>
+
+
+    <!-- CONNECTIONS -->
+
+    <div
+        class="connections"
+        id="connectionsList">
+    </div>
+
+</main>
+
+</div>
+
+
+<!-- CALL MODAL -->
+
+<div class="call-modal" id="callModal">
+
+    <div class="call-box">
+
+        <div class="call-avatar" id="callAvatar">
+            R
+        </div>
+
+        <h2 id="callName">
+            Rahul
+        </h2>
+
+        <p id="callType">
+            Video Call
+        </p>
+
+        <div class="call-status" id="callStatus">
+            Connecting...
+        </div>
+
+        <button
+            class="end-call"
+            onclick="endCall()">
+            End Call
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+const currentUser =
+    JSON.parse(localStorage.getItem("userProfile")) || {
+
+        id: "current-user",
+        name: "Mahadev",
+        email: "mahadev@example.com",
+        skill: "Python",
+        learningSkill: "Guitar"
+
+    };
+
+
+document.getElementById("topName").textContent =
+    currentUser.name;
+
+document.getElementById("topAvatar").textContent =
+    currentUser.name
+        .charAt(0)
+        .toUpperCase();
+
+
+/* =========================================================
+   CONNECTION DATA
+========================================================= */
+
+let connections =
+    JSON.parse(localStorage.getItem("connections")) || [];
+
+
+/*
+   If the user has no accepted connections yet,
+   create demo connections for testing.
+
+   Later this will come from:
+
+   GET /api/connections
+
+   Flask → PostgreSQL
+*/
+
+if (connections.length === 0) {
+
+    connections = [
+
+        {
+            id: "CON001",
+            userId: "rahul001",
+            name: "Rahul",
+            role: "Web Developer",
+            avatar: "R",
+            skills: ["JavaScript", "React"],
+            learning: ["Python", "Cybersecurity"],
+            connectedAt: new Date().toISOString(),
+            online: true
+        },
+
+        {
+            id: "CON002",
+            userId: "ananya001",
+            name: "Ananya",
+            role: "UI/UX Designer",
+            avatar: "A",
+            skills: ["Figma", "UI/UX Design"],
+            learning: ["HTML", "JavaScript"],
+            connectedAt: new Date(
+                Date.now() - 86400000 * 2
+            ).toISOString(),
+            online: true
+        },
+
+        {
+            id: "CON003",
+            userId: "kiran001",
+            name: "Kiran",
+            role: "Python Developer",
+            avatar: "K",
+            skills: ["Python", "Flask"],
+            learning: ["Cybersecurity"],
+            connectedAt: new Date(
+                Date.now() - 86400000 * 5
+            ).toISOString(),
+            online: false
+        }
+
+    ];
+
+    localStorage.setItem(
+        "connections",
+        JSON.stringify(connections)
+    );
+}
+
+
+/* =========================================================
+   RENDER CONNECTIONS
+========================================================= */
+
+function renderConnections() {
+
+    const container =
+        document.getElementById("connectionsList");
+
+    const search =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const filtered =
+        connections.filter(connection => {
+
+            const text = (
+
+                connection.name +
+                " " +
+                connection.role +
+                " " +
+                (connection.skills || []).join(" ") +
+                " " +
+                (connection.learning || []).join(" ")
+
+            ).toLowerCase();
+
+            return text.includes(search);
+
+        });
+
+
+    document.getElementById("connectionCount")
+        .textContent = connections.length;
+
+    document.getElementById("activeCount")
+        .textContent =
+        connections.filter(c => c.online).length;
+
+
+    if (filtered.length === 0) {
+
+        container.innerHTML = `
+
+            <div
+                class="empty"
+                style="grid-column:1/-1;">
+
+                <div class="empty-icon">
+                    ◎
+                </div>
+
+                <h3>
+                    No connections found
+                </h3>
+
+                <p>
+                    Start by finding someone with a skill
+                    you want to learn.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        filtered.map(connection => `
+
+        <div class="connection-card">
+
+            <div class="person">
+
+                <div class="avatar">
+                    ${escapeHTML(connection.avatar)}
+                </div>
+
+                <div>
+
+                    <h3>
+                        ${escapeHTML(connection.name)}
+                    </h3>
+
+                    <span>
+                        ${escapeHTML(connection.role)}
+                    </span>
+
+                </div>
+
+                <div class="status">
+
+                    ${
+                        connection.online
+                        ? "● Online"
+                        : "○ Offline"
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="exchange">
+
+                <div class="exchange-title">
+                    Skill Exchange
+                </div>
+
+                <div class="exchange-row">
+
+                    <span class="exchange-skill">
+
+                        You learn:
+                        ${
+                            escapeHTML(
+                                (connection.skills || [])[0]
+                                || "Skill"
+                            )
+                        }
+
+                    </span>
+
+                    <span class="exchange-arrow">
+                        ⇄
+                    </span>
+
+                    <span class="exchange-skill">
+
+                        You share:
+                        ${
+                            escapeHTML(
+                                (connection.learning || [])[0]
+                                || "Skill"
+                            )
+                        }
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="connected-date">
+
+                Connected
+                ${formatDate(connection.connectedAt)}
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn chat-btn"
+                    onclick="
+                    openChat(
+                        '${escapeAttribute(connection.userId)}',
+                        '${escapeAttribute(connection.name)}'
+                    )">
+
+                    💬 Chat
+
+                </button>
+
+
+                <button
+                    class="btn audio-btn"
+                    onclick="
+                    startCall(
+                        '${escapeAttribute(connection.userId)}',
+                        '${escapeAttribute(connection.name)}',
+                        '${escapeAttribute(connection.avatar)}',
+                        'Audio Call'
+                    )">
+
+                    🎧 Audio
+
+                </button>
+
+
+                <button
+                    class="btn video-btn"
+                    onclick="
+                    startCall(
+                        '${escapeAttribute(connection.userId)}',
+                        '${escapeAttribute(connection.name)}',
+                        '${escapeAttribute(connection.avatar)}',
+                        'Video Call'
+                    )">
+
+                    📹 Video
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+function openChat(id, name) {
+
+    localStorage.setItem(
+        "activeChatId",
+        id
+    );
+
+    localStorage.setItem(
+        "activeChatName",
+        name
+    );
+
+    window.location.href =
+        "chat.html";
+}
+
+
+/* =========================================================
+   START AUDIO / VIDEO CALL
+========================================================= */
+
+function startCall(id, name, avatar, type) {
+
+    localStorage.setItem(
+        "activeCallUserId",
+        id
+    );
+
+    localStorage.setItem(
+        "activeCallName",
+        name
+    );
+
+    localStorage.setItem(
+        "activeCallType",
+        type
+    );
+
+
+    document.getElementById("callAvatar")
+        .textContent = avatar;
+
+    document.getElementById("callName")
+        .textContent = name;
+
+    document.getElementById("callType")
+        .textContent = type;
+
+    document.getElementById("callStatus")
+        .textContent =
+        `Starting ${type.toLowerCase()}...`;
+
+    document.getElementById("callModal")
+        .style.display = "flex";
+
+
+    /*
+       REAL CALL IMPLEMENTATION LATER:
+
+       Browser
+          ↓
+       WebRTC
+          ↓
+       Signaling Server
+          ↓
+       Other User
+
+       Required backend endpoints / realtime events
+       will be added later.
+    */
+
+
+    setTimeout(() => {
+
+        document.getElementById("callStatus")
+            .textContent =
+            `Waiting for ${name} to join...`;
+
+    }, 1000);
+}
+
+
+/* =========================================================
+   END CALL
+========================================================= */
+
+function endCall() {
+
+    document.getElementById("callModal")
+        .style.display = "none";
+
+    showToast("Call ended.");
+}
+
+
+/* =========================================================
+   CLOSE MODAL ON BACKGROUND CLICK
+========================================================= */
+
+document.getElementById("callModal")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+            endCall();
+        }
+
+    });
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "recently";
+    }
+
+    const date =
+        new Date(dateString);
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }
+    );
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    setTimeout(() => {
+
+        toast.style.display = "none";
+
+    }, 2500);
+}
+
+
+/* =========================================================
+   SECURITY HELPERS
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function escapeAttribute(value) {
+
+    return String(value)
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/"/g,"&quot;");
+}
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+renderConnections();
+
+</script>
+
+</body>
+</html>
+```
