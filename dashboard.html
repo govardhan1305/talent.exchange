@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Dashboard | Talent Exchange</title>
 
 <style>
@@ -87,15 +86,6 @@ body{
     font-size:16px;
 }
 
-.badge{
-    margin-left:auto;
-    background:#7c3aed;
-    color:#fff;
-    border-radius:20px;
-    padding:3px 7px;
-    font-size:10px;
-}
-
 .sidebar-bottom{
     position:absolute;
     bottom:25px;
@@ -142,29 +132,6 @@ body{
     gap:18px;
 }
 
-.notification{
-    width:38px;
-    height:38px;
-    border-radius:10px;
-    border:1px solid #29293c;
-    background:#10101d;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    position:relative;
-}
-
-.notification-dot{
-    position:absolute;
-    top:7px;
-    right:7px;
-    width:6px;
-    height:6px;
-    background:#a78bfa;
-    border-radius:50%;
-}
-
 .user-mini{
     display:flex;
     align-items:center;
@@ -205,6 +172,17 @@ body{
 .content{
     padding:32px 35px 50px;
     max-width:1500px;
+}
+
+.status-message{
+    display:none;
+    margin-bottom:20px;
+    padding:12px 15px;
+    border-radius:10px;
+    background:rgba(124,58,237,.1);
+    border:1px solid rgba(124,58,237,.25);
+    color:#c4b5fd;
+    font-size:12px;
 }
 
 .welcome{
@@ -269,6 +247,8 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    color:#aaaabd;
+    font-size:12px;
 }
 
 .stat-icon{
@@ -406,10 +386,6 @@ body{
     background:transparent;
     color:#c4b5fd;
     cursor:pointer;
-}
-
-.edit-btn:hover{
-    background:rgba(139,92,246,.1);
 }
 
 .video-card{
@@ -628,21 +604,6 @@ body{
     text-align:center;
 }
 
-.status-message{
-    display:none;
-    margin-bottom:20px;
-    padding:12px 15px;
-    border-radius:10px;
-    background:rgba(124,58,237,.1);
-    border:1px solid rgba(124,58,237,.25);
-    color:#c4b5fd;
-    font-size:12px;
-}
-
-.mobile-menu{
-    display:none;
-}
-
 @media(max-width:1100px){
     .stats{
         grid-template-columns:repeat(2,1fr);
@@ -672,8 +633,7 @@ body{
     }
 
     .menu-title,
-    .nav-item span:not(.nav-icon),
-    .badge{
+    .nav-item span:not(.nav-icon){
         display:none;
     }
 
@@ -741,9 +701,7 @@ body{
         Talent<span>Exchange</span>
     </div>
 
-    <div class="menu-title">
-        Workspace
-    </div>
+    <div class="menu-title">Workspace</div>
 
     <nav class="nav-menu">
 
@@ -808,24 +766,17 @@ body{
 
 </aside>
 
+
 <main class="main">
 
 <header class="topbar">
 
     <div class="page-title">
         <h1>Dashboard</h1>
-
-        <p>
-            Manage your skills, connections and learning journey.
-        </p>
+        <p>Manage your skills, connections and learning journey.</p>
     </div>
 
     <div class="top-actions">
-
-        <div class="notification">
-            ♢
-            <span class="notification-dot"></span>
-        </div>
 
         <div class="user-mini">
 
@@ -834,15 +785,8 @@ body{
             </div>
 
             <div class="user-mini-text">
-
-                <strong id="topName">
-                    Loading...
-                </strong>
-
-                <span>
-                    Talent Exchange Member
-                </span>
-
+                <strong id="topName">Loading...</strong>
+                <span>Talent Exchange Member</span>
             </div>
 
         </div>
@@ -850,6 +794,7 @@ body{
     </div>
 
 </header>
+
 
 <div class="content">
 
@@ -887,94 +832,65 @@ body{
 
     </section>
 
+
     <section class="stats">
 
         <div class="stat-card">
-
             <div class="stat-top">
                 <span>Skills Offered</span>
-
-                <div class="stat-icon">
-                    ◆
-                </div>
+                <div class="stat-icon">◆</div>
             </div>
 
             <h3 id="offeredCount">0</h3>
-
-            <p>
-                Skills you can teach
-            </p>
-
+            <p>Skills you can teach</p>
         </div>
 
-        <div class="stat-card">
 
+        <div class="stat-card">
             <div class="stat-top">
                 <span>Learning</span>
-
-                <div class="stat-icon">
-                    ◇
-                </div>
+                <div class="stat-icon">◇</div>
             </div>
 
             <h3 id="learningCount">0</h3>
-
-            <p>
-                Skills you want to learn
-            </p>
-
+            <p>Skills you want to learn</p>
         </div>
 
-        <div class="stat-card">
 
+        <div class="stat-card">
             <div class="stat-top">
                 <span>Connections</span>
-
-                <div class="stat-icon">
-                    ♧
-                </div>
+                <div class="stat-icon">♧</div>
             </div>
 
             <h3 id="connectionCount">0</h3>
-
-            <p>
-                Active connections
-            </p>
-
+            <p>Active connections</p>
         </div>
 
-        <div class="stat-card">
 
+        <div class="stat-card">
             <div class="stat-top">
                 <span>Skill Evidence</span>
-
-                <div class="stat-icon">
-                    ✓
-                </div>
+                <div class="stat-icon">✓</div>
             </div>
 
             <h3 id="evidenceCount">0</h3>
-
-            <p>
-                Certificates / videos
-            </p>
-
+            <p>Certificates / videos</p>
         </div>
 
     </section>
+
 
     <section class="dashboard-grid">
 
         <div class="panel">
 
             <div class="panel-header">
-
                 <h3>Your Profile</h3>
 
                 <a href="profile.html">
                     Edit
                 </a>
-
             </div>
 
             <div class="profile">
@@ -994,11 +910,8 @@ body{
                     </p>
 
                     <div class="profile-status">
-
                         <span class="online-dot"></span>
-
                         Profile Active
-
                     </div>
 
                 </div>
@@ -1015,14 +928,16 @@ body{
                 </span>
             </div>
 
-            <button class="edit-btn"
-                    onclick="location.href='profile.html'">
+            <button
+                class="edit-btn"
+                onclick="location.href='profile.html'">
 
                 Edit Profile
 
             </button>
 
         </div>
+
 
         <div class="panel">
 
@@ -1041,11 +956,7 @@ body{
                 <div class="video-card">
 
                     <div class="video-preview">
-
-                        <div class="play">
-                            ▶
-                        </div>
-
+                        <div class="play">▶</div>
                     </div>
 
                     <div class="video-info">
@@ -1064,14 +975,16 @@ body{
 
             </div>
 
-            <button class="add-video"
-                    onclick="location.href='profile.html#videos'">
+            <button
+                class="add-video"
+                onclick="location.href='profile.html#videos'">
 
                 + Add Skill Demonstration Video
 
             </button>
 
         </div>
+
 
         <div class="panel">
 
@@ -1094,6 +1007,7 @@ body{
             </div>
 
         </div>
+
 
         <div class="panel">
 
@@ -1119,15 +1033,14 @@ body{
 
     </section>
 
+
     <section class="panel communication">
 
         <div class="panel-header">
 
             <div>
 
-                <h3>
-                    Communication
-                </h3>
+                <h3>Communication</h3>
 
                 <p style="color:#777789;font-size:11px;margin-top:5px;">
                     Communicate with accepted connections.
@@ -1141,13 +1054,9 @@ body{
 
             <div class="communication-card">
 
-                <div class="icon">
-                    ◌
-                </div>
+                <div class="icon">◌</div>
 
-                <h4>
-                    Real-Time Chat
-                </h4>
+                <h4>Real-Time Chat</h4>
 
                 <p>
                     Send and receive messages instantly with your connections.
@@ -1155,15 +1064,12 @@ body{
 
             </div>
 
+
             <div class="communication-card">
 
-                <div class="icon">
-                    🎙
-                </div>
+                <div class="icon">Audio</div>
 
-                <h4>
-                    Audio Call
-                </h4>
+                <h4>Audio Call</h4>
 
                 <p>
                     Start a real-time audio conversation with another member.
@@ -1171,15 +1077,12 @@ body{
 
             </div>
 
+
             <div class="communication-card">
 
-                <div class="icon">
-                    ▣
-                </div>
+                <div class="icon">Video</div>
 
-                <h4>
-                    Video Call
-                </h4>
+                <h4>Video Call</h4>
 
                 <p>
                     Use your camera and microphone for real-time video communication.
@@ -1195,67 +1098,74 @@ body{
 
 </main>
 
+
 <script type="module">
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+/* =====================================================
+   USE THE SAME FIREBASE CONFIG AS THE REST OF THE APP
+===================================================== */
 
 import {
-    getAuth,
+    auth,
+    db
+} from "./js/firebase-config.js";
+
+import {
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
-    getFirestore,
     doc,
     getDoc,
     collection,
     query,
     where,
-    getDocs
+    getDocs,
+    updateDoc,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-const firebaseConfig = {
-    apiKey: "AIzaSyArReAuSxobQHOprk87Fte6NmJSVAKcND0",
-    authDomain: "talent-exchange-4456e.firebaseapp.com",
-    projectId: "talent-exchange-4456e",
-    storageBucket: "talent-exchange-4456e.firebasestorage.app",
-    messagingSenderId: "617029447041",
-    appId: "1:617029447041:web:35beb28f9949e2fb594c80"
-};
-
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-
-/* =========================
+/* =====================================================
    AUTH STATE
-========================= */
+===================================================== */
+
+let dashboardUser = null;
+
+
+/*
+   IMPORTANT:
+   Do not use localStorage to decide whether the user
+   is logged in.
+
+   Firebase Auth is the real source of truth.
+*/
 
 onAuthStateChanged(auth, async (firebaseUser) => {
 
     if (!firebaseUser) {
 
-        window.location.href = "login.html";
+        console.log("No Firebase user. Redirecting to login.");
+
+        window.location.replace("login.html");
 
         return;
     }
+
+    console.log("Firebase user authenticated:", firebaseUser.uid);
+
+    dashboardUser = firebaseUser;
 
     await loadUserDashboard(firebaseUser);
 
 });
 
 
-/* =========================
-   LOAD USER
-========================= */
+/* =====================================================
+   LOAD USER DASHBOARD
+===================================================== */
 
 async function loadUserDashboard(firebaseUser) {
 
@@ -1278,92 +1188,110 @@ async function loadUserDashboard(firebaseUser) {
         }
 
 
-        const user = userSnap.data();
+        const user =
+            userSnap.data();
 
 
-        /* =========================
+        /* =================================================
            ACCOUNT STATUS
-        ========================= */
+        ================================================= */
 
-        if (
-            user.status &&
-            user.status !== "approved"
-        ) {
+        const accountStatus =
+            user.status || "approved";
 
-            if (user.status === "pending") {
 
-                showStatus(
-                    "Your account is waiting for admin approval."
-                );
+        if (accountStatus === "pending") {
 
-            }
+            showStatus(
+                "Your account is waiting for admin approval."
+            );
 
-            if (user.status === "rejected") {
+            await signOut(auth);
 
-                showStatus(
-                    "Your account has not been approved."
-                );
+            setTimeout(() => {
+                window.location.replace("login.html");
+            }, 1500);
 
-            }
-
-            if (user.status === "disabled") {
-
-                showStatus(
-                    "Your account has been disabled."
-                );
-
-            }
-
+            return;
         }
 
 
-        /* =========================
+        if (accountStatus === "rejected") {
+
+            showStatus(
+                "Your account has not been approved by the administrator."
+            );
+
+            await signOut(auth);
+
+            setTimeout(() => {
+                window.location.replace("login.html");
+            }, 1500);
+
+            return;
+        }
+
+
+        if (accountStatus === "disabled") {
+
+            showStatus(
+                "Your account has been disabled by the administrator."
+            );
+
+            await signOut(auth);
+
+            setTimeout(() => {
+                window.location.replace("login.html");
+            }, 1500);
+
+            return;
+        }
+
+
+        /* =================================================
            USER DETAILS
-        ========================= */
+        ================================================= */
 
         const name =
             user.name ||
             firebaseUser.displayName ||
             "User";
 
+
         const email =
             user.email ||
             firebaseUser.email ||
             "No email";
+
 
         const bio =
             user.bio ||
             "Add a short description about yourself.";
 
 
-        document.getElementById(
-            "welcomeName"
-        ).textContent = name;
+        document.getElementById("welcomeName")
+            .textContent = name;
 
 
-        document.getElementById(
-            "topName"
-        ).textContent = name;
+        document.getElementById("topName")
+            .textContent = name;
 
 
-        document.getElementById(
-            "profileName"
-        ).textContent = name;
+        document.getElementById("profileName")
+            .textContent = name;
 
 
-        document.getElementById(
-            "profileEmail"
-        ).textContent = email;
+        document.getElementById("profileEmail")
+            .textContent = email;
 
 
-        document.getElementById(
-            "profileBio"
-        ).textContent = bio;
+        document.getElementById("profileBio")
+            .textContent = bio;
 
 
-        /* =========================
+        /* =================================================
            AVATAR
-        ========================= */
+        ================================================= */
 
         const firstLetter =
             name.charAt(0).toUpperCase();
@@ -1383,9 +1311,9 @@ async function loadUserDashboard(firebaseUser) {
         );
 
 
-        /* =========================
+        /* =================================================
            SKILLS
-        ========================= */
+        ================================================= */
 
         const offeredSkills =
             Array.isArray(user.offeredSkills)
@@ -1403,16 +1331,12 @@ async function loadUserDashboard(firebaseUser) {
                 );
 
 
-        document.getElementById(
-            "offeredCount"
-        ).textContent =
-            offeredSkills.length;
+        document.getElementById("offeredCount")
+            .textContent = offeredSkills.length;
 
 
-        document.getElementById(
-            "learningCount"
-        ).textContent =
-            learningSkills.length;
+        document.getElementById("learningCount")
+            .textContent = learningSkills.length;
 
 
         renderSkills(
@@ -1421,9 +1345,9 @@ async function loadUserDashboard(firebaseUser) {
         );
 
 
-        /* =========================
-           EVIDENCE
-        ========================= */
+        /* =================================================
+           EVIDENCE + VIDEOS
+        ================================================= */
 
         const evidence =
             Array.isArray(user.evidence)
@@ -1437,36 +1361,41 @@ async function loadUserDashboard(firebaseUser) {
                 : [];
 
 
-        document.getElementById(
-            "evidenceCount"
-        ).textContent =
+        document.getElementById("evidenceCount")
+            .textContent =
             evidence.length + videos.length;
 
 
         renderVideos(videos);
 
 
-        /* =========================
+        /* =================================================
            REQUESTS
-        ========================= */
+        ================================================= */
 
         await loadRequests(firebaseUser.uid);
 
 
-        /* =========================
+        /* =================================================
            CONNECTIONS
-        ========================= */
+        ================================================= */
 
         await loadConnections(firebaseUser.uid);
+
+
+        console.log("Dashboard loaded successfully.");
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Dashboard loading error:",
+            error
+        );
 
         showStatus(
-            "Unable to load your dashboard. Please try again."
+            "Unable to load your dashboard. Please refresh and try again."
         );
 
     }
@@ -1474,9 +1403,9 @@ async function loadUserDashboard(firebaseUser) {
 }
 
 
-/* =========================
+/* =====================================================
    AVATAR
-========================= */
+===================================================== */
 
 function setAvatar(
     elementId,
@@ -1488,12 +1417,17 @@ function setAvatar(
         document.getElementById(elementId);
 
 
+    if (!element) return;
+
+
     if (photoUrl) {
 
         element.innerHTML =
-            `<img src="${photoUrl}" alt="Profile photo">`;
+            `<img src="${escapeHtml(photoUrl)}" alt="Profile photo">`;
 
-    } else {
+    }
+
+    else {
 
         element.textContent =
             letter;
@@ -1503,9 +1437,9 @@ function setAvatar(
 }
 
 
-/* =========================
+/* =====================================================
    SKILLS
-========================= */
+===================================================== */
 
 function renderSkills(
     offeredSkills,
@@ -1561,18 +1495,23 @@ function addSkill(
     const element =
         document.createElement("span");
 
-    element.className = "skill";
 
-    element.textContent = text;
+    element.className =
+        "skill";
+
+
+    element.textContent =
+        text;
+
 
     container.appendChild(element);
 
 }
 
 
-/* =========================
+/* =====================================================
    VIDEOS
-========================= */
+===================================================== */
 
 function renderVideos(videos) {
 
@@ -1597,8 +1536,23 @@ function renderVideos(videos) {
         const card =
             document.createElement("div");
 
+
         card.className =
             "video-card";
+
+
+        const title =
+            escapeHtml(
+                video.title ||
+                "Skill Demonstration"
+            );
+
+
+        const skill =
+            escapeHtml(
+                video.skill ||
+                "Skill video"
+            );
 
 
         card.innerHTML = `
@@ -1614,15 +1568,11 @@ function renderVideos(videos) {
             <div class="video-info">
 
                 <strong>
-                    ${escapeHtml(
-                        video.title || "Skill Demonstration"
-                    )}
+                    ${title}
                 </strong>
 
                 <p>
-                    ${escapeHtml(
-                        video.skill || "Skill video"
-                    )}
+                    ${skill}
                 </p>
 
             </div>
@@ -1637,9 +1587,9 @@ function renderVideos(videos) {
 }
 
 
-/* =========================
+/* =====================================================
    REQUESTS
-========================= */
+===================================================== */
 
 async function loadRequests(uid) {
 
@@ -1652,14 +1602,25 @@ async function loadRequests(uid) {
     try {
 
         const requestsRef =
-            collection(db, "Requests");
+            collection(
+                db,
+                "Requests"
+            );
 
 
         const requestQuery =
             query(
                 requestsRef,
-                where("receiverId", "==", uid),
-                where("status", "==", "pending")
+                where(
+                    "receiverId",
+                    "==",
+                    uid
+                ),
+                where(
+                    "status",
+                    "==",
+                    "pending"
+                )
             );
 
 
@@ -1693,6 +1654,7 @@ async function loadRequests(uid) {
             const item =
                 document.createElement("div");
 
+
             item.className =
                 "request";
 
@@ -1705,10 +1667,15 @@ async function loadRequests(uid) {
             item.innerHTML = `
 
                 <div class="request-avatar">
+
                     ${escapeHtml(
-                        senderName.charAt(0).toUpperCase()
+                        senderName
+                            .charAt(0)
+                            .toUpperCase()
                     )}
+
                 </div>
+
 
                 <div class="request-info">
 
@@ -1722,16 +1689,24 @@ async function loadRequests(uid) {
 
                 </div>
 
+
                 <div class="request-actions">
 
-                    <button class="accept"
-                            data-id="${requestDoc.id}">
+                    <button
+                        class="accept"
+                        data-id="${requestDoc.id}">
+
                         Accept
+
                     </button>
 
-                    <button class="decline"
-                            data-id="${requestDoc.id}">
+
+                    <button
+                        class="decline"
+                        data-id="${requestDoc.id}">
+
                         ×
+
                     </button>
 
                 </div>
@@ -1742,14 +1717,18 @@ async function loadRequests(uid) {
             item.querySelector(".accept")
                 .addEventListener(
                     "click",
-                    () => acceptRequest(requestDoc.id)
+                    () => acceptRequest(
+                        requestDoc.id
+                    )
                 );
 
 
             item.querySelector(".decline")
                 .addEventListener(
                     "click",
-                    () => declineRequest(requestDoc.id)
+                    () => declineRequest(
+                        requestDoc.id
+                    )
                 );
 
 
@@ -1770,7 +1749,7 @@ async function loadRequests(uid) {
         container.innerHTML = `
 
             <div class="request-empty">
-                Requests will appear here.
+                Requests could not be loaded.
             </div>
 
         `;
@@ -1780,35 +1759,177 @@ async function loadRequests(uid) {
 }
 
 
-/* =========================
+/* =====================================================
    ACCEPT REQUEST
-========================= */
+===================================================== */
 
 async function acceptRequest(requestId) {
 
-    alert(
-        "Request actions will be connected to Firebase next."
-    );
+    try {
+
+        const requestRef =
+            doc(
+                db,
+                "Requests",
+                requestId
+            );
+
+
+        const requestSnap =
+            await getDoc(requestRef);
+
+
+        if (!requestSnap.exists()) {
+
+            alert("Request no longer exists.");
+
+            return;
+        }
+
+
+        const request =
+            requestSnap.data();
+
+
+        const senderId =
+            request.senderId;
+
+
+        const receiverId =
+            request.receiverId;
+
+
+        if (
+            !senderId ||
+            !receiverId
+        ) {
+
+            alert(
+                "Invalid request data."
+            );
+
+            return;
+        }
+
+
+        /* =============================================
+           UPDATE REQUEST
+        ============================================= */
+
+        await updateDoc(
+            requestRef,
+            {
+                status:"accepted",
+                respondedAt:serverTimestamp()
+            }
+        );
+
+
+        /* =============================================
+           CREATE CONNECTION
+        ============================================= */
+
+        await addDoc(
+            collection(
+                db,
+                "Connections"
+            ),
+            {
+                user1Id:senderId,
+                user2Id:receiverId,
+                userIds:[
+                    senderId,
+                    receiverId
+                ],
+                createdAt:serverTimestamp()
+            }
+        );
+
+
+        alert(
+            "Request accepted successfully."
+        );
+
+
+        await loadRequests(
+            dashboardUser.uid
+        );
+
+
+        await loadConnections(
+            dashboardUser.uid
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Accept request error:",
+            error
+        );
+
+
+        alert(
+            "Unable to accept request. Check Firestore rules."
+        );
+
+    }
 
 }
 
 
-/* =========================
+/* =====================================================
    DECLINE REQUEST
-========================= */
+===================================================== */
 
 async function declineRequest(requestId) {
 
-    alert(
-        "Request actions will be connected to Firebase next."
-    );
+    try {
+
+        const requestRef =
+            doc(
+                db,
+                "Requests",
+                requestId
+            );
+
+
+        await updateDoc(
+            requestRef,
+            {
+                status:"rejected",
+                respondedAt:serverTimestamp()
+            }
+        );
+
+
+        await loadRequests(
+            dashboardUser.uid
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Decline request error:",
+            error
+        );
+
+
+        alert(
+            "Unable to decline request."
+        );
+
+    }
 
 }
 
 
-/* =========================
+/* =====================================================
    CONNECTIONS
-========================= */
+===================================================== */
 
 async function loadConnections(uid) {
 
@@ -1821,20 +1942,31 @@ async function loadConnections(uid) {
     try {
 
         const connectionsRef =
-            collection(db, "Connections");
+            collection(
+                db,
+                "Connections"
+            );
 
 
         const q1 =
             query(
                 connectionsRef,
-                where("user1Id", "==", uid)
+                where(
+                    "user1Id",
+                    "==",
+                    uid
+                )
             );
 
 
         const q2 =
             query(
                 connectionsRef,
-                where("user2Id", "==", uid)
+                where(
+                    "user2Id",
+                    "==",
+                    uid
+                )
             );
 
 
@@ -1851,28 +1983,48 @@ async function loadConnections(uid) {
         const connections = [];
 
 
-        snapshot1.forEach(docSnap => {
+        snapshot1.forEach(
+            docSnap => {
 
-            connections.push({
-                id:docSnap.id,
-                data:docSnap.data(),
-                otherId:
-                    docSnap.data().user2Id
-            });
-
-        });
+                const data =
+                    docSnap.data();
 
 
-        snapshot2.forEach(docSnap => {
+                connections.push({
 
-            connections.push({
-                id:docSnap.id,
-                data:docSnap.data(),
-                otherId:
-                    docSnap.data().user1Id
-            });
+                    id:docSnap.id,
 
-        });
+                    data:data,
+
+                    otherId:
+                        data.user2Id
+
+                });
+
+            }
+        );
+
+
+        snapshot2.forEach(
+            docSnap => {
+
+                const data =
+                    docSnap.data();
+
+
+                connections.push({
+
+                    id:docSnap.id,
+
+                    data:data,
+
+                    otherId:
+                        data.user1Id
+
+                });
+
+            }
+        );
 
 
         document.getElementById(
@@ -1881,13 +2033,19 @@ async function loadConnections(uid) {
             connections.length;
 
 
-        if (connections.length === 0) {
+        if (
+            connections.length === 0
+        ) {
 
             container.innerHTML = `
 
                 <div class="connection-empty">
+
                     No connections yet.<br>
-                    Find a skill and start exchanging knowledge.
+
+                    Find a skill and start
+                    exchanging knowledge.
+
                 </div>
 
             `;
@@ -1923,10 +2081,14 @@ async function loadConnections(uid) {
 
 
                 const personSnap =
-                    await getDoc(personRef);
+                    await getDoc(
+                        personRef
+                    );
 
 
-                if (personSnap.exists()) {
+                if (
+                    personSnap.exists()
+                ) {
 
                     const person =
                         personSnap.data();
@@ -1947,17 +2109,28 @@ async function loadConnections(uid) {
 
             catch(error) {
 
-                console.error(error);
+                console.error(
+                    "Connection user error:",
+                    error
+                );
 
             }
 
 
             const item =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             item.className =
                 "connection";
+
+
+            const safePhoto =
+                personPhoto
+                    ? escapeHtml(personPhoto)
+                    : "";
 
 
             item.innerHTML = `
@@ -1965,9 +2138,17 @@ async function loadConnections(uid) {
                 <div class="connection-avatar">
 
                     ${
-                        personPhoto
-                        ? `<img src="${personPhoto}" alt="Profile photo">`
-                        : escapeHtml(
+                        safePhoto
+
+                        ?
+
+                        `<img
+                            src="${safePhoto}"
+                            alt="Profile photo">`
+
+                        :
+
+                        escapeHtml(
                             personName
                                 .charAt(0)
                                 .toUpperCase()
@@ -1975,6 +2156,7 @@ async function loadConnections(uid) {
                     }
 
                 </div>
+
 
                 <div class="connection-info">
 
@@ -1987,6 +2169,7 @@ async function loadConnections(uid) {
                     </span>
 
                 </div>
+
 
                 <button class="chat-btn">
                     Chat
@@ -2006,10 +2189,12 @@ async function loadConnections(uid) {
                         connection.otherId
                     );
 
+
                     localStorage.setItem(
                         "activeChatName",
                         personName
                     );
+
 
                     window.location.href =
                         "chat.html";
@@ -2018,13 +2203,15 @@ async function loadConnections(uid) {
             );
 
 
-            container.appendChild(item);
+            container.appendChild(
+                item
+            );
 
         }
 
     }
 
-    catch (error) {
+    catch(error) {
 
         console.error(
             "Connection loading error:",
@@ -2040,7 +2227,9 @@ async function loadConnections(uid) {
         container.innerHTML = `
 
             <div class="connection-empty">
-                Connections will appear here.
+
+                Connections could not be loaded.
+
             </div>
 
         `;
@@ -2050,9 +2239,9 @@ async function loadConnections(uid) {
 }
 
 
-/* =========================
-   STATUS
-========================= */
+/* =====================================================
+   STATUS MESSAGE
+===================================================== */
 
 function showStatus(message) {
 
@@ -2072,58 +2261,88 @@ function showStatus(message) {
 }
 
 
-/* =========================
+/* =====================================================
    ESCAPE HTML
-========================= */
+===================================================== */
 
 function escapeHtml(value) {
 
     return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+===================================================== */
 
 document.getElementById(
     "logoutBtn"
 ).addEventListener(
     "click",
-    async (event) => {
+    async event => {
 
         event.preventDefault();
+
 
         try {
 
             await signOut(auth);
 
+
             localStorage.removeItem(
                 "userProfile"
             );
+
+
+            localStorage.removeItem(
+                "isLoggedIn"
+            );
+
 
             localStorage.removeItem(
                 "activeChatId"
             );
 
+
             localStorage.removeItem(
                 "activeChatName"
             );
 
-            window.location.href =
-                "login.html";
+
+            window.location.replace(
+                "login.html"
+            );
 
         }
 
         catch(error) {
 
-            console.error(error);
+            console.error(
+                "Logout error:",
+                error
+            );
+
 
             alert(
                 "Logout failed. Please try again."
