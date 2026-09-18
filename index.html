@@ -1,322 +1,773 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07050d">
+<title>Talent Exchange</title>
 
-    <title>Talent Exchange</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #07070b;
-            color: #ffffff;
-            overflow: hidden;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        /* =========================================
-           SPLASH SCREEN
-        ========================================= */
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: "Inter", sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(101, 45, 190, .22), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(25, 90, 220, .15), transparent 35%),
+        linear-gradient(135deg, #030305 0%, #090512 48%, #03050a 100%);
+}
 
-        .splash-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
+/* Background */
 
-            background: #07070b;
+.background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+.grid {
+    position: absolute;
+    inset: 0;
+    opacity: .12;
+    background-image:
+        linear-gradient(rgba(140, 100, 255, .15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(140, 100, 255, .15) 1px, transparent 1px);
+    background-size: 70px 70px;
+    mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
 
-            animation: hideSplash 0.8s ease forwards;
-            animation-delay: 2.5s;
-        }
+.glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .18;
+}
 
-        .splash-title {
-            font-size: clamp(42px, 7vw, 78px);
-            font-weight: 600;
-            letter-spacing: -2px;
-            text-align: center;
+.glow.one {
+    background: #6d28d9;
+    top: -180px;
+    left: -150px;
+}
 
-            animation: titleAppear 1.2s ease;
-        }
+.glow.two {
+    background: #2563eb;
+    right: -200px;
+    bottom: -180px;
+}
 
-        .made-by {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            right: 0;
+/* Particles */
 
-            text-align: center;
+#particles {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
 
-            color: #77777f;
-            font-size: 12px;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
+/* Navigation */
 
-        /* =========================================
-           MAIN SCREEN
-        ========================================= */
+nav {
+    position: relative;
+    z-index: 10;
+    width: min(1200px, 92%);
+    margin: auto;
+    padding: 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .main-screen {
-            min-height: 100vh;
-            width: 100%;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -.3px;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+.logo-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(135deg, rgba(139,92,246,.9), rgba(37,99,235,.8));
+    box-shadow:
+        0 0 25px rgba(124,58,237,.35),
+        inset 0 1px 1px rgba(255,255,255,.35);
+}
 
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(124, 58, 237, 0.10),
-                    transparent 45%
-                ),
-                #07070b;
+.logo-mark span {
+    width: 15px;
+    height: 15px;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: relative;
+}
 
-            opacity: 0;
+.logo-mark span::after {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 2px;
+    background: white;
+    right: -5px;
+    bottom: -3px;
+    transform: rotate(45deg);
+    border-radius: 5px;
+}
 
-            animation: showMain 0.8s ease forwards;
-            animation-delay: 2.8s;
-        }
+.nav-status {
+    padding: 8px 14px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 30px;
+    background: rgba(255,255,255,.035);
+    backdrop-filter: blur(15px);
+    color: #aeb2c7;
+    font-size: 12px;
+}
 
-        .main-content {
-            width: 100%;
-            max-width: 600px;
+.status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #7c3aed;
+    box-shadow: 0 0 12px #7c3aed;
+    margin-right: 7px;
+}
 
-            padding: 30px;
+/* Hero */
 
-            text-align: center;
-        }
+.hero {
+    position: relative;
+    z-index: 5;
+    min-height: calc(100vh - 94px);
+    width: min(1200px, 92%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 30px;
+}
 
-        .main-title {
-            font-size: clamp(38px, 6vw, 62px);
-            font-weight: 600;
-            letter-spacing: -2px;
+.hero-content {
+    transform: translateY(-20px);
+}
 
-            margin-bottom: 14px;
-        }
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 13px;
+    border: 1px solid rgba(139,92,246,.22);
+    background: rgba(124,58,237,.07);
+    border-radius: 30px;
+    color: #b9a6f5;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .4px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 35px rgba(76,29,149,.08);
+}
 
-        .description {
-            max-width: 470px;
+.eyebrow i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #8b5cf6;
+    box-shadow: 0 0 10px #8b5cf6;
+}
 
-            margin: 0 auto 38px;
+h1 {
+    font-size: clamp(52px, 7vw, 88px);
+    line-height: .95;
+    letter-spacing: -5px;
+    font-weight: 800;
+    max-width: 720px;
+}
 
-            color: #85858f;
-            font-size: 14px;
-            line-height: 1.7;
-        }
+h1 .gradient {
+    background: linear-gradient(100deg, #ffffff 10%, #b69cff 48%, #6796ff 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
 
-        /* =========================================
-           BUTTONS
-        ========================================= */
+.hero-text {
+    margin-top: 27px;
+    max-width: 570px;
+    color: #9295a8;
+    font-size: 16px;
+    line-height: 1.8;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-        }
+.hero-buttons {
+    display: flex;
+    gap: 14px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
 
-        .button {
-            width: 150px;
+.btn {
+    position: relative;
+    overflow: hidden;
+    border: 0;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    padding: 14px 23px;
+    border-radius: 13px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: .35s ease;
+}
 
-            padding: 13px 20px;
+.btn-primary {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    box-shadow:
+        0 12px 35px rgba(99,45,200,.3),
+        inset 0 1px 1px rgba(255,255,255,.3);
+}
 
-            border-radius: 9px;
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 18px 45px rgba(99,45,200,.45),
+        0 0 25px rgba(124,58,237,.2);
+}
 
-            text-decoration: none;
+.btn-secondary {
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.045);
+    backdrop-filter: blur(15px);
+    color: #d7d9e4;
+}
 
-            font-size: 13px;
-            font-weight: 600;
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,.08);
+    border-color: rgba(139,92,246,.35);
+}
 
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                border-color 0.2s ease;
-        }
+/* 3D area */
 
-        .login-button {
-            background: #7c3aed;
-            color: #ffffff;
+.visual {
+    position: relative;
+    height: 600px;
+    perspective: 1000px;
+}
 
-            border: 1px solid #7c3aed;
-        }
+#three-container {
+    position: absolute;
+    inset: 0;
+}
 
-        .login-button:hover {
-            background: #6d28d9;
-            transform: translateY(-2px);
-        }
+.floating-card {
+    position: absolute;
+    padding: 15px 18px;
+    border: 1px solid rgba(255,255,255,.11);
+    background: rgba(13,10,24,.48);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35),
+        inset 0 1px 1px rgba(255,255,255,.08);
+    z-index: 4;
+    transition: transform .2s ease;
+}
 
-        .register-button {
-            background: transparent;
-            color: #ffffff;
+.card-title {
+    font-size: 11px;
+    color: #8f91a3;
+    margin-bottom: 6px;
+}
 
-            border: 1px solid #363640;
-        }
+.card-value {
+    font-size: 16px;
+    font-weight: 700;
+}
 
-        .register-button:hover {
-            background: #15151d;
-            border-color: #555560;
+.card-one {
+    top: 18%;
+    right: 5%;
+    animation: floatOne 5s ease-in-out infinite;
+}
 
-            transform: translateY(-2px);
-        }
+.card-two {
+    bottom: 20%;
+    left: 3%;
+    animation: floatTwo 6s ease-in-out infinite;
+}
 
-        /* =========================================
-           ANIMATIONS
-        ========================================= */
+.card-three {
+    top: 47%;
+    right: -2%;
+    animation: floatThree 7s ease-in-out infinite;
+}
 
-        @keyframes titleAppear {
+@keyframes floatOne {
+    0%,100% { transform: translateY(0) rotate(2deg); }
+    50% { transform: translateY(-15px) rotate(-1deg); }
+}
 
-            0% {
-                opacity: 0;
-                transform: scale(0.96);
-            }
+@keyframes floatTwo {
+    0%,100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(18px) rotate(1deg); }
+}
 
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+@keyframes floatThree {
+    0%,100% { transform: translateY(0) rotate(1deg); }
+    50% { transform: translateY(-12px) rotate(-2deg); }
+}
 
-        @keyframes hideSplash {
+/* Bottom info */
 
-            0% {
-                opacity: 1;
-                visibility: visible;
-            }
+.bottom {
+    position: relative;
+    z-index: 5;
+    width: min(1200px, 92%);
+    margin: -30px auto 0;
+    padding-bottom: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #666979;
+    font-size: 11px;
+}
 
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
+.bottom strong {
+    color: #999caf;
+    font-weight: 600;
+}
 
-        @keyframes showMain {
+/* Responsive */
 
-            0% {
-                opacity: 0;
-                transform: translateY(8px);
-            }
+@media (max-width: 850px) {
+    nav {
+        padding: 20px 0;
+    }
 
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .hero {
+        grid-template-columns: 1fr;
+        padding-top: 35px;
+    }
 
-        /* =========================================
-           MOBILE
-        ========================================= */
+    .hero-content {
+        text-align: center;
+        transform: none;
+    }
 
-        @media (max-width: 600px) {
+    .eyebrow {
+        margin-bottom: 20px;
+    }
 
-            .splash-title {
-                font-size: 42px;
-                letter-spacing: -1.5px;
-                padding: 20px;
-            }
+    h1 {
+        letter-spacing: -3px;
+    }
 
-            .made-by {
-                bottom: 24px;
-            }
+    .hero-text {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-            .main-content {
-                padding: 25px;
-            }
+    .hero-buttons {
+        justify-content: center;
+    }
 
-            .main-title {
-                font-size: 38px;
-            }
+    .visual {
+        height: 430px;
+        margin-top: -20px;
+    }
 
-            .description {
-                font-size: 13px;
-                margin-bottom: 30px;
-            }
+    .bottom {
+        justify-content: center;
+        text-align: center;
+    }
 
-            .buttons {
-                flex-direction: column;
-            }
+    .bottom span:last-child {
+        display: none;
+    }
 
-            .button {
-                width: 210px;
-            }
-        }
-    </style>
+    .card-three {
+        right: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .nav-status {
+        display: none;
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+
+    .hero-text {
+        font-size: 14px;
+    }
+
+    .visual {
+        height: 360px;
+    }
+
+    .floating-card {
+        transform: scale(.85);
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- =========================================
-         SPLASH SCREEN
-    ========================================= -->
+<div class="background">
+    <div class="grid"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+</div>
 
-    <div class="splash-screen">
+<canvas id="particles"></canvas>
 
-        <div class="splash-title">
-            Talent Exchange
+<nav>
+    <div class="logo">
+        <div class="logo-mark">
+            <span></span>
         </div>
-
-        <div class="made-by">
-            Made by Govardhan
-        </div>
-
+        <span>Talent Exchange</span>
     </div>
 
+    <div class="nav-status">
+        <span class="status-dot"></span>
+        Skill network online
+    </div>
+</nav>
 
-    <!-- =========================================
-         MAIN SCREEN
-    ========================================= -->
+<main class="hero">
 
-    <main class="main-screen">
+    <section class="hero-content">
 
-        <div class="main-content">
-
-            <h1 class="main-title">
-                Talent Exchange
-            </h1>
-
-            <p class="description">
-                Share your skills, learn from others,
-                and build meaningful connections.
-            </p>
-
-
-            <div class="buttons">
-
-                <a
-                    href="login.html"
-                    class="button login-button">
-                    Login
-                </a>
-
-                <a
-                    href="register.html"
-                    class="button register-button">
-                    Register
-                </a>
-
-            </div>
-
+        <div class="eyebrow">
+            <i></i>
+            CONNECT • LEARN • EXCHANGE
         </div>
 
-    </main>
+        <h1>
+            Exchange skills.<br>
+            <span class="gradient">Build together.</span>
+        </h1>
 
+        <p class="hero-text">
+            A modern platform where students and creators can
+            discover talent, exchange knowledge, build connections,
+            and grow together.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="login.html" class="btn btn-primary">
+                Enter Talent Exchange →
+            </a>
+
+            <a href="register.html" class="btn btn-secondary">
+                Create account
+            </a>
+        </div>
+
+    </section>
+
+    <section class="visual" id="visual">
+
+        <div id="three-container"></div>
+
+        <div class="floating-card card-one">
+            <div class="card-title">ACTIVE NETWORK</div>
+            <div class="card-value">Skills × People</div>
+        </div>
+
+        <div class="floating-card card-two">
+            <div class="card-title">EXCHANGE</div>
+            <div class="card-value">Learn + Teach</div>
+        </div>
+
+        <div class="floating-card card-three">
+            <div class="card-title">CONNECTION</div>
+            <div class="card-value">Real People</div>
+        </div>
+
+    </section>
+
+</main>
+
+<div class="bottom">
+    <span>© 2026 <strong>Talent Exchange</strong></span>
+    <span>Made by Govardhan</span>
+</div>
+
+<script>
+/* =========================
+   THREE.JS 3D OBJECT
+========================= */
+
+const container = document.getElementById("three-container");
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+    45,
+    container.clientWidth / container.clientHeight,
+    0.1,
+    100
+);
+
+camera.position.z = 7;
+
+const renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true
+});
+
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(container.clientWidth, container.clientHeight);
+
+container.appendChild(renderer.domElement);
+
+/* Main futuristic object */
+
+const geometry = new THREE.IcosahedronGeometry(1.65, 2);
+
+const material = new THREE.MeshPhysicalMaterial({
+    color: 0x6d4aff,
+    roughness: 0.25,
+    metalness: 0.55,
+    transparent: true,
+    opacity: 0.88,
+    wireframe: false
+});
+
+const crystal = new THREE.Mesh(geometry, material);
+scene.add(crystal);
+
+/* Wireframe shell */
+
+const wireGeometry = new THREE.IcosahedronGeometry(1.82, 2);
+
+const wireMaterial = new THREE.MeshBasicMaterial({
+    color: 0x8b5cf6,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.22
+});
+
+const wire = new THREE.Mesh(wireGeometry, wireMaterial);
+scene.add(wire);
+
+/* Orbit rings */
+
+const ringMaterial = new THREE.MeshBasicMaterial({
+    color: 0x4f8cff,
+    transparent: true,
+    opacity: 0.28
+});
+
+const ring1 = new THREE.Mesh(
+    new THREE.TorusGeometry(2.35, 0.012, 12, 100),
+    ringMaterial
+);
+
+const ring2 = new THREE.Mesh(
+    new THREE.TorusGeometry(2.65, 0.009, 12, 100),
+    ringMaterial
+);
+
+ring1.rotation.x = Math.PI / 2.5;
+ring2.rotation.y = Math.PI / 2.8;
+
+scene.add(ring1);
+scene.add(ring2);
+
+/* Lights */
+
+const light1 = new THREE.PointLight(0x7c3aed, 5, 12);
+light1.position.set(3, 3, 4);
+scene.add(light1);
+
+const light2 = new THREE.PointLight(0x2563eb, 4, 12);
+light2.position.set(-3, -2, 3);
+scene.add(light2);
+
+const ambient = new THREE.AmbientLight(0x5d4a8c, 1.2);
+scene.add(ambient);
+
+/* Mouse interaction */
+
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+
+window.addEventListener("mousemove", (event) => {
+    mouseX = (event.clientX / window.innerWidth - 0.5);
+    mouseY = (event.clientY / window.innerHeight - 0.5);
+});
+
+/* Animation */
+
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    targetX += (mouseX - targetX) * 0.035;
+    targetY += (mouseY - targetY) * 0.035;
+
+    crystal.rotation.x += 0.0025;
+    crystal.rotation.y += 0.004;
+
+    wire.rotation.x -= 0.0015;
+    wire.rotation.y -= 0.002;
+
+    ring1.rotation.z += 0.002;
+    ring2.rotation.x -= 0.0015;
+
+    crystal.rotation.y += targetX * 0.008;
+    crystal.rotation.x += targetY * 0.004;
+
+    camera.position.x += (targetX * 0.45 - camera.position.x) * 0.025;
+    camera.position.y += (-targetY * 0.35 - camera.position.y) * 0.025;
+
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+/* Resize */
+
+window.addEventListener("resize", () => {
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(width, height);
+});
+
+/* =========================
+   PARTICLES
+========================= */
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+
+function resizeParticles() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeParticles();
+
+window.addEventListener("resize", resizeParticles);
+
+const particleCount =
+    window.innerWidth < 700 ? 45 : 85;
+
+for (let i = 0; i < particleCount; i++) {
+
+    particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 1.4 + .3,
+        speed: Math.random() * .25 + .05,
+        opacity: Math.random() * .45 + .1
+    });
+}
+
+function drawParticles() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+
+        p.y -= p.speed;
+
+        if (p.y < -5) {
+            p.y = canvas.height + 5;
+            p.x = Math.random() * canvas.width;
+        }
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+            `rgba(170,150,255,${p.opacity})`;
+
+        ctx.fill();
+    });
+
+    requestAnimationFrame(drawParticles);
+}
+
+drawParticles();
+
+/* =========================
+   PARALLAX FLOATING CARDS
+========================= */
+
+const cards =
+    document.querySelectorAll(".floating-card");
+
+window.addEventListener("mousemove", e => {
+
+    const x =
+        (e.clientX / window.innerWidth - .5) * 2;
+
+    const y =
+        (e.clientY / window.innerHeight - .5) * 2;
+
+    cards.forEach((card, index) => {
+
+        const depth = (index + 1) * 5;
+
+        card.style.transform =
+            `translate3d(${x * depth}px, ${y * depth}px, 0)
+             rotateY(${x * 4}deg)
+             rotateX(${-y * 4}deg)`;
+    });
+});
+</script>
 
 </body>
 </html>
