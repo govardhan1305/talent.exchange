@@ -1,888 +1,1189 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard | Talent Exchange</title>
+<meta name="theme-color" content="#05030a">
+<title>Dashboard — Talent Exchange</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background:#070711;
-    color:#fff;
     min-height:100vh;
+    font-family:"Inter",sans-serif;
+    color:#fff;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(124,58,237,.16),transparent 30%),
+        radial-gradient(circle at 85% 80%,rgba(37,99,235,.13),transparent 30%),
+        #040308;
+    overflow-x:hidden;
 }
+
+/* =====================================
+   BACKGROUND
+===================================== */
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+}
+
+.background-grid{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.055;
+    background-image:
+        linear-gradient(rgba(139,92,246,.35) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(139,92,246,.35) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,black,transparent 85%);
+    z-index:0;
+}
+
+.glow{
+    position:fixed;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    filter:blur(120px);
+    pointer-events:none;
+    z-index:0;
+}
+
+.glow-one{
+    left:-250px;
+    top:-200px;
+    background:#7c3aed;
+    opacity:.10;
+}
+
+.glow-two{
+    right:-250px;
+    bottom:-250px;
+    background:#2563eb;
+    opacity:.09;
+}
+
+/* =====================================
+   APP
+===================================== */
+
+.app{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+}
+
+/* =====================================
+   SIDEBAR
+===================================== */
 
 .sidebar{
     position:fixed;
     left:0;
     top:0;
-    width:250px;
-    height:100vh;
-    background:#0d0d19;
-    border-right:1px solid rgba(255,255,255,.08);
+    bottom:0;
+    width:245px;
     padding:25px 15px;
-    z-index:100;
+    border-right:1px solid rgba(255,255,255,.07);
+    background:rgba(7,5,13,.78);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    z-index:20;
+    display:flex;
+    flex-direction:column;
 }
 
-.logo{
-    font-size:22px;
-    font-weight:800;
-    padding:0 15px;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:0 10px;
     margin-bottom:40px;
 }
 
-.logo span{
-    color:#8b5cf6;
+.brand-icon{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    box-shadow:0 0 28px rgba(124,58,237,.32);
 }
 
-.menu-title{
-    color:#656576;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    padding:0 15px;
-    margin-bottom:12px;
+.brand-icon::before{
+    content:"";
+    width:14px;
+    height:14px;
+    border:2px solid white;
+    border-radius:50%;
 }
 
-.nav-menu{
+.brand-name{
+    font-size:15px;
+    font-weight:700;
+}
+
+.nav-label{
+    padding:0 11px;
+    margin-bottom:10px;
+    color:#454958;
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:1.2px;
+}
+
+.nav{
     display:flex;
     flex-direction:column;
     gap:5px;
 }
 
 .nav-item{
+    position:relative;
     display:flex;
     align-items:center;
-    gap:13px;
-    padding:13px 15px;
+    gap:12px;
+    width:100%;
+    padding:11px 12px;
     border-radius:11px;
-    color:#9b9baa;
+    color:#727687;
     text-decoration:none;
-    font-size:14px;
-    transition:.2s;
+    font-size:11px;
+    transition:.25s ease;
 }
 
-.nav-item:hover,
+.nav-item:hover{
+    color:#c5c8d6;
+    background:rgba(255,255,255,.035);
+}
+
 .nav-item.active{
-    background:rgba(139,92,246,.13);
-    color:#fff;
+    color:#d9d2f7;
+    background:linear-gradient(
+        90deg,
+        rgba(124,58,237,.16),
+        rgba(124,58,237,.035)
+    );
+}
+
+.nav-item.active::before{
+    content:"";
+    position:absolute;
+    left:-15px;
+    width:3px;
+    height:22px;
+    border-radius:0 4px 4px 0;
+    background:#8b5cf6;
+    box-shadow:0 0 14px #8b5cf6;
 }
 
 .nav-icon{
-    width:22px;
+    width:20px;
     text-align:center;
-    font-size:16px;
+    color:#777b8e;
+    font-size:12px;
+}
+
+.nav-item.active .nav-icon{
+    color:#a98ce9;
 }
 
 .sidebar-bottom{
-    position:absolute;
-    bottom:25px;
-    left:15px;
-    right:15px;
+    margin-top:auto;
 }
 
-.logout{
-    color:#f87171;
-}
-
-.main{
-    margin-left:250px;
-    min-height:100vh;
-}
-
-.topbar{
-    height:75px;
-    border-bottom:1px solid rgba(255,255,255,.07);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 35px;
-    background:rgba(7,7,17,.9);
-    backdrop-filter:blur(15px);
-    position:sticky;
-    top:0;
-    z-index:50;
-}
-
-.page-title h1{
-    font-size:20px;
-}
-
-.page-title p{
-    color:#777789;
-    font-size:12px;
-    margin-top:4px;
-}
-
-.user-mini{
+.profile-mini{
     display:flex;
     align-items:center;
     gap:10px;
+    padding:12px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:13px;
+    background:rgba(255,255,255,.025);
 }
 
-.user-avatar,
-.profile-avatar,
-.connection-avatar{
-    border-radius:50%;
-    background:linear-gradient(135deg,#7c3aed,#4f46e5);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:700;
+.avatar{
+    width:34px;
+    height:34px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
     overflow:hidden;
+    background:linear-gradient(135deg,#7c3aed,#2563eb);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
 }
 
-.user-avatar{
-    width:38px;
-    height:38px;
-    font-size:13px;
-}
-
-.user-avatar img,
-.profile-avatar img,
-.connection-avatar img{
+.avatar img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-.user-mini-text strong{
-    display:block;
-    font-size:12px;
+.profile-mini-text{
+    min-width:0;
 }
 
-.user-mini-text span{
-    display:block;
-    color:#777789;
+.profile-mini-name{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    color:#bfc2ce;
     font-size:10px;
-    margin-top:2px;
+    font-weight:600;
 }
 
-.content{
-    padding:32px 35px 50px;
-    max-width:1500px;
+.profile-mini-status{
+    margin-top:3px;
+    color:#5d6170;
+    font-size:8px;
 }
 
-.status-message{
-    display:none;
-    margin-bottom:20px;
-    padding:13px 16px;
-    border-radius:10px;
-    background:rgba(124,58,237,.1);
-    border:1px solid rgba(124,58,237,.3);
-    color:#c4b5fd;
-    font-size:12px;
+/* =====================================
+   MAIN
+===================================== */
+
+.main{
+    width:calc(100% - 245px);
+    margin-left:245px;
+    min-height:100vh;
+    padding:25px 35px 50px;
 }
 
-.welcome{
-    padding:28px;
-    border-radius:20px;
-    background:
-        radial-gradient(circle at 90% 20%,rgba(124,58,237,.22),transparent 30%),
-        linear-gradient(135deg,#131326,#0e0e1a);
-    border:1px solid rgba(255,255,255,.08);
-    margin-bottom:25px;
-}
+/* =====================================
+   TOPBAR
+===================================== */
 
-.welcome h2{
-    font-size:25px;
-    margin-bottom:7px;
-}
-
-.welcome p{
-    color:#8b8b9b;
-    font-size:13px;
-}
-
-.quick-actions{
-    margin-top:20px;
+.topbar{
     display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:35px;
+}
+
+.page-heading small{
+    color:#676b7b;
+    font-size:9px;
+    letter-spacing:.6px;
+}
+
+.page-heading h1{
+    margin-top:6px;
+    font-size:25px;
+    letter-spacing:-1px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
     gap:10px;
-    flex-wrap:wrap;
 }
 
-.quick-btn{
-    padding:10px 15px;
-    border-radius:9px;
-    border:1px solid #302c45;
-    background:rgba(139,92,246,.09);
-    color:#c4b5fd;
+.icon-button{
+    width:37px;
+    height:37px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.035);
+    color:#85899a;
     cursor:pointer;
-    text-decoration:none;
-    font-size:12px;
+    transition:.25s;
 }
 
-.quick-btn.primary{
-    background:#7c3aed;
-    color:white;
+.icon-button:hover{
+    color:#c8c2df;
+    border-color:rgba(139,92,246,.3);
+    transform:translateY(-2px);
 }
+
+/* =====================================
+   HERO
+===================================== */
+
+.hero{
+    position:relative;
+    min-height:270px;
+    padding:34px;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:24px;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            120deg,
+            rgba(124,58,237,.12),
+            rgba(13,10,23,.68) 45%,
+            rgba(37,99,235,.06)
+        );
+    backdrop-filter:blur(25px);
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.35),
+        inset 0 1px 1px rgba(255,255,255,.06);
+    transform-style:preserve-3d;
+    transition:transform .18s ease;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:400px;
+    height:400px;
+    right:-150px;
+    top:-180px;
+    border-radius:50%;
+    border:1px solid rgba(139,92,246,.08);
+    box-shadow:
+        0 0 80px rgba(124,58,237,.10),
+        inset 0 0 80px rgba(124,58,237,.05);
+}
+
+.hero-content{
+    position:relative;
+    z-index:3;
+    max-width:600px;
+}
+
+.status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 11px;
+    border:1px solid rgba(139,92,246,.2);
+    border-radius:30px;
+    background:rgba(124,58,237,.055);
+    color:#a895d5;
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:.7px;
+}
+
+.status-dot{
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#8b5cf6;
+    box-shadow:0 0 10px #8b5cf6;
+}
+
+.hero h2{
+    margin-top:20px;
+    font-size:37px;
+    line-height:1.05;
+    letter-spacing:-2px;
+}
+
+.hero h2 span{
+    background:linear-gradient(100deg,#fff,#b9a4fa,#6594ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    margin-top:14px;
+    color:#777b8d;
+    font-size:11px;
+    line-height:1.7;
+    max-width:530px;
+}
+
+.hero-actions{
+    display:flex;
+    gap:9px;
+    margin-top:23px;
+}
+
+.primary-btn,
+.secondary-btn{
+    height:39px;
+    padding:0 15px;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:10px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.primary-btn{
+    border:0;
+    color:white;
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    box-shadow:0 10px 28px rgba(99,45,200,.25);
+}
+
+.primary-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 15px 35px rgba(99,45,200,.38);
+}
+
+.secondary-btn{
+    border:1px solid rgba(255,255,255,.09);
+    color:#9b9eac;
+    background:rgba(255,255,255,.035);
+}
+
+.secondary-btn:hover{
+    color:#c8cbd5;
+    border-color:rgba(139,92,246,.3);
+}
+
+/* 3D */
+
+#three-container{
+    position:absolute;
+    right:20px;
+    top:0;
+    width:360px;
+    height:270px;
+    z-index:1;
+}
+
+/* =====================================
+   STATS
+===================================== */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:25px;
+    gap:13px;
+    margin-top:18px;
 }
 
 .stat-card{
-    background:#10101d;
-    border:1px solid #222234;
+    position:relative;
+    padding:18px;
+    min-height:105px;
+    border:1px solid rgba(255,255,255,.075);
     border-radius:16px;
-    padding:20px;
+    background:rgba(11,8,20,.62);
+    backdrop-filter:blur(20px);
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.2),
+        inset 0 1px 1px rgba(255,255,255,.04);
+    transition:.25s;
 }
 
-.stat-card h3{
-    font-size:25px;
-    margin-top:13px;
-}
-
-.stat-card p{
-    color:#777789;
-    font-size:11px;
-    margin-top:4px;
+.stat-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(139,92,246,.22);
 }
 
 .stat-label{
-    color:#aaaabd;
-    font-size:12px;
+    color:#666a79;
+    font-size:8px;
+    font-weight:600;
+    letter-spacing:.5px;
 }
 
-.dashboard-grid{
+.stat-value{
+    margin-top:10px;
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:-1px;
+}
+
+.stat-sub{
+    margin-top:5px;
+    color:#535766;
+    font-size:8px;
+}
+
+/* =====================================
+   CONTENT GRID
+===================================== */
+
+.content-grid{
     display:grid;
-    grid-template-columns:1.45fr 1fr;
-    gap:20px;
+    grid-template-columns:1.45fr .85fr;
+    gap:18px;
+    margin-top:18px;
 }
 
 .panel{
-    background:#10101d;
-    border:1px solid #222234;
-    border-radius:18px;
-    padding:22px;
+    border:1px solid rgba(255,255,255,.075);
+    border-radius:17px;
+    background:rgba(11,8,20,.6);
+    backdrop-filter:blur(20px);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.2),
+        inset 0 1px 1px rgba(255,255,255,.035);
+    overflow:hidden;
 }
 
 .panel-header{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:20px;
+    padding:18px 19px;
+    border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .panel-header h3{
-    font-size:16px;
+    font-size:12px;
+    letter-spacing:-.2px;
 }
 
 .panel-header a{
-    color:#a78bfa;
+    color:#8f78c6;
+    font-size:9px;
     text-decoration:none;
-    font-size:11px;
 }
 
-.profile{
-    display:flex;
-    gap:18px;
-    align-items:flex-start;
+.panel-body{
+    padding:19px;
 }
 
-.profile-avatar{
-    width:75px;
-    height:75px;
-    font-size:23px;
-    flex-shrink:0;
+/* =====================================
+   QUICK ACTIONS
+===================================== */
+
+.actions-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
-.profile-info h2{
-    font-size:18px;
+.action{
+    padding:16px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:13px;
+    background:rgba(255,255,255,.025);
+    text-decoration:none;
+    transition:.3s;
 }
 
-.profile-info p{
-    color:#777789;
+.action:hover{
+    transform:translateY(-3px);
+    background:rgba(124,58,237,.055);
+    border-color:rgba(139,92,246,.2);
+}
+
+.action-icon{
+    width:31px;
+    height:31px;
+    display:grid;
+    place-items:center;
+    border-radius:9px;
+    background:rgba(124,58,237,.10);
+    color:#a88ce4;
     font-size:12px;
-    margin-top:5px;
 }
 
-.profile-status{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    margin-top:9px;
-    color:#86efac;
+.action h4{
+    margin-top:11px;
+    color:#c2c4ce;
     font-size:10px;
 }
 
-.online-dot{
-    width:7px;
-    height:7px;
-    background:#22c55e;
-    border-radius:50%;
+.action p{
+    margin-top:5px;
+    color:#5f6372;
+    font-size:8px;
+    line-height:1.5;
 }
 
-.profile-description{
-    color:#9696a5;
-    font-size:12px;
-    line-height:1.6;
-    margin-top:18px;
+/* =====================================
+   SKILL TAGS
+===================================== */
+
+.skill-section{
+    margin-bottom:19px;
 }
 
-.skills{
+.skill-section:last-child{
+    margin-bottom:0;
+}
+
+.skill-heading{
+    margin-bottom:9px;
+    color:#777b8b;
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:.5px;
+}
+
+.skill-tags{
     display:flex;
     flex-wrap:wrap;
-    gap:7px;
-    margin-top:15px;
+    gap:6px;
 }
 
-.skill{
-    padding:6px 9px;
-    border-radius:20px;
-    background:rgba(139,92,246,.1);
-    border:1px solid rgba(139,92,246,.2);
-    color:#c4b5fd;
-    font-size:10px;
+.skill-tag{
+    padding:7px 9px;
+    border:1px solid rgba(139,92,246,.15);
+    border-radius:8px;
+    background:rgba(124,58,237,.055);
+    color:#a999ca;
+    font-size:8px;
 }
 
-.edit-btn,
-.add-video{
-    width:100%;
-    padding:10px;
-    border-radius:9px;
-    border:1px solid #302c45;
-    background:transparent;
-    color:#c4b5fd;
-    cursor:pointer;
-    margin-top:18px;
-}
+/* =====================================
+   ACTIVITY
+===================================== */
 
-.video-card{
-    border:1px solid #252538;
-    border-radius:13px;
-    overflow:hidden;
-    margin-bottom:12px;
-}
-
-.video-preview{
-    height:110px;
-    background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(15,15,28,.9));
+.activity{
     display:flex;
     align-items:center;
-    justify-content:center;
+    gap:11px;
+    padding:11px 0;
+    border-bottom:1px solid rgba(255,255,255,.045);
 }
 
-.play{
-    width:42px;
-    height:42px;
+.activity:last-child{
+    border-bottom:0;
+}
+
+.activity-dot{
+    width:8px;
+    height:8px;
     border-radius:50%;
-    background:rgba(255,255,255,.12);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.video-info{
-    padding:12px;
-}
-
-.video-info strong{
-    font-size:12px;
-}
-
-.video-info p{
-    color:#777789;
-    font-size:10px;
-    margin-top:4px;
-}
-
-.loading,
-.empty{
-    color:#777789;
-    font-size:12px;
-    text-align:center;
-    padding:25px 10px;
-    border:1px dashed #29293c;
-    border-radius:12px;
-}
-
-.request,
-.connection{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:12px 0;
-    border-bottom:1px solid #222234;
-}
-
-.request:last-child,
-.connection:last-child{
-    border-bottom:none;
-}
-
-.request-avatar,
-.connection-avatar{
-    width:42px;
-    height:42px;
-    flex-shrink:0;
-    font-size:12px;
-}
-
-.request-info,
-.connection-info{
-    flex:1;
-}
-
-.request-info strong,
-.connection-info strong{
-    display:block;
-    font-size:12px;
-}
-
-.request-info span,
-.connection-info span{
-    color:#777789;
-    font-size:10px;
-}
-
-.request-actions{
-    display:flex;
-    gap:5px;
-}
-
-.accept,
-.decline,
-.chat-btn{
-    border:none;
-    border-radius:7px;
-    padding:7px 10px;
-    cursor:pointer;
-    font-size:10px;
-}
-
-.accept{
     background:#7c3aed;
-    color:white;
+    box-shadow:0 0 10px rgba(124,58,237,.5);
 }
 
-.decline{
-    background:#20202e;
-    color:#aaa;
+.activity-text{
+    color:#777b8a;
+    font-size:9px;
 }
 
-.chat-btn{
-    background:rgba(124,58,237,.1);
-    color:#c4b5fd;
-    border:1px solid #342d4c;
+.activity-time{
+    margin-left:auto;
+    color:#4f5361;
+    font-size:8px;
 }
 
-.communication{
-    margin-top:20px;
-}
+/* =====================================
+   LOADING / EMPTY
+===================================== */
 
-.communication-box{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-}
-
-.communication-card{
-    padding:18px;
-    border-radius:13px;
-    border:1px solid #29293c;
-    background:#0d0d19;
-}
-
-.communication-card h4{
-    font-size:13px;
-}
-
-.communication-card p{
-    color:#777789;
+.center-message{
+    padding:35px;
+    text-align:center;
+    color:#666a79;
     font-size:10px;
-    line-height:1.5;
-    margin-top:5px;
 }
+
+/* =====================================
+   MOBILE MENU
+===================================== */
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:64px;
+    padding:0 18px;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(7,5,13,.82);
+    backdrop-filter:blur(25px);
+    border-bottom:1px solid rgba(255,255,255,.07);
+    z-index:30;
+}
+
+.menu-button{
+    width:36px;
+    height:36px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:10px;
+    background:rgba(255,255,255,.03);
+    color:#aaa;
+    cursor:pointer;
+}
+
+/* =====================================
+   MOBILE
+===================================== */
 
 @media(max-width:1100px){
-    .stats{
-        grid-template-columns:repeat(2,1fr);
+
+    .main{
+        padding:25px;
     }
 
-    .dashboard-grid{
+    .content-grid{
         grid-template-columns:1fr;
+    }
+
+    #three-container{
+        opacity:.55;
+        right:-40px;
     }
 }
 
 @media(max-width:800px){
+
     .sidebar{
-        width:70px;
-        padding:20px 8px;
+        transform:translateX(-100%);
+        transition:.3s;
     }
 
-    .logo{
-        font-size:0;
-        text-align:center;
-        padding:0;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
-    .logo::after{
-        content:"TE";
-        font-size:18px;
-        color:#8b5cf6;
-    }
-
-    .menu-title,
-    .nav-item span:not(.nav-icon){
-        display:none;
-    }
-
-    .nav-item{
-        justify-content:center;
-        padding:13px 8px;
-    }
-
-    .sidebar-bottom{
-        left:8px;
-        right:8px;
+    .mobile-menu{
+        display:flex;
     }
 
     .main{
-        margin-left:70px;
-    }
-
-    .content{
-        padding:25px 18px;
+        width:100%;
+        margin-left:0;
+        padding:88px 18px 40px;
     }
 
     .topbar{
-        padding:0 18px;
+        margin-bottom:25px;
     }
 
-    .user-mini-text{
-        display:none;
-    }
-}
-
-@media(max-width:550px){
     .stats{
         grid-template-columns:1fr 1fr;
     }
 
-    .communication-box{
+    .hero{
+        min-height:340px;
+        padding:25px;
+    }
+
+    #three-container{
+        width:300px;
+        height:230px;
+        right:-90px;
+        bottom:-20px;
+        top:auto;
+        opacity:.35;
+    }
+
+    .hero-content{
+        position:relative;
+        z-index:5;
+    }
+}
+
+@media(max-width:500px){
+
+    .page-heading h1{
+        font-size:22px;
+    }
+
+    .top-actions .icon-button:nth-child(2){
+        display:none;
+    }
+
+    .hero h2{
+        font-size:31px;
+    }
+
+    .hero p{
+        font-size:10px;
+    }
+
+    .hero-actions{
+        flex-wrap:wrap;
+    }
+
+    .stats{
+        gap:9px;
+    }
+
+    .stat-card{
+        min-height:95px;
+        padding:14px;
+    }
+
+    .stat-value{
+        font-size:21px;
+    }
+
+    .actions-grid{
         grid-template-columns:1fr;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<aside class="sidebar">
+<div class="background-grid"></div>
+<div class="glow glow-one"></div>
+<div class="glow glow-two"></div>
+<canvas id="particles"></canvas>
 
-    <div class="logo">
-        Talent<span>Exchange</span>
+
+<!-- MOBILE TOP -->
+
+<div class="mobile-menu">
+
+    <div class="brand">
+        <div class="brand-icon"></div>
+        <div class="brand-name">Talent Exchange</div>
     </div>
 
-    <div class="menu-title">Workspace</div>
+    <button
+        class="menu-button"
+        id="menuButton"
+    >☰</button>
 
-    <nav class="nav-menu">
+</div>
 
-        <a href="dashboard.html" class="nav-item active">
-            <span class="nav-icon">⌂</span>
-            <span>Dashboard</span>
+
+<div class="app">
+
+
+<!-- =====================================
+     SIDEBAR
+===================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon"></div>
+
+        <div class="brand-name">
+            Talent Exchange
+        </div>
+
+    </div>
+
+
+    <div class="nav-label">
+        WORKSPACE
+    </div>
+
+    <nav class="nav">
+
+        <a
+            href="dashboard.html"
+            class="nav-item active"
+        >
+            <span class="nav-icon">◈</span>
+            Dashboard
         </a>
 
-        <a href="find-skills.html" class="nav-item">
+        <a
+            href="find-skills.html"
+            class="nav-item"
+        >
             <span class="nav-icon">⌕</span>
-            <span>Find Skills</span>
+            Find Skills
         </a>
 
-        <a href="offer-skill.html" class="nav-item">
-            <span class="nav-icon">◆</span>
-            <span>Offer Your Skill</span>
+        <a
+            href="offer-skill.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">＋</span>
+            Offer Your Skill
         </a>
 
-        <a href="requests.html" class="nav-item">
-            <span class="nav-icon">⇄</span>
-            <span>Requests</span>
+        <a
+            href="requests.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">↗</span>
+            Requests
         </a>
 
-        <a href="connections.html" class="nav-item">
-            <span class="nav-icon">♧</span>
-            <span>Connections</span>
+        <a
+            href="connections.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">◎</span>
+            Connections
         </a>
 
-        <a href="chat.html" class="nav-item">
-            <span class="nav-icon">◌</span>
-            <span>Chat</span>
+        <a
+            href="chat.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">◇</span>
+            Messages
         </a>
 
     </nav>
 
-    <div class="menu-title" style="margin-top:30px;">
-        Account
+
+    <div
+        class="nav-label"
+        style="margin-top:28px;"
+    >
+        ACCOUNT
     </div>
 
-    <nav class="nav-menu">
+    <nav class="nav">
 
-        <a href="profile.html" class="nav-item">
-            <span class="nav-icon">◎</span>
-            <span>Edit Profile</span>
+        <a
+            href="profile.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">○</span>
+            Profile
         </a>
 
-        <a href="profile.html#videos" class="nav-item">
-            <span class="nav-icon">▶</span>
-            <span>Add Videos</span>
+        <a
+            href="admin-dashboard.html"
+            class="nav-item"
+            id="adminLink"
+            style="display:none;"
+        >
+            <span class="nav-icon">◆</span>
+            Admin Panel
         </a>
 
     </nav>
+
 
     <div class="sidebar-bottom">
 
-        <a href="#" class="nav-item logout" id="logoutBtn">
-            <span class="nav-icon">↪</span>
-            <span>Logout</span>
-        </a>
+        <div class="profile-mini">
+
+            <div
+                class="avatar"
+                id="sideAvatar"
+            >U</div>
+
+            <div class="profile-mini-text">
+
+                <div
+                    class="profile-mini-name"
+                    id="sideName"
+                >
+                    Loading...
+                </div>
+
+                <div class="profile-mini-status">
+                    Talent Exchange member
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 </aside>
 
 
+<!-- =====================================
+     MAIN
+===================================== -->
+
 <main class="main">
 
-<header class="topbar">
 
-    <div class="page-title">
-        <h1>Dashboard</h1>
-        <p>Manage your skills, connections and learning journey.</p>
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="page-heading">
+
+            <small id="dateText">
+                TALENT EXCHANGE
+            </small>
+
+            <h1>
+                Dashboard
+            </h1>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button
+                class="icon-button"
+                onclick="window.location.href='requests.html'"
+                title="Requests"
+            >
+                ↗
+            </button>
+
+            <button
+                class="icon-button"
+                onclick="window.location.href='chat.html'"
+                title="Messages"
+            >
+                ◇
+            </button>
+
+            <button
+                class="icon-button"
+                id="logoutButton"
+                title="Logout"
+            >
+                ⇥
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="user-mini">
 
-        <div class="user-avatar" id="topAvatar">
-            U
+    <!-- HERO -->
+
+    <section
+        class="hero"
+        id="hero"
+    >
+
+        <div class="hero-content">
+
+            <div class="status-pill">
+                <span class="status-dot"></span>
+                ACCOUNT ACTIVE
+            </div>
+
+
+            <h2>
+                Welcome back,
+                <span id="heroName">
+                    Member
+                </span>
+            </h2>
+
+
+            <p>
+                Your skills can create your next connection.
+                Discover people, exchange knowledge and
+                build something meaningful together.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <button
+                    class="primary-btn"
+                    onclick="window.location.href='find-skills.html'"
+                >
+                    Discover Skills →
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="window.location.href='profile.html'"
+                >
+                    View Profile
+                </button>
+
+            </div>
+
         </div>
 
-        <div class="user-mini-text">
-            <strong id="topName">Loading...</strong>
-            <span>Talent Exchange Member</span>
-        </div>
 
-    </div>
-
-</header>
-
-
-<div class="content">
-
-    <div class="status-message" id="statusMessage"></div>
-
-
-    <section class="welcome">
-
-        <h2>
-            Welcome back, <span id="welcomeName">Loading...</span>
-        </h2>
-
-        <p>
-            Continue exchanging knowledge, discover new skills and connect with people.
-        </p>
-
-        <div class="quick-actions">
-
-            <a href="find-skills.html" class="quick-btn primary">
-                Find a Skill
-            </a>
-
-            <a href="offer-skill.html" class="quick-btn">
-                Offer Your Skill
-            </a>
-
-            <a href="connections.html" class="quick-btn">
-                View Connections
-            </a>
-
-            <a href="chat.html" class="quick-btn">
-                Open Chat
-            </a>
-
-        </div>
+        <div id="three-container"></div>
 
     </section>
 
+
+    <!-- STATS -->
 
     <section class="stats">
 
         <div class="stat-card">
-            <span class="stat-label">Skills Offered</span>
-            <h3 id="offeredCount">0</h3>
-            <p>Skills you can teach</p>
+
+            <div class="stat-label">
+                SKILLS OFFERED
+            </div>
+
+            <div
+                class="stat-value"
+                id="offeredCount"
+            >
+                0
+            </div>
+
+            <div class="stat-sub">
+                Skills you can teach
+            </div>
+
         </div>
+
 
         <div class="stat-card">
-            <span class="stat-label">Learning</span>
-            <h3 id="learningCount">0</h3>
-            <p>Skills you want to learn</p>
+
+            <div class="stat-label">
+                SKILLS TO LEARN
+            </div>
+
+            <div
+                class="stat-value"
+                id="learningCount"
+            >
+                0
+            </div>
+
+            <div class="stat-sub">
+                Skills you're exploring
+            </div>
+
         </div>
+
 
         <div class="stat-card">
-            <span class="stat-label">Connections</span>
-            <h3 id="connectionCount">0</h3>
-            <p>Active connections</p>
+
+            <div class="stat-label">
+                REQUESTS
+            </div>
+
+            <div
+                class="stat-value"
+                id="requestCount"
+            >
+                0
+            </div>
+
+            <div class="stat-sub">
+                Pending requests
+            </div>
+
         </div>
+
 
         <div class="stat-card">
-            <span class="stat-label">Skill Evidence</span>
-            <h3 id="evidenceCount">0</h3>
-            <p>Certificates / videos</p>
-        </div>
 
-    </section>
-
-
-    <section class="dashboard-grid">
-
-
-        <!-- PROFILE -->
-
-        <div class="panel">
-
-            <div class="panel-header">
-                <h3>Your Profile</h3>
-                <a href="profile.html">Edit</a>
+            <div class="stat-label">
+                CONNECTIONS
             </div>
 
-            <div class="profile">
-
-                <div class="profile-avatar" id="profileAvatar">
-                    U
-                </div>
-
-                <div class="profile-info">
-
-                    <h2 id="profileName">
-                        Loading...
-                    </h2>
-
-                    <p id="profileEmail">
-                        Loading...
-                    </p>
-
-                    <div class="profile-status">
-                        <span class="online-dot"></span>
-                        Account Active
-                    </div>
-
-                </div>
-
+            <div
+                class="stat-value"
+                id="connectionCount"
+            >
+                0
             </div>
 
-            <p class="profile-description" id="profileBio">
-                Loading profile...
-            </p>
-
-            <div class="skills" id="skillList">
-                <span class="skill">Loading...</span>
-            </div>
-
-            <button class="edit-btn"
-                    onclick="location.href='profile.html'">
-                Edit Profile
-            </button>
-
-        </div>
-
-
-        <!-- VIDEOS -->
-
-        <div class="panel">
-
-            <div class="panel-header">
-                <h3>Skill Demonstration Videos</h3>
-                <a href="profile.html#videos">Add Video</a>
-            </div>
-
-            <div id="videoContainer">
-
-                <div class="video-card">
-
-                    <div class="video-preview">
-                        <div class="play">▶</div>
-                    </div>
-
-                    <div class="video-info">
-
-                        <strong>
-                            No skill videos added yet
-                        </strong>
-
-                        <p>
-                            Upload a video demonstrating your skill.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <button class="add-video"
-                    onclick="location.href='profile.html#videos'">
-                + Add Skill Demonstration Video
-            </button>
-
-        </div>
-
-
-        <!-- REQUESTS -->
-
-        <div class="panel">
-
-            <div class="panel-header">
-
-                <h3>Exchange Requests</h3>
-
-                <a href="requests.html">
-                    View All
-                </a>
-
-            </div>
-
-            <div id="requestContainer">
-
-                <div class="loading">
-                    Loading requests...
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- CONNECTIONS -->
-
-        <div class="panel">
-
-            <div class="panel-header">
-
-                <h3>My Connections</h3>
-
-                <a href="connections.html">
-                    View All
-                </a>
-
-            </div>
-
-            <div id="connectionContainer">
-
-                <div class="loading">
-                    Loading connections...
-                </div>
-
+            <div class="stat-sub">
+                Your network
             </div>
 
         </div>
@@ -890,73 +1191,284 @@ body{
     </section>
 
 
-    <section class="panel communication">
+    <!-- CONTENT -->
 
-        <div class="panel-header">
+    <section class="content-grid">
 
-            <div>
 
-                <h3>Communication</h3>
+        <!-- LEFT -->
 
-                <p style="color:#777789;font-size:11px;margin-top:5px;">
-                    Communicate with accepted connections.
-                </p>
+        <div>
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Quick actions
+                    </h3>
+
+                </div>
+
+
+                <div class="panel-body">
+
+                    <div class="actions-grid">
+
+                        <a
+                            class="action"
+                            href="find-skills.html"
+                        >
+
+                            <div class="action-icon">
+                                ⌕
+                            </div>
+
+                            <h4>
+                                Find Skills
+                            </h4>
+
+                            <p>
+                                Discover people who can teach
+                                what you want to learn.
+                            </p>
+
+                        </a>
+
+
+                        <a
+                            class="action"
+                            href="offer-skill.html"
+                        >
+
+                            <div class="action-icon">
+                                ＋
+                            </div>
+
+                            <h4>
+                                Offer Your Skill
+                            </h4>
+
+                            <p>
+                                Share your knowledge with
+                                other members.
+                            </p>
+
+                        </a>
+
+
+                        <a
+                            class="action"
+                            href="requests.html"
+                        >
+
+                            <div class="action-icon">
+                                ↗
+                            </div>
+
+                            <h4>
+                                Manage Requests
+                            </h4>
+
+                            <p>
+                                Review incoming skill exchange
+                                requests.
+                            </p>
+
+                        </a>
+
+
+                        <a
+                            class="action"
+                            href="connections.html"
+                        >
+
+                            <div class="action-icon">
+                                ◎
+                            </div>
+
+                            <h4>
+                                Your Connections
+                            </h4>
+
+                            <p>
+                                View the people you've connected
+                                with.
+                            </p>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIVITY -->
+
+            <div
+                class="panel"
+                style="margin-top:18px;"
+            >
+
+                <div class="panel-header">
+
+                    <h3>
+                        Recent activity
+                    </h3>
+
+                    <a href="requests.html">
+                        View all
+                    </a>
+
+                </div>
+
+
+                <div
+                    class="panel-body"
+                    id="activityList"
+                >
+
+                    <div class="activity">
+
+                        <span class="activity-dot"></span>
+
+                        <span class="activity-text">
+                            Your Talent Exchange profile is ready.
+                        </span>
+
+                        <span class="activity-time">
+                            Now
+                        </span>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-        <div class="communication-box">
 
-            <div class="communication-card">
+        <!-- RIGHT -->
 
-                <h4>Real-Time Chat</h4>
+        <div>
 
-                <p>
-                    Send and receive messages with your connections.
-                </p>
+            <!-- SKILLS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>
+                        Your skills
+                    </h3>
+
+                    <a href="profile.html">
+                        Edit
+                    </a>
+
+                </div>
+
+
+                <div class="panel-body">
+
+                    <div class="skill-section">
+
+                        <div class="skill-heading">
+                            YOU CAN OFFER
+                        </div>
+
+                        <div
+                            class="skill-tags"
+                            id="offeredTags"
+                        >
+                            <span
+                                class="skill-tag"
+                            >
+                                No skills added
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="skill-section">
+
+                        <div class="skill-heading">
+                            YOU WANT TO LEARN
+                        </div>
+
+                        <div
+                            class="skill-tags"
+                            id="learningTags"
+                        >
+                            <span
+                                class="skill-tag"
+                            >
+                                No skills added
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="communication-card">
 
-                <h4>Audio Call</h4>
+            <!-- PROFILE -->
 
-                <p>
-                    Start an audio conversation with another member.
-                </p>
+            <div
+                class="panel"
+                style="margin-top:18px;"
+            >
 
-            </div>
+                <div class="panel-header">
 
-            <div class="communication-card">
+                    <h3>
+                        Profile status
+                    </h3>
 
-                <h4>Video Call</h4>
+                </div>
 
-                <p>
-                    Use your camera and microphone for video communication.
-                </p>
+
+                <div class="panel-body">
+
+                    <div
+                        id="profileStatus"
+                        class="activity"
+                    >
+
+                        <span class="activity-dot"></span>
+
+                        <span class="activity-text">
+                            Loading profile...
+                        </span>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
     </section>
-
-</div>
 
 </main>
+
+</div>
 
 
 <script type="module">
 
-/*
-==================================================
-IMPORTANT
-==================================================
-Use the SAME Firebase auth + Firestore instances
-used by login.html and register.html.
-==================================================
-*/
+/* =====================================
+   FIREBASE
+===================================== */
 
 import {
     auth,
@@ -978,538 +1490,272 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-let dashboardLoaded = false;
+/* =====================================
+   ELEMENTS
+===================================== */
+
+const heroName =
+    document.getElementById("heroName");
+
+const sideName =
+    document.getElementById("sideName");
+
+const sideAvatar =
+    document.getElementById("sideAvatar");
+
+const offeredCount =
+    document.getElementById("offeredCount");
+
+const learningCount =
+    document.getElementById("learningCount");
+
+const requestCount =
+    document.getElementById("requestCount");
+
+const connectionCount =
+    document.getElementById("connectionCount");
+
+const offeredTags =
+    document.getElementById("offeredTags");
+
+const learningTags =
+    document.getElementById("learningTags");
+
+const profileStatus =
+    document.getElementById("profileStatus");
+
+const activityList =
+    document.getElementById("activityList");
+
+const adminLink =
+    document.getElementById("adminLink");
+
+const logoutButton =
+    document.getElementById("logoutButton");
 
 
-/*
-==================================================
-AUTHENTICATION
-==================================================
-*/
+/* =====================================
+   AUTH
+===================================== */
 
-onAuthStateChanged(auth, async (firebaseUser) => {
+onAuthStateChanged(
+    auth,
+    async user => {
 
-    console.log(
-        "Talent Exchange auth state:",
-        firebaseUser ? firebaseUser.uid : "NO USER"
-    );
+        if (!user) {
 
-    if (!firebaseUser) {
-
-        /*
-        Give Firebase a short moment to restore
-        the existing session before redirecting.
-        */
-
-        setTimeout(() => {
-
-            if (!auth.currentUser) {
-
-                console.log(
-                    "No Firebase session found. Redirecting to login."
-                );
-
-                window.location.replace("login.html");
-
-            }
-
-        }, 1500);
-
-        return;
-    }
-
-
-    if (dashboardLoaded) {
-        return;
-    }
-
-    dashboardLoaded = true;
-
-    console.log(
-        "Firebase session verified:",
-        firebaseUser.email
-    );
-
-
-    await loadUserDashboard(firebaseUser);
-
-});
-
-
-/*
-==================================================
-LOAD USER DASHBOARD
-==================================================
-*/
-
-async function loadUserDashboard(firebaseUser) {
-
-    try {
-
-        const userRef =
-            doc(
-                db,
-                "users",
-                firebaseUser.uid
-            );
-
-
-        const userSnap =
-            await getDoc(userRef);
-
-
-        if (!userSnap.exists()) {
-
-            showStatus(
-                "Your Firebase account exists, but your user profile was not found."
+            window.location.replace(
+                "login.html"
             );
 
             return;
         }
 
 
-        const user =
-            userSnap.data();
+        try {
 
+            await loadDashboard(user);
 
-        /*
-        ==============================================
-        ACCOUNT STATUS
-        ==============================================
-        */
+        } catch (error) {
 
-        const status =
-            String(
-                user.status || "approved"
-            ).toLowerCase();
-
-
-        if (status === "pending") {
-
-            showStatus(
-                "Your account is waiting for admin approval."
+            console.error(
+                "DASHBOARD ERROR:",
+                error
             );
 
+            profileStatus.innerHTML = `
+                <span class="activity-dot"></span>
+                <span class="activity-text">
+                    Unable to load your profile.
+                </span>
+            `;
         }
 
-        else if (status === "rejected") {
-
-            showStatus(
-                "Your account has not been approved."
-            );
-
-        }
-
-        else if (status === "disabled") {
-
-            showStatus(
-                "Your account has been disabled."
-            );
-
-        }
-
-
-        /*
-        ==============================================
-        USER INFORMATION
-        ==============================================
-        */
-
-        const name =
-            user.name ||
-            firebaseUser.displayName ||
-            "User";
-
-
-        const email =
-            user.email ||
-            firebaseUser.email ||
-            "No email";
-
-
-        const bio =
-            user.bio ||
-            "Add a short description about yourself.";
-
-
-        document.getElementById(
-            "welcomeName"
-        ).textContent = name;
-
-
-        document.getElementById(
-            "topName"
-        ).textContent = name;
-
-
-        document.getElementById(
-            "profileName"
-        ).textContent = name;
-
-
-        document.getElementById(
-            "profileEmail"
-        ).textContent = email;
-
-
-        document.getElementById(
-            "profileBio"
-        ).textContent = bio;
-
-
-        /*
-        ==============================================
-        AVATAR
-        ==============================================
-        */
-
-        const letter =
-            name.charAt(0).toUpperCase();
-
-
-        setAvatar(
-            "topAvatar",
-            letter,
-            user.profilePhoto
-        );
-
-
-        setAvatar(
-            "profileAvatar",
-            letter,
-            user.profilePhoto
-        );
-
-
-        /*
-        ==============================================
-        SKILLS
-        ==============================================
-        */
-
-        const offeredSkills =
-            Array.isArray(user.offeredSkills)
-                ? user.offeredSkills
-                : [];
-
-
-        const learningSkills =
-            Array.isArray(user.learningSkills)
-                ? user.learningSkills
-                : (
-                    Array.isArray(user.learningSkill)
-                        ? user.learningSkill
-                        : []
-                );
-
-
-        document.getElementById(
-            "offeredCount"
-        ).textContent =
-            offeredSkills.length;
-
-
-        document.getElementById(
-            "learningCount"
-        ).textContent =
-            learningSkills.length;
-
-
-        renderSkills(
-            offeredSkills,
-            learningSkills
-        );
-
-
-        /*
-        ==============================================
-        EVIDENCE
-        ==============================================
-        */
-
-        const evidence =
-            Array.isArray(user.evidence)
-                ? user.evidence
-                : [];
-
-
-        const videos =
-            Array.isArray(user.videos)
-                ? user.videos
-                : [];
-
-
-        document.getElementById(
-            "evidenceCount"
-        ).textContent =
-            evidence.length +
-            videos.length;
-
-
-        renderVideos(videos);
-
-
-        /*
-        ==============================================
-        REQUESTS
-        ==============================================
-        */
-
-        await loadRequests(
-            firebaseUser.uid
-        );
-
-
-        /*
-        ==============================================
-        CONNECTIONS
-        ==============================================
-        */
-
-        await loadConnections(
-            firebaseUser.uid
-        );
-
     }
+);
 
-    catch(error) {
 
-        console.error(
-            "Dashboard error:",
-            error
+/* =====================================
+   LOAD DASHBOARD
+===================================== */
+
+async function loadDashboard(user){
+
+    const userRef =
+        doc(
+            db,
+            "users",
+            user.uid
         );
 
-        showStatus(
-            "Dashboard could not load. Check your Firebase connection."
-        );
-
-    }
-
-}
+    const snapshot =
+        await getDoc(userRef);
 
 
-/*
-==================================================
-AVATAR
-==================================================
-*/
+    if (!snapshot.exists()) {
 
-function setAvatar(
-    elementId,
-    letter,
-    photoUrl
-) {
-
-    const element =
-        document.getElementById(
-            elementId
-        );
-
-
-    if (!element) {
-        return;
-    }
-
-
-    if (photoUrl) {
-
-        const image =
-            document.createElement("img");
-
-        image.src = photoUrl;
-        image.alt = "Profile photo";
-
-        element.replaceChildren(image);
-
-    }
-
-    else {
-
-        element.textContent =
-            letter;
-
-    }
-
-}
-
-
-/*
-==================================================
-SKILLS
-==================================================
-*/
-
-function renderSkills(
-    offeredSkills,
-    learningSkills
-) {
-
-    const container =
-        document.getElementById(
-            "skillList"
-        );
-
-
-    container.innerHTML = "";
-
-
-    if (
-        offeredSkills.length === 0 &&
-        learningSkills.length === 0
-    ) {
-
-        container.innerHTML =
-            `<span class="skill">
-                No skills added yet
-            </span>`;
+        profileStatus.innerHTML = `
+            <span class="activity-dot"></span>
+            <span class="activity-text">
+                Profile not found.
+            </span>
+        `;
 
         return;
     }
 
 
-    offeredSkills.forEach(skill => {
-
-        addSkill(
-            container,
-            "Offers: " + skill
-        );
-
-    });
+    const profile =
+        snapshot.data();
 
 
-    learningSkills.forEach(skill => {
-
-        addSkill(
-            container,
-            "Learning: " + skill
-        );
-
-    });
-
-}
+    const name =
+        profile.name ||
+        user.displayName ||
+        "Member";
 
 
-function addSkill(
-    container,
-    text
-) {
+    const offered =
+        Array.isArray(profile.offeredSkills)
+            ? profile.offeredSkills
+            : [];
 
-    const element =
-        document.createElement("span");
 
-    element.className =
-        "skill";
+    const learning =
+        Array.isArray(profile.learningSkills)
+            ? profile.learningSkills
+            : (
+                Array.isArray(profile.learningSkill)
+                    ? profile.learningSkill
+                    : []
+            );
 
-    element.textContent =
-        text;
 
-    container.appendChild(
-        element
+    /* Name */
+
+    heroName.textContent =
+        name;
+
+    sideName.textContent =
+        name;
+
+
+    /* Avatar */
+
+    const photo =
+        profile.profilePhoto || "";
+
+
+    if(photo){
+
+        sideAvatar.innerHTML = `
+            <img
+                src="${escapeHtml(photo)}"
+                alt="Profile"
+            >
+        `;
+
+    }else{
+
+        sideAvatar.textContent =
+            getInitials(name);
+    }
+
+
+    /* Counts */
+
+    offeredCount.textContent =
+        offered.length;
+
+    learningCount.textContent =
+        learning.length;
+
+
+    /* Tags */
+
+    renderTags(
+        offeredTags,
+        offered
     );
 
-}
+    renderTags(
+        learningTags,
+        learning
+    );
 
 
-/*
-==================================================
-VIDEOS
-==================================================
-*/
+    /* Status */
 
-function renderVideos(videos) {
-
-    const container =
-        document.getElementById(
-            "videoContainer"
-        );
+    const status =
+        profile.status ||
+        "approved";
 
 
-    if (
-        !Array.isArray(videos) ||
-        videos.length === 0
-    ) {
+    profileStatus.innerHTML = `
+        <span class="activity-dot"></span>
 
-        return;
+        <span class="activity-text">
+            Account status:
+            ${escapeHtml(status)}
+        </span>
+    `;
+
+
+    /* Admin */
+
+    if(
+        profile.role === "admin"
+    ){
+
+        adminLink.style.display =
+            "flex";
     }
 
 
-    container.innerHTML = "";
+    /* Date */
+
+    const now =
+        new Date();
+
+    document.getElementById(
+        "dateText"
+    ).textContent =
+        now.toLocaleDateString(
+            undefined,
+            {
+                weekday:"long",
+                month:"long",
+                day:"numeric"
+            }
+        ).toUpperCase();
 
 
-    videos.forEach(video => {
+    /* Firestore counts */
 
-        const card =
-            document.createElement("div");
+    await loadRequests(
+        user.uid
+    );
 
-        card.className =
-            "video-card";
-
-
-        const preview =
-            document.createElement("div");
-
-        preview.className =
-            "video-preview";
-
-        preview.innerHTML =
-            `<div class="play">▶</div>`;
-
-
-        const info =
-            document.createElement("div");
-
-        info.className =
-            "video-info";
-
-
-        const title =
-            document.createElement("strong");
-
-        title.textContent =
-            video.title ||
-            "Skill Demonstration";
-
-
-        const skill =
-            document.createElement("p");
-
-        skill.textContent =
-            video.skill ||
-            "Skill video";
-
-
-        info.appendChild(title);
-        info.appendChild(skill);
-
-        card.appendChild(preview);
-        card.appendChild(info);
-
-        container.appendChild(card);
-
-    });
-
+    await loadConnections(
+        user.uid
+    );
 }
 
 
-/*
-==================================================
-REQUESTS
-==================================================
-*/
+/* =====================================
+   REQUESTS
+===================================== */
 
-async function loadRequests(uid) {
+async function loadRequests(uid){
 
-    const container =
-        document.getElementById(
-            "requestContainer"
-        );
-
-
-    try {
+    try{
 
         const requestQuery =
             query(
-                collection(db, "Requests"),
+                collection(
+                    db,
+                    "Requests"
+                ),
                 where(
                     "receiverId",
                     "==",
@@ -1529,519 +1775,189 @@ async function loadRequests(uid) {
             );
 
 
-        if (snapshot.empty) {
+        requestCount.textContent =
+            snapshot.size;
 
-            container.innerHTML =
-                `<div class="empty">
-                    No pending exchange requests.
-                </div>`;
 
-            return;
-        }
+        if(snapshot.size > 0){
 
-
-        container.innerHTML = "";
-
-
-        snapshot.forEach(requestDoc => {
-
-            const request =
-                requestDoc.data();
-
-
-            const senderName =
-                request.senderName ||
-                "Talent Exchange Member";
-
-
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "request";
-
-
-            const avatar =
-                document.createElement("div");
-
-            avatar.className =
-                "request-avatar";
-
-            avatar.textContent =
-                senderName
-                    .charAt(0)
-                    .toUpperCase();
-
-
-            const info =
-                document.createElement("div");
-
-            info.className =
-                "request-info";
-
-
-            const name =
-                document.createElement("strong");
-
-            name.textContent =
-                senderName;
-
-
-            const type =
-                document.createElement("span");
-
-            type.textContent =
-                "Exchange request";
-
-
-            info.appendChild(name);
-            info.appendChild(type);
-
-
-            const actions =
-                document.createElement("div");
-
-            actions.className =
-                "request-actions";
-
-
-            const accept =
-                document.createElement("button");
-
-            accept.className =
-                "accept";
-
-            accept.textContent =
-                "Accept";
-
-
-            const decline =
-                document.createElement("button");
-
-            decline.className =
-                "decline";
-
-            decline.textContent =
-                "Decline";
-
-
-            accept.addEventListener(
-                "click",
-                () =>
-                    updateRequest(
-                        requestDoc.id,
-                        "accepted"
-                    )
-            );
-
-
-            decline.addEventListener(
-                "click",
-                () =>
-                    updateRequest(
-                        requestDoc.id,
-                        "declined"
-                    )
-            );
-
-
-            actions.appendChild(accept);
-            actions.appendChild(decline);
-
-
-            item.appendChild(avatar);
-            item.appendChild(info);
-            item.appendChild(actions);
-
-
-            container.appendChild(item);
-
-        });
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Requests error:",
-            error
-        );
-
-        container.innerHTML =
-            `<div class="empty">
-                No requests available.
-            </div>`;
-
-    }
-
-}
-
-
-/*
-==================================================
-REQUEST UPDATE
-==================================================
-*/
-
-async function updateRequest(
-    requestId,
-    status
-) {
-
-    console.log(
-        "Request action:",
-        requestId,
-        status
-    );
-
-    /*
-    Full request management is handled by
-    requests.html.
-    */
-
-    window.location.href =
-        "requests.html";
-
-}
-
-
-/*
-==================================================
-CONNECTIONS
-==================================================
-*/
-
-async function loadConnections(uid) {
-
-    const container =
-        document.getElementById(
-            "connectionContainer"
-        );
-
-
-    try {
-
-        const connectionsRef =
-            collection(
-                db,
-                "Connections"
-            );
-
-
-        const q1 =
-            query(
-                connectionsRef,
-                where(
-                    "user1Id",
-                    "==",
-                    uid
-                )
-            );
-
-
-        const q2 =
-            query(
-                connectionsRef,
-                where(
-                    "user2Id",
-                    "==",
-                    uid
-                )
-            );
-
-
-        const [
-            snapshot1,
-            snapshot2
-        ] =
-            await Promise.all([
-                getDocs(q1),
-                getDocs(q2)
-            ]);
-
-
-        const connections = [];
-
-
-        snapshot1.forEach(docSnap => {
-
-            const data =
-                docSnap.data();
-
-
-            connections.push({
-                id:docSnap.id,
-                data:data,
-                otherId:data.user2Id
-            });
-
-        });
-
-
-        snapshot2.forEach(docSnap => {
-
-            const data =
-                docSnap.data();
-
-
-            connections.push({
-                id:docSnap.id,
-                data:data,
-                otherId:data.user1Id
-            });
-
-        });
-
-
-        document.getElementById(
-            "connectionCount"
-        ).textContent =
-            connections.length;
-
-
-        if (connections.length === 0) {
-
-            container.innerHTML =
-                `<div class="empty">
-                    No connections yet.<br>
-                    Find a skill and start exchanging knowledge.
-                </div>`;
-
-            return;
-        }
-
-
-        container.innerHTML = "";
-
-
-        for (
-            const connection
-            of connections.slice(0,5)
-        ) {
-
-            let personName =
-                "Talent Exchange Member";
-
-
-            let personPhoto =
-                "";
-
-
-            try {
-
-                const personSnap =
-                    await getDoc(
-                        doc(
-                            db,
-                            "users",
-                            connection.otherId
-                        )
-                    );
-
-
-                if (
-                    personSnap.exists()
-                ) {
-
-                    const person =
-                        personSnap.data();
-
-
-                    personName =
-                        person.name ||
-                        personName;
-
-
-                    personPhoto =
-                        person.profilePhoto ||
-                        "";
-
-                }
-
-            }
-
-            catch(error) {
-
-                console.error(
-                    "Connection user error:",
-                    error
+            const activity =
+                document.createElement(
+                    "div"
                 );
 
-            }
+            activity.className =
+                "activity";
 
+            activity.innerHTML = `
+                <span class="activity-dot"></span>
 
-            const item =
-                document.createElement("div");
+                <span class="activity-text">
+                    You have ${snapshot.size}
+                    pending skill request${snapshot.size > 1 ? "s" : ""}.
+                </span>
 
-            item.className =
-                "connection";
+                <span class="activity-time">
+                    New
+                </span>
+            `;
 
-
-            const avatar =
-                document.createElement("div");
-
-            avatar.className =
-                "connection-avatar";
-
-
-            if (personPhoto) {
-
-                const img =
-                    document.createElement("img");
-
-                img.src =
-                    personPhoto;
-
-                img.alt =
-                    "Profile photo";
-
-                avatar.appendChild(img);
-
-            }
-
-            else {
-
-                avatar.textContent =
-                    personName
-                        .charAt(0)
-                        .toUpperCase();
-
-            }
-
-
-            const info =
-                document.createElement("div");
-
-            info.className =
-                "connection-info";
-
-
-            const name =
-                document.createElement("strong");
-
-            name.textContent =
-                personName;
-
-
-            const type =
-                document.createElement("span");
-
-            type.textContent =
-                "Connected member";
-
-
-            info.appendChild(name);
-            info.appendChild(type);
-
-
-            const chat =
-                document.createElement("button");
-
-            chat.className =
-                "chat-btn";
-
-            chat.textContent =
-                "Chat";
-
-
-            chat.addEventListener(
-                "click",
-                () => {
-
-                    localStorage.setItem(
-                        "activeChatId",
-                        connection.otherId
-                    );
-
-                    localStorage.setItem(
-                        "activeChatName",
-                        personName
-                    );
-
-                    window.location.href =
-                        "chat.html";
-
-                }
+            activityList.prepend(
+                activity
             );
-
-
-            item.appendChild(avatar);
-            item.appendChild(info);
-            item.appendChild(chat);
-
-
-            container.appendChild(item);
-
         }
 
-    }
+    }catch(error){
 
-    catch(error) {
-
-        console.error(
-            "Connections error:",
+        console.warn(
+            "REQUEST LOAD:",
             error
         );
 
-        document.getElementById(
-            "connectionCount"
-        ).textContent =
-            "0";
-
-
-        container.innerHTML =
-            `<div class="empty">
-                Connections will appear here.
-            </div>`;
-
+        requestCount.textContent =
+            "—";
     }
-
 }
 
 
-/*
-==================================================
-STATUS MESSAGE
-==================================================
-*/
+/* =====================================
+   CONNECTIONS
+===================================== */
 
-function showStatus(message) {
+async function loadConnections(uid){
 
-    const element =
-        document.getElementById(
-            "statusMessage"
+    try{
+
+        const connectionQuery =
+            query(
+                collection(
+                    db,
+                    "Connections"
+                ),
+                where(
+                    "userIds",
+                    "array-contains",
+                    uid
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                connectionQuery
+            );
+
+
+        connectionCount.textContent =
+            snapshot.size;
+
+
+    }catch(error){
+
+        console.warn(
+            "CONNECTION LOAD:",
+            error
         );
 
-
-    element.textContent =
-        message;
-
-
-    element.style.display =
-        "block";
-
+        connectionCount.textContent =
+            "—";
+    }
 }
 
 
-/*
-==================================================
-LOGOUT
-==================================================
-*/
+/* =====================================
+   TAGS
+===================================== */
 
-document.getElementById(
-    "logoutBtn"
-).addEventListener(
+function renderTags(
+    container,
+    skills
+){
+
+    container.innerHTML = "";
+
+
+    if(
+        skills.length === 0
+    ){
+
+        container.innerHTML = `
+            <span class="skill-tag">
+                No skills added
+            </span>
+        `;
+
+        return;
+    }
+
+
+    skills.slice(0,12).forEach(
+        skill => {
+
+            const tag =
+                document.createElement(
+                    "span"
+                );
+
+            tag.className =
+                "skill-tag";
+
+            tag.textContent =
+                skill;
+
+            container.appendChild(
+                tag
+            );
+        }
+    );
+}
+
+
+/* =====================================
+   INITIALS
+===================================== */
+
+function getInitials(name){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(
+            part =>
+                part[0]
+                .toUpperCase()
+        )
+        .join("");
+}
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+logoutButton.addEventListener(
     "click",
-    async event => {
+    async () => {
 
-        event.preventDefault();
-
-
-        try {
+        try{
 
             await signOut(auth);
-
 
             localStorage.removeItem(
                 "userProfile"
@@ -2059,31 +1975,562 @@ document.getElementById(
                 "activeChatName"
             );
 
+            localStorage.removeItem(
+                "activeChatSkill"
+            );
 
             window.location.replace(
                 "login.html"
             );
 
-        }
-
-        catch(error) {
+        }catch(error){
 
             console.error(
-                "Logout error:",
+                "LOGOUT ERROR:",
                 error
             );
-
-            alert(
-                "Logout failed. Please try again."
-            );
-
         }
-
     }
 );
+
+
+/* =====================================
+   MOBILE SIDEBAR
+===================================== */
+
+const menuButton =
+    document.getElementById(
+        "menuButton"
+    );
+
+const sidebar =
+    document.getElementById(
+        "sidebar"
+    );
+
+
+menuButton.addEventListener(
+    "click",
+    () => {
+
+        sidebar.classList.toggle(
+            "open"
+        );
+    }
+);
+
+
+/* Close mobile menu
+   when navigation clicked */
+
+document.querySelectorAll(
+    ".nav-item"
+).forEach(
+    item => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                sidebar.classList.remove(
+                    "open"
+                );
+            }
+        );
+    }
+);
+
+
+/* =====================================
+   HERO 3D TILT
+===================================== */
+
+const hero =
+    document.getElementById("hero");
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        if(
+            window.innerWidth < 850
+        ) return;
+
+
+        const rect =
+            hero.getBoundingClientRect();
+
+
+        const x =
+            event.clientX -
+            (rect.left + rect.width/2);
+
+        const y =
+            event.clientY -
+            (rect.top + rect.height/2);
+
+
+        const rotateY =
+            Math.max(
+                -2.5,
+                Math.min(
+                    2.5,
+                    x/180
+                )
+            );
+
+
+        const rotateX =
+            Math.max(
+                -2.5,
+                Math.min(
+                    2.5,
+                    -y/180
+                )
+            );
+
+
+        hero.style.transform =
+            `perspective(1000px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)`;
+    }
+);
+
+
+/* =====================================
+   THREE.JS
+===================================== */
+
+const container =
+    document.getElementById(
+        "three-container"
+    );
+
+const scene =
+    new THREE.Scene();
+
+
+const camera =
+    new THREE.PerspectiveCamera(
+        45,
+        container.clientWidth /
+        container.clientHeight,
+        .1,
+        100
+    );
+
+
+camera.position.z =
+    6.5;
+
+
+const renderer =
+    new THREE.WebGLRenderer({
+        alpha:true,
+        antialias:true
+    });
+
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
+);
+
+
+renderer.setSize(
+    container.clientWidth,
+    container.clientHeight
+);
+
+
+container.appendChild(
+    renderer.domElement
+);
+
+
+/* Core */
+
+const coreGeometry =
+    new THREE.IcosahedronGeometry(
+        1.35,
+        2
+    );
+
+
+const coreMaterial =
+    new THREE.MeshPhysicalMaterial({
+
+        color:0x7048dc,
+
+        roughness:.25,
+
+        metalness:.6,
+
+        transparent:true,
+
+        opacity:.88
+    });
+
+
+const core =
+    new THREE.Mesh(
+        coreGeometry,
+        coreMaterial
+    );
+
+
+scene.add(core);
+
+
+/* Wire */
+
+const wire =
+    new THREE.Mesh(
+
+        new THREE.IcosahedronGeometry(
+            1.52,
+            2
+        ),
+
+        new THREE.MeshBasicMaterial({
+            color:0x8b5cf6,
+            wireframe:true,
+            transparent:true,
+            opacity:.2
+        })
+    );
+
+
+scene.add(wire);
+
+
+/* Rings */
+
+const ringMaterial =
+    new THREE.MeshBasicMaterial({
+        color:0x4f8cff,
+        transparent:true,
+        opacity:.25
+    });
+
+
+const ring1 =
+    new THREE.Mesh(
+        new THREE.TorusGeometry(
+            1.95,
+            .009,
+            12,
+            100
+        ),
+        ringMaterial
+    );
+
+
+const ring2 =
+    new THREE.Mesh(
+        new THREE.TorusGeometry(
+            2.2,
+            .007,
+            12,
+            100
+        ),
+        ringMaterial
+    );
+
+
+ring1.rotation.x =
+    Math.PI / 2.4;
+
+ring2.rotation.y =
+    Math.PI / 2.7;
+
+
+scene.add(ring1);
+scene.add(ring2);
+
+
+/* Lights */
+
+const light1 =
+    new THREE.PointLight(
+        0x7c3aed,
+        5,
+        10
+    );
+
+light1.position.set(
+    3,
+    2,
+    4
+);
+
+scene.add(light1);
+
+
+const light2 =
+    new THREE.PointLight(
+        0x2563eb,
+        4,
+        10
+    );
+
+light2.position.set(
+    -3,
+    -2,
+    3
+);
+
+scene.add(light2);
+
+
+scene.add(
+    new THREE.AmbientLight(
+        0x4c3c70,
+        1.3
+    )
+);
+
+
+/* Mouse */
+
+let mx = 0;
+let my = 0;
+let tx = 0;
+let ty = 0;
+
+
+window.addEventListener(
+    "mousemove",
+    event => {
+
+        mx =
+            event.clientX /
+            window.innerWidth -
+            .5;
+
+        my =
+            event.clientY /
+            window.innerHeight -
+            .5;
+    }
+);
+
+
+/* Animation */
+
+function animate3D(){
+
+    requestAnimationFrame(
+        animate3D
+    );
+
+
+    tx +=
+        (mx-tx) *
+        .025;
+
+    ty +=
+        (my-ty) *
+        .025;
+
+
+    core.rotation.x +=
+        .002;
+
+    core.rotation.y +=
+        .003;
+
+
+    wire.rotation.x -=
+        .001;
+
+    wire.rotation.y -=
+        .0015;
+
+
+    ring1.rotation.z +=
+        .002;
+
+    ring2.rotation.x -=
+        .001;
+
+
+    core.rotation.y +=
+        tx*.006;
+
+    core.rotation.x +=
+        ty*.004;
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+}
+
+
+animate3D();
+
+
+/* Resize */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        const width =
+            container.clientWidth;
+
+        const height =
+            container.clientHeight;
+
+
+        camera.aspect =
+            width/height;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            width,
+            height
+        );
+    }
+);
+
+
+/* =====================================
+   PARTICLES
+===================================== */
+
+const particleCanvas =
+    document.getElementById(
+        "particles"
+    );
+
+const ctx =
+    particleCanvas.getContext(
+        "2d"
+    );
+
+
+let particles = [];
+
+
+function resizeParticles(){
+
+    particleCanvas.width =
+        window.innerWidth;
+
+    particleCanvas.height =
+        window.innerHeight;
+}
+
+
+resizeParticles();
+
+
+window.addEventListener(
+    "resize",
+    resizeParticles
+);
+
+
+const particleCount =
+    window.innerWidth < 700
+        ? 45
+        : 80;
+
+
+for(
+    let i=0;
+    i<particleCount;
+    i++
+){
+
+    particles.push({
+
+        x:
+            Math.random() *
+            window.innerWidth,
+
+        y:
+            Math.random() *
+            window.innerHeight,
+
+        size:
+            Math.random()*1.2+.25,
+
+        speed:
+            Math.random()*.18+.03,
+
+        opacity:
+            Math.random()*.3+.05
+    });
+}
+
+
+function animateParticles(){
+
+    ctx.clearRect(
+        0,
+        0,
+        particleCanvas.width,
+        particleCanvas.height
+    );
+
+
+    particles.forEach(
+        p => {
+
+            p.y -=
+                p.speed;
+
+
+            if(
+                p.y < -5
+            ){
+
+                p.y =
+                    particleCanvas.height+5;
+
+                p.x =
+                    Math.random() *
+                    particleCanvas.width;
+            }
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                p.x,
+                p.y,
+                p.size,
+                0,
+                Math.PI*2
+            );
+
+
+            ctx.fillStyle =
+                `rgba(180,160,255,${p.opacity})`;
+
+            ctx.fill();
+        }
+    );
+
+
+    requestAnimationFrame(
+        animateParticles
+    );
+}
+
+
+animateParticles();
 
 </script>
 
 </body>
 </html>
-
+```
