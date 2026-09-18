@@ -1,548 +1,397 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login — Talent Exchange</title>
+<title>Login | Talent Exchange</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter, Arial, sans-serif;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    min-height: 100vh;
+body{
+    min-height:100vh;
     background:
-        radial-gradient(circle at 15% 20%, rgba(124,58,237,.18), transparent 35%),
-        radial-gradient(circle at 85% 80%, rgba(168,85,247,.12), transparent 35%),
-        #08080e;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
+        radial-gradient(circle at 20% 20%,rgba(124,58,237,.18),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(79,70,229,.14),transparent 30%),
+        #070711;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.container {
-    width: 100%;
-    max-width: 1050px;
-    min-height: 650px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: rgba(17,17,26,.88);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0,0,0,.45);
+.container{
+    width:100%;
+    max-width:420px;
+    padding:20px;
 }
 
-.left {
-    padding: 55px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(124,58,237,.23),
-            rgba(17,17,26,.3)
-        );
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.card{
+    background:rgba(15,15,28,.94);
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:22px;
+    padding:38px 32px;
+    box-shadow:0 25px 80px rgba(0,0,0,.45);
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    font-size: 19px;
-    font-weight: 800;
+.brand{
+    text-align:center;
+    margin-bottom:30px;
 }
 
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: linear-gradient(135deg,#7c3aed,#a855f7);
-    display: grid;
-    place-items: center;
-    font-size: 15px;
+.brand h1{
+    font-size:28px;
+    font-weight:800;
 }
 
-.left-content {
-    margin-top: auto;
-    margin-bottom: auto;
+.brand h1 span{
+    color:#8b5cf6;
 }
 
-.left h1 {
-    font-size: 42px;
-    line-height: 1.15;
-    margin-bottom: 18px;
+.brand p{
+    color:#777789;
+    font-size:12px;
+    margin-top:8px;
 }
 
-.left h1 span {
-    color: #a78bfa;
+.form-group{
+    margin-bottom:18px;
 }
 
-.left p {
-    color: #aaaabc;
-    font-size: 14px;
-    line-height: 1.8;
-    max-width: 400px;
+label{
+    display:block;
+    color:#aaaabd;
+    font-size:12px;
+    margin-bottom:8px;
 }
 
-.features {
-    margin-top: 30px;
+input{
+    width:100%;
+    padding:13px 14px;
+    border-radius:10px;
+    border:1px solid #29293b;
+    background:#0b0b15;
+    color:white;
+    outline:none;
+    font-size:13px;
 }
 
-.feature {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-    color: #c5c5d2;
-    font-size: 13px;
+input:focus{
+    border-color:#7c3aed;
+    box-shadow:0 0 0 3px rgba(124,58,237,.1);
 }
 
-.feature-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
-    background: rgba(139,92,246,.12);
-    display: grid;
-    place-items: center;
-    color: #c4b5fd;
+.password-row{
+    position:relative;
 }
 
-.footer-text {
-    color: #666678;
-    font-size: 11px;
+.password-row input{
+    padding-right:75px;
 }
 
-.right {
-    padding: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.show-password{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:#9b9baa;
+    cursor:pointer;
+    font-size:11px;
 }
 
-.form-box {
-    width: 100%;
-    max-width: 390px;
+.forgot{
+    text-align:right;
+    margin-top:-8px;
+    margin-bottom:20px;
 }
 
-.form-box h2 {
-    font-size: 28px;
-    margin-bottom: 8px;
+.forgot button{
+    background:none;
+    border:none;
+    color:#a78bfa;
+    cursor:pointer;
+    font-size:11px;
 }
 
-.subtitle {
-    color: #888899;
-    font-size: 13px;
-    margin-bottom: 30px;
+.login-btn{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#7c3aed,#6d28d9);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    font-size:13px;
+    transition:.2s;
 }
 
-.form-group {
-    margin-bottom: 18px;
+.login-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 10px 25px rgba(124,58,237,.25);
 }
 
-label {
-    display: block;
-    color: #c7c7d2;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 8px;
+.login-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
 }
 
-.input-wrapper {
-    position: relative;
+.message{
+    display:none;
+    padding:11px 13px;
+    border-radius:9px;
+    margin-bottom:17px;
+    font-size:11px;
+    line-height:1.5;
 }
 
-input {
-    width: 100%;
-    padding: 13px 14px;
-    background: #0d0d15;
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 10px;
-    outline: none;
-    color: white;
-    font-size: 13px;
-    transition: .2s;
+.message.error{
+    background:rgba(239,68,68,.1);
+    border:1px solid rgba(239,68,68,.2);
+    color:#fca5a5;
 }
 
-input:focus {
-    border-color: rgba(139,92,246,.65);
-    box-shadow: 0 0 0 3px rgba(139,92,246,.08);
+.message.success{
+    background:rgba(34,197,94,.1);
+    border:1px solid rgba(34,197,94,.2);
+    color:#86efac;
 }
 
-input::placeholder {
-    color: #555566;
-}
-
-.password-input {
-    padding-right: 48px;
-}
-
-.show-password {
-    position: absolute;
-    right: 13px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #777789;
-    cursor: pointer;
-    font-size: 13px;
-    user-select: none;
-}
-
-.options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px 0 23px;
-}
-
-.remember {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    color: #888899;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.remember input {
-    width: 13px;
-    height: 13px;
-    accent-color: #8b5cf6;
-}
-
-.forgot {
-    color: #a78bfa;
-    text-decoration: none;
-    font-size: 11px;
-}
-
-.forgot:hover {
-    text-decoration: underline;
-}
-
-.login-btn {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg,#7c3aed,#9333ea);
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.login-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 25px rgba(124,58,237,.25);
-}
-
-.login-btn:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #555566;
-    font-size: 10px;
-    margin: 25px 0;
+.divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:25px 0;
+    color:#555566;
+    font-size:10px;
 }
 
 .divider::before,
-.divider::after {
-    content: "";
-    height: 1px;
-    background: rgba(255,255,255,.07);
-    flex: 1;
+.divider::after{
+    content:"";
+    height:1px;
+    flex:1;
+    background:#252536;
 }
 
-.register {
-    text-align: center;
-    color: #777789;
-    font-size: 12px;
+.register{
+    text-align:center;
+    color:#777789;
+    font-size:12px;
 }
 
-.register a {
-    color: #a78bfa;
-    text-decoration: none;
-    font-weight: 700;
+.register a{
+    color:#a78bfa;
+    text-decoration:none;
+    font-weight:600;
 }
 
-.register a:hover {
-    text-decoration: underline;
+.back{
+    text-align:center;
+    margin-top:20px;
 }
 
-.message {
-    display: none;
-    padding: 11px 13px;
-    border-radius: 9px;
-    margin-bottom: 17px;
-    font-size: 11px;
-    line-height: 1.5;
+.back a{
+    color:#666677;
+    text-decoration:none;
+    font-size:11px;
 }
 
-.message.error {
-    display: block;
-    background: rgba(239,68,68,.08);
-    border: 1px solid rgba(239,68,68,.15);
-    color: #fca5a5;
+.loading{
+    display:none;
+    text-align:center;
+    margin-top:12px;
+    color:#8b5cf6;
+    font-size:11px;
 }
 
-.message.success {
-    display: block;
-    background: rgba(52,211,153,.08);
-    border: 1px solid rgba(52,211,153,.15);
-    color: #86efac;
+.footer{
+    text-align:center;
+    margin-top:18px;
+    color:#4f4f5d;
+    font-size:9px;
 }
 
-@media(max-width:800px) {
-
-    body {
-        padding: 15px;
+@media(max-width:480px){
+    .card{
+        padding:30px 22px;
     }
 
-    .container {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-        min-height: auto;
-    }
-
-    .left {
-        padding: 30px;
-        min-height: 280px;
-    }
-
-    .left h1 {
-        font-size: 30px;
-        margin-top: 35px;
-    }
-
-    .left p {
-        font-size: 12px;
-    }
-
-    .features {
-        display: none;
-    }
-
-    .footer-text {
-        margin-top: 30px;
-    }
-
-    .right {
-        padding: 35px 25px;
-    }
-}
-
-@media(max-width:400px) {
-
-    .left {
-        padding: 25px;
-    }
-
-    .right {
-        padding: 30px 20px;
-    }
-
-    .left h1 {
-        font-size: 27px;
+    .brand h1{
+        font-size:24px;
     }
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <section class="left">
+```
+<div class="card">
 
-        <div class="logo">
-            <div class="logo-icon">TE</div>
-            Talent Exchange
-        </div>
+    <div class="brand">
 
-        <div class="left-content">
+        <h1>
+            Talent<span>Exchange</span>
+        </h1>
 
-            <h1>
-                Learn.
-                <span>Share.</span>
-                Connect.
-            </h1>
+        <p>
+            Exchange knowledge. Build connections.
+        </p>
 
-            <p>
-                Connect with people who have the skills you want
-                and share the skills you know. Build meaningful
-                knowledge exchanges through one platform.
-            </p>
+    </div>
 
-            <div class="features">
 
-                <div class="feature">
-                    <div class="feature-icon">✦</div>
-                    Skill-based connections
-                </div>
+    <div
+        id="message"
+        class="message">
+    </div>
 
-                <div class="feature">
-                    <div class="feature-icon">✓</div>
-                    Verified skill evidence
-                </div>
 
-                <div class="feature">
-                    <div class="feature-icon">◌</div>
-                    Real-time communication
-                </div>
+    <form id="loginForm">
 
-                <div class="feature">
-                    <div class="feature-icon">◎</div>
-                    Audio & video calls
-                </div>
+        <div class="form-group">
 
-            </div>
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required>
 
         </div>
 
-        <div class="footer-text">
-            © 2026 Talent Exchange. All rights reserved.
-        </div>
 
-    </section>
+        <div class="form-group">
 
+            <label for="password">
+                Password
+            </label>
 
-    <section class="right">
-
-        <div class="form-box">
-
-            <h2>Welcome back</h2>
-
-            <p class="subtitle">
-                Sign in to continue to your Talent Exchange account.
-            </p>
-
-            <div id="message" class="message"></div>
-
-
-            <div class="form-group">
-
-                <label for="email">
-                    Email Address
-                </label>
+            <div class="password-row">
 
                 <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email address"
-                    autocomplete="email"
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
                     required>
 
-            </div>
+                <button
+                    type="button"
+                    class="show-password"
+                    id="showPassword">
 
+                    Show
 
-            <div class="form-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <div class="input-wrapper">
-
-                    <input
-                        type="password"
-                        id="password"
-                        class="password-input"
-                        placeholder="Enter your password"
-                        autocomplete="current-password"
-                        required>
-
-                    <span
-                        class="show-password"
-                        id="showPassword">
-                        Show
-                    </span>
-
-                </div>
+                </button>
 
             </div>
 
+        </div>
 
-            <div class="options">
 
-                <label class="remember">
-
-                    <input
-                        type="checkbox"
-                        id="remember">
-
-                    Remember me
-
-                </label>
-
-                <a
-                    href="#"
-                    class="forgot"
-                    id="forgotPassword">
-
-                    Forgot password?
-
-                </a>
-
-            </div>
-
+        <div class="forgot">
 
             <button
-                class="login-btn"
-                id="loginBtn">
+                type="button"
+                id="forgotPassword">
 
-                Sign In
+                Forgot password?
 
             </button>
 
-
-            <div class="divider">
-                OR
-            </div>
+        </div>
 
 
-            <div class="register">
+        <button
+            type="submit"
+            class="login-btn"
+            id="loginBtn">
 
-                Don't have an account?
+            Sign In
 
-                <a href="register.html">
-                    Create Account
-                </a>
+        </button>
 
-            </div>
+
+        <div
+            class="loading"
+            id="loading">
+
+            Signing in...
 
         </div>
 
-    </section>
+    </form>
+
+
+    <div class="divider">
+        <span>NEW TO TALENT EXCHANGE?</span>
+    </div>
+
+
+    <div class="register">
+
+        Don't have an account?
+
+        <a href="register.html">
+            Create Account
+        </a>
+
+    </div>
+
+
+    <div class="back">
+
+        <a href="index.html">
+            ← Back to home
+        </a>
+
+    </div>
 
 </div>
 
 
+<div class="footer">
+    Talent Exchange · Made by Govardhan
+</div>
+```
+
+</div>
+
 <script type="module">
 
-import { auth, db } from "./js/firebase-config.js";
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+    auth,
+    db
+} from "./js/firebase-config.js";
 
 import {
     signInWithEmailAndPassword,
-    sendPasswordResetEmail,
     setPersistence,
     browserLocalPersistence,
-    browserSessionPersistence
+    sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
@@ -550,6 +399,13 @@ import {
     getDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loginForm =
+    document.getElementById("loginForm");
 
 const emailInput =
     document.getElementById("email");
@@ -560,6 +416,9 @@ const passwordInput =
 const loginBtn =
     document.getElementById("loginBtn");
 
+const loading =
+    document.getElementById("loading");
+
 const message =
     document.getElementById("message");
 
@@ -569,355 +428,550 @@ const showPassword =
 const forgotPassword =
     document.getElementById("forgotPassword");
 
-const remember =
-    document.getElementById("remember");
 
+/* =====================================================
+   MESSAGE
+===================================================== */
 
-function showMessage(text, type = "error") {
+function showMessage(
+    text,
+    type = "error"
+){
 
-    message.textContent = text;
+    message.textContent =
+        text;
 
     message.className =
         "message " + type;
 
+    message.style.display =
+        "block";
+
 }
 
 
-showPassword.addEventListener("click", () => {
+/* =====================================================
+   SHOW / HIDE PASSWORD
+===================================================== */
 
-    if (passwordInput.type === "password") {
+showPassword.addEventListener(
+    "click",
+    () => {
 
-        passwordInput.type = "text";
-        showPassword.textContent = "Hide";
+        if(
+            passwordInput.type === "password"
+        ){
 
-    } else {
+            passwordInput.type =
+                "text";
 
-        passwordInput.type = "password";
-        showPassword.textContent = "Show";
+            showPassword.textContent =
+                "Hide";
 
-    }
+        }else{
 
-});
+            passwordInput.type =
+                "password";
 
+            showPassword.textContent =
+                "Show";
 
-loginBtn.addEventListener("click", async () => {
-
-    const email =
-        emailInput.value.trim().toLowerCase();
-
-    const password =
-        passwordInput.value;
-
-    if (!email || !password) {
-
-        showMessage(
-            "Please enter your email and password."
-        );
-
-        return;
-    }
-
-    loginBtn.disabled = true;
-    loginBtn.textContent = "Signing in...";
-
-    try {
-
-        /*
-         * Remember-me controls how long
-         * Firebase keeps the login session.
-         */
-
-        await setPersistence(
-            auth,
-            remember.checked
-                ? browserLocalPersistence
-                : browserSessionPersistence
-        );
-
-
-        /*
-         * Firebase Authentication
-         */
-
-        const userCredential =
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-        const user =
-            userCredential.user;
-
-
-        /*
-         * Get user's Firestore profile
-         */
-
-        const userRef =
-            doc(db, "users", user.uid);
-
-        const userSnapshot =
-            await getDoc(userRef);
-
-
-        if (!userSnapshot.exists()) {
-
-            showMessage(
-                "Your account profile was not found. Please contact the administrator."
-            );
-
-            await auth.signOut();
-
-            loginBtn.disabled = false;
-            loginBtn.textContent = "Sign In";
-
-            return;
-        }
-
-
-        const profile =
-            userSnapshot.data();
-
-
-        /*
-         * Check account status
-         */
-
-        const accountStatus =
-            profile.status || "pending";
-
-
-        if (accountStatus === "pending") {
-
-            showMessage(
-                "Your account is waiting for admin approval."
-            );
-
-            await auth.signOut();
-
-            loginBtn.disabled = false;
-            loginBtn.textContent = "Sign In";
-
-            return;
-        }
-
-
-        if (accountStatus === "rejected") {
-
-            showMessage(
-                "Your account registration was not approved."
-            );
-
-            await auth.signOut();
-
-            loginBtn.disabled = false;
-            loginBtn.textContent = "Sign In";
-
-            return;
-        }
-
-
-        if (accountStatus === "disabled") {
-
-            showMessage(
-                "Your account has been disabled. Please contact the administrator."
-            );
-
-            await auth.signOut();
-
-            loginBtn.disabled = false;
-            loginBtn.textContent = "Sign In";
-
-            return;
-        }
-
-
-        /*
-         * Save only basic profile information
-         * for the frontend UI.
-         */
-
-        localStorage.setItem(
-            "userProfile",
-            JSON.stringify({
-                id: user.uid,
-                name: profile.name || "",
-                email: user.email || "",
-                bio: profile.bio || "",
-                offeredSkills:
-                    profile.offeredSkills || [],
-                learningSkill:
-                    profile.learningSkill || [],
-                profilePhoto:
-                    profile.profilePhoto || "",
-                role:
-                    profile.role || "user",
-                status:
-                    accountStatus
-            })
-        );
-
-
-        localStorage.setItem(
-            "isLoggedIn",
-            "true"
-        );
-
-
-        showMessage(
-            "Login successful. Redirecting...",
-            "success"
-        );
-
-
-        setTimeout(() => {
-
-            window.location.href =
-                "dashboard.html";
-
-        }, 700);
-
-
-    } catch (error) {
-
-        console.error(
-            "Firebase Login Error:",
-            error
-        );
-
-
-        let errorMessage =
-            "Unable to sign in. Please check your details and try again.";
-
-
-        if (
-            error.code ===
-            "auth/invalid-credential"
-        ) {
-
-            errorMessage =
-                "Invalid email or password.";
-
-        } else if (
-            error.code ===
-            "auth/user-not-found"
-        ) {
-
-            errorMessage =
-                "No account exists with this email.";
-
-        } else if (
-            error.code ===
-            "auth/wrong-password"
-        ) {
-
-            errorMessage =
-                "Incorrect password.";
-
-        } else if (
-            error.code ===
-            "auth/invalid-email"
-        ) {
-
-            errorMessage =
-                "Please enter a valid email address.";
-
-        } else if (
-            error.code ===
-            "auth/too-many-requests"
-        ) {
-
-            errorMessage =
-                "Too many attempts. Please try again later.";
-
-        } else if (
-            error.code ===
-            "auth/network-request-failed"
-        ) {
-
-            errorMessage =
-                "Network error. Please check your internet connection.";
-
-        }
-
-
-        showMessage(errorMessage);
-
-        loginBtn.disabled = false;
-        loginBtn.textContent = "Sign In";
-
-    }
-
-});
-
-
-passwordInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            loginBtn.click();
         }
 
     }
 );
 
 
-forgotPassword.addEventListener(
-    "click",
-    async event => {
+/* =====================================================
+   LOGIN
+===================================================== */
+
+loginForm.addEventListener(
+    "submit",
+    async (event) => {
 
         event.preventDefault();
 
+
+        message.style.display =
+            "none";
+
+
         const email =
-            emailInput.value.trim().toLowerCase();
+            emailInput.value
+                .trim()
+                .toLowerCase();
 
 
-        if (!email) {
+        const password =
+            passwordInput.value;
+
+
+        if(!email || !password){
 
             showMessage(
-                "Enter your email address first, then click Forgot password."
+                "Please enter your email and password."
+            );
+
+            return;
+
+        }
+
+
+        loginBtn.disabled =
+            true;
+
+        loading.style.display =
+            "block";
+
+
+        try{
+
+            /* =========================================
+               FORCE LOCAL FIREBASE SESSION
+            ========================================= */
+
+            await setPersistence(
+                auth,
+                browserLocalPersistence
+            );
+
+
+            /* =========================================
+               FIREBASE LOGIN
+            ========================================= */
+
+            const credential =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const firebaseUser =
+                credential.user;
+
+
+            console.log(
+                "LOGIN SUCCESS"
+            );
+
+            console.log(
+                "Firebase UID:",
+                firebaseUser.uid
+            );
+
+            console.log(
+                "Firebase email:",
+                firebaseUser.email
+            );
+
+            console.log(
+                "Current Firebase user:",
+                auth.currentUser
+            );
+
+
+            /* =========================================
+               GET FIRESTORE USER PROFILE
+            ========================================= */
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    firebaseUser.uid
+                );
+
+
+            const userSnap =
+                await getDoc(userRef);
+
+
+            if(!userSnap.exists()){
+
+                await auth.signOut();
+
+                showMessage(
+                    "Your Firebase account exists, but your Talent Exchange profile was not found."
+                );
+
+                loginBtn.disabled =
+                    false;
+
+                loading.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            const userData =
+                userSnap.data();
+
+
+            console.log(
+                "Firestore user:",
+                userData
+            );
+
+
+            /* =========================================
+               ACCOUNT STATUS
+            ========================================= */
+
+            const status =
+                userData.status ||
+                "approved";
+
+
+            if(status === "pending"){
+
+                await auth.signOut();
+
+                showMessage(
+                    "Your account is waiting for admin approval."
+                );
+
+                loginBtn.disabled =
+                    false;
+
+                loading.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            if(status === "rejected"){
+
+                await auth.signOut();
+
+                showMessage(
+                    "Your account has been rejected by the administrator."
+                );
+
+                loginBtn.disabled =
+                    false;
+
+                loading.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            if(status === "disabled"){
+
+                await auth.signOut();
+
+                showMessage(
+                    "Your account has been disabled."
+                );
+
+                loginBtn.disabled =
+                    false;
+
+                loading.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            /* =========================================
+               SAVE LOCAL PROFILE
+            ========================================= */
+
+            const profile = {
+
+                id:
+                    firebaseUser.uid,
+
+                uid:
+                    firebaseUser.uid,
+
+                name:
+                    userData.name ||
+                    "User",
+
+                email:
+                    userData.email ||
+                    firebaseUser.email,
+
+                bio:
+                    userData.bio ||
+                    "",
+
+                offeredSkills:
+                    Array.isArray(
+                        userData.offeredSkills
+                    )
+                    ?
+                    userData.offeredSkills
+                    :
+                    [],
+
+                learningSkills:
+                    Array.isArray(
+                        userData.learningSkills
+                    )
+                    ?
+                    userData.learningSkills
+                    :
+                    [],
+
+                learningSkill:
+                    Array.isArray(
+                        userData.learningSkill
+                    )
+                    ?
+                    userData.learningSkill
+                    :
+                    [],
+
+                profilePhoto:
+                    userData.profilePhoto ||
+                    "",
+
+                role:
+                    userData.role ||
+                    "user",
+
+                status:
+                    status
+
+            };
+
+
+            localStorage.setItem(
+                "userProfile",
+                JSON.stringify(profile)
+            );
+
+
+            localStorage.setItem(
+                "isLoggedIn",
+                "true"
+            );
+
+
+            /* =========================================
+               VERIFY SESSION BEFORE REDIRECT
+            ========================================= */
+
+            const currentUser =
+                auth.currentUser;
+
+
+            if(!currentUser){
+
+                throw new Error(
+                    "Firebase session was lost immediately after login."
+                );
+
+            }
+
+
+            console.log(
+                "SESSION VERIFIED:",
+                currentUser.uid
+            );
+
+
+            showMessage(
+                "Login successful. Opening dashboard...",
+                "success"
+            );
+
+
+            /*
+               Small delay so Firebase has time to
+               finish persistence before navigation.
+            */
+
+            setTimeout(
+                () => {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                },
+                800
+            );
+
+        }
+
+        catch(error){
+
+            console.error(
+                "LOGIN ERROR:",
+                error
+            );
+
+
+            let errorText =
+                "Unable to sign in. Please try again.";
+
+
+            if(
+                error.code ===
+                "auth/invalid-credential"
+            ){
+
+                errorText =
+                    "Invalid email or password.";
+
+            }
+
+            else if(
+                error.code ===
+                "auth/user-not-found"
+            ){
+
+                errorText =
+                    "No account exists with this email.";
+
+            }
+
+            else if(
+                error.code ===
+                "auth/wrong-password"
+            ){
+
+                errorText =
+                    "Incorrect password.";
+
+            }
+
+            else if(
+                error.code ===
+                "auth/invalid-email"
+            ){
+
+                errorText =
+                    "Please enter a valid email address.";
+
+            }
+
+            else if(
+                error.code ===
+                "auth/too-many-requests"
+            ){
+
+                errorText =
+                    "Too many login attempts. Please try again later.";
+
+            }
+
+            else if(
+                error.code ===
+                "auth/network-request-failed"
+            ){
+
+                errorText =
+                    "Network error. Check your internet connection.";
+
+            }
+
+            else if(
+                error.message
+            ){
+
+                errorText =
+                    error.message;
+
+            }
+
+
+            showMessage(
+                errorText
+            );
+
+
+            loginBtn.disabled =
+                false;
+
+            loading.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+forgotPassword.addEventListener(
+    "click",
+    async () => {
+
+        const email =
+            emailInput.value
+                .trim()
+                .toLowerCase();
+
+
+        if(!email){
+
+            showMessage(
+                "Enter your email address first."
             );
 
             emailInput.focus();
 
             return;
+
         }
 
 
-        try {
+        try{
 
             await sendPasswordResetEmail(
                 auth,
                 email
             );
 
+
             showMessage(
                 "Password reset email sent. Check your inbox.",
                 "success"
             );
 
-        } catch (error) {
+        }
+
+        catch(error){
 
             console.error(
-                "Password Reset Error:",
+                "PASSWORD RESET ERROR:",
                 error
             );
 
-            if (
+
+            if(
                 error.code ===
                 "auth/user-not-found"
-            ) {
+            ){
 
                 showMessage(
                     "No account exists with this email."
                 );
 
-            } else {
+            }
+
+            else{
 
                 showMessage(
-                    "Unable to send password reset email. Please try again."
+                    error.message ||
+                    "Unable to send password reset email."
                 );
 
             }
