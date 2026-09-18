@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,608 +7,468 @@
 
 <title>Talent Exchange — Chat</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter, Arial, sans-serif;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-:root {
-    --bg: #09090f;
-    --sidebar: #0d0d15;
-    --card: #11111a;
-    --card2: #161620;
-    --border: rgba(255,255,255,.08);
-    --purple: #8b5cf6;
-    --purple-light: #c4b5fd;
-    --muted: #9696a8;
-    --green: #34d399;
+body{
+    min-height:100vh;
+    font-family:Inter,sans-serif;
+    color:#fff;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(124,58,237,.20),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(37,99,235,.12),transparent 28%),
+        #050509;
+    overflow:hidden;
 }
 
-body {
-    background: var(--bg);
-    color: #fff;
-    min-height: 100vh;
-    overflow: hidden;
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    padding:25px 18px;
+    background:rgba(7,7,13,.82);
+    border-right:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(25px);
+    z-index:20;
 }
 
-/* ================= APP ================= */
-
-.app {
-    display: flex;
-    height: 100vh;
+.logo{
+    padding:5px 12px 28px;
 }
 
-/* ================= SIDEBAR ================= */
-
-.sidebar {
-    width: 250px;
-    flex-shrink: 0;
-    background: var(--sidebar);
-    border-right: 1px solid var(--border);
-    padding: 25px 16px;
-    position: relative;
-    z-index: 20;
+.logo h2{
+    font-size:21px;
+    font-weight:800;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 0 10px 28px;
-    font-size: 20px;
-    font-weight: 800;
+.logo h2 span{
+    color:#a78bfa;
 }
 
-.logo-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: linear-gradient(135deg,#7c3aed,#a855f7);
-    display: grid;
-    place-items: center;
-    font-size: 17px;
+.logo small{
+    display:block;
+    margin-top:5px;
+    color:#666;
+    font-size:9px;
+    letter-spacing:1px;
 }
 
-.nav-title {
-    color: #626273;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    padding: 0 12px 10px;
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
 }
 
-.nav a {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 4px;
-    color: #9999aa;
-    text-decoration: none;
-    font-size: 14px;
-    transition: .2s;
+.nav a{
+    text-decoration:none;
+    color:#999;
+    padding:13px 14px;
+    border-radius:13px;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s;
 }
 
-.nav a:hover {
-    background: rgba(139,92,246,.08);
-    color: white;
-}
-
-.nav a.active {
-    background: rgba(139,92,246,.16);
-    color: var(--purple-light);
-}
-
-.nav-icon {
-    width: 20px;
-    text-align: center;
-}
-
-.logout {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 22px;
-}
-
-/* ================= CHAT AREA ================= */
-
-.chat-area {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ================= CHAT HEADER ================= */
-
-.chat-header {
-    height: 82px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 28px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(13,13,21,.92);
-}
-
-.connection-info {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-}
-
-.avatar {
-    width: 47px;
-    height: 47px;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#4f46e5,#9333ea);
-    display: grid;
-    place-items: center;
-    font-size: 16px;
-    font-weight: 800;
-    position: relative;
-}
-
-.online-dot {
-    position: absolute;
-    width: 11px;
-    height: 11px;
-    background: var(--green);
-    border: 2px solid #0d0d15;
-    border-radius: 50%;
-    right: 0;
-    bottom: 1px;
-}
-
-.connection-info h2 {
-    font-size: 15px;
-    margin-bottom: 4px;
-}
-
-.connection-info p {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.call-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.call-btn {
-    border: 1px solid var(--border);
-    background: #171721;
-    color: #d9d9e2;
-    padding: 10px 14px;
-    border-radius: 9px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 700;
-    transition: .2s;
-}
-
-.call-btn:hover {
-    background: rgba(139,92,246,.14);
-    border-color: rgba(139,92,246,.3);
-    color: #c4b5fd;
-}
-
-.back-btn {
-    display: none;
-}
-
-/* ================= MESSAGES ================= */
-
-.messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 30px 7%;
-    scroll-behavior: smooth;
-}
-
-.date-divider {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    color: #656577;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 5px 0 25px;
-}
-
-.date-divider::before,
-.date-divider::after {
-    content: "";
-    height: 1px;
-    background: var(--border);
-    flex: 1;
-}
-
-.message-row {
-    display: flex;
-    margin-bottom: 14px;
-}
-
-.message-row.me {
-    justify-content: flex-end;
-}
-
-.message {
-    max-width: min(600px,75%);
-}
-
-.message-bubble {
-    padding: 11px 14px;
-    border-radius: 14px;
-    background: #171720;
-    border: 1px solid var(--border);
-    color: #e9e9ef;
-    font-size: 13px;
-    line-height: 1.5;
-    word-wrap: break-word;
-}
-
-.me .message-bubble {
-    background: linear-gradient(
+.nav a:hover,
+.nav a.active{
+    color:#fff;
+    background:linear-gradient(
         135deg,
-        #6d3ee8,
-        #8b5cf6
+        rgba(124,58,237,.25),
+        rgba(59,130,246,.08)
     );
-    border: none;
-    color: white;
-    border-bottom-right-radius: 4px;
+    border:1px solid rgba(139,92,246,.20);
 }
 
-.message-row:not(.me) .message-bubble {
-    border-bottom-left-radius: 4px;
+.icon{
+    display:inline-block;
+    width:23px;
+    color:#a78bfa;
 }
 
-.message-time {
-    color: #626273;
-    font-size: 10px;
-    margin-top: 5px;
-    padding: 0 4px;
+.logout{
+    position:absolute;
+    bottom:25px;
+    left:18px;
+    right:18px;
+    padding:13px;
+    border:1px solid rgba(239,68,68,.15);
+    border-radius:12px;
+    background:rgba(239,68,68,.05);
+    color:#fca5a5;
+    cursor:pointer;
+    font-weight:600;
 }
 
-.me .message-time {
-    text-align: right;
+/* MAIN */
+
+.main{
+    margin-left:250px;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
 }
 
-/* ================= TYPING ================= */
+/* CHAT HEADER */
 
-.typing {
-    display: none;
-    padding: 0 7% 10px;
+.chat-header{
+    height:82px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 25px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(8,8,14,.55);
+    backdrop-filter:blur(20px);
 }
 
-.typing-inner {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: #15151f;
-    border: 1px solid var(--border);
-    padding: 9px 13px;
-    border-radius: 12px;
+.person{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.typing-inner span {
-    width: 5px;
-    height: 5px;
-    background: #888899;
-    border-radius: 50%;
-    animation: typing 1.2s infinite;
+.avatar{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid rgba(167,139,250,.45);
+    background:#11111a;
 }
 
-.typing-inner span:nth-child(2) {
-    animation-delay: .15s;
+.name{
+    font-size:14px;
+    font-weight:700;
 }
 
-.typing-inner span:nth-child(3) {
-    animation-delay: .3s;
+.status{
+    color:#777;
+    font-size:10px;
+    margin-top:4px;
 }
 
-@keyframes typing {
-    0%,60%,100% {
-        opacity: .3;
-        transform: translateY(0);
+.header-actions{
+    display:flex;
+    gap:8px;
+}
+
+.header-btn{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.04);
+    color:#aaa;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.header-btn:hover{
+    color:#fff;
+    background:rgba(124,58,237,.15);
+    border-color:rgba(139,92,246,.25);
+}
+
+/* MESSAGES */
+
+.messages{
+    flex:1;
+    overflow-y:auto;
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+}
+
+.message{
+    max-width:min(65%,520px);
+    padding:11px 14px;
+    border-radius:15px;
+    font-size:12px;
+    line-height:1.55;
+    word-break:break-word;
+}
+
+.message.me{
+    align-self:flex-end;
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #4f46e5
+    );
+    border-bottom-right-radius:4px;
+}
+
+.message.them{
+    align-self:flex-start;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.07);
+    color:#ccc;
+    border-bottom-left-radius:4px;
+}
+
+.time{
+    display:block;
+    margin-top:5px;
+    font-size:8px;
+    opacity:.55;
+    text-align:right;
+}
+
+/* EMPTY */
+
+.chat-empty{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#666;
+}
+
+.chat-empty h3{
+    color:#999;
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+.chat-empty p{
+    font-size:11px;
+}
+
+/* INPUT */
+
+.composer{
+    display:flex;
+    gap:9px;
+    padding:17px 20px;
+    border-top:1px solid rgba(255,255,255,.08);
+    background:rgba(7,7,13,.75);
+    backdrop-filter:blur(20px);
+}
+
+.message-input{
+    flex:1;
+    min-width:0;
+    padding:13px 15px;
+    border-radius:13px;
+    border:1px solid rgba(255,255,255,.08);
+    outline:none;
+    background:rgba(255,255,255,.045);
+    color:#fff;
+    font-family:inherit;
+    font-size:12px;
+}
+
+.message-input:focus{
+    border-color:rgba(139,92,246,.35);
+}
+
+.message-input::placeholder{
+    color:#666;
+}
+
+.send{
+    width:48px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #4f46e5
+    );
+    color:#fff;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.send:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+/* NO CHAT */
+
+.no-chat{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+}
+
+.no-chat h2{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.no-chat p{
+    color:#666;
+    font-size:11px;
+    margin-bottom:20px;
+}
+
+.back-btn{
+    border:none;
+    border-radius:11px;
+    padding:11px 18px;
+    color:#fff;
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #4f46e5
+    );
+    cursor:pointer;
+    font-weight:700;
+}
+
+/* CALL MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(10px);
+    z-index:100;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-card{
+    width:min(650px,100%);
+    padding:25px;
+    border-radius:22px;
+    background:#0d0d14;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 30px 100px rgba(0,0,0,.6);
+}
+
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.close{
+    width:32px;
+    height:32px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    color:#aaa;
+    cursor:pointer;
+}
+
+.video-area{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#020204;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.video-placeholder{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#555;
+    font-size:12px;
+}
+
+.call-controls{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:15px;
+}
+
+.call-control{
+    padding:11px 17px;
+    border:none;
+    border-radius:11px;
+    background:rgba(255,255,255,.06);
+    color:#aaa;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.call-control.end{
+    background:rgba(239,68,68,.12);
+    color:#fca5a5;
+}
+
+/* MOBILE */
+
+.menu-btn{
+    display:none;
+}
+
+@media(max-width:850px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
     }
-    30% {
-        opacity: 1;
-        transform: translateY(-3px);
-    }
-}
 
-/* ================= INPUT ================= */
-
-.input-area {
-    padding: 16px 7% 20px;
-    border-top: 1px solid var(--border);
-    background: #0d0d15;
-}
-
-.input-box {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    background: #15151f;
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    padding: 6px;
-}
-
-.attach-btn {
-    width: 38px;
-    height: 38px;
-    border: none;
-    background: transparent;
-    color: #888899;
-    border-radius: 9px;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.attach-btn:hover {
-    background: #20202b;
-    color: white;
-}
-
-#messageInput {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: white;
-    font-size: 13px;
-    padding: 11px 5px;
-}
-
-#messageInput::placeholder {
-    color: #686878;
-}
-
-.send-btn {
-    width: 42px;
-    height: 38px;
-    border: none;
-    border-radius: 9px;
-    background: var(--purple);
-    color: white;
-    cursor: pointer;
-    font-size: 17px;
-    transition: .2s;
-}
-
-.send-btn:hover {
-    background: #7c3aed;
-    transform: translateY(-1px);
-}
-
-/* ================= ATTACHMENT PREVIEW ================= */
-
-.attachment-preview {
-    display: none;
-    margin-bottom: 8px;
-    padding: 10px 13px;
-    background: #15151f;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 12px;
-    color: #aaaaba;
-}
-
-.remove-attachment {
-    float: right;
-    background: none;
-    border: none;
-    color: #aaa;
-    cursor: pointer;
-}
-
-/* ================= CALL MODAL ================= */
-
-.call-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    background: rgba(0,0,0,.82);
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.call-window {
-    width: min(850px,100%);
-    height: min(600px,90vh);
-    background: #101018;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.call-top {
-    height: 65px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    border-bottom: 1px solid var(--border);
-}
-
-.call-top h3 {
-    font-size: 14px;
-}
-
-.call-top span {
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.close-call {
-    width: 34px;
-    height: 34px;
-    border: none;
-    border-radius: 8px;
-    background: #1b1b25;
-    color: #aaa;
-    cursor: pointer;
-}
-
-.video-area {
-    flex: 1;
-    position: relative;
-    background: #07070c;
-    display: grid;
-    place-items: center;
-}
-
-.remote-placeholder {
-    text-align: center;
-    color: #77778a;
-}
-
-.remote-avatar {
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#7c3aed,#ec4899);
-    display: grid;
-    place-items: center;
-    margin: 0 auto 15px;
-    font-size: 30px;
-    font-weight: 800;
-}
-
-.local-video {
-    display: none;
-    position: absolute;
-    width: 180px;
-    height: 120px;
-    right: 18px;
-    bottom: 18px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 2px solid rgba(255,255,255,.15);
-    background: #000;
-}
-
-.call-controls {
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    background: #101018;
-}
-
-.control {
-    width: 46px;
-    height: 46px;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    background: #1b1b26;
-    color: white;
-    cursor: pointer;
-    font-size: 17px;
-}
-
-.control.active {
-    background: rgba(139,92,246,.25);
-}
-
-.control.end {
-    background: #dc2626;
-    border: none;
-}
-
-/* ================= MOBILE ================= */
-
-.mobile-header {
-    display: none;
-}
-
-@media(max-width:800px) {
-
-    body {
-        overflow: hidden;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
-    .sidebar {
-        display: none;
+    .main{
+        margin-left:0;
     }
 
-    .mobile-header {
-        display: none;
+    .menu-btn{
+        display:block;
+        width:38px;
+        height:38px;
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:10px;
+        background:rgba(255,255,255,.04);
+        color:#fff;
+        cursor:pointer;
     }
 
-    .chat-header {
-        height: 74px;
-        padding: 10px 14px;
+    .chat-header{
+        padding:12px 15px;
     }
 
-    .back-btn {
-        display: block;
-        border: none;
-        background: transparent;
-        color: #aaa;
-        font-size: 20px;
-        margin-right: 4px;
-        cursor: pointer;
+    .messages{
+        padding:17px;
     }
 
-    .connection-info {
-        flex: 1;
-    }
-
-    .avatar {
-        width: 42px;
-        height: 42px;
-    }
-
-    .call-actions {
-        gap: 4px;
-    }
-
-    .call-btn {
-        padding: 9px 10px;
-        font-size: 0;
-    }
-
-    .call-btn:first-child::before {
-        content: "☎";
-        font-size: 16px;
-    }
-
-    .call-btn:last-child::before {
-        content: "▣";
-        font-size: 16px;
-    }
-
-    .messages {
-        padding: 22px 16px;
-    }
-
-    .typing {
-        padding: 0 16px 8px;
-    }
-
-    .input-area {
-        padding: 11px 12px 14px;
-    }
-
-    .message {
-        max-width: 82%;
+    .message{
+        max-width:82%;
     }
 }
 </style>
@@ -616,119 +476,100 @@ body {
 
 <body>
 
-<div class="app">
 
-    <!-- SIDEBAR -->
+<!-- SIDEBAR -->
 
-    <aside class="sidebar">
+<aside class="sidebar" id="sidebar">
 
-        <div class="logo">
-            <div class="logo-icon">TE</div>
-            Talent Exchange
-        </div>
+    <div class="logo">
+        <h2>Talent <span>Exchange</span></h2>
+        <small>SKILLS • PEOPLE • CONNECTIONS</small>
+    </div>
 
-        <div class="nav-title">
-            Workspace
-        </div>
+    <nav class="nav">
 
-        <nav class="nav">
+        <a href="dashboard.html">
+            <span class="icon">⌂</span>
+            Dashboard
+        </a>
 
-            <a href="dashboard.html">
-                <span class="nav-icon">⌂</span>
-                Dashboard
-            </a>
+        <a href="find-skills.html">
+            <span class="icon">⌕</span>
+            Find Skills
+        </a>
 
-            <a href="find-skills.html">
-                <span class="nav-icon">⌕</span>
-                Find Skills
-            </a>
+        <a href="offer-skill.html">
+            <span class="icon">＋</span>
+            Offer Skill
+        </a>
 
-            <a href="requests.html">
-                <span class="nav-icon">♢</span>
-                Requests
-            </a>
+        <a href="requests.html">
+            <span class="icon">↗</span>
+            Requests
+        </a>
 
-            <a href="connections.html">
-                <span class="nav-icon">◎</span>
-                Connections
-            </a>
+        <a href="connections.html">
+            <span class="icon">◎</span>
+            Connections
+        </a>
 
-            <a href="chat.html" class="active">
-                <span class="nav-icon">◌</span>
-                Chat
-            </a>
+        <a href="chat.html" class="active">
+            <span class="icon">▱</span>
+            Chat
+        </a>
 
-            <a href="profile.html">
-                <span class="nav-icon">⚙</span>
-                Edit Profile
-            </a>
+        <a href="profile.html">
+            <span class="icon">◉</span>
+            Profile
+        </a>
 
-        </nav>
+    </nav>
 
-        <div class="logout">
+    <button class="logout" id="logoutBtn">
+        Logout
+    </button>
 
-            <a href="login.html"
-               style="
-               display:flex;
-               align-items:center;
-               gap:13px;
-               color:#9999aa;
-               text-decoration:none;
-               padding:12px;
-               font-size:14px;">
-
-                <span class="nav-icon">↪</span>
-                Logout
-
-            </a>
-
-        </div>
-
-    </aside>
+</aside>
 
 
-    <!-- CHAT AREA -->
+<!-- MAIN -->
 
-    <section class="chat-area">
+<main class="main">
 
+    <div id="chatScreen">
 
-        <!-- CHAT HEADER -->
+        <div class="chat-header">
 
-        <header class="chat-header">
-
-            <div style="display:flex;align-items:center;">
+            <div class="person">
 
                 <button
-                    class="back-btn"
-                    onclick="window.location.href='connections.html'">
-                    ‹
+                    class="menu-btn"
+                    id="menuBtn"
+                >
+                    ☰
                 </button>
 
-                <div class="connection-info">
+                <img
+                    id="chatAvatar"
+                    class="avatar"
+                    src=""
+                    alt="Profile"
+                >
 
-                    <div class="avatar">
+                <div>
 
-                        <span id="chatAvatar">
-                            R
-                        </span>
-
-                        <div
-                            class="online-dot"
-                            id="onlineDot">
-                        </div>
-
+                    <div
+                        class="name"
+                        id="chatName"
+                    >
+                        Loading...
                     </div>
 
-                    <div>
-
-                        <h2 id="chatName">
-                            Rahul
-                        </h2>
-
-                        <p id="chatStatus">
-                            Online
-                        </p>
-
+                    <div
+                        class="status"
+                        id="chatStatus"
+                    >
+                        Talent Exchange connection
                     </div>
 
                 </div>
@@ -736,158 +577,110 @@ body {
             </div>
 
 
-            <!-- CALL BUTTONS -->
-
-            <div class="call-actions">
+            <div class="header-actions">
 
                 <button
-                    class="call-btn"
-                    onclick="startCall('audio')">
-
-                    🎧 Audio Call
-
+                    class="header-btn"
+                    id="audioBtn"
+                    title="Audio Call"
+                >
+                    ☎
                 </button>
 
                 <button
-                    class="call-btn"
-                    onclick="startCall('video')">
-
-                    📹 Video Call
-
+                    class="header-btn"
+                    id="videoBtn"
+                    title="Video Call"
+                >
+                    ▣
                 </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- MESSAGES -->
-
-        <main
-            class="messages"
-            id="messages">
-
-            <div class="date-divider">
-                Today
-            </div>
-
-        </main>
-
-
-        <!-- TYPING -->
-
-        <div
-            class="typing"
-            id="typingIndicator">
-
-            <div class="typing-inner">
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-                <small
-                    style="color:#77778a;margin-left:4px;">
-                    typing...
-                </small>
 
             </div>
 
         </div>
 
 
-        <!-- INPUT -->
-
-        <footer class="input-area">
-
-            <div
-                class="attachment-preview"
-                id="attachmentPreview">
-
-                <span id="attachmentName">
-                    File selected
-                </span>
-
-                <button
-                    class="remove-attachment"
-                    onclick="removeAttachment()">
-                    ✕
-                </button>
-
-            </div>
+        <div
+            class="messages"
+            id="messages"
+        ></div>
 
 
-            <div class="input-box">
+        <form
+            class="composer"
+            id="messageForm"
+        >
 
-                <button
-                    class="attach-btn"
-                    onclick="document.getElementById('fileInput').click()"
-                    title="Attach file">
-
-                    +
-
-                </button>
-
-                <input
-                    type="file"
-                    id="fileInput"
-                    hidden
-                    onchange="handleAttachment(this)">
-
-
-                <input
-                    type="text"
-                    id="messageInput"
-                    placeholder="Type a message..."
-                    autocomplete="off">
-
-
-                <button
-                    class="send-btn"
-                    id="sendButton"
-                    onclick="sendMessage()">
-
-                    ➤
-
-                </button>
-
-            </div>
-
-        </footer>
-
-    </section>
-
-</div>
-
-
-<!-- CALL WINDOW -->
-
-<div
-    class="call-modal"
-    id="callModal">
-
-    <div class="call-window">
-
-        <div class="call-top">
-
-            <div>
-
-                <h3 id="callTitle">
-                    Video Call
-                </h3>
-
-                <span id="callStatus">
-                    Connecting...
-                </span>
-
-            </div>
+            <input
+                id="messageInput"
+                class="message-input"
+                type="text"
+                autocomplete="off"
+                placeholder="Type a message..."
+            >
 
             <button
-                class="close-call"
-                onclick="endCall()">
+                id="sendBtn"
+                class="send"
+                type="submit"
+            >
+                ↑
+            </button>
 
-                ✕
+        </form>
 
+    </div>
+
+
+    <div
+        class="no-chat"
+        id="noChat"
+        style="display:none;"
+    >
+
+        <div>
+
+            <h2>No conversation selected</h2>
+
+            <p>
+                Open a connection and choose Chat
+                to start a conversation.
+            </p>
+
+            <button
+                class="back-btn"
+                onclick="location.href='connections.html'"
+            >
+                View Connections
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- CALL MODAL -->
+
+<div
+    class="modal"
+    id="callModal"
+>
+
+    <div class="modal-card">
+
+        <div class="modal-top">
+
+            <strong id="callTitle">
+                Video Call
+            </strong>
+
+            <button
+                class="close"
+                id="closeCall"
+            >
+                ×
             </button>
 
         </div>
@@ -895,32 +688,19 @@ body {
 
         <div class="video-area">
 
-            <div class="remote-placeholder">
-
-                <div
-                    class="remote-avatar"
-                    id="remoteAvatar">
-                    R
-                </div>
-
-                <p id="remoteName">
-                    Rahul
-                </p>
-
-                <small
-                    style="display:block;margin-top:6px;">
-                    Waiting for connection...
-                </small>
-
-            </div>
-
-
             <video
                 id="localVideo"
-                class="local-video"
                 autoplay
-                muted>
-            </video>
+                muted
+                playsinline
+            ></video>
+
+            <div
+                class="video-placeholder"
+                id="videoPlaceholder"
+            >
+                Camera preview
+            </div>
 
         </div>
 
@@ -928,23 +708,24 @@ body {
         <div class="call-controls">
 
             <button
-                class="control"
-                id="micControl"
-                onclick="toggleMic()">
-                🎙
+                class="call-control"
+                id="cameraBtn"
+            >
+                Camera
             </button>
 
             <button
-                class="control"
-                id="cameraControl"
-                onclick="toggleCamera()">
-                📹
+                class="call-control"
+                id="micBtn"
+            >
+                Microphone
             </button>
 
             <button
-                class="control end"
-                onclick="endCall()">
-                ☎
+                class="call-control end"
+                id="endCall"
+            >
+                End
             </button>
 
         </div>
@@ -954,572 +735,679 @@ body {
 </div>
 
 
-<script>
+<script type="module">
 
-/* =========================================================
-   CURRENT USER
-========================================================= */
+import {
+    auth,
+    db
+} from "./js/firebase-config.js";
 
-const currentUser =
-    JSON.parse(localStorage.getItem("userProfile")) || {
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-        id: "current-user",
-        name: "Mahadev"
-
-    };
-
-
-/* =========================================================
-   ACTIVE CHAT
-========================================================= */
-
-const activeChatId =
-    localStorage.getItem("activeChatId");
-
-const activeChatName =
-    localStorage.getItem("activeChatName") || "Rahul";
+import {
+    collection,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    onSnapshot,
+    getDoc,
+    doc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/*
-   This is temporary information.
+let currentUser = null;
 
-   Later:
+let otherUser = null;
 
-   GET /api/users/:id
-   GET /api/connections
-*/
+let unsubscribeMessages = null;
 
-const demoPeople = {
+let localStream = null;
 
-    rahul001: {
-        name: "Rahul",
-        role: "Web Developer",
-        avatar: "R",
-        online: true
-    },
 
-    ananya001: {
-        name: "Ananya",
-        role: "UI/UX Designer",
-        avatar: "A",
-        online: true
-    },
+/* =========================
+   DEFAULT AVATAR
+========================= */
 
-    kiran001: {
-        name: "Kiran",
-        role: "Python Developer",
-        avatar: "K",
-        online: false
+function defaultAvatar(){
+
+    return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="300"
+             height="300">
+
+            <rect
+                width="300"
+                height="300"
+                fill="#11111a"
+            />
+
+            <circle
+                cx="150"
+                cy="110"
+                r="55"
+                fill="#29243a"
+            />
+
+            <path
+                d="M50 285
+                   C60 205 105 170 150 170
+                   C195 170 240 205 250 285"
+                fill="#29243a"
+            />
+
+        </svg>
+        `);
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   TIME
+========================= */
+
+function formatTime(timestamp){
+
+    if(!timestamp){
+        return "";
     }
 
-};
+
+    try{
+
+        const date =
+            timestamp.toDate();
 
 
-const person =
-    demoPeople[activeChatId] || {
+        return date.toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
 
-        name: activeChatName,
-        role: "Talent Exchange Member",
-        avatar: activeChatName
-            .charAt(0)
-            .toUpperCase(),
-        online: true
+    }catch{
 
-    };
+        return "";
 
+    }
 
-/* =========================================================
-   HEADER DATA
-========================================================= */
-
-document.getElementById("chatName")
-    .textContent = person.name;
-
-document.getElementById("chatAvatar")
-    .textContent = person.avatar;
-
-document.getElementById("remoteAvatar")
-    .textContent = person.avatar;
-
-document.getElementById("remoteName")
-    .textContent = person.name;
-
-document.getElementById("chatStatus")
-    .textContent =
-    person.online ? "Online" : "Offline";
-
-if (!person.online) {
-    document.getElementById("onlineDot").style.display = "none";
 }
 
 
-/* =========================================================
-   CHAT STORAGE
-========================================================= */
+/* =========================
+   GET CHAT ID
+========================= */
 
-const chatStorageKey =
-    "messages_" +
-    (activeChatId || person.name);
+function createChatId(uid1,uid2){
 
+    return [uid1,uid2]
+        .sort()
+        .join("_");
 
-let messages =
-    JSON.parse(
-        localStorage.getItem(chatStorageKey)
-    ) || [];
+}
 
 
-/* =========================================================
-   DEMO FIRST MESSAGE
-========================================================= */
+/* =========================
+   LOAD USER
+========================= */
 
-if (messages.length === 0) {
+async function loadOtherUser(){
 
-    messages = [
+    const id =
+        localStorage.getItem(
+            "activeChatId"
+        );
 
-        {
-            id: "demo1",
-            sender: person.name,
-            text:
-                "Hi! Nice to connect with you through Talent Exchange.",
-            time: getTime()
-        },
 
-        {
-            id: "demo2",
-            sender: currentUser.name,
-            text:
-                "Hi! I'm excited to exchange skills and learn together.",
-            time: getTime()
+    if(!id){
+
+        document.getElementById(
+            "chatScreen"
+        ).style.display = "none";
+
+        document.getElementById(
+            "noChat"
+        ).style.display = "flex";
+
+        return false;
+
+    }
+
+
+    try{
+
+        const userSnap =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    id
+                )
+            );
+
+
+        if(!userSnap.exists()){
+
+            document.getElementById(
+                "chatScreen"
+            ).style.display = "none";
+
+            document.getElementById(
+                "noChat"
+            ).style.display = "flex";
+
+            return false;
+
         }
 
-    ];
 
-    saveMessages();
+        otherUser = {
+
+            id:userSnap.id,
+
+            ...userSnap.data()
+
+        };
+
+
+        document.getElementById(
+            "chatName"
+        ).textContent =
+            otherUser.name ||
+            "Talent Exchange Member";
+
+
+        document.getElementById(
+            "chatAvatar"
+        ).src =
+            otherUser.profilePhoto ||
+            defaultAvatar();
+
+
+        return true;
+
+
+    }catch(error){
+
+        console.error(
+            "USER LOAD ERROR:",
+            error
+        );
+
+        alert(
+            "Unable to load connection."
+        );
+
+        return false;
+
+    }
+
 }
 
 
-/* =========================================================
-   RENDER MESSAGES
-========================================================= */
+/* =========================
+   LOAD MESSAGES
+========================= */
 
-function renderMessages() {
+function loadMessages(){
 
-    const container =
-        document.getElementById("messages");
-
-    container.innerHTML = `
-        <div class="date-divider">
-            Today
-        </div>
-    `;
+    if(!currentUser || !otherUser){
+        return;
+    }
 
 
-    messages.forEach(message => {
-
-        const isMe =
-            message.sender === currentUser.name ||
-            message.sender === "me";
-
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "message-row " +
-            (isMe ? "me" : "");
+    const chatId =
+        createChatId(
+            currentUser.uid,
+            otherUser.id
+        );
 
 
-        row.innerHTML = `
-
-            <div class="message">
-
-                <div class="message-bubble">
-                    ${escapeHTML(message.text)}
-                </div>
-
-                <div class="message-time">
-                    ${escapeHTML(message.time)}
-                </div>
-
-            </div>
-
-        `;
-
-        container.appendChild(row);
-
-    });
-
-
-    container.scrollTop =
-        container.scrollHeight;
-}
-
-
-/* =========================================================
-   SEND MESSAGE
-========================================================= */
-
-function sendMessage() {
-
-    const input =
-        document.getElementById("messageInput");
-
-    const text =
-        input.value.trim();
-
-
-    if (!text) return;
-
-
-    const message = {
-
-        id:
-            "MSG-" +
-            Date.now(),
-
-        sender:
-            currentUser.name,
-
-        text:
-            text,
-
-        time:
-            getTime()
-
-    };
-
-
-    messages.push(message);
-
-    saveMessages();
-
-    input.value = "";
-
-    renderMessages();
+    const messagesRef =
+        collection(
+            db,
+            "messages"
+        );
 
 
     /*
-       REAL BACKEND VERSION:
+     We query by chatId.
 
-       POST /api/messages
+     Messages are stored as:
 
-       {
-           sender_id,
-           receiver_id,
-           message
-       }
-
-       Then realtime delivery will happen
-       through WebSocket / Socket.IO / Supabase Realtime.
+     chatId
+     senderId
+     receiverId
+     message
+     createdAt
     */
 
+    const q =
+        query(
+            messagesRef,
+            where(
+                "chatId",
+                "==",
+                chatId
+            ),
+            orderBy(
+                "createdAt",
+                "asc"
+            )
+        );
 
-    simulateReply();
+
+    if(unsubscribeMessages){
+
+        unsubscribeMessages();
+
+    }
+
+
+    unsubscribeMessages =
+        onSnapshot(
+            q,
+            snapshot => {
+
+                const container =
+                    document.getElementById(
+                        "messages"
+                    );
+
+
+                container.innerHTML = "";
+
+
+                if(snapshot.empty){
+
+                    container.innerHTML = `
+
+                        <div class="chat-empty">
+
+                            <div>
+
+                                <h3>
+                                    Start your conversation
+                                </h3>
+
+                                <p>
+                                    Send a message to
+                                    your skill exchange connection.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                snapshot.forEach(
+                    messageDoc => {
+
+                        const data =
+                            messageDoc.data();
+
+
+                        const isMe =
+                            data.senderId ===
+                            currentUser.uid;
+
+
+                        const bubble =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        bubble.className =
+                            "message " +
+                            (
+                                isMe
+                                    ? "me"
+                                    : "them"
+                            );
+
+
+                        bubble.innerHTML = `
+
+                            <span>
+                                ${escapeHtml(
+                                    data.message
+                                )}
+                            </span>
+
+                            <span class="time">
+                                ${formatTime(
+                                    data.createdAt
+                                )}
+                            </span>
+
+                        `;
+
+
+                        container.appendChild(
+                            bubble
+                        );
+
+                    }
+                );
+
+
+                container.scrollTop =
+                    container.scrollHeight;
+
+            },
+            error => {
+
+                console.error(
+                    "MESSAGE LISTENER ERROR:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "messages"
+                ).innerHTML = `
+
+                    <div class="chat-empty">
+
+                        <div>
+
+                            <h3>
+                                Unable to load messages
+                            </h3>
+
+                            <p>
+                                ${escapeHtml(
+                                    error.message
+                                )}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
 }
 
 
-/* =========================================================
-   ENTER TO SEND
-========================================================= */
+/* =========================
+   SEND MESSAGE
+========================= */
+
+async function sendMessage(){
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const sendBtn =
+        document.getElementById(
+            "sendBtn"
+        );
+
+
+    const message =
+        input.value.trim();
+
+
+    if(!message){
+        return;
+    }
+
+
+    if(!currentUser || !otherUser){
+        return;
+    }
+
+
+    input.disabled = true;
+
+    sendBtn.disabled = true;
+
+
+    try{
+
+        const chatId =
+            createChatId(
+                currentUser.uid,
+                otherUser.id
+            );
+
+
+        await addDoc(
+            collection(
+                db,
+                "messages"
+            ),
+            {
+
+                chatId:chatId,
+
+                senderId:
+                    currentUser.uid,
+
+                receiverId:
+                    otherUser.id,
+
+                message:message,
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        input.value = "";
+
+
+    }catch(error){
+
+        console.error(
+            "SEND MESSAGE ERROR:",
+            error
+        );
+
+
+        alert(
+            "Message could not be sent.\n\n" +
+            error.message
+        );
+
+    }finally{
+
+        input.disabled = false;
+
+        sendBtn.disabled = false;
+
+        input.focus();
+
+    }
+
+}
+
+
+/* =========================
+   FORM
+========================= */
 
 document
-    .getElementById("messageInput")
-    .addEventListener("keydown", function(event) {
-
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
+    .getElementById("messageForm")
+    .addEventListener(
+        "submit",
+        event => {
 
             event.preventDefault();
 
             sendMessage();
 
         }
-
-    });
-
-
-/* =========================================================
-   DEMO REAL-TIME REPLY
-========================================================= */
-
-function simulateReply() {
-
-    if (!person.online) return;
-
-
-    document.getElementById(
-        "typingIndicator"
-    ).style.display = "block";
-
-
-    setTimeout(() => {
-
-        document.getElementById(
-            "typingIndicator"
-        ).style.display = "none";
-
-
-        const reply = {
-
-            id:
-                "MSG-" +
-                Date.now(),
-
-            sender:
-                person.name,
-
-            text:
-                "Sounds good! Let's exchange our skills and learn together.",
-
-            time:
-                getTime()
-
-        };
-
-
-        messages.push(reply);
-
-        saveMessages();
-
-        renderMessages();
-
-    }, 1500);
-}
-
-
-/* =========================================================
-   SAVE
-========================================================= */
-
-function saveMessages() {
-
-    localStorage.setItem(
-        chatStorageKey,
-        JSON.stringify(messages)
     );
-}
 
 
-/* =========================================================
-   FILE ATTACHMENT
-========================================================= */
+/* =========================
+   CALL MODAL
+========================= */
 
-function handleAttachment(input) {
-
-    if (!input.files.length) return;
-
-    const file =
-        input.files[0];
-
-
-    document.getElementById(
-        "attachmentName"
-    ).textContent =
-        file.name;
-
-
-    document.getElementById(
-        "attachmentPreview"
-    ).style.display = "block";
-}
-
-
-function removeAttachment() {
-
-    document.getElementById(
-        "fileInput"
-    ).value = "";
-
-    document.getElementById(
-        "attachmentPreview"
-    ).style.display = "none";
-}
-
-
-/* =========================================================
-   CALL VARIABLES
-========================================================= */
-
-let localStream = null;
-
-let micEnabled = true;
-
-let cameraEnabled = true;
-
-
-/* =========================================================
-   START CALL
-========================================================= */
-
-async function startCall(type) {
+async function openCall(type){
 
     const modal =
-        document.getElementById("callModal");
+        document.getElementById(
+            "callModal"
+        );
+
 
     const title =
-        document.getElementById("callTitle");
-
-    const status =
-        document.getElementById("callStatus");
+        document.getElementById(
+            "callTitle"
+        );
 
 
     title.textContent =
         type === "video"
-        ? "Video Call"
-        : "Audio Call";
+            ? "Video Call"
+            : "Audio Call";
 
 
-    status.textContent =
-        "Requesting permission...";
+    modal.classList.add("show");
 
 
-    modal.style.display = "flex";
+    try{
 
+        if(localStream){
 
-    try {
-
-        localStream =
-            await navigator.mediaDevices.getUserMedia({
-
-                video:
-                    type === "video",
-
-                audio:
-                    true
-
-            });
-
-
-        if (type === "video") {
-
-            const video =
-                document.getElementById("localVideo");
-
-            video.srcObject =
-                localStream;
-
-            video.style.display =
-                "block";
+            localStream
+                .getTracks()
+                .forEach(
+                    track =>
+                        track.stop()
+                );
 
         }
 
 
-        status.textContent =
-            `Waiting for ${person.name} to join...`;
+        localStream =
+            await navigator.mediaDevices
+                .getUserMedia({
+
+                    video:
+                        type === "video",
+
+                    audio:true
+
+                });
 
 
-        /*
-           IMPORTANT:
+        const video =
+            document.getElementById(
+                "localVideo"
+            );
 
-           This currently activates the
-           browser camera/microphone.
 
-           It does NOT yet connect two users.
+        video.srcObject =
+            localStream;
 
-           Real communication requires:
 
-           Browser A
-                ↓
-           WebRTC
-                ↓
-           Signaling Server
-                ↓
-           WebRTC
-                ↓
-           Browser B
-        */
+        document.getElementById(
+            "videoPlaceholder"
+        ).style.display =
+            type === "video"
+                ? "none"
+                : "flex";
 
-    } catch (error) {
 
-        console.error(error);
+    }catch(error){
 
-        status.textContent =
-            "Camera or microphone permission was not granted.";
+        console.error(
+            "MEDIA ERROR:",
+            error
+        );
+
+
+        alert(
+            "Camera/microphone permission was not available.\n\n" +
+            error.message
+        );
 
     }
+
 }
 
 
-/* =========================================================
-   MICROPHONE
-========================================================= */
+/* =========================
+   AUDIO BUTTON
+========================= */
 
-function toggleMic() {
+document
+    .getElementById("audioBtn")
+    .onclick = () => {
 
-    if (!localStream) return;
+        openCall("audio");
 
-
-    const tracks =
-        localStream.getAudioTracks();
-
-
-    tracks.forEach(track => {
-
-        track.enabled =
-            !track.enabled;
-
-        micEnabled =
-            track.enabled;
-
-    });
+    };
 
 
-    document.getElementById(
-        "micControl"
-    ).classList.toggle(
-        "active",
-        !micEnabled
-    );
-}
+/* =========================
+   VIDEO BUTTON
+========================= */
+
+document
+    .getElementById("videoBtn")
+    .onclick = () => {
+
+        openCall("video");
+
+    };
 
 
-/* =========================================================
-   CAMERA
-========================================================= */
-
-function toggleCamera() {
-
-    if (!localStream) return;
-
-
-    const tracks =
-        localStream.getVideoTracks();
-
-
-    tracks.forEach(track => {
-
-        track.enabled =
-            !track.enabled;
-
-        cameraEnabled =
-            track.enabled;
-
-    });
-
-
-    document.getElementById(
-        "cameraControl"
-    ).classList.toggle(
-        "active",
-        !cameraEnabled
-    );
-}
-
-
-/* =========================================================
+/* =========================
    END CALL
-========================================================= */
+========================= */
 
-function endCall() {
+function closeCall(){
 
-    if (localStream) {
+    if(localStream){
 
         localStream
             .getTracks()
-            .forEach(track =>
-                track.stop()
+            .forEach(
+                track =>
+                    track.stop()
             );
 
         localStream = null;
@@ -1533,66 +1421,187 @@ function endCall() {
 
 
     document.getElementById(
-        "localVideo"
-    ).style.display = "none";
-
-
-    document.getElementById(
         "callModal"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "micControl"
-    ).classList.remove("active");
-
-
-    document.getElementById(
-        "cameraControl"
-    ).classList.remove("active");
+    ).classList.remove("show");
 
 }
 
 
-/* =========================================================
-   TIME
-========================================================= */
+document
+    .getElementById("closeCall")
+    .onclick =
+        closeCall;
 
-function getTime() {
 
-    return new Date()
-        .toLocaleTimeString(
-            [],
-            {
-                hour: "2-digit",
-                minute: "2-digit"
+document
+    .getElementById("endCall")
+    .onclick =
+        closeCall;
+
+
+/* =========================
+   CAMERA TOGGLE
+========================= */
+
+document
+    .getElementById("cameraBtn")
+    .onclick = () => {
+
+        if(!localStream){
+            return;
+        }
+
+
+        const track =
+            localStream
+                .getVideoTracks()[0];
+
+
+        if(track){
+
+            track.enabled =
+                !track.enabled;
+
+        }
+
+    };
+
+
+/* =========================
+   MIC TOGGLE
+========================= */
+
+document
+    .getElementById("micBtn")
+    .onclick = () => {
+
+        if(!localStream){
+            return;
+        }
+
+
+        const track =
+            localStream
+                .getAudioTracks()[0];
+
+
+        if(track){
+
+            track.enabled =
+                !track.enabled;
+
+        }
+
+    };
+
+
+/* =========================
+   AUTH
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser = user;
+
+
+        const loaded =
+            await loadOtherUser();
+
+
+        if(loaded){
+
+            loadMessages();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+    .getElementById("logoutBtn")
+    .onclick = async () => {
+
+        try{
+
+            if(unsubscribeMessages){
+
+                unsubscribeMessages();
+
             }
-        );
-
-}
 
 
-/* =========================================================
-   SECURITY
-========================================================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
+            closeCall();
 
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
+            await signOut(auth);
 
-renderMessages();
+
+            localStorage.removeItem(
+                "userProfile"
+            );
+
+            localStorage.removeItem(
+                "isLoggedIn"
+            );
+
+            localStorage.removeItem(
+                "activeChatId"
+            );
+
+            localStorage.removeItem(
+                "activeChatName"
+            );
+
+            localStorage.removeItem(
+                "activeChatSkill"
+            );
+
+
+            window.location.href =
+                "login.html";
+
+        }catch(error){
+
+            console.error(
+                "LOGOUT ERROR:",
+                error
+            );
+
+        }
+
+    };
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+document
+    .getElementById("menuBtn")
+    .onclick = () => {
+
+        document
+            .getElementById("sidebar")
+            .classList.toggle("open");
+
+    };
 
 </script>
 
