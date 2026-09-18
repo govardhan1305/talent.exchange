@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +33,7 @@ body{
 }
 
 .logo{
-    font-size:23px;
+    font-size:22px;
     font-weight:800;
     padding:0 15px;
     margin-bottom:40px;
@@ -69,15 +70,10 @@ body{
     transition:.2s;
 }
 
-.nav-item:hover{
-    background:rgba(139,92,246,.09);
-    color:#fff;
-}
-
+.nav-item:hover,
 .nav-item.active{
-    background:rgba(139,92,246,.15);
+    background:rgba(139,92,246,.13);
     color:#fff;
-    border:1px solid rgba(139,92,246,.2);
 }
 
 .nav-icon{
@@ -109,7 +105,7 @@ body{
     align-items:center;
     justify-content:space-between;
     padding:0 35px;
-    background:rgba(7,7,17,.85);
+    background:rgba(7,7,17,.9);
     backdrop-filter:blur(15px);
     position:sticky;
     top:0;
@@ -126,32 +122,33 @@ body{
     margin-top:4px;
 }
 
-.top-actions{
-    display:flex;
-    align-items:center;
-    gap:18px;
-}
-
 .user-mini{
     display:flex;
     align-items:center;
     gap:10px;
 }
 
-.user-avatar{
-    width:38px;
-    height:38px;
+.user-avatar,
+.profile-avatar,
+.connection-avatar{
     border-radius:50%;
     background:linear-gradient(135deg,#7c3aed,#4f46e5);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:13px;
     font-weight:700;
     overflow:hidden;
 }
 
-.user-avatar img{
+.user-avatar{
+    width:38px;
+    height:38px;
+    font-size:13px;
+}
+
+.user-avatar img,
+.profile-avatar img,
+.connection-avatar img{
     width:100%;
     height:100%;
     object-fit:cover;
@@ -177,10 +174,10 @@ body{
 .status-message{
     display:none;
     margin-bottom:20px;
-    padding:12px 15px;
+    padding:13px 16px;
     border-radius:10px;
     background:rgba(124,58,237,.1);
-    border:1px solid rgba(124,58,237,.25);
+    border:1px solid rgba(124,58,237,.3);
     color:#c4b5fd;
     font-size:12px;
 }
@@ -226,7 +223,6 @@ body{
 .quick-btn.primary{
     background:#7c3aed;
     color:white;
-    border-color:#7c3aed;
 }
 
 .stats{
@@ -243,24 +239,6 @@ body{
     padding:20px;
 }
 
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    color:#aaaabd;
-    font-size:12px;
-}
-
-.stat-icon{
-    width:38px;
-    height:38px;
-    border-radius:10px;
-    background:rgba(139,92,246,.12);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
 .stat-card h3{
     font-size:25px;
     margin-top:13px;
@@ -270,6 +248,11 @@ body{
     color:#777789;
     font-size:11px;
     margin-top:4px;
+}
+
+.stat-label{
+    color:#aaaabd;
+    font-size:12px;
 }
 
 .dashboard-grid{
@@ -311,21 +294,8 @@ body{
 .profile-avatar{
     width:75px;
     height:75px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#7c3aed,#4f46e5);
-    display:flex;
-    align-items:center;
-    justify-content:center;
     font-size:23px;
-    font-weight:700;
     flex-shrink:0;
-    overflow:hidden;
-}
-
-.profile-avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
 }
 
 .profile-info h2{
@@ -339,9 +309,9 @@ body{
 }
 
 .profile-status{
-    display:inline-flex;
+    display:flex;
     align-items:center;
-    gap:5px;
+    gap:6px;
     margin-top:9px;
     color:#86efac;
     font-size:10px;
@@ -377,8 +347,8 @@ body{
     font-size:10px;
 }
 
-.edit-btn{
-    margin-top:18px;
+.edit-btn,
+.add-video{
     width:100%;
     padding:10px;
     border-radius:9px;
@@ -386,6 +356,7 @@ body{
     background:transparent;
     color:#c4b5fd;
     cursor:pointer;
+    margin-top:18px;
 }
 
 .video-card{
@@ -427,18 +398,8 @@ body{
     margin-top:4px;
 }
 
-.add-video{
-    width:100%;
-    padding:10px;
-    border-radius:9px;
-    border:1px dashed #3b3b50;
-    background:transparent;
-    color:#8b8b9b;
-    cursor:pointer;
-}
-
-.request-empty,
-.connection-empty{
+.loading,
+.empty{
     color:#777789;
     font-size:12px;
     text-align:center;
@@ -447,7 +408,8 @@ body{
     border-radius:12px;
 }
 
-.request{
+.request,
+.connection{
     display:flex;
     align-items:center;
     gap:12px;
@@ -455,32 +417,32 @@ body{
     border-bottom:1px solid #222234;
 }
 
-.request:last-child{
+.request:last-child,
+.connection:last-child{
     border-bottom:none;
 }
 
-.request-avatar{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:#242438;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.request-avatar,
+.connection-avatar{
+    width:42px;
+    height:42px;
+    flex-shrink:0;
     font-size:12px;
-    font-weight:700;
 }
 
-.request-info{
+.request-info,
+.connection-info{
     flex:1;
 }
 
-.request-info strong{
+.request-info strong,
+.connection-info strong{
     display:block;
     font-size:12px;
 }
 
-.request-info span{
+.request-info span,
+.connection-info span{
     color:#777789;
     font-size:10px;
 }
@@ -491,10 +453,11 @@ body{
 }
 
 .accept,
-.decline{
+.decline,
+.chat-btn{
     border:none;
     border-radius:7px;
-    padding:7px 9px;
+    padding:7px 10px;
     cursor:pointer;
     font-size:10px;
 }
@@ -506,62 +469,13 @@ body{
 
 .decline{
     background:#20202e;
-    color:#999;
-}
-
-.connection{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:12px 0;
-    border-bottom:1px solid #222234;
-}
-
-.connection:last-child{
-    border-bottom:none;
-}
-
-.connection-avatar{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#4338ca,#7c3aed);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:700;
-    font-size:12px;
-    overflow:hidden;
-}
-
-.connection-avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.connection-info{
-    flex:1;
-}
-
-.connection-info strong{
-    display:block;
-    font-size:12px;
-}
-
-.connection-info span{
-    color:#777789;
-    font-size:10px;
+    color:#aaa;
 }
 
 .chat-btn{
-    padding:7px 10px;
-    border-radius:7px;
-    border:1px solid #342d4c;
     background:rgba(124,58,237,.1);
     color:#c4b5fd;
-    cursor:pointer;
-    font-size:10px;
+    border:1px solid #342d4c;
 }
 
 .communication{
@@ -570,7 +484,7 @@ body{
 
 .communication-box{
     display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+    grid-template-columns:repeat(3,1fr);
     gap:12px;
 }
 
@@ -579,11 +493,6 @@ body{
     border-radius:13px;
     border:1px solid #29293c;
     background:#0d0d19;
-}
-
-.communication-card .icon{
-    font-size:21px;
-    margin-bottom:12px;
 }
 
 .communication-card h4{
@@ -595,13 +504,6 @@ body{
     font-size:10px;
     line-height:1.5;
     margin-top:5px;
-}
-
-.loading{
-    color:#a78bfa;
-    font-size:12px;
-    padding:20px;
-    text-align:center;
 }
 
 @media(max-width:1100px){
@@ -667,27 +569,10 @@ body{
 @media(max-width:550px){
     .stats{
         grid-template-columns:1fr 1fr;
-        gap:10px;
-    }
-
-    .stat-card{
-        padding:15px;
-    }
-
-    .stat-card h3{
-        font-size:20px;
-    }
-
-    .welcome h2{
-        font-size:20px;
     }
 
     .communication-box{
         grid-template-columns:1fr;
-    }
-
-    .page-title p{
-        display:none;
     }
 }
 </style>
@@ -776,19 +661,15 @@ body{
         <p>Manage your skills, connections and learning journey.</p>
     </div>
 
-    <div class="top-actions">
+    <div class="user-mini">
 
-        <div class="user-mini">
+        <div class="user-avatar" id="topAvatar">
+            U
+        </div>
 
-            <div class="user-avatar" id="topAvatar">
-                U
-            </div>
-
-            <div class="user-mini-text">
-                <strong id="topName">Loading...</strong>
-                <span>Talent Exchange Member</span>
-            </div>
-
+        <div class="user-mini-text">
+            <strong id="topName">Loading...</strong>
+            <span>Talent Exchange Member</span>
         </div>
 
     </div>
@@ -799,6 +680,7 @@ body{
 <div class="content">
 
     <div class="status-message" id="statusMessage"></div>
+
 
     <section class="welcome">
 
@@ -813,11 +695,11 @@ body{
         <div class="quick-actions">
 
             <a href="find-skills.html" class="quick-btn primary">
-                + Find a Skill
+                Find a Skill
             </a>
 
             <a href="offer-skill.html" class="quick-btn">
-                + Offer Your Skill
+                Offer Your Skill
             </a>
 
             <a href="connections.html" class="quick-btn">
@@ -836,44 +718,25 @@ body{
     <section class="stats">
 
         <div class="stat-card">
-            <div class="stat-top">
-                <span>Skills Offered</span>
-                <div class="stat-icon">◆</div>
-            </div>
-
+            <span class="stat-label">Skills Offered</span>
             <h3 id="offeredCount">0</h3>
             <p>Skills you can teach</p>
         </div>
 
-
         <div class="stat-card">
-            <div class="stat-top">
-                <span>Learning</span>
-                <div class="stat-icon">◇</div>
-            </div>
-
+            <span class="stat-label">Learning</span>
             <h3 id="learningCount">0</h3>
             <p>Skills you want to learn</p>
         </div>
 
-
         <div class="stat-card">
-            <div class="stat-top">
-                <span>Connections</span>
-                <div class="stat-icon">♧</div>
-            </div>
-
+            <span class="stat-label">Connections</span>
             <h3 id="connectionCount">0</h3>
             <p>Active connections</p>
         </div>
 
-
         <div class="stat-card">
-            <div class="stat-top">
-                <span>Skill Evidence</span>
-                <div class="stat-icon">✓</div>
-            </div>
-
+            <span class="stat-label">Skill Evidence</span>
             <h3 id="evidenceCount">0</h3>
             <p>Certificates / videos</p>
         </div>
@@ -883,14 +746,14 @@ body{
 
     <section class="dashboard-grid">
 
+
+        <!-- PROFILE -->
+
         <div class="panel">
 
             <div class="panel-header">
                 <h3>Your Profile</h3>
-
-                <a href="profile.html">
-                    Edit
-                </a>
+                <a href="profile.html">Edit</a>
             </div>
 
             <div class="profile">
@@ -911,7 +774,7 @@ body{
 
                     <div class="profile-status">
                         <span class="online-dot"></span>
-                        Profile Active
+                        Account Active
                     </div>
 
                 </div>
@@ -923,32 +786,24 @@ body{
             </p>
 
             <div class="skills" id="skillList">
-                <span class="skill">
-                    Loading skills...
-                </span>
+                <span class="skill">Loading...</span>
             </div>
 
-            <button
-                class="edit-btn"
-                onclick="location.href='profile.html'">
-
+            <button class="edit-btn"
+                    onclick="location.href='profile.html'">
                 Edit Profile
-
             </button>
 
         </div>
 
 
+        <!-- VIDEOS -->
+
         <div class="panel">
 
             <div class="panel-header">
-
                 <h3>Skill Demonstration Videos</h3>
-
-                <a href="profile.html#videos">
-                    Add Video
-                </a>
-
+                <a href="profile.html#videos">Add Video</a>
             </div>
 
             <div id="videoContainer">
@@ -966,7 +821,7 @@ body{
                         </strong>
 
                         <p>
-                            Upload a video demonstrating one of your skills.
+                            Upload a video demonstrating your skill.
                         </p>
 
                     </div>
@@ -975,16 +830,15 @@ body{
 
             </div>
 
-            <button
-                class="add-video"
-                onclick="location.href='profile.html#videos'">
-
+            <button class="add-video"
+                    onclick="location.href='profile.html#videos'">
                 + Add Skill Demonstration Video
-
             </button>
 
         </div>
 
+
+        <!-- REQUESTS -->
 
         <div class="panel">
 
@@ -1008,6 +862,8 @@ body{
 
         </div>
 
+
+        <!-- CONNECTIONS -->
 
         <div class="panel">
 
@@ -1054,38 +910,30 @@ body{
 
             <div class="communication-card">
 
-                <div class="icon">◌</div>
-
                 <h4>Real-Time Chat</h4>
 
                 <p>
-                    Send and receive messages instantly with your connections.
+                    Send and receive messages with your connections.
                 </p>
 
             </div>
 
-
             <div class="communication-card">
-
-                <div class="icon">Audio</div>
 
                 <h4>Audio Call</h4>
 
                 <p>
-                    Start a real-time audio conversation with another member.
+                    Start an audio conversation with another member.
                 </p>
 
             </div>
 
-
             <div class="communication-card">
-
-                <div class="icon">Video</div>
 
                 <h4>Video Call</h4>
 
                 <p>
-                    Use your camera and microphone for real-time video communication.
+                    Use your camera and microphone for video communication.
                 </p>
 
             </div>
@@ -1101,9 +949,14 @@ body{
 
 <script type="module">
 
-/* =====================================================
-   USE THE SAME FIREBASE CONFIG AS THE REST OF THE APP
-===================================================== */
+/*
+==================================================
+IMPORTANT
+==================================================
+Use the SAME Firebase auth + Firestore instances
+used by login.html and register.html.
+==================================================
+*/
 
 import {
     auth,
@@ -1121,58 +974,85 @@ import {
     collection,
     query,
     where,
-    getDocs,
-    updateDoc,
-    addDoc,
-    serverTimestamp
+    getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =====================================================
-   AUTH STATE
-===================================================== */
-
-let dashboardUser = null;
+let dashboardLoaded = false;
 
 
 /*
-   IMPORTANT:
-   Do not use localStorage to decide whether the user
-   is logged in.
-
-   Firebase Auth is the real source of truth.
+==================================================
+AUTHENTICATION
+==================================================
 */
 
 onAuthStateChanged(auth, async (firebaseUser) => {
 
+    console.log(
+        "Talent Exchange auth state:",
+        firebaseUser ? firebaseUser.uid : "NO USER"
+    );
+
     if (!firebaseUser) {
 
-        console.log("No Firebase user. Redirecting to login.");
+        /*
+        Give Firebase a short moment to restore
+        the existing session before redirecting.
+        */
 
-        window.location.replace("login.html");
+        setTimeout(() => {
+
+            if (!auth.currentUser) {
+
+                console.log(
+                    "No Firebase session found. Redirecting to login."
+                );
+
+                window.location.replace("login.html");
+
+            }
+
+        }, 1500);
 
         return;
     }
 
-    console.log("Firebase user authenticated:", firebaseUser.uid);
 
-    dashboardUser = firebaseUser;
+    if (dashboardLoaded) {
+        return;
+    }
+
+    dashboardLoaded = true;
+
+    console.log(
+        "Firebase session verified:",
+        firebaseUser.email
+    );
+
 
     await loadUserDashboard(firebaseUser);
 
 });
 
 
-/* =====================================================
-   LOAD USER DASHBOARD
-===================================================== */
+/*
+==================================================
+LOAD USER DASHBOARD
+==================================================
+*/
 
 async function loadUserDashboard(firebaseUser) {
 
     try {
 
         const userRef =
-            doc(db, "users", firebaseUser.uid);
+            doc(
+                db,
+                "users",
+                firebaseUser.uid
+            );
+
 
         const userSnap =
             await getDoc(userRef);
@@ -1181,7 +1061,7 @@ async function loadUserDashboard(firebaseUser) {
         if (!userSnap.exists()) {
 
             showStatus(
-                "Your account profile was not found in the database."
+                "Your Firebase account exists, but your user profile was not found."
             );
 
             return;
@@ -1192,65 +1072,48 @@ async function loadUserDashboard(firebaseUser) {
             userSnap.data();
 
 
-        /* =================================================
-           ACCOUNT STATUS
-        ================================================= */
+        /*
+        ==============================================
+        ACCOUNT STATUS
+        ==============================================
+        */
 
-        const accountStatus =
-            user.status || "approved";
+        const status =
+            String(
+                user.status || "approved"
+            ).toLowerCase();
 
 
-        if (accountStatus === "pending") {
+        if (status === "pending") {
 
             showStatus(
                 "Your account is waiting for admin approval."
             );
 
-            await signOut(auth);
-
-            setTimeout(() => {
-                window.location.replace("login.html");
-            }, 1500);
-
-            return;
         }
 
-
-        if (accountStatus === "rejected") {
+        else if (status === "rejected") {
 
             showStatus(
-                "Your account has not been approved by the administrator."
+                "Your account has not been approved."
             );
 
-            await signOut(auth);
-
-            setTimeout(() => {
-                window.location.replace("login.html");
-            }, 1500);
-
-            return;
         }
 
-
-        if (accountStatus === "disabled") {
+        else if (status === "disabled") {
 
             showStatus(
-                "Your account has been disabled by the administrator."
+                "Your account has been disabled."
             );
 
-            await signOut(auth);
-
-            setTimeout(() => {
-                window.location.replace("login.html");
-            }, 1500);
-
-            return;
         }
 
 
-        /* =================================================
-           USER DETAILS
-        ================================================= */
+        /*
+        ==============================================
+        USER INFORMATION
+        ==============================================
+        */
 
         const name =
             user.name ||
@@ -1269,51 +1132,60 @@ async function loadUserDashboard(firebaseUser) {
             "Add a short description about yourself.";
 
 
-        document.getElementById("welcomeName")
-            .textContent = name;
+        document.getElementById(
+            "welcomeName"
+        ).textContent = name;
 
 
-        document.getElementById("topName")
-            .textContent = name;
+        document.getElementById(
+            "topName"
+        ).textContent = name;
 
 
-        document.getElementById("profileName")
-            .textContent = name;
+        document.getElementById(
+            "profileName"
+        ).textContent = name;
 
 
-        document.getElementById("profileEmail")
-            .textContent = email;
+        document.getElementById(
+            "profileEmail"
+        ).textContent = email;
 
 
-        document.getElementById("profileBio")
-            .textContent = bio;
+        document.getElementById(
+            "profileBio"
+        ).textContent = bio;
 
 
-        /* =================================================
-           AVATAR
-        ================================================= */
+        /*
+        ==============================================
+        AVATAR
+        ==============================================
+        */
 
-        const firstLetter =
+        const letter =
             name.charAt(0).toUpperCase();
 
 
         setAvatar(
             "topAvatar",
-            firstLetter,
+            letter,
             user.profilePhoto
         );
 
 
         setAvatar(
             "profileAvatar",
-            firstLetter,
+            letter,
             user.profilePhoto
         );
 
 
-        /* =================================================
-           SKILLS
-        ================================================= */
+        /*
+        ==============================================
+        SKILLS
+        ==============================================
+        */
 
         const offeredSkills =
             Array.isArray(user.offeredSkills)
@@ -1331,12 +1203,16 @@ async function loadUserDashboard(firebaseUser) {
                 );
 
 
-        document.getElementById("offeredCount")
-            .textContent = offeredSkills.length;
+        document.getElementById(
+            "offeredCount"
+        ).textContent =
+            offeredSkills.length;
 
 
-        document.getElementById("learningCount")
-            .textContent = learningSkills.length;
+        document.getElementById(
+            "learningCount"
+        ).textContent =
+            learningSkills.length;
 
 
         renderSkills(
@@ -1345,9 +1221,11 @@ async function loadUserDashboard(firebaseUser) {
         );
 
 
-        /* =================================================
-           EVIDENCE + VIDEOS
-        ================================================= */
+        /*
+        ==============================================
+        EVIDENCE
+        ==============================================
+        */
 
         const evidence =
             Array.isArray(user.evidence)
@@ -1361,41 +1239,48 @@ async function loadUserDashboard(firebaseUser) {
                 : [];
 
 
-        document.getElementById("evidenceCount")
-            .textContent =
-            evidence.length + videos.length;
+        document.getElementById(
+            "evidenceCount"
+        ).textContent =
+            evidence.length +
+            videos.length;
 
 
         renderVideos(videos);
 
 
-        /* =================================================
-           REQUESTS
-        ================================================= */
+        /*
+        ==============================================
+        REQUESTS
+        ==============================================
+        */
 
-        await loadRequests(firebaseUser.uid);
-
-
-        /* =================================================
-           CONNECTIONS
-        ================================================= */
-
-        await loadConnections(firebaseUser.uid);
+        await loadRequests(
+            firebaseUser.uid
+        );
 
 
-        console.log("Dashboard loaded successfully.");
+        /*
+        ==============================================
+        CONNECTIONS
+        ==============================================
+        */
+
+        await loadConnections(
+            firebaseUser.uid
+        );
 
     }
 
-    catch (error) {
+    catch(error) {
 
         console.error(
-            "Dashboard loading error:",
+            "Dashboard error:",
             error
         );
 
         showStatus(
-            "Unable to load your dashboard. Please refresh and try again."
+            "Dashboard could not load. Check your Firebase connection."
         );
 
     }
@@ -1403,9 +1288,11 @@ async function loadUserDashboard(firebaseUser) {
 }
 
 
-/* =====================================================
-   AVATAR
-===================================================== */
+/*
+==================================================
+AVATAR
+==================================================
+*/
 
 function setAvatar(
     elementId,
@@ -1414,16 +1301,25 @@ function setAvatar(
 ) {
 
     const element =
-        document.getElementById(elementId);
+        document.getElementById(
+            elementId
+        );
 
 
-    if (!element) return;
+    if (!element) {
+        return;
+    }
 
 
     if (photoUrl) {
 
-        element.innerHTML =
-            `<img src="${escapeHtml(photoUrl)}" alt="Profile photo">`;
+        const image =
+            document.createElement("img");
+
+        image.src = photoUrl;
+        image.alt = "Profile photo";
+
+        element.replaceChildren(image);
 
     }
 
@@ -1437,9 +1333,11 @@ function setAvatar(
 }
 
 
-/* =====================================================
-   SKILLS
-===================================================== */
+/*
+==================================================
+SKILLS
+==================================================
+*/
 
 function renderSkills(
     offeredSkills,
@@ -1447,7 +1345,9 @@ function renderSkills(
 ) {
 
     const container =
-        document.getElementById("skillList");
+        document.getElementById(
+            "skillList"
+        );
 
 
     container.innerHTML = "";
@@ -1459,7 +1359,9 @@ function renderSkills(
     ) {
 
         container.innerHTML =
-            `<span class="skill">No skills added yet</span>`;
+            `<span class="skill">
+                No skills added yet
+            </span>`;
 
         return;
     }
@@ -1495,28 +1397,31 @@ function addSkill(
     const element =
         document.createElement("span");
 
-
     element.className =
         "skill";
-
 
     element.textContent =
         text;
 
-
-    container.appendChild(element);
+    container.appendChild(
+        element
+    );
 
 }
 
 
-/* =====================================================
-   VIDEOS
-===================================================== */
+/*
+==================================================
+VIDEOS
+==================================================
+*/
 
 function renderVideos(videos) {
 
     const container =
-        document.getElementById("videoContainer");
+        document.getElementById(
+            "videoContainer"
+        );
 
 
     if (
@@ -1536,49 +1441,48 @@ function renderVideos(videos) {
         const card =
             document.createElement("div");
 
-
         card.className =
             "video-card";
 
 
+        const preview =
+            document.createElement("div");
+
+        preview.className =
+            "video-preview";
+
+        preview.innerHTML =
+            `<div class="play">▶</div>`;
+
+
+        const info =
+            document.createElement("div");
+
+        info.className =
+            "video-info";
+
+
         const title =
-            escapeHtml(
-                video.title ||
-                "Skill Demonstration"
-            );
+            document.createElement("strong");
+
+        title.textContent =
+            video.title ||
+            "Skill Demonstration";
 
 
         const skill =
-            escapeHtml(
-                video.skill ||
-                "Skill video"
-            );
+            document.createElement("p");
+
+        skill.textContent =
+            video.skill ||
+            "Skill video";
 
 
-        card.innerHTML = `
+        info.appendChild(title);
+        info.appendChild(skill);
 
-            <div class="video-preview">
-
-                <div class="play">
-                    ▶
-                </div>
-
-            </div>
-
-            <div class="video-info">
-
-                <strong>
-                    ${title}
-                </strong>
-
-                <p>
-                    ${skill}
-                </p>
-
-            </div>
-
-        `;
-
+        card.appendChild(preview);
+        card.appendChild(info);
 
         container.appendChild(card);
 
@@ -1587,9 +1491,11 @@ function renderVideos(videos) {
 }
 
 
-/* =====================================================
-   REQUESTS
-===================================================== */
+/*
+==================================================
+REQUESTS
+==================================================
+*/
 
 async function loadRequests(uid) {
 
@@ -1601,16 +1507,9 @@ async function loadRequests(uid) {
 
     try {
 
-        const requestsRef =
-            collection(
-                db,
-                "Requests"
-            );
-
-
         const requestQuery =
             query(
-                requestsRef,
+                collection(db, "Requests"),
                 where(
                     "receiverId",
                     "==",
@@ -1625,18 +1524,17 @@ async function loadRequests(uid) {
 
 
         const snapshot =
-            await getDocs(requestQuery);
+            await getDocs(
+                requestQuery
+            );
 
 
         if (snapshot.empty) {
 
-            container.innerHTML = `
-
-                <div class="request-empty">
+            container.innerHTML =
+                `<div class="empty">
                     No pending exchange requests.
-                </div>
-
-            `;
+                </div>`;
 
             return;
         }
@@ -1651,85 +1549,109 @@ async function loadRequests(uid) {
                 requestDoc.data();
 
 
-            const item =
-                document.createElement("div");
-
-
-            item.className =
-                "request";
-
-
             const senderName =
                 request.senderName ||
                 "Talent Exchange Member";
 
 
-            item.innerHTML = `
+            const item =
+                document.createElement("div");
 
-                <div class="request-avatar">
-
-                    ${escapeHtml(
-                        senderName
-                            .charAt(0)
-                            .toUpperCase()
-                    )}
-
-                </div>
+            item.className =
+                "request";
 
 
-                <div class="request-info">
+            const avatar =
+                document.createElement("div");
 
-                    <strong>
-                        ${escapeHtml(senderName)}
-                    </strong>
+            avatar.className =
+                "request-avatar";
 
-                    <span>
-                        Exchange request
-                    </span>
-
-                </div>
-
-
-                <div class="request-actions">
-
-                    <button
-                        class="accept"
-                        data-id="${requestDoc.id}">
-
-                        Accept
-
-                    </button>
+            avatar.textContent =
+                senderName
+                    .charAt(0)
+                    .toUpperCase();
 
 
-                    <button
-                        class="decline"
-                        data-id="${requestDoc.id}">
+            const info =
+                document.createElement("div");
 
-                        ×
-
-                    </button>
-
-                </div>
-
-            `;
+            info.className =
+                "request-info";
 
 
-            item.querySelector(".accept")
-                .addEventListener(
-                    "click",
-                    () => acceptRequest(
-                        requestDoc.id
+            const name =
+                document.createElement("strong");
+
+            name.textContent =
+                senderName;
+
+
+            const type =
+                document.createElement("span");
+
+            type.textContent =
+                "Exchange request";
+
+
+            info.appendChild(name);
+            info.appendChild(type);
+
+
+            const actions =
+                document.createElement("div");
+
+            actions.className =
+                "request-actions";
+
+
+            const accept =
+                document.createElement("button");
+
+            accept.className =
+                "accept";
+
+            accept.textContent =
+                "Accept";
+
+
+            const decline =
+                document.createElement("button");
+
+            decline.className =
+                "decline";
+
+            decline.textContent =
+                "Decline";
+
+
+            accept.addEventListener(
+                "click",
+                () =>
+                    updateRequest(
+                        requestDoc.id,
+                        "accepted"
                     )
-                );
+            );
 
 
-            item.querySelector(".decline")
-                .addEventListener(
-                    "click",
-                    () => declineRequest(
-                        requestDoc.id
+            decline.addEventListener(
+                "click",
+                () =>
+                    updateRequest(
+                        requestDoc.id,
+                        "declined"
                     )
-                );
+            );
+
+
+            actions.appendChild(accept);
+            actions.appendChild(decline);
+
+
+            item.appendChild(avatar);
+            item.appendChild(info);
+            item.appendChild(actions);
 
 
             container.appendChild(item);
@@ -1738,198 +1660,56 @@ async function loadRequests(uid) {
 
     }
 
-    catch (error) {
-
-        console.error(
-            "Request loading error:",
-            error
-        );
-
-
-        container.innerHTML = `
-
-            <div class="request-empty">
-                Requests could not be loaded.
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
-   ACCEPT REQUEST
-===================================================== */
-
-async function acceptRequest(requestId) {
-
-    try {
-
-        const requestRef =
-            doc(
-                db,
-                "Requests",
-                requestId
-            );
-
-
-        const requestSnap =
-            await getDoc(requestRef);
-
-
-        if (!requestSnap.exists()) {
-
-            alert("Request no longer exists.");
-
-            return;
-        }
-
-
-        const request =
-            requestSnap.data();
-
-
-        const senderId =
-            request.senderId;
-
-
-        const receiverId =
-            request.receiverId;
-
-
-        if (
-            !senderId ||
-            !receiverId
-        ) {
-
-            alert(
-                "Invalid request data."
-            );
-
-            return;
-        }
-
-
-        /* =============================================
-           UPDATE REQUEST
-        ============================================= */
-
-        await updateDoc(
-            requestRef,
-            {
-                status:"accepted",
-                respondedAt:serverTimestamp()
-            }
-        );
-
-
-        /* =============================================
-           CREATE CONNECTION
-        ============================================= */
-
-        await addDoc(
-            collection(
-                db,
-                "Connections"
-            ),
-            {
-                user1Id:senderId,
-                user2Id:receiverId,
-                userIds:[
-                    senderId,
-                    receiverId
-                ],
-                createdAt:serverTimestamp()
-            }
-        );
-
-
-        alert(
-            "Request accepted successfully."
-        );
-
-
-        await loadRequests(
-            dashboardUser.uid
-        );
-
-
-        await loadConnections(
-            dashboardUser.uid
-        );
-
-    }
-
     catch(error) {
 
         console.error(
-            "Accept request error:",
+            "Requests error:",
             error
         );
 
-
-        alert(
-            "Unable to accept request. Check Firestore rules."
-        );
+        container.innerHTML =
+            `<div class="empty">
+                No requests available.
+            </div>`;
 
     }
 
 }
 
 
-/* =====================================================
-   DECLINE REQUEST
-===================================================== */
+/*
+==================================================
+REQUEST UPDATE
+==================================================
+*/
 
-async function declineRequest(requestId) {
+async function updateRequest(
+    requestId,
+    status
+) {
 
-    try {
+    console.log(
+        "Request action:",
+        requestId,
+        status
+    );
 
-        const requestRef =
-            doc(
-                db,
-                "Requests",
-                requestId
-            );
+    /*
+    Full request management is handled by
+    requests.html.
+    */
 
-
-        await updateDoc(
-            requestRef,
-            {
-                status:"rejected",
-                respondedAt:serverTimestamp()
-            }
-        );
-
-
-        await loadRequests(
-            dashboardUser.uid
-        );
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Decline request error:",
-            error
-        );
-
-
-        alert(
-            "Unable to decline request."
-        );
-
-    }
+    window.location.href =
+        "requests.html";
 
 }
 
 
-/* =====================================================
-   CONNECTIONS
-===================================================== */
+/*
+==================================================
+CONNECTIONS
+==================================================
+*/
 
 async function loadConnections(uid) {
 
@@ -1983,48 +1763,34 @@ async function loadConnections(uid) {
         const connections = [];
 
 
-        snapshot1.forEach(
-            docSnap => {
+        snapshot1.forEach(docSnap => {
 
-                const data =
-                    docSnap.data();
-
-
-                connections.push({
-
-                    id:docSnap.id,
-
-                    data:data,
-
-                    otherId:
-                        data.user2Id
-
-                });
-
-            }
-        );
+            const data =
+                docSnap.data();
 
 
-        snapshot2.forEach(
-            docSnap => {
+            connections.push({
+                id:docSnap.id,
+                data:data,
+                otherId:data.user2Id
+            });
 
-                const data =
-                    docSnap.data();
+        });
 
 
-                connections.push({
+        snapshot2.forEach(docSnap => {
 
-                    id:docSnap.id,
+            const data =
+                docSnap.data();
 
-                    data:data,
 
-                    otherId:
-                        data.user1Id
+            connections.push({
+                id:docSnap.id,
+                data:data,
+                otherId:data.user1Id
+            });
 
-                });
-
-            }
-        );
+        });
 
 
         document.getElementById(
@@ -2033,22 +1799,13 @@ async function loadConnections(uid) {
             connections.length;
 
 
-        if (
-            connections.length === 0
-        ) {
+        if (connections.length === 0) {
 
-            container.innerHTML = `
-
-                <div class="connection-empty">
-
+            container.innerHTML =
+                `<div class="empty">
                     No connections yet.<br>
-
-                    Find a skill and start
-                    exchanging knowledge.
-
-                </div>
-
-            `;
+                    Find a skill and start exchanging knowledge.
+                </div>`;
 
             return;
         }
@@ -2072,17 +1829,13 @@ async function loadConnections(uid) {
 
             try {
 
-                const personRef =
-                    doc(
-                        db,
-                        "users",
-                        connection.otherId
-                    );
-
-
                 const personSnap =
                     await getDoc(
-                        personRef
+                        doc(
+                            db,
+                            "users",
+                            connection.otherId
+                        )
                     );
 
 
@@ -2118,69 +1871,80 @@ async function loadConnections(uid) {
 
 
             const item =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             item.className =
                 "connection";
 
 
-            const safePhoto =
-                personPhoto
-                    ? escapeHtml(personPhoto)
-                    : "";
+            const avatar =
+                document.createElement("div");
+
+            avatar.className =
+                "connection-avatar";
 
 
-            item.innerHTML = `
+            if (personPhoto) {
 
-                <div class="connection-avatar">
+                const img =
+                    document.createElement("img");
 
-                    ${
-                        safePhoto
+                img.src =
+                    personPhoto;
 
-                        ?
+                img.alt =
+                    "Profile photo";
 
-                        `<img
-                            src="${safePhoto}"
-                            alt="Profile photo">`
+                avatar.appendChild(img);
 
-                        :
+            }
 
-                        escapeHtml(
-                            personName
-                                .charAt(0)
-                                .toUpperCase()
-                        )
-                    }
+            else {
 
-                </div>
+                avatar.textContent =
+                    personName
+                        .charAt(0)
+                        .toUpperCase();
 
-
-                <div class="connection-info">
-
-                    <strong>
-                        ${escapeHtml(personName)}
-                    </strong>
-
-                    <span>
-                        Connected member
-                    </span>
-
-                </div>
+            }
 
 
-                <button class="chat-btn">
-                    Chat
-                </button>
+            const info =
+                document.createElement("div");
 
-            `;
+            info.className =
+                "connection-info";
 
 
-            item.querySelector(
-                ".chat-btn"
-            ).addEventListener(
+            const name =
+                document.createElement("strong");
+
+            name.textContent =
+                personName;
+
+
+            const type =
+                document.createElement("span");
+
+            type.textContent =
+                "Connected member";
+
+
+            info.appendChild(name);
+            info.appendChild(type);
+
+
+            const chat =
+                document.createElement("button");
+
+            chat.className =
+                "chat-btn";
+
+            chat.textContent =
+                "Chat";
+
+
+            chat.addEventListener(
                 "click",
                 () => {
 
@@ -2189,12 +1953,10 @@ async function loadConnections(uid) {
                         connection.otherId
                     );
 
-
                     localStorage.setItem(
                         "activeChatName",
                         personName
                     );
-
 
                     window.location.href =
                         "chat.html";
@@ -2203,9 +1965,12 @@ async function loadConnections(uid) {
             );
 
 
-            container.appendChild(
-                item
-            );
+            item.appendChild(avatar);
+            item.appendChild(info);
+            item.appendChild(chat);
+
+
+            container.appendChild(item);
 
         }
 
@@ -2214,34 +1979,31 @@ async function loadConnections(uid) {
     catch(error) {
 
         console.error(
-            "Connection loading error:",
+            "Connections error:",
             error
         );
 
-
         document.getElementById(
             "connectionCount"
-        ).textContent = "0";
+        ).textContent =
+            "0";
 
 
-        container.innerHTML = `
-
-            <div class="connection-empty">
-
-                Connections could not be loaded.
-
-            </div>
-
-        `;
+        container.innerHTML =
+            `<div class="empty">
+                Connections will appear here.
+            </div>`;
 
     }
 
 }
 
 
-/* =====================================================
-   STATUS MESSAGE
-===================================================== */
+/*
+==================================================
+STATUS MESSAGE
+==================================================
+*/
 
 function showStatus(message) {
 
@@ -2261,40 +2023,11 @@ function showStatus(message) {
 }
 
 
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(value) {
-
-    return String(value)
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
+/*
+==================================================
+LOGOUT
+==================================================
+*/
 
 document.getElementById(
     "logoutBtn"
@@ -2314,16 +2047,13 @@ document.getElementById(
                 "userProfile"
             );
 
-
             localStorage.removeItem(
                 "isLoggedIn"
             );
 
-
             localStorage.removeItem(
                 "activeChatId"
             );
-
 
             localStorage.removeItem(
                 "activeChatName"
@@ -2343,7 +2073,6 @@ document.getElementById(
                 error
             );
 
-
             alert(
                 "Logout failed. Please try again."
             );
@@ -2357,3 +2086,4 @@ document.getElementById(
 
 </body>
 </html>
+```
