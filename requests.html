@@ -1,492 +1,539 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Talent Exchange — Requests</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter, Arial, sans-serif;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    background: #09090f;
-    color: #f5f5f7;
-    min-height: 100vh;
+html{
+    scroll-behavior:smooth;
 }
 
-:root {
-    --purple: #8b5cf6;
-    --purple2: #a78bfa;
-    --bg2: #11111a;
-    --border: rgba(255,255,255,0.08);
-    --muted: #9696a8;
-    --green: #34d399;
-    --red: #f87171;
+body{
+    min-height:100vh;
+    font-family:Inter,sans-serif;
+    color:#fff;
+    background:
+        radial-gradient(circle at 12% 10%,rgba(124,58,237,.20),transparent 30%),
+        radial-gradient(circle at 90% 25%,rgba(37,99,235,.12),transparent 28%),
+        radial-gradient(circle at 50% 100%,rgba(147,51,234,.10),transparent 35%),
+        #050509;
+    overflow-x:hidden;
 }
 
-.app {
-    display: flex;
-    min-height: 100vh;
+/* BACKGROUND */
+
+.bg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:.20;
+}
+
+.orb1{
+    width:300px;
+    height:300px;
+    background:#7c3aed;
+    left:-100px;
+    top:-100px;
+}
+
+.orb2{
+    width:280px;
+    height:280px;
+    background:#2563eb;
+    right:-100px;
+    top:30%;
+}
+
+.orb3{
+    width:250px;
+    height:250px;
+    background:#9333ea;
+    bottom:-100px;
+    left:40%;
 }
 
 /* SIDEBAR */
 
-.sidebar {
-    width: 250px;
-    background: #0d0d15;
-    border-right: 1px solid var(--border);
-    padding: 25px 16px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 20;
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:250px;
+    padding:25px 18px;
+    background:rgba(7,7,13,.76);
+    border-right:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(25px);
+    z-index:20;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 0 10px 28px;
-    font-size: 20px;
-    font-weight: 800;
+.logo{
+    padding:5px 12px 28px;
 }
 
-.logo-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: linear-gradient(135deg,#7c3aed,#a855f7);
-    display: grid;
-    place-items: center;
-    font-size: 18px;
+.logo h2{
+    font-size:21px;
+    font-weight:800;
 }
 
-.nav-title {
-    color: #626273;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    padding: 0 12px 10px;
+.logo h2 span{
+    color:#a78bfa;
 }
 
-.nav a {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    color: #9999aa;
-    text-decoration: none;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 4px;
-    font-size: 14px;
-    transition: .2s;
+.logo small{
+    display:block;
+    color:#666;
+    font-size:9px;
+    margin-top:5px;
+    letter-spacing:1px;
 }
 
-.nav a:hover {
-    background: rgba(139,92,246,.08);
-    color: white;
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
 }
 
-.nav a.active {
-    background: rgba(139,92,246,.16);
-    color: #c4b5fd;
+.nav a{
+    text-decoration:none;
+    color:#999;
+    padding:13px 14px;
+    border-radius:13px;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s;
 }
 
-.nav-icon {
-    width: 20px;
-    text-align: center;
+.nav a:hover,
+.nav a.active{
+    color:#fff;
+    background:linear-gradient(
+        135deg,
+        rgba(124,58,237,.25),
+        rgba(59,130,246,.08)
+    );
+    border:1px solid rgba(139,92,246,.20);
+    transform:translateX(3px);
 }
 
-.logout {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 22px;
+.icon{
+    display:inline-block;
+    width:23px;
+    color:#a78bfa;
 }
 
-.logout a {
-    color: #f87171;
+.logout{
+    position:absolute;
+    bottom:25px;
+    left:18px;
+    right:18px;
+    padding:13px;
+    border:1px solid rgba(239,68,68,.15);
+    border-radius:12px;
+    background:rgba(239,68,68,.05);
+    color:#fca5a5;
+    cursor:pointer;
+    font-weight:600;
 }
 
 /* MAIN */
 
-.main {
-    margin-left: 250px;
-    width: calc(100% - 250px);
-    padding: 34px 40px;
+.main{
+    margin-left:250px;
+    padding:35px;
 }
 
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
 }
 
-.topbar h1 {
-    font-size: 30px;
-    margin-bottom: 6px;
+.title h1{
+    font-size:29px;
+    font-weight:800;
 }
 
-.topbar p {
-    color: var(--muted);
-    font-size: 14px;
-}
-
-.profile-mini {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.mini-avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#7c3aed,#ec4899);
-    display: grid;
-    place-items: center;
-    font-weight: bold;
+.title p{
+    color:#777;
+    font-size:12px;
+    margin-top:6px;
 }
 
 /* TABS */
 
-.tabs {
-    display: flex;
-    gap: 6px;
-    background: #11111a;
-    border: 1px solid var(--border);
-    padding: 5px;
-    border-radius: 12px;
-    width: fit-content;
-    margin-bottom: 24px;
+.tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:22px;
 }
 
-.tab {
-    border: none;
-    background: transparent;
-    color: #9292a5;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
+.tab{
+    padding:10px 17px;
+    border-radius:11px;
+    border:1px solid rgba(255,255,255,.07);
+    background:rgba(255,255,255,.035);
+    color:#888;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
 }
 
-.tab.active {
-    background: var(--purple);
-    color: white;
+.tab.active{
+    color:#fff;
+    border-color:rgba(139,92,246,.25);
+    background:rgba(124,58,237,.16);
 }
 
-/* REQUEST GRID */
+/* REQUEST LIST */
 
-.requests-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(360px,1fr));
-    gap: 18px;
+.request-list{
+    display:grid;
+    gap:14px;
 }
 
-.request-card {
-    background: linear-gradient(145deg,#12121c,#0f0f17);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 21px;
-    transition: .2s;
+.request-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    padding:20px;
+    border-radius:19px;
+    border:1px solid rgba(255,255,255,.08);
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.065),
+        rgba(255,255,255,.025)
+    );
+    backdrop-filter:blur(18px);
+    transition:.25s;
 }
 
-.request-card:hover {
-    border-color: rgba(139,92,246,.35);
-    transform: translateY(-2px);
+.request-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(139,92,246,.25);
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
 
-.person {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    margin-bottom: 17px;
+.person{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
 }
 
-.avatar {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-weight: 800;
-    font-size: 17px;
-    background: linear-gradient(135deg,#4f46e5,#9333ea);
-    overflow: hidden;
-    flex-shrink: 0;
+.avatar{
+    width:58px;
+    height:58px;
+    flex-shrink:0;
+    object-fit:cover;
+    border-radius:50%;
+    background:#15151d;
+    border:1px solid rgba(167,139,250,.45);
 }
 
-.avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.person-info{
+    min-width:0;
 }
 
-.person h3 {
-    font-size: 16px;
-    margin-bottom: 4px;
+.person-name{
+    font-size:14px;
+    font-weight:700;
 }
 
-.person span {
-    color: var(--muted);
-    font-size: 12px;
+.person-email{
+    color:#666;
+    font-size:10px;
+    margin-top:4px;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.section-label {
-    color: #77778a;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: .8px;
-    margin: 14px 0 7px;
+.skill{
+    margin-top:7px;
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    background:rgba(124,58,237,.12);
+    border:1px solid rgba(139,92,246,.17);
+    color:#c4b5fd;
+    font-size:9px;
 }
 
-.skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
+.meta{
+    color:#666;
+    font-size:10px;
+    margin-top:7px;
 }
 
-.skill {
-    padding: 6px 9px;
-    border-radius: 7px;
-    background: rgba(139,92,246,.1);
-    border: 1px solid rgba(139,92,246,.18);
-    color: #c4b5fd;
-    font-size: 11px;
+.actions{
+    display:flex;
+    gap:8px;
+    flex-shrink:0;
 }
 
-.skill.learn {
-    background: rgba(52,211,153,.07);
-    border-color: rgba(52,211,153,.16);
-    color: #86efac;
+.accept,
+.decline,
+.cancel,
+.profile{
+    border:none;
+    border-radius:10px;
+    padding:10px 15px;
+    font-size:10px;
+    font-weight:700;
+    cursor:pointer;
 }
 
-.bio {
-    color: #9999aa;
-    font-size: 13px;
-    line-height: 1.55;
-    margin: 14px 0;
+.accept{
+    background:linear-gradient(135deg,#7c3aed,#4f46e5);
+    color:#fff;
 }
 
-.evidence {
-    display: flex;
-    gap: 15px;
-    color: #858596;
-    font-size: 12px;
-    padding: 11px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+.decline,
+.cancel{
+    background:rgba(239,68,68,.07);
+    border:1px solid rgba(239,68,68,.15);
+    color:#fca5a5;
 }
 
-.actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 16px;
+.profile{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    color:#aaa;
 }
 
-.btn {
-    flex: 1;
-    border: none;
-    border-radius: 9px;
-    padding: 10px 12px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 12px;
-    transition: .2s;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-.accept {
-    background: var(--purple);
-    color: white;
-}
-
-.decline {
-    background: rgba(248,113,113,.08);
-    color: #fca5a5;
-    border: 1px solid rgba(248,113,113,.16);
-}
-
-.profile-btn {
-    background: #191923;
-    color: #d5d5df;
-    border: 1px solid var(--border);
-}
-
-.cancel {
-    background: #191923;
-    color: #aaaabb;
-    border: 1px solid var(--border);
-}
-
-.chat {
-    background: rgba(139,92,246,.12);
-    color: #c4b5fd;
-    border: 1px solid rgba(139,92,246,.2);
-}
-
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 9px;
-    border-radius: 7px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-top: 5px;
-}
-
-.pending {
-    color: #fbbf24;
-    background: rgba(251,191,36,.08);
-}
-
-.accepted {
-    color: #6ee7b7;
-    background: rgba(52,211,153,.08);
-}
-
-.rejected {
-    color: #fca5a5;
-    background: rgba(248,113,113,.08);
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
 }
 
 /* EMPTY */
 
-.empty {
-    border: 1px dashed rgba(255,255,255,.1);
-    border-radius: 18px;
-    padding: 70px 20px;
-    text-align: center;
-    color: #77778a;
-    grid-column: 1/-1;
+.empty{
+    padding:75px 20px;
+    text-align:center;
+    border:1px dashed rgba(255,255,255,.09);
+    border-radius:20px;
 }
 
-.empty-icon {
-    font-size: 42px;
-    margin-bottom: 15px;
+.empty h3{
+    color:#aaa;
+    font-size:15px;
+    margin-bottom:8px;
 }
 
-.empty h3 {
-    color: #dddde7;
-    margin-bottom: 8px;
-}
-
-/* LOADING */
-
-.loading {
-    text-align: center;
-    padding: 60px;
-    color: #888898;
-    grid-column: 1/-1;
-}
-
-/* TOAST */
-
-.toast {
-    position: fixed;
-    right: 25px;
-    bottom: 25px;
-    background: #181821;
-    border: 1px solid rgba(139,92,246,.3);
-    box-shadow: 0 15px 40px rgba(0,0,0,.35);
-    padding: 14px 18px;
-    border-radius: 11px;
-    display: none;
-    z-index: 100;
-    font-size: 13px;
+.empty p{
+    color:#666;
+    font-size:11px;
 }
 
 /* MODAL */
 
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.72);
-    z-index: 80;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+.modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+    z-index:100;
 }
 
-.modal-box {
-    width: min(520px,100%);
-    background: #11111a;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 26px;
-    max-height: 90vh;
-    overflow-y: auto;
+.modal.show{
+    display:flex;
 }
 
-.modal-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 22px;
+.modal-card{
+    width:min(470px,100%);
+    max-height:85vh;
+    overflow-y:auto;
+    padding:27px;
+    border-radius:22px;
+    background:#0d0d14;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
 }
 
-.close {
-    border: none;
-    background: #1b1b26;
-    color: #aaa;
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
-    cursor: pointer;
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
 }
 
-.modal-box p {
-    color: #9999aa;
-    line-height: 1.6;
-    font-size: 14px;
+.close{
+    width:32px;
+    height:32px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    color:#aaa;
+    cursor:pointer;
+}
+
+.modal-profile{
+    text-align:center;
+}
+
+.modal-avatar{
+    width:88px;
+    height:88px;
+    object-fit:cover;
+    border-radius:50%;
+    border:2px solid rgba(167,139,250,.45);
+    margin-bottom:12px;
+}
+
+.modal-profile h2{
+    font-size:20px;
+}
+
+.modal-profile p{
+    color:#777;
+    font-size:11px;
+    margin-top:5px;
+}
+
+.modal-section{
+    margin-top:22px;
+}
+
+.modal-section h4{
+    color:#777;
+    font-size:10px;
+    text-transform:uppercase;
+    margin-bottom:9px;
+}
+
+.modal-bio{
+    color:#aaa;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.tag{
+    padding:6px 9px;
+    border-radius:15px;
+    background:rgba(124,58,237,.12);
+    color:#c4b5fd;
+    border:1px solid rgba(139,92,246,.15);
+    font-size:9px;
+}
+
+/* LOADING */
+
+.loading{
+    position:fixed;
+    inset:0;
+    background:#050509;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:200;
+    transition:.4s;
+}
+
+.loading.hide{
+    opacity:0;
+    pointer-events:none;
+}
+
+.loader{
+    width:38px;
+    height:38px;
+    border:3px solid rgba(255,255,255,.08);
+    border-top-color:#8b5cf6;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 /* MOBILE */
 
-.mobile-header {
-    display: none;
+.menu-btn{
+    display:none;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.04);
+    color:#fff;
+    padding:9px 12px;
+    border-radius:10px;
+    cursor:pointer;
 }
 
-@media(max-width:800px) {
+@media(max-width:850px){
 
-    .sidebar {
-        display: none;
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
     }
 
-    .mobile-header {
-        display: flex;
-        padding: 16px 18px;
-        border-bottom: 1px solid var(--border);
-        justify-content: space-between;
-        align-items: center;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
-    .main {
-        margin-left: 0;
-        width: 100%;
-        padding: 25px 18px;
+    .main{
+        margin-left:0;
+        padding:22px;
     }
 
-    .profile-mini {
-        display: none;
+    .menu-btn{
+        display:block;
+    }
+}
+
+@media(max-width:650px){
+
+    .request-card{
+        flex-direction:column;
+        align-items:stretch;
     }
 
-    .requests-grid {
-        grid-template-columns: 1fr;
+    .actions{
+        width:100%;
+    }
+
+    .actions button{
+        flex:1;
+    }
+
+    .title h1{
+        font-size:23px;
     }
 }
 </style>
@@ -494,112 +541,88 @@ body {
 
 <body>
 
-<div class="mobile-header">
+<div class="loading" id="loading">
+    <div class="loader"></div>
+</div>
 
-    <div class="logo">
-        <div class="logo-icon">TE</div>
-        Talent Exchange
-    </div>
-
-    <a href="dashboard.html"
-       style="color:#aaa;text-decoration:none;">
-        Dashboard
-    </a>
-
+<div class="bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 </div>
 
 
-<div class="app">
+<!-- SIDEBAR -->
 
-<aside class="sidebar">
+<aside class="sidebar" id="sidebar">
 
     <div class="logo">
-        <div class="logo-icon">TE</div>
-        Talent Exchange
-    </div>
-
-    <div class="nav-title">
-        Workspace
+        <h2>Talent <span>Exchange</span></h2>
+        <small>SKILLS • PEOPLE • CONNECTIONS</small>
     </div>
 
     <nav class="nav">
 
         <a href="dashboard.html">
-            <span class="nav-icon">⌂</span>
+            <span class="icon">⌂</span>
             Dashboard
         </a>
 
         <a href="find-skills.html">
-            <span class="nav-icon">⌕</span>
+            <span class="icon">⌕</span>
             Find Skills
         </a>
 
+        <a href="offer-skill.html">
+            <span class="icon">＋</span>
+            Offer Skill
+        </a>
+
         <a href="requests.html" class="active">
-            <span class="nav-icon">♢</span>
+            <span class="icon">↗</span>
             Requests
         </a>
 
         <a href="connections.html">
-            <span class="nav-icon">◎</span>
+            <span class="icon">◎</span>
             Connections
         </a>
 
         <a href="chat.html">
-            <span class="nav-icon">◌</span>
+            <span class="icon">▱</span>
             Chat
         </a>
 
         <a href="profile.html">
-            <span class="nav-icon">⚙</span>
-            Edit Profile
+            <span class="icon">◉</span>
+            Profile
         </a>
 
     </nav>
 
-    <div class="logout">
-
-        <a href="#" id="logoutBtn"
-           style="text-decoration:none;">
-            <span class="nav-icon">↪</span>
-            Logout
-        </a>
-
-    </div>
+    <button class="logout" id="logoutBtn">
+        Logout
+    </button>
 
 </aside>
 
+
+<!-- MAIN -->
 
 <main class="main">
 
     <div class="topbar">
 
-        <div>
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
 
-            <h1>
-                Requests
-            </h1>
-
-            <p>
-                Manage your skill exchange requests and connections.
-            </p>
-
+        <div class="title">
+            <h1>Requests</h1>
+            <p>Manage your skill exchange requests</p>
         </div>
 
-
-        <div class="profile-mini">
-
-            <div>
-                <strong id="topName">
-                    User
-                </strong>
-            </div>
-
-            <div class="mini-avatar"
-                 id="topAvatar">
-                U
-            </div>
-
-        </div>
+        <div></div>
 
     </div>
 
@@ -609,80 +632,45 @@ body {
         <button
             class="tab active"
             id="incomingTab"
-            onclick="showTab('incoming', this)">
-
+        >
             Incoming
-            <span id="incomingCount"></span>
-
         </button>
-
 
         <button
             class="tab"
             id="sentTab"
-            onclick="showTab('sent', this)">
-
+        >
             Sent
-            <span id="sentCount"></span>
-
         </button>
 
     </div>
 
 
-    <section id="incomingSection">
-
-        <div
-            class="requests-grid"
-            id="incomingList">
-
-            <div class="loading">
-                Loading requests...
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section
-        id="sentSection"
-        style="display:none;">
-
-        <div
-            class="requests-grid"
-            id="sentList">
-
-            <div class="loading">
-                Loading requests...
-            </div>
-
-        </div>
-
-    </section>
+    <div
+        class="request-list"
+        id="requestList"
+    ></div>
 
 </main>
-
-</div>
 
 
 <!-- PROFILE MODAL -->
 
 <div
     class="modal"
-    id="profileModal">
+    id="profileModal"
+>
 
-    <div class="modal-box">
+    <div class="modal-card">
 
-        <div class="modal-head">
+        <div class="modal-top">
 
-            <h2 id="modalName">
-                Profile
-            </h2>
+            <strong>Member Profile</strong>
 
             <button
                 class="close"
-                onclick="closeModal()">
+                id="closeModal"
+            >
                 ×
             </button>
 
@@ -695,120 +683,130 @@ body {
 </div>
 
 
-<div
-    class="toast"
-    id="toast">
-</div>
-
-
 <script type="module">
 
-/* =========================================================
-   FIREBASE
-========================================================= */
+import {
+    auth,
+    db
+} from "./js/firebase-config.js";
 
 import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-import {
-    getAuth,
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
-    getFirestore,
     collection,
-    doc,
-    getDoc,
-    getDocs,
     query,
     where,
-    addDoc,
+    getDocs,
+    getDoc,
+    doc,
     updateDoc,
-    deleteDoc,
+    addDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-const firebaseConfig = {
-    apiKey: "AIzaSyReArAuSxobQHOprk87Fe6NmJSVAKcND0",
-    authDomain: "talent-exchange-4456e.firebaseapp.com",
-    projectId: "talent-exchange-4456e",
-    storageBucket: "talent-exchange-4456e.firebasestorage.app",
-    messagingSenderId: "617029447041",
-    appId: "1:617029447041:web:35beb28f9949e2fb594c80"
-};
+/* =========================
+   ELEMENTS
+========================= */
+
+const loading =
+    document.getElementById("loading");
+
+const requestList =
+    document.getElementById("requestList");
+
+const incomingTab =
+    document.getElementById("incomingTab");
+
+const sentTab =
+    document.getElementById("sentTab");
+
+const profileModal =
+    document.getElementById("profileModal");
+
+const modalContent =
+    document.getElementById("modalContent");
+
+let currentUser = null;
+
+let currentMode = "incoming";
 
 
-const app = initializeApp(firebaseConfig);
+/* =========================
+   DEFAULT AVATAR
+========================= */
 
-const auth = getAuth(app);
+function defaultAvatar(){
 
-const db = getFirestore(app);
+    return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="300"
+             height="300"
+             viewBox="0 0 300 300">
+
+            <rect
+                width="300"
+                height="300"
+                fill="#11111a"
+            />
+
+            <circle
+                cx="150"
+                cy="110"
+                r="55"
+                fill="#29243a"
+            />
+
+            <path
+                d="M50 285
+                   C60 205 105 170 150 170
+                   C195 170 240 205 250 285"
+                fill="#29243a"
+            />
+
+        </svg>
+        `);
+
+}
 
 
-/* =========================================================
-   GLOBAL DATA
-========================================================= */
+/* =========================
+   ESCAPE HTML
+========================= */
 
-let firebaseUser = null;
-let currentUserData = null;
-
-let incomingRequests = [];
-let sentRequests = [];
-
-let selectedRequest = null;
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function escapeHTML(value) {
+function escapeHtml(value){
 
     return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 
 }
 
 
-function arrayValue(value) {
+/* =========================
+   NORMALIZE SKILLS
+========================= */
 
-    return Array.isArray(value) ? value : [];
+function normalizeSkills(value){
 
-}
-
-
-function getName(data) {
-
-    return data?.name ||
-           data?.displayName ||
-           "Talent Exchange Member";
-
-}
-
-
-function getOffered(data) {
-
-    return arrayValue(data?.offeredSkills);
-
-}
-
-
-function getLearning(data) {
-
-    if (Array.isArray(data?.learningSkills)) {
-        return data.learningSkills;
+    if(Array.isArray(value)){
+        return value.filter(Boolean);
     }
 
-    if (Array.isArray(data?.learningSkill)) {
-        return data.learningSkill;
+    if(typeof value === "string"){
+
+        return value
+            .split(",")
+            .map(x => x.trim())
+            .filter(Boolean);
+
     }
 
     return [];
@@ -816,923 +814,587 @@ function getLearning(data) {
 }
 
 
-function getEvidence(data) {
+/* =========================
+   LOAD REQUESTS
+========================= */
 
-    return arrayValue(data?.evidence);
+async function loadRequests(){
 
-}
-
-
-function getVideos(data) {
-
-    if (Array.isArray(data?.videos)) {
-        return data.videos.length;
-    }
-
-    if (typeof data?.videos === "number") {
-        return data.videos;
-    }
-
-    return 0;
-
-}
-
-
-function getAvatarHTML(data) {
-
-    const name = getName(data);
-
-    const photo = data?.profilePhoto || "";
-
-    if (photo) {
-
-        return `
-            <div class="avatar">
-                <img src="${escapeHTML(photo)}"
-                     alt="Profile photo">
-            </div>
-        `;
-
-    }
-
-    return `
-        <div class="avatar">
-            ${escapeHTML(name.charAt(0).toUpperCase())}
+    requestList.innerHTML = `
+        <div class="empty">
+            <h3>Loading requests...</h3>
+            <p>Checking your Talent Exchange activity.</p>
         </div>
     `;
 
+
+    try{
+
+        let requestQuery;
+
+
+        if(currentMode === "incoming"){
+
+            requestQuery =
+                query(
+                    collection(db,"Requests"),
+                    where(
+                        "receiverId",
+                        "==",
+                        currentUser.uid
+                    )
+                );
+
+        }else{
+
+            requestQuery =
+                query(
+                    collection(db,"Requests"),
+                    where(
+                        "senderId",
+                        "==",
+                        currentUser.uid
+                    )
+                );
+
+        }
+
+
+        const snapshot =
+            await getDocs(requestQuery);
+
+
+        const requests =
+            snapshot.docs
+                .map(item => ({
+                    id:item.id,
+                    ...item.data()
+                }))
+                .sort((a,b) => {
+
+                    const aTime =
+                        a.createdAt?.seconds || 0;
+
+                    const bTime =
+                        b.createdAt?.seconds || 0;
+
+                    return bTime - aTime;
+
+                });
+
+
+        /*
+         Incoming tab:
+         show pending requests first.
+
+         Sent tab:
+         show all sent requests.
+        */
+
+        const filtered =
+            currentMode === "incoming"
+
+                ? requests.filter(
+                    item =>
+                        item.status === "pending"
+                )
+
+                : requests;
+
+
+        renderRequests(filtered);
+
+
+    }catch(error){
+
+        console.error(
+            "REQUEST LOAD ERROR:",
+            error
+        );
+
+        requestList.innerHTML = `
+            <div class="empty">
+                <h3>Unable to load requests</h3>
+                <p>
+                    ${escapeHtml(error.message)}
+                </p>
+            </div>
+        `;
+
+    }finally{
+
+        setTimeout(() => {
+
+            loading.classList.add("hide");
+
+        },300);
+
+    }
+
 }
 
 
-/* =========================================================
-   CURRENT USER
-========================================================= */
+/* =========================
+   RENDER REQUESTS
+========================= */
 
-async function loadCurrentUser() {
+async function renderRequests(requests){
 
-    if (!firebaseUser) return;
+    requestList.innerHTML = "";
 
-    try {
 
-        const userRef =
-            doc(db, "users", firebaseUser.uid);
+    if(requests.length === 0){
 
-        const userSnap =
-            await getDoc(userRef);
+        requestList.innerHTML = `
 
-        if (userSnap.exists()) {
+            <div class="empty">
 
-            currentUserData =
-                userSnap.data();
+                <h3>
+                    ${
+                        currentMode === "incoming"
+                            ? "No incoming requests"
+                            : "No sent requests"
+                    }
+                </h3>
 
-        } else {
+                <p>
+                    ${
+                        currentMode === "incoming"
+                            ? "When someone wants to exchange skills with you, it will appear here."
+                            : "Requests you send will appear here."
+                    }
+                </p>
 
-            currentUserData = {
+            </div>
 
-                name:
-                    firebaseUser.displayName ||
-                    "User",
+        `;
 
-                email:
-                    firebaseUser.email || ""
+        return;
+    }
 
-            };
+
+    for(const request of requests){
+
+        const otherId =
+            currentMode === "incoming"
+                ? request.senderId
+                : request.receiverId;
+
+
+        let person = null;
+
+
+        try{
+
+            const userSnap =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        otherId
+                    )
+                );
+
+            if(userSnap.exists()){
+
+                person = {
+                    id:userSnap.id,
+                    ...userSnap.data()
+                };
+
+            }
+
+        }catch(error){
+
+            console.error(
+                "USER LOAD ERROR:",
+                error
+            );
 
         }
 
 
         const name =
-            getName(currentUserData);
+            person?.name ||
+            (
+                currentMode === "incoming"
+                    ? request.senderName
+                    : request.receiverName
+            ) ||
+            "Talent Exchange Member";
 
 
-        document.getElementById("topName")
-            .textContent = name;
+        const email =
+            person?.email || "";
 
 
-        document.getElementById("topAvatar")
-            .textContent =
-            name.charAt(0).toUpperCase();
+        const photo =
+            person?.profilePhoto ||
+            defaultAvatar();
 
-    }
 
-    catch(error) {
+        const skill =
+            request.skill ||
+            person?.offeredSkills?.[0] ||
+            "";
 
-        console.error(
-            "User profile error:",
-            error
-        );
 
-    }
+        const card =
+            document.createElement("div");
 
-}
+        card.className = "request-card";
 
 
-/* =========================================================
-   LOAD REQUESTS
-========================================================= */
+        let actionHTML = "";
 
-async function loadRequests() {
 
-    if (!firebaseUser) return;
+        if(currentMode === "incoming"){
 
-
-    incomingRequests = [];
-    sentRequests = [];
-
-
-    try {
-
-        const requestsRef =
-            collection(db, "Requests");
-
-
-        /*
-           Get requests sent TO current user.
-        */
-
-        const incomingQuery =
-            query(
-                requestsRef,
-                where(
-                    "receiverId",
-                    "==",
-                    firebaseUser.uid
-                )
-            );
-
-
-        const incomingSnapshot =
-            await getDocs(incomingQuery);
-
-
-        for (const requestDoc of incomingSnapshot.docs) {
-
-            const data =
-                requestDoc.data();
-
-
-            const sender =
-                await getUserProfile(
-                    data.senderId
-                );
-
-
-            incomingRequests.push({
-
-                id: requestDoc.id,
-
-                ...data,
-
-                senderProfile:
-                    sender
-
-            });
-
-        }
-
-
-        /*
-           Get requests sent BY current user.
-        */
-
-        const sentQuery =
-            query(
-                requestsRef,
-                where(
-                    "senderId",
-                    "==",
-                    firebaseUser.uid
-                )
-            );
-
-
-        const sentSnapshot =
-            await getDocs(sentQuery);
-
-
-        for (const requestDoc of sentSnapshot.docs) {
-
-            const data =
-                requestDoc.data();
-
-
-            const receiver =
-                await getUserProfile(
-                    data.receiverId
-                );
-
-
-            sentRequests.push({
-
-                id: requestDoc.id,
-
-                ...data,
-
-                receiverProfile:
-                    receiver
-
-            });
-
-        }
-
-
-        renderIncoming();
-        renderSent();
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Request loading error:",
-            error
-        );
-
-
-        document.getElementById("incomingList")
-            .innerHTML = `
-                <div class="empty">
-                    <div class="empty-icon">!</div>
-
-                    <h3>
-                        Unable to load requests
-                    </h3>
-
-                    <p>
-                        ${escapeHTML(error.message)}
-                    </p>
-                </div>
-            `;
-
-
-        document.getElementById("sentList")
-            .innerHTML = `
-                <div class="empty">
-                    <div class="empty-icon">!</div>
-
-                    <h3>
-                        Unable to load requests
-                    </h3>
-
-                    <p>
-                        ${escapeHTML(error.message)}
-                    </p>
-                </div>
-            `;
-
-    }
-
-}
-
-
-/* =========================================================
-   GET USER PROFILE
-========================================================= */
-
-async function getUserProfile(uid) {
-
-    if (!uid) {
-
-        return {};
-
-    }
-
-
-    try {
-
-        const userSnap =
-            await getDoc(
-                doc(db, "users", uid)
-            );
-
-
-        if (userSnap.exists()) {
-
-            return {
-
-                uid: uid,
-
-                ...userSnap.data()
-
-            };
-
-        }
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Profile fetch error:",
-            error
-        );
-
-    }
-
-
-    return {
-
-        uid: uid,
-
-        name: "User",
-
-        bio: "No profile information available.",
-
-        offeredSkills: [],
-
-        learningSkills: [],
-
-        evidence: [],
-
-        videos: 0
-
-    };
-
-}
-
-
-/* =========================================================
-   RENDER INCOMING
-========================================================= */
-
-function renderIncoming() {
-
-    const container =
-        document.getElementById("incomingList");
-
-
-    document.getElementById("incomingCount")
-        .textContent =
-        incomingRequests.length
-        ? ` (${incomingRequests.length})`
-        : "";
-
-
-    if (incomingRequests.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                <div class="empty-icon">
-                    -
-                </div>
-
-                <h3>
-                    No incoming requests
-                </h3>
-
-                <p>
-                    When someone wants to exchange skills with you,
-                    their request will appear here.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        incomingRequests.map(request => {
-
-            const profile =
-                request.senderProfile || {};
-
-
-            const name =
-                getName(profile) ||
-                request.senderName ||
-                "User";
-
-
-            const offered =
-                getOffered(profile).length
-                ? getOffered(profile)
-                : arrayValue(request.offeredSkills);
-
-
-            const learning =
-                getLearning(profile).length
-                ? getLearning(profile)
-                : arrayValue(request.learningSkills);
-
-
-            const bio =
-                profile.bio ||
-                request.message ||
-                "No bio available.";
-
-
-            const evidence =
-                getEvidence(profile).length;
-
-
-            const videos =
-                getVideos(profile);
-
-
-            const role =
-                profile.role ||
-                "Talent Exchange Member";
-
-
-            return `
-
-            <div class="request-card">
-
-                <div class="person">
-
-                    ${getAvatarHTML(profile)}
-
-                    <div>
-
-                        <h3>
-                            ${escapeHTML(name)}
-                        </h3>
-
-                        <span>
-                            ${escapeHTML(role)}
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="section-label">
-                    They offer
-                </div>
-
-
-                <div class="skills">
-
-                    ${
-                        offered.length
-                        ?
-                        offered.map(skill => `
-                            <span class="skill">
-                                ${escapeHTML(skill)}
-                            </span>
-                        `).join("")
-                        :
-                        `<span class="skill">
-                            No skills added
-                        </span>`
-                    }
-
-                </div>
-
-
-                <div class="section-label">
-                    They want to learn
-                </div>
-
-
-                <div class="skills">
-
-                    ${
-                        learning.length
-                        ?
-                        learning.map(skill => `
-                            <span class="skill learn">
-                                ${escapeHTML(skill)}
-                            </span>
-                        `).join("")
-                        :
-                        `<span class="skill learn">
-                            No skills added
-                        </span>`
-                    }
-
-                </div>
-
-
-                <div class="bio">
-                    ${escapeHTML(bio)}
-                </div>
-
-
-                <div class="evidence">
-
-                    <span>
-                        ${evidence} Evidence
-                    </span>
-
-                    <span>
-                        ${videos} Videos
-                    </span>
-
-                </div>
-
+            actionHTML = `
 
                 <div class="actions">
 
                     <button
-                        class="btn profile-btn"
-                        onclick="viewIncomingProfile('${request.id}')">
-
-                        View Profile
-
+                        class="profile"
+                        data-profile
+                    >
+                        Profile
                     </button>
 
-
                     <button
-                        class="btn decline"
-                        onclick="declineRequest('${request.id}')">
-
-                        Decline
-
-                    </button>
-
-
-                    <button
-                        class="btn accept"
-                        onclick="acceptRequest('${request.id}')">
-
+                        class="accept"
+                        data-accept
+                    >
                         Accept
+                    </button>
 
+                    <button
+                        class="decline"
+                        data-decline
+                    >
+                        Decline
                     </button>
 
                 </div>
-
-            </div>
 
             `;
 
-        }).join("");
-
-}
-
-
-/* =========================================================
-   RENDER SENT
-========================================================= */
-
-function renderSent() {
-
-    const container =
-        document.getElementById("sentList");
-
-
-    document.getElementById("sentCount")
-        .textContent =
-        sentRequests.length
-        ? ` (${sentRequests.length})`
-        : "";
-
-
-    if (sentRequests.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                <div class="empty-icon">
-                    -
-                </div>
-
-                <h3>
-                    No sent requests
-                </h3>
-
-                <p>
-                    Find someone with a skill you want to learn
-                    and send them an exchange request.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        sentRequests.map(request => {
-
-            const profile =
-                request.receiverProfile || {};
-
-
-            const name =
-                getName(profile) ||
-                request.receiverName ||
-                "User";
-
-
-            const offered =
-                getOffered(profile).length
-                ? getOffered(profile)
-                : arrayValue(request.offeredSkills);
-
-
-            const learning =
-                getLearning(profile).length
-                ? getLearning(profile)
-                : arrayValue(request.learningSkills);
-
-
-            const bio =
-                profile.bio ||
-                "No bio available.";
-
-
-            const role =
-                profile.role ||
-                "Talent Exchange Member";
-
+        }else{
 
             const status =
-                request.status ||
-                "pending";
+                request.status || "pending";
 
 
-            let statusClass =
-                "pending";
+            if(status === "pending"){
 
+                actionHTML = `
 
-            if (status === "accepted") {
+                    <div class="actions">
 
-                statusClass = "accepted";
+                        <button
+                            class="profile"
+                            data-profile
+                        >
+                            Profile
+                        </button>
+
+                        <button
+                            class="cancel"
+                            data-cancel
+                        >
+                            Cancel
+                        </button>
+
+                    </div>
+
+                `;
+
+            }else if(status === "accepted"){
+
+                actionHTML = `
+
+                    <div class="actions">
+
+                        <button
+                            class="accept"
+                            disabled
+                        >
+                            Accepted
+                        </button>
+
+                    </div>
+
+                `;
+
+            }else{
+
+                actionHTML = `
+
+                    <div class="actions">
+
+                        <button
+                            class="decline"
+                            disabled
+                        >
+                            ${escapeHtml(status)}
+                        </button>
+
+                    </div>
+
+                `;
 
             }
 
-            else if (
-                status === "declined" ||
-                status === "rejected"
-            ) {
-
-                statusClass = "rejected";
-
-            }
+        }
 
 
-            const statusText =
-                status.charAt(0).toUpperCase() +
-                status.slice(1);
+        card.innerHTML = `
 
+            <div class="person">
 
-            return `
+                <img
+                    class="avatar"
+                    src="${escapeHtml(photo)}"
+                    alt="Profile"
+                >
 
-            <div class="request-card">
+                <div class="person-info">
 
-                <div class="person">
+                    <div class="person-name">
+                        ${escapeHtml(name)}
+                    </div>
 
-                    ${getAvatarHTML(profile)}
+                    <div class="person-email">
+                        ${escapeHtml(email)}
+                    </div>
 
-                    <div>
+                    ${
+                        skill
+                        ? `
+                            <span class="skill">
+                                ${escapeHtml(skill)}
+                            </span>
+                        `
+                        : ""
+                    }
 
-                        <h3>
-                            ${escapeHTML(name)}
-                        </h3>
+                    <div class="meta">
 
-                        <span>
-                            ${escapeHTML(role)}
-                        </span>
+                        ${
+                            currentMode === "incoming"
+                                ? "Wants to connect with you"
+                                : "Request sent by you"
+                        }
+
+                        ${
+                            request.status &&
+                            currentMode === "sent"
+                                ? " • " +
+                                  escapeHtml(request.status)
+                                : ""
+                        }
 
                     </div>
 
                 </div>
 
-
-                <div class="section-label">
-                    They offer
-                </div>
-
-
-                <div class="skills">
-
-                    ${
-                        offered.length
-                        ?
-                        offered.map(skill => `
-                            <span class="skill">
-                                ${escapeHTML(skill)}
-                            </span>
-                        `).join("")
-                        :
-                        `<span class="skill">
-                            No skills added
-                        </span>`
-                    }
-
-                </div>
-
-
-                <div class="section-label">
-                    They want to learn
-                </div>
-
-
-                <div class="skills">
-
-                    ${
-                        learning.length
-                        ?
-                        learning.map(skill => `
-                            <span class="skill learn">
-                                ${escapeHTML(skill)}
-                            </span>
-                        `).join("")
-                        :
-                        `<span class="skill learn">
-                            No skills added
-                        </span>`
-                    }
-
-                </div>
-
-
-                <div class="status ${statusClass}">
-                    ● ${escapeHTML(statusText)}
-                </div>
-
-
-                <div class="actions">
-
-                    <button
-                        class="btn profile-btn"
-                        onclick="viewSentProfile('${request.id}')">
-
-                        View Profile
-
-                    </button>
-
-
-                    ${
-                        status === "pending"
-                        ?
-                        `
-                        <button
-                            class="btn cancel"
-                            onclick="cancelRequest('${request.id}')">
-
-                            Cancel
-
-                        </button>
-                        `
-                        :
-                        ""
-                    }
-
-
-                    ${
-                        status === "accepted"
-                        ?
-                        `
-                        <button
-                            class="btn chat"
-                            onclick="openChat('${escapeAttribute(request.receiverId)}','${escapeAttribute(name)}')">
-
-                            Open Chat
-
-                        </button>
-                        `
-                        :
-                        ""
-                    }
-
-                </div>
-
             </div>
 
-            `;
+            ${actionHTML}
 
-        }).join("");
+        `;
+
+
+        const profileBtn =
+            card.querySelector("[data-profile]");
+
+
+        if(profileBtn){
+
+            profileBtn.addEventListener(
+                "click",
+                () => {
+
+                    if(person){
+                        showProfile(person);
+                    }
+
+                }
+            );
+
+        }
+
+
+        const acceptBtn =
+            card.querySelector("[data-accept]");
+
+
+        if(acceptBtn){
+
+            acceptBtn.addEventListener(
+                "click",
+                () =>
+                    acceptRequest(
+                        request,
+                        acceptBtn
+                    )
+            );
+
+        }
+
+
+        const declineBtn =
+            card.querySelector("[data-decline]");
+
+
+        if(declineBtn){
+
+            declineBtn.addEventListener(
+                "click",
+                () =>
+                    declineRequest(
+                        request,
+                        declineBtn
+                    )
+            );
+
+        }
+
+
+        const cancelBtn =
+            card.querySelector("[data-cancel]");
+
+
+        if(cancelBtn){
+
+            cancelBtn.addEventListener(
+                "click",
+                () =>
+                    cancelRequest(
+                        request,
+                        cancelBtn
+                    )
+            );
+
+        }
+
+
+        requestList.appendChild(card);
+
+    }
 
 }
 
 
-/* =========================================================
+/* =========================
    ACCEPT REQUEST
-========================================================= */
+========================= */
 
-window.acceptRequest = async function(id) {
+async function acceptRequest(
+    request,
+    button
+){
 
-    const request =
-        incomingRequests.find(
-            req => req.id === id
-        );
+    button.disabled = true;
+
+    button.textContent = "Accepting...";
 
 
-    if (!request) return;
-
-
-    try {
-
-        const requestRef =
-            doc(db, "Requests", id);
-
+    try{
 
         /*
-           Update request status.
+         Update request.
         */
 
         await updateDoc(
-            requestRef,
+            doc(
+                db,
+                "Requests",
+                request.id
+            ),
             {
-                status: "accepted",
-                respondedAt: serverTimestamp()
+                status:"accepted",
+                acceptedAt:serverTimestamp()
             }
         );
 
 
         /*
-           Create connection.
+         Create one connection document.
+
+         We use:
+         userIds: [senderId, receiverId]
+
+         This matches the new connections page.
         */
 
-        const senderId =
-            request.senderId;
-
-
-        const receiverId =
-            request.receiverId;
+        const userIds = [
+            request.senderId,
+            request.receiverId
+        ];
 
 
         /*
-           Prevent duplicate connections
-           by checking existing connections.
+         Check for existing connection
+         before creating another one.
         */
 
-        const connectionsRef =
-            collection(db, "Connections");
-
-
-        const existingQuery =
+        const connectionQuery =
             query(
-                connectionsRef,
+                collection(db,"Connections"),
                 where(
                     "userIds",
                     "array-contains",
-                    firebaseUser.uid
+                    currentUser.uid
                 )
             );
 
 
-        const existingSnapshot =
-            await getDocs(existingQuery);
+        const connectionSnapshot =
+            await getDocs(
+                connectionQuery
+            );
 
 
-        let alreadyConnected = false;
+        let exists = false;
 
 
-        existingSnapshot.forEach(connectionDoc => {
+        connectionSnapshot.forEach(item => {
 
-            const data =
-                connectionDoc.data();
+            const data = item.data();
 
+            if(
+                Array.isArray(data.userIds) &&
+                data.userIds.includes(
+                    request.senderId
+                ) &&
+                data.userIds.includes(
+                    request.receiverId
+                )
+            ){
 
-            const ids =
-                arrayValue(data.userIds);
-
-
-            if (
-                ids.includes(senderId) &&
-                ids.includes(receiverId)
-            ) {
-
-                alreadyConnected = true;
+                exists = true;
 
             }
 
         });
 
 
-        if (!alreadyConnected) {
+        if(!exists){
 
             await addDoc(
-                connectionsRef,
+                collection(db,"Connections"),
                 {
 
-                    userIds: [
-                        senderId,
-                        receiverId
-                    ],
+                    userIds:userIds,
 
                     user1Id:
-                        senderId,
+                        request.senderId,
 
                     user2Id:
-                        receiverId,
+                        request.receiverId,
 
-                    user1Name:
-                        request.senderName ||
-                        getName(request.senderProfile),
-
-                    user2Name:
-                        request.receiverName ||
-                        getName(currentUserData),
-
-                    status:
-                        "active",
-
-                    connectedAt:
+                    createdAt:
                         serverTimestamp()
 
                 }
@@ -1741,499 +1403,350 @@ window.acceptRequest = async function(id) {
         }
 
 
-        showToast(
-            `${getName(request.senderProfile)} is now your connection.`
+        button.textContent = "Accepted";
+
+
+        setTimeout(
+            loadRequests,
+            500
         );
 
 
-        await loadRequests();
+    }catch(error){
 
-    }
+        console.error(
+            "ACCEPT REQUEST ERROR:",
+            error
+        );
 
-    catch(error) {
+        button.disabled = false;
 
-        console.error(error);
+        button.textContent = "Accept";
 
-        showToast(
-            "Could not accept request: " +
+        alert(
+            "Unable to accept request.\n\n" +
             error.message
         );
 
     }
 
-};
+}
 
 
-/* =========================================================
-   DECLINE
-========================================================= */
+/* =========================
+   DECLINE REQUEST
+========================= */
 
-window.declineRequest = async function(id) {
+async function declineRequest(
+    request,
+    button
+){
 
-    const request =
-        incomingRequests.find(
-            req => req.id === id
-        );
+    button.disabled = true;
+
+    button.textContent = "Declining...";
 
 
-    if (!request) return;
-
-
-    try {
+    try{
 
         await updateDoc(
-            doc(db, "Requests", id),
+            doc(
+                db,
+                "Requests",
+                request.id
+            ),
             {
-                status: "declined",
-                respondedAt: serverTimestamp()
+                status:"declined",
+                declinedAt:serverTimestamp()
             }
         );
 
 
-        showToast(
-            `Request from ${getName(request.senderProfile)} declined.`
+        loadRequests();
+
+
+    }catch(error){
+
+        console.error(
+            "DECLINE REQUEST ERROR:",
+            error
         );
 
+        button.disabled = false;
 
-        await loadRequests();
+        button.textContent = "Decline";
 
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        showToast(
-            "Could not decline request: " +
+        alert(
+            "Unable to decline request.\n\n" +
             error.message
         );
 
     }
 
-};
+}
 
 
-/* =========================================================
-   CANCEL SENT REQUEST
-========================================================= */
+/* =========================
+   CANCEL REQUEST
+========================= */
 
-window.cancelRequest = async function(id) {
+async function cancelRequest(
+    request,
+    button
+){
 
-    try {
+    button.disabled = true;
 
-        await deleteDoc(
-            doc(db, "Requests", id)
+    button.textContent = "Cancelling...";
+
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "Requests",
+                request.id
+            ),
+            {
+                status:"cancelled",
+                cancelledAt:serverTimestamp()
+            }
         );
 
 
-        showToast(
-            "Exchange request cancelled."
+        loadRequests();
+
+
+    }catch(error){
+
+        console.error(
+            "CANCEL REQUEST ERROR:",
+            error
         );
 
+        button.disabled = false;
 
-        await loadRequests();
+        button.textContent = "Cancel";
 
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        showToast(
-            "Could not cancel request: " +
+        alert(
+            "Unable to cancel request.\n\n" +
             error.message
         );
 
     }
 
-};
+}
 
 
-/* =========================================================
-   VIEW INCOMING PROFILE
-========================================================= */
+/* =========================
+   PROFILE MODAL
+========================= */
 
-window.viewIncomingProfile = function(id) {
+function showProfile(user){
 
-    const request =
-        incomingRequests.find(
-            req => req.id === id
-        );
-
-
-    if (!request) return;
-
-
-    const profile =
-        request.senderProfile || {};
-
-
-    selectedRequest = request;
-
-
-    renderModalProfile(
-        profile,
-        request
-    );
-
-};
-
-
-/* =========================================================
-   VIEW SENT PROFILE
-========================================================= */
-
-window.viewSentProfile = function(id) {
-
-    const request =
-        sentRequests.find(
-            req => req.id === id
-        );
-
-
-    if (!request) return;
-
-
-    const profile =
-        request.receiverProfile || {};
-
-
-    selectedRequest = request;
-
-
-    renderModalProfile(
-        profile,
-        request
-    );
-
-};
-
-
-/* =========================================================
-   MODAL PROFILE
-========================================================= */
-
-function renderModalProfile(profile, request) {
-
-    const name =
-        getName(profile) ||
-        request.senderName ||
-        request.receiverName ||
-        "User";
-
-
-    const role =
-        profile.role ||
-        "Talent Exchange Member";
-
-
-    const bio =
-        profile.bio ||
-        request.message ||
-        "No bio available.";
+    const photo =
+        user.profilePhoto ||
+        defaultAvatar();
 
 
     const offered =
-        getOffered(profile);
+        normalizeSkills(
+            user.offeredSkills
+        );
 
 
     const learning =
-        getLearning(profile);
+        normalizeSkills(
+            user.learningSkills ||
+            user.learningSkill
+        );
 
 
-    const evidence =
-        getEvidence(profile);
+    modalContent.innerHTML = `
+
+        <div class="modal-profile">
+
+            <img
+                src="${escapeHtml(photo)}"
+                class="modal-avatar"
+                alt="Profile"
+            >
+
+            <h2>
+                ${escapeHtml(
+                    user.name ||
+                    "Talent Exchange Member"
+                )}
+            </h2>
+
+            <p>
+                ${escapeHtml(
+                    user.email || ""
+                )}
+            </p>
+
+        </div>
 
 
-    const videos =
-        getVideos(profile);
+        <div class="modal-section">
 
+            <h4>About</h4>
 
-    document.getElementById("modalName")
-        .textContent = name;
+            <div class="modal-bio">
 
-
-    document.getElementById("modalContent")
-        .innerHTML = `
-
-        <div class="person">
-
-            ${getAvatarHTML(profile)}
-
-            <div>
-
-                <h3>
-                    ${escapeHTML(name)}
-                </h3>
-
-                <span>
-                    ${escapeHTML(role)}
-                </span>
+                ${escapeHtml(
+                    user.bio ||
+                    "No bio added yet."
+                )}
 
             </div>
 
         </div>
 
 
-        <div class="section-label">
-            About
-        </div>
+        <div class="modal-section">
 
-        <p>
-            ${escapeHTML(bio)}
-        </p>
+            <h4>Skills Offered</h4>
 
+            <div class="tags">
 
-        <div class="section-label">
-            Skills Offered
-        </div>
+                ${
+                    offered.length
 
-        <div class="skills">
+                    ? offered.map(skill => `
+                        <span class="tag">
+                            ${escapeHtml(skill)}
+                        </span>
+                    `).join("")
 
-            ${
-                offered.length
-                ?
-                offered.map(skill => `
-                    <span class="skill">
-                        ${escapeHTML(skill)}
-                    </span>
-                `).join("")
-                :
-                `<span class="skill">
-                    No skills added
-                </span>`
-            }
+                    : `
+                        <span class="tag">
+                            None added
+                        </span>
+                    `
+                }
+
+            </div>
 
         </div>
 
 
-        <div class="section-label">
-            Skills Wanted
+        <div class="modal-section">
+
+            <h4>Skills Wanted</h4>
+
+            <div class="tags">
+
+                ${
+                    learning.length
+
+                    ? learning.map(skill => `
+                        <span class="tag">
+                            ${escapeHtml(skill)}
+                        </span>
+                    `).join("")
+
+                    : `
+                        <span class="tag">
+                            None added
+                        </span>
+                    `
+                }
+
+            </div>
+
         </div>
-
-        <div class="skills">
-
-            ${
-                learning.length
-                ?
-                learning.map(skill => `
-                    <span class="skill learn">
-                        ${escapeHTML(skill)}
-                    </span>
-                `).join("")
-                :
-                `<span class="skill learn">
-                    No skills added
-                </span>`
-            }
-
-        </div>
-
-
-        <div class="section-label">
-            Skill Evidence
-        </div>
-
-        <p>
-            ${evidence.length} certificate/document items
-            <br>
-            ${videos} skill demonstration videos
-        </p>
 
     `;
 
 
-    document.getElementById("profileModal")
-        .style.display = "flex";
+    profileModal.classList.add("show");
 
 }
 
 
-/* =========================================================
+/* =========================
    CLOSE MODAL
-========================================================= */
+========================= */
 
-window.closeModal = function() {
-
-    document.getElementById("profileModal")
-        .style.display = "none";
-
-};
-
-
-document.getElementById("profileModal")
+document
+    .getElementById("closeModal")
     .addEventListener(
         "click",
-        function(event) {
+        () => {
 
-            if (event.target === this) {
-
-                closeModal();
-
-            }
+            profileModal.classList.remove(
+                "show"
+            );
 
         }
     );
 
 
-/* =========================================================
-   OPEN CHAT
-========================================================= */
+profileModal.addEventListener(
+    "click",
+    event => {
 
-window.openChat = function(id, name) {
+        if(
+            event.target === profileModal
+        ){
 
-    localStorage.setItem(
-        "activeChatId",
-        id
-    );
+            profileModal.classList.remove(
+                "show"
+            );
 
+        }
 
-    localStorage.setItem(
-        "activeChatName",
-        name
-    );
-
-
-    window.location.href =
-        "chat.html";
-
-};
+    }
+);
 
 
-/* =========================================================
+/* =========================
    TABS
-========================================================= */
+========================= */
 
-window.showTab = function(tab, button) {
+incomingTab.addEventListener(
+    "click",
+    () => {
 
-    document.querySelectorAll(".tab")
-        .forEach(btn => {
+        currentMode = "incoming";
 
-            btn.classList.remove("active");
+        incomingTab.classList.add("active");
 
-        });
+        sentTab.classList.remove("active");
 
-
-    button.classList.add("active");
-
-
-    if (tab === "incoming") {
-
-        document.getElementById(
-            "incomingSection"
-        ).style.display = "block";
-
-
-        document.getElementById(
-            "sentSection"
-        ).style.display = "none";
+        loadRequests();
 
     }
-
-    else {
-
-        document.getElementById(
-            "incomingSection"
-        ).style.display = "none";
+);
 
 
-        document.getElementById(
-            "sentSection"
-        ).style.display = "block";
+sentTab.addEventListener(
+    "click",
+    () => {
+
+        currentMode = "sent";
+
+        sentTab.classList.add("active");
+
+        incomingTab.classList.remove("active");
+
+        loadRequests();
 
     }
-
-};
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function showToast(message) {
-
-    const toast =
-        document.getElementById("toast");
+);
 
 
-    toast.textContent =
-        message;
-
-
-    toast.style.display =
-        "block";
-
-
-    setTimeout(() => {
-
-        toast.style.display =
-            "none";
-
-    }, 3000);
-
-}
-
-
-/* =========================================================
-   ATTRIBUTE ESCAPE
-========================================================= */
-
-function escapeAttribute(value) {
-
-    return String(value ?? "")
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'");
-
-}
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-document.getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        async function(event) {
-
-            event.preventDefault();
-
-
-            try {
-
-                await signOut(auth);
-
-                localStorage.removeItem(
-                    "userProfile"
-                );
-
-                window.location.href =
-                    "login.html";
-
-            }
-
-            catch(error) {
-
-                showToast(
-                    "Logout failed: " +
-                    error.message
-                );
-
-            }
-
-        }
-    );
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
+/* =========================
+   AUTH
+========================= */
 
 onAuthStateChanged(
     auth,
-    async user => {
+    user => {
 
-        if (!user) {
+        if(!user){
 
             window.location.href =
                 "login.html";
@@ -2242,18 +1755,71 @@ onAuthStateChanged(
 
         }
 
+        currentUser = user;
 
-        firebaseUser = user;
-
-
-        await loadCurrentUser();
-
-        await loadRequests();
+        loadRequests();
 
     }
 );
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async () => {
+
+            try{
+
+                await signOut(auth);
+
+                localStorage.removeItem(
+                    "userProfile"
+                );
+
+                localStorage.removeItem(
+                    "isLoggedIn"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            }catch(error){
+
+                console.error(
+                    "LOGOUT ERROR:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+document
+    .getElementById("menuBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle("open");
+
+        }
+    );
 
 </script>
 
 </body>
 </html>
+```
