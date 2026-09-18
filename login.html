@@ -1,17 +1,15 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07050d">
-<title>Talent Exchange</title>
+<meta name="theme-color" content="#05030a">
+<title>Login — Talent Exchange</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
 * {
@@ -20,19 +18,15 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow: hidden;
     font-family: "Inter", sans-serif;
     color: white;
     background:
-        radial-gradient(circle at 20% 20%, rgba(101, 45, 190, .22), transparent 35%),
-        radial-gradient(circle at 80% 30%, rgba(25, 90, 220, .15), transparent 35%),
-        linear-gradient(135deg, #030305 0%, #090512 48%, #03050a 100%);
+        radial-gradient(circle at 15% 20%, rgba(124,58,237,.22), transparent 32%),
+        radial-gradient(circle at 85% 80%, rgba(37,99,235,.16), transparent 32%),
+        linear-gradient(135deg, #030305, #090512 50%, #03050a);
 }
 
 /* Background */
@@ -41,401 +35,509 @@ body {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
 }
 
 .grid {
     position: absolute;
     inset: 0;
-    opacity: .12;
+    opacity: .10;
     background-image:
-        linear-gradient(rgba(140, 100, 255, .15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(140, 100, 255, .15) 1px, transparent 1px);
+        linear-gradient(rgba(139,92,246,.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,.15) 1px, transparent 1px);
     background-size: 70px 70px;
-    mask-image: linear-gradient(to bottom, black, transparent 90%);
+    mask-image: linear-gradient(to bottom, black, transparent);
 }
 
 .glow {
     position: absolute;
-    width: 500px;
-    height: 500px;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: .18;
 }
 
-.glow.one {
+.glow-one {
+    width: 420px;
+    height: 420px;
     background: #6d28d9;
+    left: -180px;
     top: -180px;
-    left: -150px;
+    opacity: .14;
 }
 
-.glow.two {
+.glow-two {
+    width: 450px;
+    height: 450px;
     background: #2563eb;
-    right: -200px;
-    bottom: -180px;
+    right: -220px;
+    bottom: -220px;
+    opacity: .12;
 }
-
-/* Particles */
 
 #particles {
     position: fixed;
     inset: 0;
-    z-index: 1;
     pointer-events: none;
 }
 
-/* Navigation */
+/* Layout */
 
-nav {
+.page {
     position: relative;
-    z-index: 10;
-    width: min(1200px, 92%);
+    z-index: 2;
+    min-height: 100vh;
+    width: min(1180px, 92%);
     margin: auto;
-    padding: 28px 0;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: 80px;
     align-items: center;
-    justify-content: space-between;
 }
 
-.logo {
+/* Left */
+
+.intro {
+    padding-left: 25px;
+}
+
+.brand {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -.3px;
+    margin-bottom: 35px;
 }
 
-.logo-mark {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
     display: grid;
     place-items: center;
-    background:
-        linear-gradient(135deg, rgba(139,92,246,.9), rgba(37,99,235,.8));
-    box-shadow:
-        0 0 25px rgba(124,58,237,.35),
-        inset 0 1px 1px rgba(255,255,255,.35);
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    box-shadow: 0 0 35px rgba(124,58,237,.35);
 }
 
-.logo-mark span {
+.brand-icon::before {
+    content: "";
     width: 15px;
     height: 15px;
     border: 2px solid white;
     border-radius: 50%;
-    position: relative;
 }
 
-.logo-mark span::after {
-    content: "";
-    position: absolute;
-    width: 7px;
-    height: 2px;
-    background: white;
-    right: -5px;
-    bottom: -3px;
-    transform: rotate(45deg);
-    border-radius: 5px;
+.brand-name {
+    font-size: 18px;
+    font-weight: 700;
 }
 
-.nav-status {
-    padding: 8px 14px;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 30px;
-    background: rgba(255,255,255,.035);
-    backdrop-filter: blur(15px);
-    color: #aeb2c7;
-    font-size: 12px;
-}
-
-.status-dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #7c3aed;
-    box-shadow: 0 0 12px #7c3aed;
-    margin-right: 7px;
-}
-
-/* Hero */
-
-.hero {
-    position: relative;
-    z-index: 5;
-    min-height: calc(100vh - 94px);
-    width: min(1200px, 92%);
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 30px;
-}
-
-.hero-content {
-    transform: translateY(-20px);
-}
-
-.eyebrow {
+.badge {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
+    gap: 8px;
     padding: 8px 13px;
     border: 1px solid rgba(139,92,246,.22);
-    background: rgba(124,58,237,.07);
     border-radius: 30px;
-    color: #b9a6f5;
-    font-size: 12px;
+    background: rgba(124,58,237,.06);
+    color: #b7a5e9;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: .4px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 35px rgba(76,29,149,.08);
+    margin-bottom: 22px;
 }
 
-.eyebrow i {
+.badge-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #8b5cf6;
-    box-shadow: 0 0 10px #8b5cf6;
+    box-shadow: 0 0 12px #8b5cf6;
 }
 
-h1 {
-    font-size: clamp(52px, 7vw, 88px);
-    line-height: .95;
-    letter-spacing: -5px;
+.intro h1 {
+    font-size: clamp(46px, 5vw, 72px);
+    line-height: .98;
+    letter-spacing: -4px;
     font-weight: 800;
-    max-width: 720px;
 }
 
-h1 .gradient {
-    background: linear-gradient(100deg, #ffffff 10%, #b69cff 48%, #6796ff 90%);
+.gradient {
+    background: linear-gradient(100deg, #fff, #b69cff, #6594ff);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-.hero-text {
-    margin-top: 27px;
-    max-width: 570px;
-    color: #9295a8;
-    font-size: 16px;
+.intro p {
+    margin-top: 24px;
+    max-width: 530px;
+    color: #858899;
+    font-size: 15px;
     line-height: 1.8;
 }
 
-.hero-buttons {
+/* Feature pills */
+
+.features {
     display: flex;
-    gap: 14px;
-    margin-top: 35px;
+    gap: 10px;
     flex-wrap: wrap;
+    margin-top: 28px;
 }
 
-.btn {
-    position: relative;
-    overflow: hidden;
-    border: 0;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-    padding: 14px 23px;
-    border-radius: 13px;
-    font-size: 14px;
-    font-weight: 600;
-    transition: .35s ease;
+.feature {
+    padding: 9px 13px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+    color: #8f92a3;
+    font-size: 11px;
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #7c3aed, #4f46e5);
-    box-shadow:
-        0 12px 35px rgba(99,45,200,.3),
-        inset 0 1px 1px rgba(255,255,255,.3);
-}
+/* Login card */
 
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow:
-        0 18px 45px rgba(99,45,200,.45),
-        0 0 25px rgba(124,58,237,.2);
-}
-
-.btn-secondary {
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(255,255,255,.045);
-    backdrop-filter: blur(15px);
-    color: #d7d9e4;
-}
-
-.btn-secondary:hover {
-    transform: translateY(-3px);
-    background: rgba(255,255,255,.08);
-    border-color: rgba(139,92,246,.35);
-}
-
-/* 3D area */
-
-.visual {
-    position: relative;
-    height: 600px;
+.login-wrapper {
     perspective: 1000px;
 }
 
-#three-container {
-    position: absolute;
-    inset: 0;
-}
-
-.floating-card {
-    position: absolute;
-    padding: 15px 18px;
-    border: 1px solid rgba(255,255,255,.11);
-    background: rgba(13,10,24,.48);
-    backdrop-filter: blur(20px);
-    border-radius: 16px;
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.35),
-        inset 0 1px 1px rgba(255,255,255,.08);
-    z-index: 4;
-    transition: transform .2s ease;
-}
-
-.card-title {
-    font-size: 11px;
-    color: #8f91a3;
-    margin-bottom: 6px;
-}
-
-.card-value {
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.card-one {
-    top: 18%;
-    right: 5%;
-    animation: floatOne 5s ease-in-out infinite;
-}
-
-.card-two {
-    bottom: 20%;
-    left: 3%;
-    animation: floatTwo 6s ease-in-out infinite;
-}
-
-.card-three {
-    top: 47%;
-    right: -2%;
-    animation: floatThree 7s ease-in-out infinite;
-}
-
-@keyframes floatOne {
-    0%,100% { transform: translateY(0) rotate(2deg); }
-    50% { transform: translateY(-15px) rotate(-1deg); }
-}
-
-@keyframes floatTwo {
-    0%,100% { transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(18px) rotate(1deg); }
-}
-
-@keyframes floatThree {
-    0%,100% { transform: translateY(0) rotate(1deg); }
-    50% { transform: translateY(-12px) rotate(-2deg); }
-}
-
-/* Bottom info */
-
-.bottom {
+.login-card {
     position: relative;
-    z-index: 5;
-    width: min(1200px, 92%);
-    margin: -30px auto 0;
-    padding-bottom: 45px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #666979;
-    font-size: 11px;
+    padding: 38px;
+    border: 1px solid rgba(255,255,255,.11);
+    border-radius: 25px;
+    background: rgba(12,9,21,.66);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow:
+        0 35px 100px rgba(0,0,0,.45),
+        inset 0 1px 1px rgba(255,255,255,.07);
+    transform-style: preserve-3d;
+    transition: transform .15s ease;
 }
 
-.bottom strong {
-    color: #999caf;
+.login-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 25px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(139,92,246,.35),
+        transparent 35%,
+        transparent 65%,
+        rgba(59,130,246,.25)
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.card-header {
+    margin-bottom: 30px;
+}
+
+.card-header h2 {
+    font-size: 27px;
+    letter-spacing: -1px;
+}
+
+.card-header p {
+    margin-top: 8px;
+    color: #777b8e;
+    font-size: 13px;
+}
+
+/* Form */
+
+.field {
+    margin-bottom: 18px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #a8aabb;
+    font-size: 11px;
     font-weight: 600;
 }
 
-/* Responsive */
+.input-wrap {
+    position: relative;
+}
 
-@media (max-width: 850px) {
-    nav {
-        padding: 20px 0;
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #686b7b;
+    font-size: 13px;
+}
+
+input {
+    width: 100%;
+    height: 49px;
+    padding: 0 15px 0 42px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 12px;
+    outline: none;
+    color: white;
+    background: rgba(255,255,255,.035);
+    font-family: inherit;
+    font-size: 13px;
+    transition: .25s ease;
+}
+
+input::placeholder {
+    color: #555968;
+}
+
+input:focus {
+    border-color: rgba(139,92,246,.55);
+    background: rgba(124,58,237,.055);
+    box-shadow: 0 0 0 3px rgba(124,58,237,.08);
+}
+
+/* Options */
+
+.options {
+    display: flex;
+    justify-content: flex-end;
+    margin: 3px 0 22px;
+}
+
+.forgot {
+    border: 0;
+    background: transparent;
+    color: #9d82e8;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.forgot:hover {
+    color: #c1adff;
+}
+
+/* Button */
+
+.login-btn {
+    position: relative;
+    width: 100%;
+    height: 51px;
+    border: 0;
+    border-radius: 13px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow:
+        0 12px 35px rgba(99,45,200,.25),
+        inset 0 1px 1px rgba(255,255,255,.25);
+    transition: .3s ease;
+    overflow: hidden;
+}
+
+.login-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.16),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: .7s;
+}
+
+.login-btn:hover::after {
+    left: 140%;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 17px 45px rgba(99,45,200,.4),
+        0 0 25px rgba(124,58,237,.15);
+}
+
+.login-btn:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Divider */
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 25px 0;
+    color: #4e5261;
+    font-size: 10px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: rgba(255,255,255,.07);
+}
+
+/* Register */
+
+.register {
+    text-align: center;
+    color: #686c7c;
+    font-size: 11px;
+}
+
+.register a {
+    color: #a98bea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register a:hover {
+    color: #c5b5ff;
+}
+
+/* Messages */
+
+.message {
+    display: none;
+    margin-bottom: 18px;
+    padding: 11px 13px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.message.show {
+    display: block;
+}
+
+.message.error {
+    border: 1px solid rgba(239,68,68,.2);
+    background: rgba(239,68,68,.07);
+    color: #fca5a5;
+}
+
+.message.success {
+    border: 1px solid rgba(34,197,94,.2);
+    background: rgba(34,197,94,.07);
+    color: #86efac;
+}
+
+/* Loading */
+
+.loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,.25);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Footer */
+
+.footer {
+    position: fixed;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #464957;
+    font-size: 9px;
+    z-index: 5;
+}
+
+/* Mobile */
+
+@media (max-width: 900px) {
+
+    body {
+        overflow-y: auto;
     }
 
-    .hero {
+    .page {
         grid-template-columns: 1fr;
-        padding-top: 35px;
+        gap: 35px;
+        padding: 35px 0 70px;
     }
 
-    .hero-content {
+    .intro {
+        padding-left: 0;
         text-align: center;
-        transform: none;
     }
 
-    .eyebrow {
-        margin-bottom: 20px;
+    .brand {
+        justify-content: center;
     }
 
-    h1 {
-        letter-spacing: -3px;
-    }
-
-    .hero-text {
+    .intro p {
         margin-left: auto;
         margin-right: auto;
     }
 
-    .hero-buttons {
+    .features {
         justify-content: center;
     }
 
-    .visual {
-        height: 430px;
-        margin-top: -20px;
+    .login-wrapper {
+        width: min(480px, 100%);
+        margin: auto;
     }
 
-    .bottom {
-        justify-content: center;
-        text-align: center;
-    }
-
-    .bottom span:last-child {
-        display: none;
-    }
-
-    .card-three {
-        right: 0;
+    .footer {
+        position: relative;
+        margin-top: -50px;
+        padding-bottom: 15px;
     }
 }
 
 @media (max-width: 500px) {
-    .nav-status {
-        display: none;
+
+    .page {
+        width: 90%;
+        padding-top: 25px;
     }
 
-    h1 {
-        font-size: 48px;
+    .intro h1 {
+        font-size: 43px;
+        letter-spacing: -3px;
     }
 
-    .hero-text {
-        font-size: 14px;
+    .intro p {
+        font-size: 13px;
     }
 
-    .visual {
-        height: 360px;
-    }
-
-    .floating-card {
-        transform: scale(.85);
+    .login-card {
+        padding: 27px 22px;
+        border-radius: 21px;
     }
 }
 </style>
@@ -445,330 +547,664 @@ h1 .gradient {
 
 <div class="background">
     <div class="grid"></div>
-    <div class="glow one"></div>
-    <div class="glow two"></div>
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
 </div>
 
 <canvas id="particles"></canvas>
 
-<nav>
-    <div class="logo">
-        <div class="logo-mark">
-            <span></span>
+<main class="page">
+
+    <!-- LEFT SIDE -->
+
+    <section class="intro">
+
+        <div class="brand">
+            <div class="brand-icon"></div>
+            <div class="brand-name">Talent Exchange</div>
         </div>
-        <span>Talent Exchange</span>
-    </div>
 
-    <div class="nav-status">
-        <span class="status-dot"></span>
-        Skill network online
-    </div>
-</nav>
-
-<main class="hero">
-
-    <section class="hero-content">
-
-        <div class="eyebrow">
-            <i></i>
-            CONNECT • LEARN • EXCHANGE
+        <div class="badge">
+            <span class="badge-dot"></span>
+            YOUR SKILL. YOUR NETWORK.
         </div>
 
         <h1>
-            Exchange skills.<br>
-            <span class="gradient">Build together.</span>
+            Welcome<br>
+            <span class="gradient">back.</span>
         </h1>
 
-        <p class="hero-text">
-            A modern platform where students and creators can
-            discover talent, exchange knowledge, build connections,
-            and grow together.
+        <p>
+            Connect with people who have the skills you want
+            to learn and share what you know with others.
+            Your next connection could become your next opportunity.
         </p>
 
-        <div class="hero-buttons">
-            <a href="login.html" class="btn btn-primary">
-                Enter Talent Exchange →
-            </a>
-
-            <a href="register.html" class="btn btn-secondary">
-                Create account
-            </a>
+        <div class="features">
+            <div class="feature">Skill Discovery</div>
+            <div class="feature">Knowledge Exchange</div>
+            <div class="feature">Real Connections</div>
         </div>
 
     </section>
 
-    <section class="visual" id="visual">
 
-        <div id="three-container"></div>
+    <!-- LOGIN -->
 
-        <div class="floating-card card-one">
-            <div class="card-title">ACTIVE NETWORK</div>
-            <div class="card-value">Skills × People</div>
-        </div>
+    <section class="login-wrapper">
 
-        <div class="floating-card card-two">
-            <div class="card-title">EXCHANGE</div>
-            <div class="card-value">Learn + Teach</div>
-        </div>
+        <div class="login-card" id="loginCard">
 
-        <div class="floating-card card-three">
-            <div class="card-title">CONNECTION</div>
-            <div class="card-value">Real People</div>
+            <div class="card-header">
+                <h2>Sign in</h2>
+                <p>Access your Talent Exchange account</p>
+            </div>
+
+            <div id="message" class="message"></div>
+
+            <form id="loginForm">
+
+                <div class="field">
+                    <label for="email">EMAIL ADDRESS</label>
+
+                    <div class="input-wrap">
+                        <span class="input-icon">@</span>
+
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <label for="password">PASSWORD</label>
+
+                    <div class="input-wrap">
+                        <span class="input-icon">•••</span>
+
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+                </div>
+
+
+                <div class="options">
+                    <button
+                        type="button"
+                        class="forgot"
+                        id="forgotPassword"
+                    >
+                        Forgot password?
+                    </button>
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginBtn"
+                >
+                    Continue to Talent Exchange →
+                </button>
+
+            </form>
+
+
+            <div class="divider">OR</div>
+
+
+            <div class="register">
+                Don't have an account?
+                <a href="register.html">Create an account</a>
+            </div>
+
         </div>
 
     </section>
 
 </main>
 
-<div class="bottom">
-    <span>© 2026 <strong>Talent Exchange</strong></span>
-    <span>Made by Govardhan</span>
+<div class="footer">
+    Talent Exchange · Made by Govardhan
 </div>
 
-<script>
-/* =========================
-   THREE.JS 3D OBJECT
-========================= */
 
-const container = document.getElementById("three-container");
+<script type="module">
 
-const scene = new THREE.Scene();
+/* ==========================================
+   SAME FIREBASE CONNECTION
+   ========================================== */
 
-const camera = new THREE.PerspectiveCamera(
-    45,
-    container.clientWidth / container.clientHeight,
-    0.1,
-    100
-);
+import {
+    auth,
+    db
+} from "./js/firebase-config.js";
 
-camera.position.z = 7;
+import {
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+    setPersistence,
+    browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-const renderer = new THREE.WebGLRenderer({
-    alpha: true,
-    antialias: true
-});
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(container.clientWidth, container.clientHeight);
 
-container.appendChild(renderer.domElement);
+/* ==========================================
+   ELEMENTS
+   ========================================== */
 
-/* Main futuristic object */
+const form = document.getElementById("loginForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const forgotPassword = document.getElementById("forgotPassword");
+const message = document.getElementById("message");
+const loginCard = document.getElementById("loginCard");
 
-const geometry = new THREE.IcosahedronGeometry(1.65, 2);
 
-const material = new THREE.MeshPhysicalMaterial({
-    color: 0x6d4aff,
-    roughness: 0.25,
-    metalness: 0.55,
-    transparent: true,
-    opacity: 0.88,
-    wireframe: false
-});
+/* ==========================================
+   MESSAGE
+   ========================================== */
 
-const crystal = new THREE.Mesh(geometry, material);
-scene.add(crystal);
+function showMessage(text, type = "error") {
 
-/* Wireframe shell */
+    message.textContent = text;
 
-const wireGeometry = new THREE.IcosahedronGeometry(1.82, 2);
-
-const wireMaterial = new THREE.MeshBasicMaterial({
-    color: 0x8b5cf6,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.22
-});
-
-const wire = new THREE.Mesh(wireGeometry, wireMaterial);
-scene.add(wire);
-
-/* Orbit rings */
-
-const ringMaterial = new THREE.MeshBasicMaterial({
-    color: 0x4f8cff,
-    transparent: true,
-    opacity: 0.28
-});
-
-const ring1 = new THREE.Mesh(
-    new THREE.TorusGeometry(2.35, 0.012, 12, 100),
-    ringMaterial
-);
-
-const ring2 = new THREE.Mesh(
-    new THREE.TorusGeometry(2.65, 0.009, 12, 100),
-    ringMaterial
-);
-
-ring1.rotation.x = Math.PI / 2.5;
-ring2.rotation.y = Math.PI / 2.8;
-
-scene.add(ring1);
-scene.add(ring2);
-
-/* Lights */
-
-const light1 = new THREE.PointLight(0x7c3aed, 5, 12);
-light1.position.set(3, 3, 4);
-scene.add(light1);
-
-const light2 = new THREE.PointLight(0x2563eb, 4, 12);
-light2.position.set(-3, -2, 3);
-scene.add(light2);
-
-const ambient = new THREE.AmbientLight(0x5d4a8c, 1.2);
-scene.add(ambient);
-
-/* Mouse interaction */
-
-let mouseX = 0;
-let mouseY = 0;
-let targetX = 0;
-let targetY = 0;
-
-window.addEventListener("mousemove", (event) => {
-    mouseX = (event.clientX / window.innerWidth - 0.5);
-    mouseY = (event.clientY / window.innerHeight - 0.5);
-});
-
-/* Animation */
-
-function animate() {
-
-    requestAnimationFrame(animate);
-
-    targetX += (mouseX - targetX) * 0.035;
-    targetY += (mouseY - targetY) * 0.035;
-
-    crystal.rotation.x += 0.0025;
-    crystal.rotation.y += 0.004;
-
-    wire.rotation.x -= 0.0015;
-    wire.rotation.y -= 0.002;
-
-    ring1.rotation.z += 0.002;
-    ring2.rotation.x -= 0.0015;
-
-    crystal.rotation.y += targetX * 0.008;
-    crystal.rotation.x += targetY * 0.004;
-
-    camera.position.x += (targetX * 0.45 - camera.position.x) * 0.025;
-    camera.position.y += (-targetY * 0.35 - camera.position.y) * 0.025;
-
-    camera.lookAt(scene.position);
-
-    renderer.render(scene, camera);
+    message.className =
+        "message show " + type;
 }
 
-animate();
 
-/* Resize */
+/* ==========================================
+   LOGIN
+   ========================================== */
 
-window.addEventListener("resize", () => {
+form.addEventListener("submit", async (event) => {
 
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    event.preventDefault();
 
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
+    const email =
+        emailInput.value.trim();
 
-    renderer.setSize(width, height);
+    const password =
+        passwordInput.value;
+
+    if (!email || !password) {
+
+        showMessage(
+            "Please enter your email and password."
+        );
+
+        return;
+    }
+
+
+    loginBtn.disabled = true;
+
+    loginBtn.innerHTML = `
+        <span class="loading">
+            <span class="spinner"></span>
+            Signing in...
+        </span>
+    `;
+
+
+    try {
+
+        /*
+         * Keep Firebase session persistent
+         */
+
+        await setPersistence(
+            auth,
+            browserLocalPersistence
+        );
+
+
+        /*
+         * Firebase Authentication
+         */
+
+        const credential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        const user =
+            credential.user;
+
+
+        /*
+         * Get user's Firestore profile
+         */
+
+        const userRef =
+            doc(db, "users", user.uid);
+
+        const userSnap =
+            await getDoc(userRef);
+
+
+        if (!userSnap.exists()) {
+
+            await auth.signOut();
+
+            showMessage(
+                "Your account profile was not found. Please contact the administrator."
+            );
+
+            resetButton();
+
+            return;
+        }
+
+
+        const profile =
+            userSnap.data();
+
+
+        /*
+         * Account status
+         */
+
+        if (profile.status === "pending") {
+
+            await auth.signOut();
+
+            showMessage(
+                "Your account is waiting for administrator approval."
+            );
+
+            resetButton();
+
+            return;
+        }
+
+
+        if (
+            profile.status === "rejected" ||
+            profile.status === "disabled"
+        ) {
+
+            await auth.signOut();
+
+            showMessage(
+                "Your account is currently disabled or rejected."
+            );
+
+            resetButton();
+
+            return;
+        }
+
+
+        /*
+         * Save profile locally
+         */
+
+        localStorage.setItem(
+            "userProfile",
+            JSON.stringify({
+                id: user.uid,
+                name: profile.name || "",
+                email: profile.email || user.email || "",
+                bio: profile.bio || "",
+                offeredSkills:
+                    profile.offeredSkills || [],
+                learningSkills:
+                    profile.learningSkills ||
+                    profile.learningSkill ||
+                    [],
+                profilePhoto:
+                    profile.profilePhoto || "",
+                role:
+                    profile.role || "user",
+                status:
+                    profile.status || "approved"
+            })
+        );
+
+        localStorage.setItem(
+            "isLoggedIn",
+            "true"
+        );
+
+
+        showMessage(
+            "Login successful. Opening your dashboard...",
+            "success"
+        );
+
+
+        /*
+         * Redirect
+         */
+
+        setTimeout(() => {
+
+            window.location.href =
+                "dashboard.html";
+
+        }, 700);
+
+
+    } catch (error) {
+
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
+
+
+        let text =
+            "Unable to sign in. Please try again.";
+
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            text =
+                "Invalid email or password. Please check your credentials.";
+        }
+
+        else if (
+            error.code ===
+            "auth/user-not-found"
+        ) {
+
+            text =
+                "No account was found with this email.";
+        }
+
+        else if (
+            error.code ===
+            "auth/wrong-password"
+        ) {
+
+            text =
+                "Incorrect password.";
+        }
+
+        else if (
+            error.code ===
+            "auth/too-many-requests"
+        ) {
+
+            text =
+                "Too many attempts. Please try again later.";
+        }
+
+        else if (
+            error.code ===
+            "auth/network-request-failed"
+        ) {
+
+            text =
+                "Network error. Please check your internet connection.";
+        }
+
+        showMessage(text);
+
+        resetButton();
+    }
+
 });
 
-/* =========================
-   PARTICLES
-========================= */
 
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+/* ==========================================
+   RESET BUTTON
+   ========================================== */
+
+function resetButton() {
+
+    loginBtn.disabled = false;
+
+    loginBtn.textContent =
+        "Continue to Talent Exchange →";
+}
+
+
+/* ==========================================
+   FORGOT PASSWORD
+   ========================================== */
+
+forgotPassword.addEventListener(
+    "click",
+    async () => {
+
+        const email =
+            emailInput.value.trim();
+
+        if (!email) {
+
+            showMessage(
+                "Enter your email address first."
+            );
+
+            emailInput.focus();
+
+            return;
+        }
+
+
+        try {
+
+            await sendPasswordResetEmail(
+                auth,
+                email
+            );
+
+            showMessage(
+                "Password reset email sent. Check your inbox.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "PASSWORD RESET ERROR:",
+                error
+            );
+
+            showMessage(
+                "Unable to send the reset email. Please check the email address."
+            );
+        }
+
+    }
+);
+
+
+/* ==========================================
+   3D CARD MOUSE EFFECT
+   ========================================== */
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        if (
+            window.innerWidth < 900
+        ) return;
+
+        const rect =
+            loginCard.getBoundingClientRect();
+
+        const x =
+            event.clientX -
+            (rect.left + rect.width / 2);
+
+        const y =
+            event.clientY -
+            (rect.top + rect.height / 2);
+
+        const rotateY =
+            Math.max(
+                -5,
+                Math.min(5, x / 45)
+            );
+
+        const rotateX =
+            Math.max(
+                -5,
+                Math.min(5, -y / 45)
+            );
+
+        loginCard.style.transform =
+            `rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)`;
+    }
+);
+
+
+document.addEventListener(
+    "mouseleave",
+    () => {
+
+        loginCard.style.transform =
+            "rotateX(0deg) rotateY(0deg)";
+    }
+);
+
+
+/* ==========================================
+   PARTICLES
+   ========================================== */
+
+const canvas =
+    document.getElementById("particles");
+
+const ctx =
+    canvas.getContext("2d");
 
 let particles = [];
 
-function resizeParticles() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+
+function resizeCanvas() {
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
 }
 
-resizeParticles();
+resizeCanvas();
 
-window.addEventListener("resize", resizeParticles);
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
 
 const particleCount =
-    window.innerWidth < 700 ? 45 : 85;
+    window.innerWidth < 700
+        ? 40
+        : 75;
 
-for (let i = 0; i < particleCount; i++) {
+
+for (
+    let i = 0;
+    i < particleCount;
+    i++
+) {
 
     particles.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        size: Math.random() * 1.4 + .3,
-        speed: Math.random() * .25 + .05,
-        opacity: Math.random() * .45 + .1
+        x:
+            Math.random() *
+            window.innerWidth,
+
+        y:
+            Math.random() *
+            window.innerHeight,
+
+        size:
+            Math.random() * 1.3 + .3,
+
+        speed:
+            Math.random() * .22 + .04,
+
+        opacity:
+            Math.random() * .35 + .08
     });
 }
 
-function drawParticles() {
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+function animateParticles() {
 
-    particles.forEach(p => {
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-        p.y -= p.speed;
 
-        if (p.y < -5) {
-            p.y = canvas.height + 5;
-            p.x = Math.random() * canvas.width;
+    particles.forEach(
+        particle => {
+
+            particle.y -=
+                particle.speed;
+
+
+            if (
+                particle.y < -5
+            ) {
+
+                particle.y =
+                    canvas.height + 5;
+
+                particle.x =
+                    Math.random() *
+                    canvas.width;
+            }
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                particle.x,
+                particle.y,
+                particle.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `rgba(180,160,255,${particle.opacity})`;
+
+            ctx.fill();
         }
+    );
 
-        ctx.beginPath();
 
-        ctx.arc(
-            p.x,
-            p.y,
-            p.size,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle =
-            `rgba(170,150,255,${p.opacity})`;
-
-        ctx.fill();
-    });
-
-    requestAnimationFrame(drawParticles);
+    requestAnimationFrame(
+        animateParticles
+    );
 }
 
-drawParticles();
+animateParticles();
 
-/* =========================
-   PARALLAX FLOATING CARDS
-========================= */
-
-const cards =
-    document.querySelectorAll(".floating-card");
-
-window.addEventListener("mousemove", e => {
-
-    const x =
-        (e.clientX / window.innerWidth - .5) * 2;
-
-    const y =
-        (e.clientY / window.innerHeight - .5) * 2;
-
-    cards.forEach((card, index) => {
-
-        const depth = (index + 1) * 5;
-
-        card.style.transform =
-            `translate3d(${x * depth}px, ${y * depth}px, 0)
-             rotateY(${x * 4}deg)
-             rotateX(${-y * 4}deg)`;
-    });
-});
 </script>
 
 </body>
 </html>
-```
+
