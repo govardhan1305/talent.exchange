@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,512 +7,500 @@
 
 <title>Talent Exchange — Connections</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Inter,Arial,sans-serif;
-}
-
-:root{
-    --purple:#8b5cf6;
-    --purple-light:#c4b5fd;
-    --bg:#09090f;
-    --card:#11111a;
-    --border:rgba(255,255,255,.08);
-    --muted:#9696a8;
-    --green:#34d399;
-    --red:#ef4444;
 }
 
 body{
-    background:var(--bg);
-    color:#fff;
     min-height:100vh;
+    font-family:Inter,sans-serif;
+    color:#fff;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(124,58,237,.20),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(37,99,235,.12),transparent 28%),
+        radial-gradient(circle at 50% 100%,rgba(147,51,234,.10),transparent 35%),
+        #050509;
+    overflow-x:hidden;
 }
+
+/* BACKGROUND */
+
+.bg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.18;
+}
+
+.orb1{
+    width:320px;
+    height:320px;
+    background:#7c3aed;
+    left:-120px;
+    top:-100px;
+}
+
+.orb2{
+    width:280px;
+    height:280px;
+    background:#2563eb;
+    right:-100px;
+    top:35%;
+}
+
+.orb3{
+    width:260px;
+    height:260px;
+    background:#9333ea;
+    bottom:-100px;
+    left:40%;
+}
+
+/* SIDEBAR */
 
 .sidebar{
     position:fixed;
-    left:0;
     top:0;
     bottom:0;
+    left:0;
     width:250px;
-    background:#0d0d15;
-    border-right:1px solid var(--border);
-    padding:25px 16px;
+    padding:25px 18px;
+    background:rgba(7,7,13,.78);
+    border-right:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(25px);
     z-index:20;
 }
 
 .logo{
+    padding:5px 12px 28px;
+}
+
+.logo h2{
+    font-size:21px;
+    font-weight:800;
+}
+
+.logo h2 span{
+    color:#a78bfa;
+}
+
+.logo small{
+    display:block;
+    margin-top:5px;
+    color:#666;
+    font-size:9px;
+    letter-spacing:1px;
+}
+
+.nav{
     display:flex;
-    align-items:center;
-    gap:11px;
-    padding:0 10px 28px;
-    font-size:20px;
-    font-weight:800;
-}
-
-.logo-icon,
-.mobile-logo-icon{
-    background:linear-gradient(135deg,#7c3aed,#a855f7);
-    display:grid;
-    place-items:center;
-    font-weight:800;
-}
-
-.logo-icon{
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    font-size:14px;
-}
-
-.nav-title{
-    color:#626273;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:1.2px;
-    padding:0 12px 10px;
+    flex-direction:column;
+    gap:7px;
 }
 
 .nav a{
-    display:flex;
-    align-items:center;
-    gap:13px;
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:4px;
-    color:#9999aa;
     text-decoration:none;
-    font-size:14px;
-    transition:.2s;
+    color:#999;
+    padding:13px 14px;
+    border-radius:13px;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s;
 }
 
-.nav a:hover{
-    background:rgba(139,92,246,.08);
-    color:#fff;
-}
-
+.nav a:hover,
 .nav a.active{
-    background:rgba(139,92,246,.16);
-    color:var(--purple-light);
+    color:#fff;
+    background:linear-gradient(
+        135deg,
+        rgba(124,58,237,.25),
+        rgba(59,130,246,.08)
+    );
+    border:1px solid rgba(139,92,246,.20);
+    transform:translateX(3px);
 }
 
-.nav-icon{
-    width:20px;
-    text-align:center;
+.icon{
+    display:inline-block;
+    width:23px;
+    color:#a78bfa;
 }
 
 .logout{
     position:absolute;
-    bottom:22px;
-    left:16px;
-    right:16px;
+    left:18px;
+    right:18px;
+    bottom:25px;
+    padding:13px;
+    border:1px solid rgba(239,68,68,.15);
+    border-radius:12px;
+    background:rgba(239,68,68,.05);
+    color:#fca5a5;
+    cursor:pointer;
+    font-weight:600;
 }
+
+/* MAIN */
 
 .main{
     margin-left:250px;
-    padding:34px 40px;
+    padding:35px;
 }
 
 .topbar{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:30px;
+    margin-bottom:28px;
 }
 
-.topbar h1{
-    font-size:30px;
-    margin-bottom:6px;
-}
-
-.topbar p{
-    color:var(--muted);
-    font-size:14px;
-}
-
-.profile-mini{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.mini-avatar{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#7c3aed,#ec4899);
-    display:grid;
-    place-items:center;
-    font-weight:bold;
-    overflow:hidden;
-}
-
-.mini-avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
-    margin-bottom:30px;
-}
-
-.stat-card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:20px;
-}
-
-.stat-icon{
-    font-size:22px;
-    margin-bottom:13px;
-}
-
-.stat-number{
-    font-size:25px;
+.title h1{
+    font-size:29px;
     font-weight:800;
 }
 
-.stat-label{
-    color:var(--muted);
+.title p{
+    margin-top:6px;
+    color:#777;
     font-size:12px;
-    margin-top:4px;
 }
 
-.toolbar{
-    display:flex;
-    margin-bottom:22px;
-}
+/* SEARCH */
 
 .search{
-    width:100%;
-    max-width:480px;
-    position:relative;
-}
-
-.search input{
-    width:100%;
-    background:var(--card);
-    border:1px solid var(--border);
-    color:#fff;
-    padding:13px 15px 13px 42px;
-    border-radius:11px;
+    width:min(330px,100%);
+    padding:12px 15px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.08);
     outline:none;
-    font-size:13px;
+    color:#fff;
+    background:rgba(255,255,255,.045);
 }
 
-.search input:focus{
-    border-color:rgba(139,92,246,.5);
+.search::placeholder{
+    color:#666;
 }
 
-.search span{
-    position:absolute;
-    left:15px;
-    top:12px;
-    color:#77778a;
-}
+/* GRID */
 
 .connections{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
-    gap:18px;
+    grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    gap:17px;
 }
 
+/* CARD */
+
 .connection-card{
-    background:linear-gradient(145deg,#12121c,#0f0f17);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:21px;
-    transition:.2s;
+    position:relative;
+    padding:22px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.08);
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.065),
+        rgba(255,255,255,.025)
+    );
+    backdrop-filter:blur(18px);
+    transition:.3s;
+    overflow:hidden;
+}
+
+.connection-card::before{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    right:-50px;
+    top:-50px;
+    border-radius:50%;
+    background:rgba(124,58,237,.13);
+    filter:blur(25px);
 }
 
 .connection-card:hover{
-    border-color:rgba(139,92,246,.35);
-    transform:translateY(-2px);
+    transform:translateY(-5px);
+    border-color:rgba(139,92,246,.28);
+    box-shadow:0 25px 60px rgba(0,0,0,.3);
 }
 
-.person{
+.card-top{
     display:flex;
     align-items:center;
     gap:13px;
-    margin-bottom:18px;
 }
 
 .avatar{
-    width:54px;
-    height:54px;
+    width:58px;
+    height:58px;
     border-radius:50%;
-    background:linear-gradient(135deg,#4f46e5,#9333ea);
-    display:grid;
-    place-items:center;
-    font-weight:800;
-    font-size:18px;
-    overflow:hidden;
-    flex-shrink:0;
-}
-
-.avatar img{
-    width:100%;
-    height:100%;
     object-fit:cover;
+    background:#15151d;
+    border:1px solid rgba(167,139,250,.45);
 }
 
-.person-info{
-    min-width:0;
-}
-
-.person h3{
-    font-size:16px;
-    margin-bottom:4px;
-}
-
-.person span{
-    color:var(--muted);
-    font-size:12px;
-}
-
-.status{
-    margin-left:auto;
-    color:var(--green);
-    font-size:11px;
-    white-space:nowrap;
-}
-
-.exchange{
-    background:rgba(139,92,246,.06);
-    border:1px solid rgba(139,92,246,.1);
-    border-radius:12px;
-    padding:14px;
-    margin-bottom:14px;
-}
-
-.exchange-title{
-    color:#77778a;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:.8px;
-    margin-bottom:9px;
-}
-
-.exchange-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-}
-
-.exchange-skill{
-    color:#c4b5fd;
-    font-size:12px;
-    font-weight:600;
-}
-
-.exchange-arrow{
-    color:#77778a;
-}
-
-.connected-date{
-    color:#77778a;
-    font-size:11px;
-    margin-bottom:15px;
-}
-
-.actions{
-    display:grid;
-    grid-template-columns:1.4fr 1fr 1fr;
-    gap:7px;
-}
-
-.btn{
-    border:none;
-    border-radius:9px;
-    padding:10px 7px;
-    cursor:pointer;
-    font-size:11px;
+.name{
+    font-size:14px;
     font-weight:700;
-    transition:.2s;
 }
 
-.btn:hover{
-    transform:translateY(-1px);
+.email{
+    color:#666;
+    font-size:10px;
+    margin-top:5px;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.chat-btn{
-    background:var(--purple);
+.skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:17px;
+}
+
+.skill{
+    padding:6px 9px;
+    border-radius:15px;
+    background:rgba(124,58,237,.12);
+    border:1px solid rgba(139,92,246,.16);
+    color:#c4b5fd;
+    font-size:9px;
+}
+
+.bio{
+    margin-top:15px;
+    color:#888;
+    font-size:10px;
+    line-height:1.6;
+    min-height:32px;
+}
+
+.card-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:18px;
+}
+
+.action{
+    padding:10px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.04);
+    color:#aaa;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:700;
+}
+
+.action.primary{
     color:#fff;
+    border:none;
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #4f46e5
+    );
 }
 
-.audio-btn,
-.video-btn{
-    background:#191923;
-    color:#d7d7e1;
-    border:1px solid var(--border);
-}
+/* EMPTY */
 
 .empty{
-    border:1px dashed rgba(255,255,255,.1);
-    border-radius:18px;
     padding:75px 20px;
     text-align:center;
-    color:#77778a;
-    grid-column:1/-1;
-}
-
-.empty-icon{
-    font-size:43px;
-    margin-bottom:14px;
+    border:1px dashed rgba(255,255,255,.09);
+    border-radius:20px;
 }
 
 .empty h3{
-    color:#dddde7;
+    color:#aaa;
+    font-size:15px;
     margin-bottom:8px;
 }
 
 .empty p{
-    font-size:13px;
-    line-height:1.5;
+    color:#666;
+    font-size:11px;
 }
 
-.loading{
-    border:1px dashed rgba(139,92,246,.25);
-    border-radius:18px;
-    padding:70px 20px;
-    text-align:center;
-    color:#a78bfa;
-    grid-column:1/-1;
-}
+/* MODAL */
 
-.toast{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    background:#181821;
-    border:1px solid rgba(139,92,246,.3);
-    padding:14px 18px;
-    border-radius:11px;
-    display:none;
-    z-index:100;
-    font-size:13px;
-}
-
-.call-modal{
-    display:none;
+.modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.78);
-    z-index:90;
+    display:none;
     align-items:center;
     justify-content:center;
     padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+    z-index:100;
 }
 
-.call-box{
-    width:min(600px,100%);
-    background:#11111a;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:28px;
+.modal.show{
+    display:flex;
+}
+
+.modal-card{
+    width:min(470px,100%);
+    max-height:85vh;
+    overflow-y:auto;
+    padding:27px;
+    border-radius:22px;
+    background:#0d0d14;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
+}
+
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    width:32px;
+    height:32px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    color:#aaa;
+    cursor:pointer;
+}
+
+.modal-profile{
     text-align:center;
 }
 
-.call-avatar{
-    width:80px;
-    height:80px;
+.modal-avatar{
+    width:90px;
+    height:90px;
     border-radius:50%;
-    background:linear-gradient(135deg,#7c3aed,#ec4899);
-    display:grid;
-    place-items:center;
-    margin:10px auto 18px;
-    font-size:27px;
-    font-weight:800;
-    overflow:hidden;
-}
-
-.call-avatar img{
-    width:100%;
-    height:100%;
     object-fit:cover;
+    border:2px solid rgba(167,139,250,.45);
 }
 
-.call-box p{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:7px;
+.modal-profile h2{
+    margin-top:12px;
+    font-size:20px;
 }
 
-.call-status{
-    margin:22px 0;
-    padding:15px;
-    border-radius:12px;
-    background:rgba(139,92,246,.08);
+.modal-profile p{
+    margin-top:5px;
+    color:#777;
+    font-size:11px;
+}
+
+.modal-section{
+    margin-top:22px;
+}
+
+.modal-section h4{
+    margin-bottom:9px;
+    color:#777;
+    font-size:10px;
+    text-transform:uppercase;
+}
+
+.modal-bio{
+    color:#aaa;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.tag{
+    padding:6px 9px;
+    border-radius:15px;
+    background:rgba(124,58,237,.12);
     color:#c4b5fd;
-    font-size:13px;
+    border:1px solid rgba(139,92,246,.15);
+    font-size:9px;
 }
 
-.end-call{
-    background:#dc2626;
+/* CALL MODAL */
+
+.call-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:20px;
+}
+
+.call-btn{
+    padding:14px;
     border:none;
+    border-radius:12px;
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #4f46e5
+    );
     color:#fff;
-    padding:11px 25px;
-    border-radius:10px;
     cursor:pointer;
     font-weight:700;
 }
 
-.mobile-header{
+/* MOBILE */
+
+.menu-btn{
     display:none;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.04);
+    color:#fff;
+    padding:9px 12px;
+    border-radius:10px;
+    cursor:pointer;
 }
 
-@media(max-width:800px){
+@media(max-width:850px){
 
     .sidebar{
-        display:none;
+        transform:translateX(-100%);
+        transition:.3s;
     }
 
-    .mobile-header{
-        display:flex;
-        padding:16px 18px;
-        border-bottom:1px solid var(--border);
-        justify-content:space-between;
-        align-items:center;
-    }
-
-    .mobile-logo{
-        display:flex;
-        align-items:center;
-        gap:9px;
-        font-weight:800;
-    }
-
-    .mobile-logo-icon{
-        width:32px;
-        height:32px;
-        border-radius:9px;
-        font-size:12px;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
     .main{
         margin-left:0;
-        padding:25px 18px;
+        padding:22px;
     }
 
-    .profile-mini{
-        display:none;
+    .menu-btn{
+        display:block;
     }
 
-    .stats{
-        grid-template-columns:1fr;
+    .topbar{
+        flex-wrap:wrap;
+        gap:15px;
     }
 
-    .connections{
-        grid-template-columns:1fr;
+    .search{
+        width:100%;
     }
 }
 </style>
@@ -519,519 +508,434 @@ body{
 
 <body>
 
-<div class="mobile-header">
-
-    <div class="mobile-logo">
-        <div class="mobile-logo-icon">TE</div>
-        Talent Exchange
-    </div>
-
-    <a href="dashboard.html"
-       style="color:#aaa;text-decoration:none;font-size:13px;">
-        Dashboard
-    </a>
-
+<div class="bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 </div>
 
-<aside class="sidebar">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
 
     <div class="logo">
-        <div class="logo-icon">TE</div>
-        Talent Exchange
-    </div>
-
-    <div class="nav-title">
-        Workspace
+        <h2>Talent <span>Exchange</span></h2>
+        <small>SKILLS • PEOPLE • CONNECTIONS</small>
     </div>
 
     <nav class="nav">
 
         <a href="dashboard.html">
-            <span class="nav-icon">⌂</span>
+            <span class="icon">⌂</span>
             Dashboard
         </a>
 
         <a href="find-skills.html">
-            <span class="nav-icon">⌕</span>
+            <span class="icon">⌕</span>
             Find Skills
         </a>
 
+        <a href="offer-skill.html">
+            <span class="icon">＋</span>
+            Offer Skill
+        </a>
+
         <a href="requests.html">
-            <span class="nav-icon">♢</span>
+            <span class="icon">↗</span>
             Requests
         </a>
 
         <a href="connections.html" class="active">
-            <span class="nav-icon">◎</span>
+            <span class="icon">◎</span>
             Connections
         </a>
 
         <a href="chat.html">
-            <span class="nav-icon">◌</span>
+            <span class="icon">▱</span>
             Chat
         </a>
 
         <a href="profile.html">
-            <span class="nav-icon">⚙</span>
-            Edit Profile
+            <span class="icon">◉</span>
+            Profile
         </a>
 
     </nav>
 
-    <div class="logout">
-
-        <a href="#" id="logoutBtn"
-           style="
-           display:flex;
-           align-items:center;
-           gap:13px;
-           color:#9999aa;
-           text-decoration:none;
-           padding:12px;
-           font-size:14px;">
-
-            <span class="nav-icon">↪</span>
-            Logout
-
-        </a>
-
-    </div>
+    <button class="logout" id="logoutBtn">
+        Logout
+    </button>
 
 </aside>
+
+
+<!-- MAIN -->
 
 <main class="main">
 
     <div class="topbar">
 
-        <div>
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
 
+        <div class="title">
             <h1>Connections</h1>
-
-            <p>
-                People you have successfully connected with.
-            </p>
-
+            <p>Your accepted skill exchange connections</p>
         </div>
 
-        <div class="profile-mini">
-
-            <strong id="topName">
-                User
-            </strong>
-
-            <div class="mini-avatar" id="topAvatar">
-                U
-            </div>
-
-        </div>
+        <input
+            class="search"
+            id="searchInput"
+            type="text"
+            placeholder="Search connections..."
+        >
 
     </div>
 
-    <div class="stats">
 
-        <div class="stat-card">
-
-            <div class="stat-icon">
-                ◎
-            </div>
-
-            <div class="stat-number" id="connectionCount">
-                0
-            </div>
-
-            <div class="stat-label">
-                Total Connections
-            </div>
-
-        </div>
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-                ●
-            </div>
-
-            <div class="stat-number" id="activeCount">
-                0
-            </div>
-
-            <div class="stat-label">
-                Active Connections
-            </div>
-
-        </div>
-
-        <div class="stat-card">
-
-            <div class="stat-icon">
-                ⇄
-            </div>
-
-            <div class="stat-number" id="skillCount">
-                0
-            </div>
-
-            <div class="stat-label">
-                Skills Across Connections
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="toolbar">
-
-        <div class="search">
-
-            <span>⌕</span>
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search connections..."
-            >
-
-        </div>
-
-    </div>
-
-    <div class="connections" id="connectionsList">
-
-        <div class="loading">
-            Loading your connections...
-        </div>
-
-    </div>
+    <div
+        class="connections"
+        id="connections"
+    ></div>
 
 </main>
 
-<div class="call-modal" id="callModal">
 
-    <div class="call-box">
+<!-- PROFILE MODAL -->
 
-        <div class="call-avatar" id="callAvatar">
-            U
+<div class="modal" id="profileModal">
+
+    <div class="modal-card">
+
+        <div class="modal-top">
+
+            <strong>Member Profile</strong>
+
+            <button
+                class="close"
+                id="closeProfile"
+            >
+                ×
+            </button>
+
         </div>
 
-        <h2 id="callName">
-            User
-        </h2>
-
-        <p id="callType">
-            Video Call
-        </p>
-
-        <div class="call-status" id="callStatus">
-            Starting...
-        </div>
-
-        <button class="end-call" id="endCallBtn">
-            End Call
-        </button>
+        <div id="profileContent"></div>
 
     </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
+
+<!-- CALL MODAL -->
+
+<div class="modal" id="callModal">
+
+    <div class="modal-card">
+
+        <div class="modal-top">
+
+            <strong>Connect</strong>
+
+            <button
+                class="close"
+                id="closeCall"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div id="callContent"></div>
+
+    </div>
+
+</div>
 
 
 <script type="module">
 
 import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+    auth,
+    db
+} from "./js/firebase-config.js";
 
 import {
-    getAuth,
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
-    getFirestore,
     collection,
     query,
     where,
     getDocs,
-    doc,
-    getDoc
+    getDoc,
+    doc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* =========================================================
-   FIREBASE CONFIG
-========================================================= */
+let currentUser = null;
 
-const firebaseConfig = {
-    apiKey: "AIzaSyReArAuSxobQHOprk87Fe6NmJSVAKcND0",
-    authDomain: "talent-exchange-4456e.firebaseapp.com",
-    projectId: "talent-exchange-4456e",
-    storageBucket: "talent-exchange-4456e.firebasestorage.app",
-    messagingSenderId: "617029447041",
-    appId: "1:617029447041:web:35beb28f9949e2fb594c80"
-};
+let allConnections = [];
 
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
+let userCache = {};
 
 
-/* =========================================================
-   GLOBAL DATA
-========================================================= */
+/* =========================
+   DEFAULT AVATAR
+========================= */
 
-let currentFirebaseUser = null;
+function defaultAvatar(){
 
-let connections = [];
+    return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="300"
+             height="300"
+             viewBox="0 0 300 300">
 
+            <rect
+                width="300"
+                height="300"
+                fill="#11111a"
+            />
 
-/* =========================================================
-   AUTH STATE
-========================================================= */
+            <circle
+                cx="150"
+                cy="110"
+                r="55"
+                fill="#29243a"
+            />
 
-onAuthStateChanged(auth, async (user) => {
+            <path
+                d="M50 285
+                   C60 205 105 170 150 170
+                   C195 170 240 205 250 285"
+                fill="#29243a"
+            />
 
-    if (!user) {
-
-        window.location.href = "login.html";
-
-        return;
-    }
-
-    currentFirebaseUser = user;
-
-    await loadCurrentUser();
-
-    await loadConnections();
-
-});
-
-
-/* =========================================================
-   CURRENT USER
-========================================================= */
-
-async function loadCurrentUser(){
-
-    try{
-
-        const userRef =
-            doc(db,"users",currentFirebaseUser.uid);
-
-        const userSnap =
-            await getDoc(userRef);
-
-        let userData = {};
-
-        if(userSnap.exists()){
-
-            userData = userSnap.data();
-
-        }
-
-        const name =
-            userData.name ||
-            currentFirebaseUser.displayName ||
-            "User";
-
-        document.getElementById("topName")
-            .textContent = name;
-
-        const avatar =
-            document.getElementById("topAvatar");
-
-        if(userData.profilePhoto){
-
-            avatar.innerHTML =
-                `<img src="${escapeHTML(userData.profilePhoto)}"
-                alt="Profile">`;
-
-        }else{
-
-            avatar.textContent =
-                getInitial(name);
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "Current user error:",
-            error
-        );
-
-        document.getElementById("topName")
-            .textContent =
-            currentFirebaseUser.email ||
-            "User";
-
-    }
+        </svg>
+        `);
 
 }
 
 
-/* =========================================================
-   LOAD CONNECTIONS FROM FIRESTORE
-========================================================= */
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   SKILLS
+========================= */
+
+function normalizeSkills(value){
+
+    if(Array.isArray(value)){
+        return value.filter(Boolean);
+    }
+
+    if(typeof value === "string"){
+
+        return value
+            .split(",")
+            .map(x => x.trim())
+            .filter(Boolean);
+
+    }
+
+    return [];
+
+}
+
+
+/* =========================
+   LOAD CONNECTIONS
+========================= */
 
 async function loadConnections(){
 
     const container =
-        document.getElementById("connectionsList");
+        document.getElementById(
+            "connections"
+        );
+
 
     container.innerHTML = `
-        <div class="loading">
-            Loading your connections...
+
+        <div class="empty">
+
+            <h3>Loading connections...</h3>
+
+            <p>
+                Finding your accepted connections.
+            </p>
+
         </div>
+
     `;
+
 
     try{
 
-        /*
-            Connections collection structure:
-
-            {
-                userIds: [uid1, uid2],
-                user1Id: uid1,
-                user2Id: uid2,
-                user1Name: "...",
-                user2Name: "...",
-                status: "active",
-                connectedAt: timestamp
-            }
-        */
-
-        const connectionsQuery =
+        const q =
             query(
                 collection(db,"Connections"),
                 where(
                     "userIds",
                     "array-contains",
-                    currentFirebaseUser.uid
+                    currentUser.uid
                 )
             );
 
-        const snapshot =
-            await getDocs(connectionsQuery);
 
-        connections = [];
+        const snapshot =
+            await getDocs(q);
+
+
+        allConnections = [];
+
 
         for(const connectionDoc of snapshot.docs){
 
-            const data =
-                connectionDoc.data();
+            const connection =
+                {
+                    id:connectionDoc.id,
+                    ...connectionDoc.data()
+                };
 
-            if(data.status &&
-               data.status !== "active"){
 
-                continue;
+            let otherId = null;
+
+
+            if(
+                Array.isArray(
+                    connection.userIds
+                )
+            ){
+
+                otherId =
+                    connection.userIds.find(
+                        id =>
+                            id !==
+                            currentUser.uid
+                    );
 
             }
 
-            const otherId =
-                data.user1Id === currentFirebaseUser.uid
-                    ? data.user2Id
-                    : data.user1Id;
+
+            /*
+             Fallback for older documents.
+            */
 
             if(!otherId){
 
-                continue;
+                if(
+                    connection.user1Id ===
+                    currentUser.uid
+                ){
+
+                    otherId =
+                        connection.user2Id;
+
+                }else{
+
+                    otherId =
+                        connection.user1Id;
+
+                }
 
             }
 
-            const otherUserRef =
-                doc(db,"users",otherId);
 
-            const otherUserSnap =
-                await getDoc(otherUserRef);
-
-            if(!otherUserSnap.exists()){
-
+            if(!otherId){
                 continue;
+            }
+
+
+            let user;
+
+
+            if(userCache[otherId]){
+
+                user =
+                    userCache[otherId];
+
+            }else{
+
+                const userSnap =
+                    await getDoc(
+                        doc(
+                            db,
+                            "users",
+                            otherId
+                        )
+                    );
+
+
+                if(!userSnap.exists()){
+                    continue;
+                }
+
+
+                user = {
+                    id:userSnap.id,
+                    ...userSnap.data()
+                };
+
+
+                userCache[otherId] =
+                    user;
 
             }
 
-            const userData =
-                otherUserSnap.data();
 
-            const offeredSkills =
-                normalizeSkills(
-                    userData.offeredSkills
-                );
+            allConnections.push({
 
-            const learningSkills =
-                normalizeSkills(
-                    userData.learningSkills ??
-                    userData.learningSkill
-                );
-
-            connections.push({
-
-                id: connectionDoc.id,
-
-                userId: otherId,
-
-                name:
-                    userData.name ||
-                    "User",
-
-                email:
-                    userData.email ||
-                    "",
-
-                role:
-                    userData.roleTitle ||
-                    userData.profession ||
-                    "Talent Exchange Member",
-
-                profilePhoto:
-                    userData.profilePhoto ||
-                    "",
-
-                skills:
-                    offeredSkills,
-
-                learning:
-                    learningSkills,
-
-                online:
-                    userData.online === true,
-
-                connectedAt:
-                    data.connectedAt || null
+                connection,
+                user
 
             });
 
         }
 
-        renderConnections();
+
+        renderConnections(
+            allConnections
+        );
+
 
     }catch(error){
 
         console.error(
-            "Connection loading error:",
+            "CONNECTION LOAD ERROR:",
             error
         );
+
 
         container.innerHTML = `
 
             <div class="empty">
 
-                <div class="empty-icon">
-                    !
-                </div>
-
-                <h3>
-                    Could not load connections
-                </h3>
+                <h3>Unable to load connections</h3>
 
                 <p>
-                    ${escapeHTML(
-                        error.message ||
-                        "Please check your Firebase configuration and Firestore rules."
+                    ${escapeHtml(
+                        error.message
                     )}
                 </p>
 
@@ -1044,128 +948,32 @@ async function loadConnections(){
 }
 
 
-/* =========================================================
-   NORMALIZE SKILLS
-========================================================= */
-
-function normalizeSkills(value){
-
-    if(Array.isArray(value)){
-
-        return value
-            .map(item => String(item).trim())
-            .filter(Boolean);
-
-    }
-
-    if(typeof value === "string"){
-
-        return value
-            .split(",")
-            .map(item => item.trim())
-            .filter(Boolean);
-
-    }
-
-    return [];
-
-}
-
-
-/* =========================================================
+/* =========================
    RENDER
-========================================================= */
+========================= */
 
-function renderConnections(){
+function renderConnections(items){
 
     const container =
-        document.getElementById("connectionsList");
-
-    const search =
-        document
-            .getElementById("searchInput")
-            .value
-            .toLowerCase()
-            .trim();
-
-
-    const filtered =
-        connections.filter(connection => {
-
-            const searchableText = (
-
-                connection.name +
-                " " +
-                connection.role +
-                " " +
-                connection.email +
-                " " +
-                connection.skills.join(" ") +
-                " " +
-                connection.learning.join(" ")
-
-            ).toLowerCase();
-
-            return searchableText.includes(search);
-
-        });
-
-
-    document.getElementById("connectionCount")
-        .textContent =
-        connections.length;
-
-
-    document.getElementById("activeCount")
-        .textContent =
-        connections.filter(
-            connection => connection.online
-        ).length;
-
-
-    const allSkills = new Set();
-
-    connections.forEach(connection => {
-
-        connection.skills.forEach(skill =>
-            allSkills.add(skill.toLowerCase())
+        document.getElementById(
+            "connections"
         );
 
-        connection.learning.forEach(skill =>
-            allSkills.add(skill.toLowerCase())
-        );
 
-    });
-
-    document.getElementById("skillCount")
-        .textContent =
-        allSkills.size;
+    container.innerHTML = "";
 
 
-    if(filtered.length === 0){
+    if(items.length === 0){
 
         container.innerHTML = `
 
             <div class="empty">
 
-                <div class="empty-icon">
-                    ◎
-                </div>
-
-                <h3>
-                    ${
-                        connections.length === 0
-                        ? "No connections yet"
-                        : "No connections found"
-                    }
-                </h3>
+                <h3>No connections yet</h3>
 
                 <p>
-                    ${
-                        connections.length === 0
-                        ? "Accept a skill exchange request to create your first connection."
-                        : "Try searching with a different name or skill."
-                    }
+                    Accept a skill exchange request
+                    to create your first connection.
                 </p>
 
             </div>
@@ -1177,243 +985,360 @@ function renderConnections(){
     }
 
 
-    container.innerHTML =
-        filtered.map(connection => {
+    items.forEach(item => {
 
-            const offered =
-                connection.skills[0] ||
-                "Skill not added";
-
-            const learning =
-                connection.learning[0] ||
-                "Skill not added";
-
-            const avatarHTML =
-                connection.profilePhoto
-
-                ? `<img
-                    src="${escapeHTML(connection.profilePhoto)}"
-                    alt="${escapeHTML(connection.name)}">`
-
-                : escapeHTML(
-                    getInitial(connection.name)
-                );
+        const user =
+            item.user;
 
 
-            return `
-
-                <div class="connection-card">
-
-                    <div class="person">
-
-                        <div class="avatar">
-                            ${avatarHTML}
-                        </div>
-
-                        <div class="person-info">
-
-                            <h3>
-                                ${escapeHTML(
-                                    connection.name
-                                )}
-                            </h3>
-
-                            <span>
-                                ${escapeHTML(
-                                    connection.role
-                                )}
-                            </span>
-
-                        </div>
-
-                        <div class="status">
-
-                            ${
-                                connection.online
-                                ? "● Online"
-                                : "○ Connected"
-                            }
-
-                        </div>
-
-                    </div>
+        const skills =
+            normalizeSkills(
+                user.offeredSkills
+            );
 
 
-                    <div class="exchange">
-
-                        <div class="exchange-title">
-                            Skill Exchange
-                        </div>
-
-                        <div class="exchange-row">
-
-                            <span class="exchange-skill">
-
-                                You learn:
-                                ${escapeHTML(offered)}
-
-                            </span>
-
-                            <span class="exchange-arrow">
-                                ⇄
-                            </span>
-
-                            <span class="exchange-skill">
-
-                                You share:
-                                ${escapeHTML(learning)}
-
-                            </span>
-
-                        </div>
-
-                    </div>
+        const photo =
+            user.profilePhoto ||
+            defaultAvatar();
 
 
-                    <div class="connected-date">
+        const card =
+            document.createElement("div");
 
-                        Connected
-                        ${formatFirebaseDate(
-                            connection.connectedAt
+        card.className =
+            "connection-card";
+
+
+        card.dataset.search =
+            [
+                user.name,
+                user.email,
+                user.bio,
+                ...skills
+            ]
+            .join(" ")
+            .toLowerCase();
+
+
+        card.innerHTML = `
+
+            <div class="card-top">
+
+                <img
+                    class="avatar"
+                    src="${escapeHtml(photo)}"
+                    alt="Profile"
+                >
+
+                <div>
+
+                    <div class="name">
+                        ${escapeHtml(
+                            user.name ||
+                            "Talent Exchange Member"
                         )}
-
                     </div>
 
-
-                    <div class="actions">
-
-                        <button
-                            class="btn chat-btn"
-                            data-action="chat"
-                            data-id="${escapeAttribute(connection.userId)}"
-                            data-name="${escapeAttribute(connection.name)}">
-
-                            Chat
-
-                        </button>
-
-
-                        <button
-                            class="btn audio-btn"
-                            data-action="audio"
-                            data-id="${escapeAttribute(connection.userId)}"
-                            data-name="${escapeAttribute(connection.name)}"
-                            data-avatar="${escapeAttribute(connection.profilePhoto || getInitial(connection.name))}">
-
-                            Audio
-
-                        </button>
-
-
-                        <button
-                            class="btn video-btn"
-                            data-action="video"
-                            data-id="${escapeAttribute(connection.userId)}"
-                            data-name="${escapeAttribute(connection.name)}"
-                            data-avatar="${escapeAttribute(connection.profilePhoto || getInitial(connection.name))}">
-
-                            Video
-
-                        </button>
-
+                    <div class="email">
+                        ${escapeHtml(
+                            user.email || ""
+                        )}
                     </div>
 
                 </div>
 
-            `;
+            </div>
 
-        }).join("");
+
+            <div class="skills">
+
+                ${
+                    skills.length
+
+                    ? skills
+                        .slice(0,5)
+                        .map(skill => `
+                            <span class="skill">
+                                ${escapeHtml(skill)}
+                            </span>
+                        `)
+                        .join("")
+
+                    : `
+                        <span class="skill">
+                            Skill not added
+                        </span>
+                    `
+                }
+
+            </div>
+
+
+            <div class="bio">
+
+                ${escapeHtml(
+                    user.bio ||
+                    "Connected Talent Exchange member."
+                )}
+
+            </div>
+
+
+            <div class="card-actions">
+
+                <button
+                    class="action"
+                    data-profile
+                >
+                    Profile
+                </button>
+
+                <button
+                    class="action primary"
+                    data-chat
+                >
+                    Chat
+                </button>
+
+            </div>
+
+        `;
+
+
+        card
+            .querySelector("[data-profile]")
+            .addEventListener(
+                "click",
+                () => showProfile(user)
+            );
+
+
+        card
+            .querySelector("[data-chat]")
+            .addEventListener(
+                "click",
+                () => openChat(user)
+            );
+
+
+        container.appendChild(card);
+
+    });
 
 }
 
 
-/* =========================================================
-   BUTTON EVENTS
-========================================================= */
-
-document
-    .getElementById("connectionsList")
-    .addEventListener("click",(event)=>{
-
-        const button =
-            event.target.closest("button");
-
-        if(!button){
-
-            return;
-
-        }
-
-        const action =
-            button.dataset.action;
-
-        const id =
-            button.dataset.id;
-
-        const name =
-            button.dataset.name;
-
-        const avatar =
-            button.dataset.avatar;
-
-
-        if(action === "chat"){
-
-            openChat(id,name);
-
-        }
-
-
-        if(action === "audio"){
-
-            startCall(
-                id,
-                name,
-                avatar,
-                "Audio Call"
-            );
-
-        }
-
-
-        if(action === "video"){
-
-            startCall(
-                id,
-                name,
-                avatar,
-                "Video Call"
-            );
-
-        }
-
-    });
-
-
-/* =========================================================
+/* =========================
    SEARCH
-========================================================= */
+========================= */
 
 document
     .getElementById("searchInput")
-    .addEventListener("input",renderConnections);
+    .addEventListener(
+        "input",
+        event => {
+
+            const search =
+                event.target.value
+                    .trim()
+                    .toLowerCase();
 
 
-/* =========================================================
+            const filtered =
+                allConnections.filter(
+                    item => {
+
+                        const user =
+                            item.user;
+
+
+                        const text =
+                            [
+                                user.name,
+                                user.email,
+                                user.bio,
+                                ...normalizeSkills(
+                                    user.offeredSkills
+                                ),
+                                ...normalizeSkills(
+                                    user.learningSkills ||
+                                    user.learningSkill
+                                )
+                            ]
+                            .join(" ")
+                            .toLowerCase();
+
+
+                        return text.includes(
+                            search
+                        );
+
+                    }
+                );
+
+
+            renderConnections(
+                filtered
+            );
+
+        }
+    );
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function showProfile(user){
+
+    const offered =
+        normalizeSkills(
+            user.offeredSkills
+        );
+
+
+    const learning =
+        normalizeSkills(
+            user.learningSkills ||
+            user.learningSkill
+        );
+
+
+    const photo =
+        user.profilePhoto ||
+        defaultAvatar();
+
+
+    document.getElementById(
+        "profileContent"
+    ).innerHTML = `
+
+        <div class="modal-profile">
+
+            <img
+                class="modal-avatar"
+                src="${escapeHtml(photo)}"
+                alt="Profile"
+            >
+
+            <h2>
+                ${escapeHtml(
+                    user.name ||
+                    "Talent Exchange Member"
+                )}
+            </h2>
+
+            <p>
+                ${escapeHtml(
+                    user.email || ""
+                )}
+            </p>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <h4>About</h4>
+
+            <div class="modal-bio">
+
+                ${escapeHtml(
+                    user.bio ||
+                    "No bio added yet."
+                )}
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <h4>Skills Offered</h4>
+
+            <div class="tags">
+
+                ${
+                    offered.length
+
+                    ? offered.map(skill => `
+                        <span class="tag">
+                            ${escapeHtml(skill)}
+                        </span>
+                    `).join("")
+
+                    : `
+                        <span class="tag">
+                            None added
+                        </span>
+                    `
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-section">
+
+            <h4>Skills Wanted</h4>
+
+            <div class="tags">
+
+                ${
+                    learning.length
+
+                    ? learning.map(skill => `
+                        <span class="tag">
+                            ${escapeHtml(skill)}
+                        </span>
+                    `).join("")
+
+                    : `
+                        <span class="tag">
+                            None added
+                        </span>
+                    `
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById("profileModal")
+        .classList.add("show");
+
+}
+
+
+/* =========================
    CHAT
-========================================================= */
+========================= */
 
-function openChat(id,name){
+function openChat(user){
 
     localStorage.setItem(
         "activeChatId",
-        id
+        user.id
     );
 
     localStorage.setItem(
         "activeChatName",
-        name
+        user.name || ""
     );
+
+    localStorage.setItem(
+        "activeChatSkill",
+        normalizeSkills(
+            user.offeredSkills
+        )[0] || ""
+    );
+
 
     window.location.href =
         "chat.html";
@@ -1421,143 +1346,200 @@ function openChat(id,name){
 }
 
 
-/* =========================================================
+/* =========================
    CALL
-========================================================= */
+========================= */
 
-function startCall(id,name,avatar,type){
+function openCall(user){
 
-    localStorage.setItem(
-        "activeCallUserId",
-        id
-    );
+    document.getElementById(
+        "callContent"
+    ).innerHTML = `
 
-    localStorage.setItem(
-        "activeCallName",
-        name
-    );
+        <div class="modal-profile">
 
-    localStorage.setItem(
-        "activeCallType",
-        type
-    );
+            <h2>
+                ${escapeHtml(
+                    user.name ||
+                    "Connection"
+                )}
+            </h2>
 
+            <p>
+                Choose how you want to connect.
+            </p>
 
-    const callAvatar =
-        document.getElementById("callAvatar");
-
-
-    if(
-        avatar &&
-        avatar.startsWith("http")
-    ){
-
-        callAvatar.innerHTML =
-            `<img
-                src="${escapeHTML(avatar)}"
-                alt="${escapeHTML(name)}">`;
-
-    }else{
-
-        callAvatar.textContent =
-            getInitial(name);
-
-    }
+        </div>
 
 
-    document.getElementById("callName")
-        .textContent = name;
+        <div class="call-options">
 
-    document.getElementById("callType")
-        .textContent = type;
+            <button
+                class="call-btn"
+                id="audioCall"
+            >
+                Audio Call
+            </button>
 
-    document.getElementById("callStatus")
-        .textContent =
-        `Starting ${type.toLowerCase()}...`;
+            <button
+                class="call-btn"
+                id="videoCall"
+            >
+                Video Call
+            </button>
 
-    document.getElementById("callModal")
-        .style.display = "flex";
+        </div>
+
+    `;
 
 
-    /*
-        REAL AUDIO/VIDEO CALL:
+    document
+        .getElementById("callModal")
+        .classList.add("show");
 
-        This UI is ready.
 
-        Actual two-user calling will later use:
+    document
+        .getElementById("audioCall")
+        .onclick = () => {
 
-        WebRTC
-           +
-        Firebase signaling / realtime
+            alert(
+                "Audio calling will be connected through WebRTC in the realtime communication step."
+            );
 
-        That will be added after chat.
-    */
+        };
 
-    setTimeout(()=>{
 
-        document.getElementById("callStatus")
-            .textContent =
-            `Waiting for ${name} to join...`;
+    document
+        .getElementById("videoCall")
+        .onclick = () => {
 
-    },1000);
+            alert(
+                "Video calling will be connected through WebRTC in the realtime communication step."
+            );
+
+        };
 
 }
 
 
-/* =========================================================
-   END CALL
-========================================================= */
-
-function endCall(){
-
-    document.getElementById("callModal")
-        .style.display = "none";
-
-}
-
-
-/* =========================================================
-   END CALL BUTTON
-========================================================= */
+/* =========================
+   CLOSE MODALS
+========================= */
 
 document
-    .getElementById("endCallBtn")
-    .addEventListener("click",endCall);
+    .getElementById("closeProfile")
+    .onclick = () => {
 
+        document
+            .getElementById("profileModal")
+            .classList.remove("show");
 
-/* =========================================================
-   MODAL BACKGROUND
-========================================================= */
+    };
+
 
 document
-    .getElementById("callModal")
-    .addEventListener("click",(event)=>{
+    .getElementById("closeCall")
+    .onclick = () => {
 
-        if(event.target === event.currentTarget){
+        document
+            .getElementById("callModal")
+            .classList.remove("show");
 
-            endCall();
+    };
+
+
+document
+    .getElementById("profileModal")
+    .onclick = event => {
+
+        if(
+            event.target.id ===
+            "profileModal"
+        ){
+
+            event.currentTarget
+                .classList.remove("show");
 
         }
 
-    });
+    };
 
 
-/* =========================================================
+document
+    .getElementById("callModal")
+    .onclick = event => {
+
+        if(
+            event.target.id ===
+            "callModal"
+        ){
+
+            event.currentTarget
+                .classList.remove("show");
+
+        }
+
+    };
+
+
+/* =========================
+   AUTH
+========================= */
+
+onAuthStateChanged(
+    auth,
+    user => {
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser = user;
+
+        loadConnections();
+
+    }
+);
+
+
+/* =========================
    LOGOUT
-========================================================= */
+========================= */
 
 document
     .getElementById("logoutBtn")
-    .addEventListener("click",async(event)=>{
-
-        event.preventDefault();
+    .onclick = async () => {
 
         try{
 
             await signOut(auth);
 
-            localStorage.removeItem("activeChatId");
-            localStorage.removeItem("activeChatName");
+            localStorage.removeItem(
+                "userProfile"
+            );
+
+            localStorage.removeItem(
+                "isLoggedIn"
+            );
+
+            localStorage.removeItem(
+                "activeChatId"
+            );
+
+            localStorage.removeItem(
+                "activeChatName"
+            );
+
+            localStorage.removeItem(
+                "activeChatSkill"
+            );
+
 
             window.location.href =
                 "login.html";
@@ -1565,118 +1547,31 @@ document
         }catch(error){
 
             console.error(
-                "Logout error:",
+                "LOGOUT ERROR:",
                 error
             );
 
-            showToast(
-                "Logout failed. Please try again."
-            );
-
         }
 
-    });
+    };
 
 
-/* =========================================================
-   DATE FORMAT
-========================================================= */
+/* =========================
+   MOBILE MENU
+========================= */
 
-function formatFirebaseDate(value){
+document
+    .getElementById("menuBtn")
+    .onclick = () => {
 
-    if(!value){
+        document
+            .getElementById("sidebar")
+            .classList.toggle("open");
 
-        return "recently";
-
-    }
-
-    let date;
-
-    if(
-        value &&
-        typeof value.toDate === "function"
-    ){
-
-        date = value.toDate();
-
-    }else{
-
-        date = new Date(value);
-
-    }
-
-    if(isNaN(date.getTime())){
-
-        return "recently";
-
-    }
-
-    return date.toLocaleDateString(
-        undefined,
-        {
-            day:"numeric",
-            month:"short",
-            year:"numeric"
-        }
-    );
-
-}
-
-
-/* =========================================================
-   INITIAL
-========================================================= */
-
-function getInitial(name){
-
-    return String(name || "U")
-        .trim()
-        .charAt(0)
-        .toUpperCase() || "U";
-
-}
-
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-function escapeAttribute(value){
-
-    return String(value ?? "")
-        .replace(/\\/g,"\\\\")
-        .replace(/'/g,"&#039;")
-        .replace(/"/g,"&quot;");
-
-}
-
-
-function showToast(message){
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent = message;
-
-    toast.style.display = "block";
-
-    setTimeout(()=>{
-
-        toast.style.display = "none";
-
-    },2500);
-
-}
+    };
 
 </script>
 
 </body>
 </html>
+```
