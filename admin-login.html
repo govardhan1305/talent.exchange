@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talent Exchange | Admin</title>
+<title>Talent Exchange | Admin Portal</title>
 
 <style>
 *{
@@ -13,95 +13,205 @@
     box-sizing:border-box;
 }
 
-body{
-    min-height:100vh;
-    overflow:hidden;
-    font-family:Inter,Segoe UI,Arial,sans-serif;
-    background:#050509;
-    color:#fff;
+html,body{
+    width:100%;
+    height:100%;
 }
 
-/* =========================
-   3D WORLD
-========================= */
+body{
+    overflow:hidden;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    color:white;
+    background:#03020a;
+}
+
+/* =====================================================
+   3D ENVIRONMENT
+===================================================== */
 
 .scene{
     position:fixed;
     inset:0;
-    perspective:1200px;
     overflow:hidden;
+    perspective:1600px;
+
     background:
-        radial-gradient(circle at 50% 45%,#211044 0%,#0d0818 35%,#050509 75%);
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(91,45,150,.45),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 15% 80%,
+            rgba(91,33,182,.22),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #03020a 0%,
+            #09051a 50%,
+            #020107 100%
+        );
 }
 
-/* Grid floor */
+/* =====================================================
+   ATMOSPHERIC LIGHT
+===================================================== */
 
-.grid{
-    position:absolute;
-    width:180%;
-    height:80%;
-    left:-40%;
-    bottom:-35%;
-    transform:
-        rotateX(68deg)
-        translateZ(-100px);
-    background-image:
-        linear-gradient(rgba(139,92,246,.12) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(139,92,246,.12) 1px,transparent 1px);
-    background-size:70px 70px;
-    mask-image:linear-gradient(to top,black,transparent);
-    -webkit-mask-image:linear-gradient(to top,black,transparent);
-}
-
-/* =========================
-   GLOW ORBS
-========================= */
-
-.orb{
+.light{
     position:absolute;
     border-radius:50%;
-    filter:blur(3px);
     pointer-events:none;
+    filter:blur(70px);
 }
 
-.orb1{
-    width:380px;
-    height:380px;
-    left:-150px;
-    top:-140px;
-    background:radial-gradient(circle,#7c3aed,transparent 68%);
-    opacity:.25;
-    animation:orbFloat 9s ease-in-out infinite;
+.light1{
+    width:500px;
+    height:500px;
+    left:-180px;
+    top:-180px;
+    background:#6d28d9;
+    opacity:.18;
 }
 
-.orb2{
-    width:450px;
-    height:450px;
-    right:-190px;
+.light2{
+    width:500px;
+    height:500px;
+    right:-180px;
     bottom:-180px;
-    background:radial-gradient(circle,#6d28d9,transparent 68%);
-    opacity:.22;
-    animation:orbFloat 11s ease-in-out infinite reverse;
+    background:#7c3aed;
+    opacity:.16;
 }
 
-.orb3{
-    width:200px;
-    height:200px;
+.light3{
+    width:300px;
+    height:300px;
     left:50%;
-    top:5%;
+    top:25%;
     transform:translateX(-50%);
-    background:radial-gradient(circle,#a78bfa,transparent 65%);
+    background:#c084fc;
     opacity:.08;
 }
 
-@keyframes orbFloat{
-    0%,100%{transform:translate3d(0,0,0)}
-    50%{transform:translate3d(25px,-30px,40px)}
+/* =====================================================
+   PLANET / GLOW
+===================================================== */
+
+.planet{
+    position:absolute;
+    width:700px;
+    height:700px;
+    left:50%;
+    top:-480px;
+    transform:translateX(-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            rgba(192,132,252,.3),
+            rgba(76,29,149,.12) 40%,
+            transparent 70%
+        );
+
+    box-shadow:
+        0 0 100px rgba(139,92,246,.16),
+        inset 0 -50px 100px rgba(0,0,0,.7);
 }
 
-/* =========================
-   3D PARTICLES
-========================= */
+/* =====================================================
+   NEON RING
+===================================================== */
+
+.neon-ring{
+    position:absolute;
+    width:950px;
+    height:250px;
+
+    left:50%;
+    top:48%;
+
+    transform:
+        translate(-50%,-50%)
+        rotateX(68deg);
+
+    border-radius:50%;
+
+    border:2px solid rgba(168,85,247,.5);
+
+    box-shadow:
+        0 0 20px rgba(139,92,246,.7),
+        0 0 70px rgba(139,92,246,.35),
+        inset 0 0 30px rgba(139,92,246,.25);
+
+    animation:ringPulse 5s ease-in-out infinite;
+}
+
+@keyframes ringPulse{
+    0%,100%{
+        opacity:.35;
+        transform:
+            translate(-50%,-50%)
+            rotateX(68deg)
+            scale(1);
+    }
+
+    50%{
+        opacity:.75;
+        transform:
+            translate(-50%,-50%)
+            rotateX(68deg)
+            scale(1.04);
+    }
+}
+
+/* =====================================================
+   FLOOR
+===================================================== */
+
+.floor{
+    position:absolute;
+    width:180%;
+    height:65%;
+    left:-40%;
+    bottom:-42%;
+
+    transform:
+        rotateX(67deg)
+        translateZ(-200px);
+
+    background-image:
+        linear-gradient(
+            rgba(139,92,246,.13) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(139,92,246,.13) 1px,
+            transparent 1px
+        );
+
+    background-size:80px 80px;
+
+    mask-image:
+        linear-gradient(
+            to top,
+            black,
+            transparent
+        );
+
+    -webkit-mask-image:
+        linear-gradient(
+            to top,
+            black,
+            transparent
+        );
+}
+
+/* =====================================================
+   PARTICLES
+===================================================== */
 
 .particles{
     position:absolute;
@@ -111,379 +221,471 @@ body{
 
 .particle{
     position:absolute;
-    width:3px;
-    height:3px;
+    width:2px;
+    height:2px;
     border-radius:50%;
-    background:#a78bfa;
-    box-shadow:0 0 12px #8b5cf6;
-    opacity:.5;
-    animation:particleFloat linear infinite;
+
+    background:#c4b5fd;
+
+    box-shadow:
+        0 0 10px #a78bfa;
+
+    animation:
+        rise linear infinite;
 }
 
-@keyframes particleFloat{
-    from{
-        transform:translateY(110vh) translateZ(0);
+@keyframes rise{
+
+    0%{
+        transform:
+            translate3d(0,110vh,0)
+            scale(.3);
+
         opacity:0;
     }
 
     15%{
+        opacity:.8;
+    }
+
+    80%{
         opacity:.7;
     }
 
-    85%{
-        opacity:.7;
-    }
+    100%{
+        transform:
+            translate3d(40px,-15vh,300px)
+            scale(1.5);
 
-    to{
-        transform:translateY(-15vh) translateZ(300px);
         opacity:0;
     }
 }
 
-/* =========================
-   3D SHAPES
-========================= */
-
-.shape{
-    position:absolute;
-    transform-style:preserve-3d;
-    border:1px solid rgba(167,139,250,.18);
-    background:rgba(139,92,246,.025);
-    box-shadow:
-        0 0 40px rgba(139,92,246,.06),
-        inset 0 0 30px rgba(139,92,246,.04);
-}
+/* =====================================================
+   FLOATING CUBES
+===================================================== */
 
 .cube{
-    width:100px;
-    height:100px;
-    right:12%;
-    top:18%;
-    transform:rotateX(55deg) rotateY(40deg) rotateZ(15deg);
-    animation:cubeRotate 14s linear infinite;
-}
-
-.cube::before,
-.cube::after{
-    content:"";
     position:absolute;
-    inset:12px;
-    border:1px solid rgba(167,139,250,.12);
+
+    width:65px;
+    height:65px;
+
+    border:1px solid rgba(192,132,252,.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,92,246,.12),
+            rgba(255,255,255,.015)
+        );
+
+    box-shadow:
+        0 0 35px rgba(139,92,246,.15);
+
+    transform-style:preserve-3d;
+
+    animation:cubeFloat 12s linear infinite;
 }
 
-.cube::before{
-    transform:translateZ(35px);
+.cube1{
+    left:8%;
+    top:25%;
 }
 
-.cube::after{
-    transform:translateZ(-35px);
+.cube2{
+    right:10%;
+    top:20%;
+    width:45px;
+    height:45px;
+    animation-duration:16s;
+    animation-delay:2s;
 }
 
-@keyframes cubeRotate{
-    from{
-        transform:rotateX(55deg) rotateY(0deg) rotateZ(15deg);
+.cube3{
+    right:16%;
+    bottom:12%;
+    width:75px;
+    height:75px;
+    animation-duration:18s;
+    animation-delay:4s;
+}
+
+@keyframes cubeFloat{
+
+    0%{
+        transform:
+            rotateX(0)
+            rotateY(0)
+            rotateZ(0)
+            translateY(0);
     }
-    to{
-        transform:rotateX(55deg) rotateY(360deg) rotateZ(15deg);
+
+    50%{
+        transform:
+            rotateX(180deg)
+            rotateY(180deg)
+            rotateZ(90deg)
+            translateY(-50px);
+    }
+
+    100%{
+        transform:
+            rotateX(360deg)
+            rotateY(360deg)
+            rotateZ(180deg)
+            translateY(0);
     }
 }
 
-.ring{
-    width:190px;
-    height:190px;
-    border-radius:50%;
-    right:5%;
-    bottom:18%;
-    border:1px solid rgba(167,139,250,.14);
-    transform:rotateX(70deg) rotateY(20deg);
-    animation:ringRotate 12s linear infinite;
-}
-
-.ring::after{
-    content:"";
-    position:absolute;
-    inset:22px;
-    border-radius:50%;
-    border:1px solid rgba(167,139,250,.1);
-}
-
-@keyframes ringRotate{
-    to{
-        transform:rotateX(70deg) rotateY(380deg);
-    }
-}
-
-/* =========================
+/* =====================================================
    MAIN
-========================= */
+===================================================== */
 
 .main{
     position:relative;
-    z-index:10;
+    z-index:20;
+
     min-height:100vh;
+
     display:flex;
-    justify-content:center;
     align-items:center;
-    padding:25px;
+    justify-content:center;
+
+    padding:30px;
 }
 
-/* =========================
-   CARD
-========================= */
+/* =====================================================
+   CONTENT
+===================================================== */
 
-.card{
-    width:440px;
-    padding:44px;
+.content{
+    width:min(1250px,100%);
+
+    display:grid;
+    grid-template-columns:
+        1fr
+        460px
+        .75fr;
+
+    gap:60px;
+
+    align-items:center;
+}
+
+/* =====================================================
+   LEFT BRAND
+===================================================== */
+
+.brand{
+    transform-style:preserve-3d;
+}
+
+.tx-logo{
     position:relative;
+
+    width:220px;
+    height:150px;
+
+    margin-bottom:25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transform-style:preserve-3d;
+}
+
+.tx-logo::before{
+    content:"";
+
+    position:absolute;
+
+    width:190px;
+    height:70px;
+
+    border-radius:50%;
+
+    border:3px solid #a855f7;
+
+    transform:
+        rotateX(68deg)
+        rotateZ(-12deg);
+
+    box-shadow:
+        0 0 20px #a855f7,
+        0 0 60px rgba(168,85,247,.55);
+}
+
+.tx{
+    position:relative;
+    z-index:2;
+
+    font-size:105px;
+    line-height:1;
+
+    font-weight:950;
+    letter-spacing:-15px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(35,25,55,.78),
-            rgba(10,8,17,.74)
+            #ffffff,
+            #c4b5fd 40%,
+            #7c3aed 75%,
+            #4c1d95
         );
 
-    border:1px solid rgba(167,139,250,.22);
-    border-radius:30px;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+
+    text-shadow:
+        0 0 30px rgba(139,92,246,.4);
+
+    transform:
+        translateZ(50px)
+        rotateY(-8deg);
+}
+
+.brand h1{
+    font-size:54px;
+    line-height:.95;
+
+    letter-spacing:4px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 30px rgba(139,92,246,.3);
+}
+
+.brand h1 span{
+    display:block;
+    color:#c4b5fd;
+}
+
+.tagline{
+    margin-top:22px;
+
+    color:#aaa1bd;
+
+    letter-spacing:5px;
+    font-size:13px;
+}
+
+/* =====================================================
+   LOGIN PANEL
+===================================================== */
+
+.login-panel{
+    position:relative;
+
+    padding:42px;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,17,45,.82),
+            rgba(5,4,12,.88)
+        );
+
+    border:1px solid rgba(192,132,252,.28);
 
     backdrop-filter:blur(25px);
     -webkit-backdrop-filter:blur(25px);
 
     box-shadow:
-        0 50px 120px rgba(0,0,0,.65),
-        0 0 80px rgba(124,58,237,.10),
+        0 40px 100px rgba(0,0,0,.65),
+        0 0 70px rgba(124,58,237,.13),
         inset 0 1px 0 rgba(255,255,255,.08);
 
     transform-style:preserve-3d;
-    transition:transform .15s ease-out;
+
+    transition:
+        transform .15s ease-out;
 }
 
-/* top reflection */
-
-.card::before{
+.login-panel::before{
     content:"";
+
     position:absolute;
-    inset:0;
-    border-radius:30px;
-    pointer-events:none;
+    inset:-1px;
+
+    border-radius:28px;
+
+    padding:1px;
 
     background:
         linear-gradient(
-            135deg,
-            rgba(255,255,255,.08),
+            120deg,
+            rgba(168,85,247,.7),
             transparent 30%,
             transparent 70%,
-            rgba(139,92,246,.06)
-        );
-}
-
-/* =========================
-   LOGO
-========================= */
-
-.logo-area{
-    display:flex;
-    justify-content:center;
-    margin-bottom:25px;
-    transform:translateZ(55px);
-}
-
-.logo{
-    width:88px;
-    height:88px;
-    border-radius:26px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-        linear-gradient(
-            145deg,
-            #8b5cf6,
-            #4c1d95
+            rgba(124,58,237,.5)
         );
 
-    border:1px solid rgba(255,255,255,.18);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
 
-    box-shadow:
-        0 20px 45px rgba(124,58,237,.4),
-        inset 0 1px 1px rgba(255,255,255,.25);
+    -webkit-mask-composite:xor;
 
-    transform-style:preserve-3d;
-    animation:logoFloat 4s ease-in-out infinite;
+    mask-composite:exclude;
+
+    pointer-events:none;
 }
 
-.logo::after{
-    content:"";
-    position:absolute;
-    width:70px;
-    height:70px;
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.15);
-    transform:translateZ(20px);
+.panel-label{
+    color:#a78bfa;
+
+    font-size:11px;
+
+    letter-spacing:4px;
+
+    margin-bottom:12px;
 }
 
-.logo span{
-    font-size:28px;
-    font-weight:900;
-    letter-spacing:-2px;
+.login-panel h2{
+    font-size:34px;
+    margin-bottom:8px;
 }
 
-@keyframes logoFloat{
-    0%,100%{
-        transform:translateY(0) rotateX(0) rotateY(0);
-    }
-
-    50%{
-        transform:translateY(-8px) rotateX(5deg) rotateY(-5deg);
-    }
+.subtitle{
+    color:#8f879f;
+    font-size:13px;
 }
 
-/* =========================
-   TITLE
-========================= */
-
-.title{
-    text-align:center;
-    transform:translateZ(35px);
-}
-
-.title h1{
-    font-size:30px;
-    letter-spacing:-1px;
-    margin-bottom:9px;
-}
-
-.title p{
-    color:#9d98ad;
-    font-size:14px;
-    line-height:1.5;
-}
-
-/* =========================
-   FORM
-========================= */
+/* =====================================================
+   INPUTS
+===================================================== */
 
 .form{
-    margin-top:32px;
-    transform:translateZ(30px);
+    margin-top:30px;
 }
 
 .field{
     margin-bottom:19px;
 }
 
-label{
+.field label{
     display:block;
+
     margin-bottom:8px;
-    font-size:13px;
-    font-weight:600;
-    color:#d9d4e6;
+
+    color:#d8d0e4;
+
+    font-size:12px;
 }
 
-.input-box{
+.input-wrap{
     position:relative;
 }
 
-input{
+.input-wrap input{
     width:100%;
-    height:54px;
+    height:53px;
 
     padding:0 16px;
 
-    border-radius:15px;
-    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+
+    border:1px solid rgba(255,255,255,.09);
 
     outline:none;
 
-    background:rgba(0,0,0,.3);
-
     color:white;
 
-    font-size:14px;
+    background:
+        rgba(0,0,0,.3);
 
     transition:.25s;
 }
 
-input::placeholder{
-    color:#666173;
+.input-wrap input::placeholder{
+    color:#5e576c;
 }
 
-input:focus{
-    border-color:rgba(139,92,246,.7);
+.input-wrap input:focus{
+    border-color:#9f67ff;
 
     box-shadow:
-        0 0 0 4px rgba(139,92,246,.09),
-        0 0 25px rgba(139,92,246,.08);
-
-    background:rgba(0,0,0,.4);
+        0 0 0 4px rgba(139,92,246,.08),
+        0 0 25px rgba(139,92,246,.1);
 }
 
 .password{
-    padding-right:65px;
+    padding-right:65px !important;
 }
 
-.show-btn{
+.show{
     position:absolute;
-    right:10px;
+
+    right:13px;
     top:50%;
+
     transform:translateY(-50%);
 
-    border:none;
-    background:transparent;
+    border:0;
+    background:none;
 
-    color:#9b94aa;
-    font-size:12px;
+    color:#8f87a0;
+
+    font-size:11px;
+
     cursor:pointer;
 }
 
-.show-btn:hover{
-    color:#c4b5fd;
-}
-
-/* =========================
+/* =====================================================
    BUTTON
-========================= */
+===================================================== */
 
 .login-btn{
     width:100%;
     height:56px;
 
-    margin-top:7px;
+    margin-top:5px;
 
-    border:none;
-    border-radius:16px;
+    border:0;
 
-    color:white;
-
-    font-size:15px;
-    font-weight:700;
+    border-radius:15px;
 
     cursor:pointer;
 
+    color:white;
+
+    font-size:14px;
+    font-weight:700;
+
     background:
         linear-gradient(
-            135deg,
-            #7c3aed,
-            #a855f7
+            100deg,
+            #6d28d9,
+            #9333ea,
+            #7c3aed
         );
 
+    background-size:200% 100%;
+
     box-shadow:
-        0 18px 35px rgba(124,58,237,.3),
-        inset 0 1px 0 rgba(255,255,255,.25);
+        0 15px 40px rgba(124,58,237,.32),
+        inset 0 1px 0 rgba(255,255,255,.2);
 
-    transition:.25s;
-
-    transform-style:preserve-3d;
+    transition:.3s;
 }
 
 .login-btn:hover{
-    transform:translateY(-3px) translateZ(8px);
+    background-position:100% 0;
+
+    transform:
+        translateY(-3px)
+        translateZ(10px);
 
     box-shadow:
-        0 25px 45px rgba(124,58,237,.42),
-        inset 0 1px 0 rgba(255,255,255,.25);
+        0 22px 50px rgba(124,58,237,.48),
+        0 0 30px rgba(168,85,247,.18);
 }
 
 .login-btn:active{
@@ -491,70 +693,183 @@ input:focus{
 }
 
 .login-btn:disabled{
-    opacity:.65;
+    opacity:.6;
     cursor:not-allowed;
 }
 
-/* =========================
+/* =====================================================
    STATUS
-========================= */
+===================================================== */
 
 .status{
     display:none;
-    margin-top:17px;
-    padding:13px;
 
-    border-radius:13px;
+    margin-top:16px;
 
-    font-size:13px;
+    padding:12px;
+
+    border-radius:12px;
+
+    font-size:12px;
     line-height:1.45;
+
     text-align:center;
 }
 
 .status.error{
     display:block;
+
     color:#fecdd3;
-    background:rgba(244,63,94,.09);
-    border:1px solid rgba(244,63,94,.2);
+
+    background:rgba(244,63,94,.08);
+
+    border:1px solid rgba(244,63,94,.18);
 }
 
 .status.success{
     display:block;
+
     color:#bbf7d0;
+
     background:rgba(34,197,94,.08);
-    border:1px solid rgba(34,197,94,.2);
+
+    border:1px solid rgba(34,197,94,.18);
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* =====================================================
+   FIREBASE FOOTER
+===================================================== */
 
-.footer{
-    margin-top:26px;
-    text-align:center;
-    color:#656071;
+.firebase{
+    margin-top:25px;
+
+    padding-top:18px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:8px;
+
+    color:#777083;
+
+    font-size:10px;
+}
+
+.firebase b{
+    color:#a78bfa;
+}
+
+/* =====================================================
+   RIGHT FEATURES
+===================================================== */
+
+.features{
+    transform-style:preserve-3d;
+}
+
+.portal{
+    display:inline-block;
+
+    margin-bottom:28px;
+
+    padding:8px 14px;
+
+    border:1px solid rgba(167,139,250,.3);
+
+    border-radius:30px;
+
+    color:#c4b5fd;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    background:rgba(139,92,246,.05);
+}
+
+.feature{
+    display:flex;
+
+    gap:16px;
+
+    margin-bottom:28px;
+
+    transform:translateZ(25px);
+}
+
+.feature-icon{
+    flex:none;
+
+    width:45px;
+    height:45px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid rgba(167,139,250,.28);
+
+    color:#c4b5fd;
+
+    font-size:19px;
+
+    background:
+        rgba(139,92,246,.06);
+
+    box-shadow:
+        0 0 25px rgba(139,92,246,.08);
+}
+
+.feature h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.feature p{
+    color:#827b90;
+
     font-size:11px;
-    transform:translateZ(20px);
+
+    line-height:1.5;
 }
 
-.footer span{
-    color:#9b7edb;
+.quote{
+    margin-top:45px;
+
+    color:#81798e;
+
+    font-size:11px;
+
+    line-height:1.8;
+
+    letter-spacing:2px;
 }
 
-/* =========================
+/* =====================================================
    LOADER
-========================= */
+===================================================== */
 
 .spinner{
     width:18px;
     height:18px;
+
     margin:auto;
 
     border-radius:50%;
-    border:2px solid rgba(255,255,255,.25);
+
+    border:
+        2px solid rgba(255,255,255,.2);
+
     border-top-color:white;
 
-    animation:spin .7s linear infinite;
+    animation:
+        spin .7s linear infinite;
 }
 
 @keyframes spin{
@@ -563,36 +878,49 @@ input:focus{
     }
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
-@media(max-width:600px){
+@media(max-width:1050px){
 
     body{
         overflow:auto;
     }
 
+    .content{
+        grid-template-columns:
+            1fr
+            460px;
+
+        justify-content:center;
+    }
+
+    .brand{
+        display:none;
+    }
+
+    .features{
+        display:none;
+    }
+}
+
+@media(max-width:600px){
+
     .main{
         padding:18px;
     }
 
-    .card{
-        width:100%;
-        padding:34px 24px;
-        border-radius:25px;
+    .content{
+        display:block;
     }
 
-    .cube{
-        right:-50px;
+    .login-panel{
+        padding:30px 22px;
     }
 
-    .ring{
-        right:-80px;
-    }
-
-    .title h1{
-        font-size:26px;
+    .login-panel h2{
+        font-size:28px;
     }
 }
 </style>
@@ -604,126 +932,246 @@ input:focus{
 <div class="scene">
 
 ```
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
+<div class="light light1"></div>
+<div class="light light2"></div>
+<div class="light light3"></div>
 
-<div class="grid"></div>
+<div class="planet"></div>
 
-<div class="shape cube"></div>
-<div class="shape ring"></div>
+<div class="neon-ring"></div>
 
-<div class="particles" id="particles"></div>
+<div class="floor"></div>
+
+<div class="cube cube1"></div>
+<div class="cube cube2"></div>
+<div class="cube cube3"></div>
+
+<div
+    class="particles"
+    id="particles"
+></div>
 ```
 
 </div>
 
-<div class="main">
+<main class="main">
 
 ```
-<div class="card" id="card">
+<div class="content">
 
-    <div class="logo-area">
-        <div class="logo">
-            <span>TX</span>
+    <!-- ================= LEFT ================= -->
+
+    <section class="brand">
+
+        <div class="tx-logo">
+            <div class="tx">TX</div>
         </div>
-    </div>
 
-    <div class="title">
-        <h1>Admin Access</h1>
-        <p>
-            Talent Exchange<br>
-            Administrator Portal
+        <h1>
+            TALENT
+            <span>EXCHANGE</span>
+        </h1>
+
+        <div class="tagline">
+            SKILLS · OPPORTUNITIES · GROWTH
+        </div>
+
+    </section>
+
+
+    <!-- ================= LOGIN ================= -->
+
+    <section
+        class="login-panel"
+        id="loginPanel"
+    >
+
+        <div class="panel-label">
+            ADMIN PORTAL
+        </div>
+
+        <h2>
+            Welcome Back
+        </h2>
+
+        <p class="subtitle">
+            Access the administrator portal
         </p>
-    </div>
 
 
-    <form class="form" id="adminForm">
-
-        <div class="field">
-
-            <label for="email">
-                Admin Email
-            </label>
-
-            <div class="input-box">
-
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter admin email"
-                    autocomplete="username"
-                    required
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="field">
-
-            <label for="password">
-                Password
-            </label>
-
-            <div class="input-box">
-
-                <input
-                    id="password"
-                    class="password"
-                    type="password"
-                    placeholder="Enter password"
-                    autocomplete="current-password"
-                    required
-                >
-
-                <button
-                    type="button"
-                    class="show-btn"
-                    id="showPassword"
-                >
-                    Show
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <button
-            type="submit"
-            class="login-btn"
-            id="loginBtn"
+        <form
+            class="form"
+            id="adminForm"
         >
-            Enter Admin Panel
-        </button>
+
+            <div class="field">
+
+                <label>
+                    ADMIN EMAIL
+                </label>
+
+                <div class="input-wrap">
+
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="Enter admin email"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+            </div>
 
 
-        <div
-            class="status"
-            id="status"
-        ></div>
+            <div class="field">
 
-    </form>
+                <label>
+                    PASSWORD
+                </label>
+
+                <div class="input-wrap">
+
+                    <input
+                        id="password"
+                        class="password"
+                        type="password"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show"
+                        id="showPassword"
+                    >
+                        SHOW
+                    </button>
+
+                </div>
+
+            </div>
 
 
-    <div class="footer">
-        Secured by <span>Firebase</span> · Talent Exchange
-    </div>
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginBtn"
+            >
+                SIGN IN
+            </button>
+
+
+            <div
+                class="status"
+                id="status"
+            ></div>
+
+        </form>
+
+
+        <div class="firebase">
+            <span>●</span>
+            <span>Secured by</span>
+            <b>Firebase</b>
+        </div>
+
+    </section>
+
+
+    <!-- ================= RIGHT ================= -->
+
+    <section class="features">
+
+        <div class="portal">
+            ADMINISTRATOR ACCESS
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ◇
+            </div>
+
+            <div>
+                <h3>
+                    Manage Users
+                </h3>
+
+                <p>
+                    Approve, reject and manage
+                    registered members.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ◈
+            </div>
+
+            <div>
+                <h3>
+                    Review Requests
+                </h3>
+
+                <p>
+                    Monitor skill exchange
+                    activity across the platform.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ✓
+            </div>
+
+            <div>
+                <h3>
+                    Control Platform
+                </h3>
+
+                <p>
+                    Keep Talent Exchange
+                    organized and secure.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="quote">
+            BETTER TALENT<br>
+            BUILDS A BRIGHTER FUTURE.
+        </div>
+
+    </section>
 
 </div>
 ```
 
-</div>
+</main>
 
 <script type="module">
 
-/* ==========================================
-   EXISTING FIREBASE CONFIG
-========================================== */
+/* =====================================================
+   FIREBASE
+===================================================== */
 
-import { auth, db } from "./js/firebase-config.js";
+import {
+    auth,
+    db
+} from "./js/firebase-config.js";
 
 
 import {
@@ -739,6 +1187,10 @@ import {
     getDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const form =
     document.getElementById("adminForm");
@@ -758,18 +1210,18 @@ const status =
 const showPassword =
     document.getElementById("showPassword");
 
-const card =
-    document.getElementById("card");
+const panel =
+    document.getElementById("loginPanel");
 
 
-/* ==========================================
+/* =====================================================
    PARTICLES
-========================================== */
+===================================================== */
 
 const particles =
     document.getElementById("particles");
 
-for(let i = 0; i < 45; i++){
+for(let i = 0; i < 70; i++){
 
     const p =
         document.createElement("div");
@@ -780,49 +1232,56 @@ for(let i = 0; i < 45; i++){
         Math.random() * 100 + "%";
 
     p.style.animationDuration =
-        (7 + Math.random() * 10) + "s";
+        (6 + Math.random() * 12) + "s";
 
     p.style.animationDelay =
-        (Math.random() * 8) + "s";
+        (Math.random() * 10) + "s";
 
-    p.style.transform =
-        `scale(${0.5 + Math.random() * 1.5})`;
+    p.style.opacity =
+        Math.random();
 
     particles.appendChild(p);
 }
 
 
-/* ==========================================
-   SHOW / HIDE PASSWORD
-========================================== */
+/* =====================================================
+   PASSWORD
+===================================================== */
 
 showPassword.addEventListener(
     "click",
-    () => {
+    ()=>{
 
         if(password.type === "password"){
 
             password.type = "text";
-            showPassword.textContent = "Hide";
+
+            showPassword.textContent =
+                "HIDE";
 
         }else{
 
             password.type = "password";
-            showPassword.textContent = "Show";
 
+            showPassword.textContent =
+                "SHOW";
         }
 
     }
 );
 
 
-/* ==========================================
+/* =====================================================
    STATUS
-========================================== */
+===================================================== */
 
-function showStatus(message,type="error"){
+function showStatus(
+    message,
+    type="error"
+){
 
-    status.textContent = message;
+    status.textContent =
+        message;
 
     status.className =
         "status " + type;
@@ -832,17 +1291,20 @@ function showStatus(message,type="error"){
 function clearStatus(){
 
     status.textContent = "";
-    status.className = "status";
+
+    status.className =
+        "status";
 }
 
 
-/* ==========================================
+/* =====================================================
    LOADING
-========================================== */
+===================================================== */
 
-function loading(value){
+function setLoading(value){
 
-    loginBtn.disabled = value;
+    loginBtn.disabled =
+        value;
 
     if(value){
 
@@ -852,14 +1314,14 @@ function loading(value){
     }else{
 
         loginBtn.textContent =
-            "Enter Admin Panel";
+            "SIGN IN";
     }
 }
 
 
-/* ==========================================
-   FIREBASE ADMIN LOGIN
-========================================== */
+/* =====================================================
+   ADMIN LOGIN
+===================================================== */
 
 form.addEventListener(
     "submit",
@@ -876,24 +1338,25 @@ form.addEventListener(
             password.value;
 
 
-        if(!emailValue || !passwordValue){
+        if(
+            !emailValue ||
+            !passwordValue
+        ){
 
             showStatus(
-                "Please enter your admin email and password."
+                "Enter your admin email and password."
             );
 
             return;
         }
 
 
-        loading(true);
+        setLoading(true);
 
 
         try{
 
-            /*
-                Firebase Authentication
-            */
+            /* Firebase Authentication */
 
             await setPersistence(
                 auth,
@@ -909,65 +1372,59 @@ form.addEventListener(
                 );
 
 
-            const firebaseUser =
+            const user =
                 result.user;
 
 
-            /*
-                Firestore admin profile
-            */
+            /* Firestore admin document */
 
             const userRef =
                 doc(
                     db,
                     "users",
-                    firebaseUser.uid
+                    user.uid
                 );
 
 
-            const userSnapshot =
+            const snapshot =
                 await getDoc(userRef);
 
 
-            if(!userSnapshot.exists()){
+            if(!snapshot.exists()){
 
                 await signOut(auth);
 
                 showStatus(
-                    "Firebase account found, but no Talent Exchange profile exists."
+                    "No Talent Exchange profile was found for this account."
                 );
 
-                loading(false);
+                setLoading(false);
 
                 return;
             }
 
 
             const profile =
-                userSnapshot.data();
+                snapshot.data();
 
 
-            /*
-                ADMIN ROLE CHECK
-            */
+            /* Admin role */
 
             if(profile.role !== "admin"){
 
                 await signOut(auth);
 
                 showStatus(
-                    "Access denied. This account is not an administrator."
+                    "Access denied. Administrator privileges are required."
                 );
 
-                loading(false);
+                setLoading(false);
 
                 return;
             }
 
 
-            /*
-                APPROVAL CHECK
-            */
+            /* Approved */
 
             if(profile.status !== "approved"){
 
@@ -977,15 +1434,13 @@ form.addEventListener(
                     "This administrator account is not approved."
                 );
 
-                loading(false);
+                setLoading(false);
 
                 return;
             }
 
 
-            /*
-                DISABLED CHECK
-            */
+            /* Disabled */
 
             if(profile.disabled === true){
 
@@ -995,40 +1450,41 @@ form.addEventListener(
                     "This administrator account has been disabled."
                 );
 
-                loading(false);
+                setLoading(false);
 
                 return;
             }
 
 
-            /*
-                SUCCESS
-            */
+            /* Success */
 
             showStatus(
-                "Authentication successful. Opening Admin Dashboard...",
+                "Access granted. Opening Admin Dashboard...",
                 "success"
             );
 
 
-            setTimeout(()=>{
+            setTimeout(
+                ()=>{
 
-                window.location.href =
-                    "./admin-dashboard.html";
+                    window.location.href =
+                        "./admin-dashboard.html";
 
-            },800);
+                },
+                800
+            );
 
 
         }catch(error){
 
             console.error(
-                "ADMIN LOGIN ERROR:",
+                "Firebase Admin Login:",
                 error
             );
 
 
             let message =
-                "Unable to sign in. Please try again.";
+                "Unable to sign in.";
 
 
             switch(error.code){
@@ -1036,7 +1492,7 @@ form.addEventListener(
                 case "auth/invalid-credential":
 
                     message =
-                        "Invalid email or password. Check the Firebase Authentication account.";
+                        "Invalid email or password.";
 
                     break;
 
@@ -1044,7 +1500,7 @@ form.addEventListener(
                 case "auth/invalid-email":
 
                     message =
-                        "Please enter a valid email address.";
+                        "Enter a valid email address.";
 
                     break;
 
@@ -1052,7 +1508,7 @@ form.addEventListener(
                 case "auth/user-not-found":
 
                     message =
-                        "No Firebase Authentication account was found for this email.";
+                        "No Firebase account exists with this email.";
 
                     break;
 
@@ -1068,7 +1524,7 @@ form.addEventListener(
                 case "auth/too-many-requests":
 
                     message =
-                        "Too many attempts. Please wait and try again.";
+                        "Too many attempts. Please try again later.";
 
                     break;
 
@@ -1084,7 +1540,7 @@ form.addEventListener(
                 case "permission-denied":
 
                     message =
-                        "Firestore permission denied. Check your Firestore rules.";
+                        "Firestore permission denied. Check your Firebase rules.";
 
                     break;
 
@@ -1092,37 +1548,38 @@ form.addEventListener(
                 default:
 
                     message =
-                        error.message || message;
-
+                        error.message ||
+                        message;
             }
 
 
             showStatus(message);
 
-            loading(false);
-
+            setLoading(false);
         }
 
     }
 );
 
 
-/* ==========================================
+/* =====================================================
    3D MOUSE PARALLAX
-========================================== */
+===================================================== */
 
 document.addEventListener(
     "mousemove",
     (event)=>{
 
         const x =
-            (window.innerWidth / 2 - event.clientX) / 35;
+            (window.innerWidth / 2 -
+             event.clientX) / 40;
 
         const y =
-            (window.innerHeight / 2 - event.clientY) / 35;
+            (window.innerHeight / 2 -
+             event.clientY) / 40;
 
 
-        card.style.transform =
+        panel.style.transform =
             `rotateY(${-x}deg) rotateX(${y}deg)`;
     }
 );
@@ -1132,7 +1589,7 @@ document.addEventListener(
     "mouseleave",
     ()=>{
 
-        card.style.transform =
+        panel.style.transform =
             "rotateY(0deg) rotateX(0deg)";
     }
 );
