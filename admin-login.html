@@ -1,11 +1,10 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Talent Exchange — Admin Access</title>
+<title>Talent Exchange — Admin Login</title>
 
 <style>
 *{
@@ -14,409 +13,310 @@
     box-sizing:border-box;
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
+:root{
+    --bg:#07070d;
+    --card:rgba(18,16,31,.72);
+    --border:rgba(167,139,250,.22);
+    --purple:#8b5cf6;
+    --purple2:#a78bfa;
+    --text:#f5f3ff;
+    --muted:#9b97ad;
+    --danger:#fb7185;
+    --success:#4ade80;
 }
 
 body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     overflow:hidden;
     font-family:Inter,Segoe UI,Arial,sans-serif;
-    color:#fff;
+    color:var(--text);
     background:
-        radial-gradient(circle at 20% 20%,rgba(123,63,255,.20),transparent 32%),
-        radial-gradient(circle at 80% 75%,rgba(55,91,255,.15),transparent 30%),
-        #040407;
+        radial-gradient(circle at 15% 20%,rgba(139,92,246,.18),transparent 28%),
+        radial-gradient(circle at 85% 80%,rgba(124,58,237,.15),transparent 30%),
+        var(--bg);
 }
 
-/* =========================
-   BACKGROUND
-========================= */
-
-.scene{
+/* Background */
+.background{
     position:fixed;
     inset:0;
+    pointer-events:none;
     overflow:hidden;
-    perspective:1000px;
 }
-
-.grid{
-    position:absolute;
-    width:160%;
-    height:160%;
-    left:-30%;
-    top:35%;
-    transform:rotateX(70deg);
-    background-image:
-        linear-gradient(rgba(145,90,255,.10) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(145,90,255,.10) 1px,transparent 1px);
-    background-size:65px 65px;
-    mask-image:linear-gradient(to top,transparent,#000 35%,transparent);
-    opacity:.35;
-}
-
-/* FLOATING 3D OBJECTS */
 
 .orb{
     position:absolute;
     border-radius:50%;
-    filter:blur(.2px);
-    transform-style:preserve-3d;
+    filter:blur(2px);
+    opacity:.45;
+    animation:float 10s ease-in-out infinite;
 }
 
 .orb.one{
-    width:230px;
-    height:230px;
-    left:8%;
-    top:12%;
-    background:
-        radial-gradient(circle at 30% 25%,#d6c4ff,transparent 8%),
-        radial-gradient(circle at 40% 35%,#7b43ff,transparent 45%),
-        #19083d;
-    box-shadow:
-        inset -35px -30px 60px rgba(0,0,0,.6),
-        0 0 80px rgba(123,67,255,.25);
-    animation:float1 7s ease-in-out infinite;
+    width:280px;
+    height:280px;
+    background:radial-gradient(circle,#7c3aed,transparent 70%);
+    top:-100px;
+    left:-80px;
 }
 
 .orb.two{
-    width:150px;
-    height:150px;
-    right:9%;
-    top:17%;
-    background:
-        radial-gradient(circle at 35% 30%,#b9c6ff,transparent 8%),
-        radial-gradient(circle at 45% 40%,#416dff,transparent 48%),
-        #07143c;
-    box-shadow:
-        inset -30px -25px 45px rgba(0,0,0,.6),
-        0 0 65px rgba(70,100,255,.22);
-    animation:float2 8s ease-in-out infinite;
+    width:330px;
+    height:330px;
+    background:radial-gradient(circle,#4c1d95,transparent 70%);
+    right:-120px;
+    bottom:-100px;
+    animation-delay:2s;
 }
 
 .orb.three{
-    width:90px;
-    height:90px;
-    left:18%;
-    bottom:10%;
-    background:linear-gradient(135deg,#a06cff,#281052);
-    box-shadow:0 0 45px rgba(150,80,255,.25);
-    animation:float3 6s ease-in-out infinite;
+    width:180px;
+    height:180px;
+    background:radial-gradient(circle,#a78bfa,transparent 70%);
+    left:50%;
+    top:5%;
+    opacity:.12;
+    animation-delay:4s;
 }
 
-@keyframes float1{
-    0%,100%{transform:translate3d(0,0,0) rotateY(0)}
-    50%{transform:translate3d(25px,-30px,80px) rotateY(25deg)}
+@keyframes float{
+    0%,100%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(20px,-25px) scale(1.08)}
 }
 
-@keyframes float2{
-    0%,100%{transform:translate3d(0,0,0) rotateX(0)}
-    50%{transform:translate3d(-25px,35px,60px) rotateX(25deg)}
-}
-
-@keyframes float3{
-    0%,100%{transform:translateY(0) rotate(0)}
-    50%{transform:translateY(-30px) rotate(180deg)}
-}
-
-/* PARTICLES */
-
-.particles{
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-}
-
-.particle{
-    position:absolute;
-    width:2px;
-    height:2px;
-    border-radius:50%;
-    background:#bda6ff;
-    opacity:.5;
-    animation:twinkle 4s infinite ease-in-out;
-}
-
-@keyframes twinkle{
-    0%,100%{opacity:.15;transform:scale(.7)}
-    50%{opacity:.8;transform:scale(1.5)}
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-    position:absolute;
-    top:30px;
-    left:40px;
-    z-index:10;
-    letter-spacing:.5px;
-}
-
-.brand{
-    font-size:20px;
-    font-weight:800;
-}
-
-.brand span{
-    color:#a478ff;
-}
-
-.admin-label{
-    margin-top:5px;
-    color:#777;
-    font-size:10px;
-    letter-spacing:3px;
-}
-
-/* =========================
-   LOGIN
-========================= */
-
+/* Card */
 .wrapper{
-    position:relative;
-    z-index:5;
     width:100%;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:25px;
+    max-width:450px;
+    padding:24px;
+    perspective:1200px;
 }
 
 .card{
-    width:min(430px,100%);
-    padding:42px 38px;
     position:relative;
+    padding:42px 38px;
+    border:1px solid var(--border);
     border-radius:28px;
-    border:1px solid rgba(255,255,255,.11);
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.075),
-            rgba(255,255,255,.025)
-        );
-    backdrop-filter:blur(30px);
+    background:var(--card);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
     box-shadow:
-        0 35px 100px rgba(0,0,0,.55),
-        inset 0 1px 0 rgba(255,255,255,.08);
+        0 30px 80px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.06);
     transform-style:preserve-3d;
-    transition:transform .15s ease;
+    transition:transform .18s ease;
 }
 
+/* Top shine */
 .card::before{
     content:"";
     position:absolute;
-    inset:-1px;
+    inset:0;
     border-radius:28px;
-    padding:1px;
     background:linear-gradient(
-        130deg,
-        rgba(157,103,255,.6),
+        135deg,
+        rgba(255,255,255,.08),
         transparent 35%,
-        transparent 65%,
-        rgba(70,100,255,.4)
+        transparent 70%,
+        rgba(139,92,246,.07)
     );
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;
-    mask-composite:exclude;
     pointer-events:none;
 }
 
-.card-icon{
-    width:65px;
-    height:65px;
-    margin-bottom:24px;
+/* Logo */
+.logo{
+    width:72px;
+    height:72px;
+    margin:0 auto 22px;
     display:flex;
-    align-items:center;
     justify-content:center;
-    border-radius:19px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(151,92,255,.35),
-            rgba(56,74,190,.18)
-        );
-    border:1px solid rgba(180,140,255,.2);
+    align-items:center;
+    border-radius:22px;
+    background:linear-gradient(
+        145deg,
+        rgba(139,92,246,.28),
+        rgba(76,29,149,.18)
+    );
+    border:1px solid rgba(167,139,250,.3);
     box-shadow:
-        0 15px 40px rgba(100,60,255,.18),
-        inset 0 1px 0 rgba(255,255,255,.15);
+        0 15px 40px rgba(124,58,237,.25),
+        inset 0 1px 0 rgba(255,255,255,.08);
     transform:translateZ(35px);
 }
 
-.lock{
-    width:25px;
-    height:21px;
-    position:relative;
-    border:2px solid #c5adff;
-    border-radius:5px;
+.logo span{
+    font-size:30px;
+    font-weight:800;
+    color:var(--purple2);
 }
 
-.lock::before{
-    content:"";
-    position:absolute;
-    width:13px;
-    height:13px;
-    left:4px;
-    top:-12px;
-    border:2px solid #c5adff;
-    border-bottom:0;
-    border-radius:9px 9px 0 0;
-}
-
-.lock::after{
-    content:"";
-    position:absolute;
-    width:4px;
-    height:8px;
-    left:9px;
-    top:5px;
-    border-radius:5px;
-    background:#c5adff;
-}
-
-h1{
-    font-size:32px;
-    line-height:1.1;
-    margin-bottom:9px;
+/* Heading */
+.heading{
+    text-align:center;
     transform:translateZ(25px);
 }
 
-.subtitle{
-    color:#85858f;
-    font-size:13px;
-    margin-bottom:30px;
+.heading h1{
+    font-size:28px;
+    letter-spacing:-.8px;
+    margin-bottom:8px;
+}
+
+.heading p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
+}
+
+/* Form */
+.form{
+    margin-top:32px;
     transform:translateZ(20px);
 }
 
-/* INPUTS */
-
 .field{
-    margin-bottom:17px;
-    transform:translateZ(18px);
+    margin-bottom:20px;
 }
 
-label{
+.field label{
     display:block;
-    margin-bottom:7px;
-    color:#aaa;
-    font-size:11px;
-    letter-spacing:.5px;
+    margin-bottom:8px;
+    font-size:13px;
+    font-weight:600;
+    color:#d8d4e6;
 }
 
-input{
+.input-wrap{
+    position:relative;
+}
+
+.input{
     width:100%;
-    height:48px;
+    height:52px;
     padding:0 15px;
-    outline:none;
-    border-radius:12px;
-    color:#fff;
+    border-radius:15px;
     border:1px solid rgba(255,255,255,.09);
-    background:rgba(0,0,0,.24);
+    outline:none;
+    background:rgba(5,5,12,.58);
+    color:white;
+    font-size:14px;
     transition:.25s;
 }
 
-input::placeholder{
-    color:#555;
+.input.password{
+    padding-right:48px;
 }
 
-input:focus{
-    border-color:rgba(145,95,255,.7);
-    box-shadow:
-        0 0 0 3px rgba(120,70,255,.08),
-        0 0 25px rgba(120,70,255,.08);
+.input::placeholder{
+    color:#696579;
 }
 
-/* BUTTON */
+.input:focus{
+    border-color:rgba(139,92,246,.65);
+    box-shadow:0 0 0 4px rgba(139,92,246,.09);
+    background:rgba(8,7,17,.8);
+}
 
+.eye{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:none;
+    color:#8c879d;
+    cursor:pointer;
+    font-size:13px;
+    padding:5px;
+}
+
+.eye:hover{
+    color:var(--purple2);
+}
+
+/* Login button */
 .login-btn{
     width:100%;
-    height:50px;
-    margin-top:8px;
-    border-radius:13px;
-    color:#fff;
+    height:54px;
+    margin-top:5px;
+    border:0;
+    border-radius:16px;
+    cursor:pointer;
+    color:white;
+    font-size:15px;
     font-weight:700;
-    letter-spacing:.3px;
-    background:
-        linear-gradient(
-            100deg,
-            #7138d9,
-            #4c5ce8
-        );
+    letter-spacing:.2px;
+    background:linear-gradient(135deg,#7c3aed,#9f67ff);
     box-shadow:
-        0 12px 30px rgba(91,61,220,.25),
+        0 15px 35px rgba(124,58,237,.3),
         inset 0 1px 0 rgba(255,255,255,.18);
     transition:.25s;
-    transform:translateZ(25px);
 }
 
 .login-btn:hover{
-    transform:translateZ(35px) translateY(-2px);
+    transform:translateY(-2px);
     box-shadow:
-        0 18px 40px rgba(91,61,220,.38);
+        0 20px 40px rgba(124,58,237,.38),
+        inset 0 1px 0 rgba(255,255,255,.2);
 }
 
 .login-btn:active{
-    transform:translateZ(20px);
+    transform:translateY(0);
 }
 
 .login-btn:disabled{
-    opacity:.6;
+    opacity:.65;
     cursor:not-allowed;
+    transform:none;
 }
 
-/* ERROR */
-
-.error{
-    min-height:18px;
-    margin-top:14px;
-    color:#ff7d91;
-    text-align:center;
-    font-size:12px;
-}
-
-/* BACK */
-
-.back{
-    display:block;
-    margin-top:22px;
-    color:#777;
-    text-align:center;
-    text-decoration:none;
-    font-size:12px;
-    transition:.2s;
-}
-
-.back:hover{
-    color:#bda5ff;
-}
-
-/* LOADING */
-
-.loading{
-    position:absolute;
-    inset:0;
+/* Status */
+.status{
     display:none;
-    align-items:center;
-    justify-content:center;
-    border-radius:28px;
-    background:rgba(5,5,8,.82);
-    backdrop-filter:blur(8px);
-    z-index:20;
+    margin-top:18px;
+    padding:13px 14px;
+    border-radius:13px;
+    font-size:13px;
+    line-height:1.45;
+    text-align:center;
 }
 
-.loading.show{
-    display:flex;
+.status.error{
+    display:block;
+    color:#fecdd3;
+    background:rgba(244,63,94,.09);
+    border:1px solid rgba(244,63,94,.2);
 }
 
+.status.success{
+    display:block;
+    color:#bbf7d0;
+    background:rgba(34,197,94,.08);
+    border:1px solid rgba(34,197,94,.2);
+}
+
+/* Footer */
+.footer{
+    text-align:center;
+    margin-top:27px;
+    color:#696579;
+    font-size:12px;
+}
+
+.footer span{
+    color:#9f8bd4;
+}
+
+/* Loading */
 .spinner{
-    width:30px;
-    height:30px;
-    border:3px solid rgba(255,255,255,.12);
-    border-top-color:#9c70ff;
+    width:18px;
+    height:18px;
+    margin:auto;
+    border:2px solid rgba(255,255,255,.25);
+    border-top-color:white;
     border-radius:50%;
     animation:spin .7s linear infinite;
 }
@@ -425,115 +325,72 @@ input:focus{
     to{transform:rotate(360deg)}
 }
 
-/* MOBILE */
-
-@media(max-width:600px){
-
-    .header{
-        top:20px;
-        left:20px;
-    }
-
+/* Mobile */
+@media(max-width:500px){
     .wrapper{
-        padding:20px;
+        padding:16px;
     }
 
     .card{
-        padding:32px 25px;
+        padding:34px 24px;
+        border-radius:24px;
     }
 
-    h1{
-        font-size:28px;
-    }
-
-    .orb.one{
-        width:150px;
-        height:150px;
-        left:-50px;
-    }
-
-    .orb.two{
-        width:100px;
-        height:100px;
-        right:-30px;
+    .heading h1{
+        font-size:25px;
     }
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="scene">
-
-    <div class="grid"></div>
-
+<div class="background">
     <div class="orb one"></div>
     <div class="orb two"></div>
     <div class="orb three"></div>
-
-    <div id="particles" class="particles"></div>
-
 </div>
-
-
-<div class="header">
-
-    <div class="brand">
-        Talent <span>Exchange</span>
-    </div>
-
-    <div class="admin-label">
-        ADMINISTRATOR ACCESS
-    </div>
-
-</div>
-
 
 <div class="wrapper">
+    <div class="card" id="card">
 
-    <div id="card" class="card">
+```
+    <div class="logo">
+        <span>TX</span>
+    </div>
 
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-        </div>
-
-        <div class="card-icon">
-            <div class="lock"></div>
-        </div>
-
-        <h1>Admin Access</h1>
-
-        <p class="subtitle">
-            Secure management portal for Talent Exchange
+    <div class="heading">
+        <h1>Admin Login</h1>
+        <p>
+            Secure administrator access to<br>
+            Talent Exchange
         </p>
+    </div>
 
+    <form class="form" id="adminForm">
 
-        <form id="loginForm">
+        <div class="field">
+            <label for="email">Admin Email</label>
 
-            <div class="field">
-
-                <label for="email">
-                    ADMIN EMAIL
-                </label>
-
+            <div class="input-wrap">
                 <input
+                    class="input"
                     id="email"
                     type="email"
                     placeholder="Enter admin email"
-                    autocomplete="email"
+                    autocomplete="username"
                     required
                 >
-
             </div>
+        </div>
 
+        <div class="field">
+            <label for="password">Password</label>
 
-            <div class="field">
-
-                <label for="password">
-                    PASSWORD
-                </label>
-
+            <div class="input-wrap">
                 <input
+                    class="input password"
                     id="password"
                     type="password"
                     placeholder="Enter password"
@@ -541,43 +398,47 @@ input:focus{
                     required
                 >
 
+                <button
+                    type="button"
+                    class="eye"
+                    id="togglePassword"
+                >
+                    Show
+                </button>
             </div>
+        </div>
 
-
-            <button
-                id="loginBtn"
-                class="login-btn"
-                type="submit"
-            >
-                Enter Admin Dashboard
-            </button>
-
-            <div
-                id="error"
-                class="error"
-            ></div>
-
-        </form>
-
-
-        <a
-            class="back"
-            href="login.html"
+        <button
+            type="submit"
+            class="login-btn"
+            id="loginBtn"
         >
-            ← Back to User Login
-        </a>
+            Sign in as Admin
+        </button>
 
+        <div id="status" class="status"></div>
+
+    </form>
+
+    <div class="footer">
+        Talent Exchange · <span>Administrator Portal</span>
     </div>
 
 </div>
+```
 
+</div>
 
 <script type="module">
 
-import {
-    auth,
-    db
-} from "./js/firebase-config.js";
+/*
+    IMPORTANT:
+    This file uses your existing Firebase configuration.
+
+    DO NOT put another Firebase config here.
+*/
+
+import { auth, db } from "./js/firebase-config.js";
 
 import {
     signInWithEmailAndPassword,
@@ -592,340 +453,352 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+const form = document.getElementById("adminForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const statusBox = document.getElementById("status");
+const togglePassword = document.getElementById("togglePassword");
+const card = document.getElementById("card");
+
+
 /* =========================
-   PARTICLES
+   PASSWORD SHOW / HIDE
 ========================= */
 
-const particleContainer =
-    document.getElementById("particles");
+togglePassword.addEventListener("click", () => {
 
-for(let i = 0; i < 65; i++){
+    const isPassword =
+        passwordInput.type === "password";
 
-    const particle =
-        document.createElement("div");
+    passwordInput.type =
+        isPassword ? "text" : "password";
 
-    particle.className =
-        "particle";
+    togglePassword.textContent =
+        isPassword ? "Hide" : "Show";
+});
 
-    particle.style.left =
-        Math.random() * 100 + "%";
 
-    particle.style.top =
-        Math.random() * 100 + "%";
+/* =========================
+   STATUS MESSAGE
+========================= */
 
-    particle.style.animationDelay =
-        Math.random() * 4 + "s";
+function showStatus(message, type = "error") {
 
-    particle.style.animationDuration =
-        (3 + Math.random() * 4) + "s";
+    statusBox.textContent = message;
 
-    particleContainer.appendChild(
-        particle
-    );
+    statusBox.className =
+        `status ${type}`;
+}
+
+
+function clearStatus() {
+
+    statusBox.textContent = "";
+
+    statusBox.className = "status";
 }
 
 
 /* =========================
-   3D CARD MOUSE EFFECT
+   LOADING
 ========================= */
 
-const card =
-    document.getElementById("card");
+function setLoading(loading) {
 
+    loginBtn.disabled = loading;
 
-document.addEventListener(
-    "mousemove",
-    event => {
+    if (loading) {
 
-        const x =
-            (event.clientX /
-            window.innerWidth -
-            .5);
+        loginBtn.innerHTML =
+            `<div class="spinner"></div>`;
 
-        const y =
-            (event.clientY /
-            window.innerHeight -
-            .5);
+    } else {
 
-        const rotateX =
-            y * -7;
-
-        const rotateY =
-            x * 9;
-
-        card.style.transform =
-            `
-            rotateX(${rotateX}deg)
-            rotateY(${rotateY}deg)
-            translateZ(0)
-            `;
-
+        loginBtn.textContent =
+            "Sign in as Admin";
     }
-);
-
-
-document.addEventListener(
-    "mouseleave",
-    () => {
-
-        card.style.transform =
-            "rotateX(0deg) rotateY(0deg)";
-
-    }
-);
+}
 
 
 /* =========================
-   ELEMENTS
+   ADMIN LOGIN
 ========================= */
 
-const form =
-    document.getElementById(
-        "loginForm"
-    );
+form.addEventListener("submit", async (event) => {
 
-const errorBox =
-    document.getElementById(
-        "error"
-    );
+    event.preventDefault();
 
-const loading =
-    document.getElementById(
-        "loading"
-    );
+    clearStatus();
 
-const loginBtn =
-    document.getElementById(
-        "loginBtn"
-    );
+    const email =
+        emailInput.value.trim();
+
+    const password =
+        passwordInput.value;
 
 
-/* =========================
-   LOGIN
-========================= */
+    if (!email || !password) {
 
-form.addEventListener(
-    "submit",
-    async event => {
-
-        event.preventDefault();
-
-        errorBox.textContent =
-            "";
-
-        const email =
-            document
-                .getElementById("email")
-                .value
-                .trim();
-
-        const password =
-            document
-                .getElementById("password")
-                .value;
-
-
-        if(!email || !password){
-
-            errorBox.textContent =
-                "Enter your admin email and password.";
-
-            return;
-
-        }
-
-
-        loading.classList.add(
-            "show"
+        showStatus(
+            "Please enter your admin email and password."
         );
 
-        loginBtn.disabled =
-            true;
+        return;
+    }
 
 
-        try{
+    setLoading(true);
 
-            await setPersistence(
+
+    try {
+
+        /*
+            STEP 1
+            Firebase Authentication
+        */
+
+        await setPersistence(
+            auth,
+            browserLocalPersistence
+        );
+
+
+        const credential =
+            await signInWithEmailAndPassword(
                 auth,
-                browserLocalPersistence
+                email,
+                password
             );
 
 
-            const credential =
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
+        const user =
+            credential.user;
 
 
-            const uid =
-                credential.user.uid;
+        /*
+            STEP 2
+            Get the user's Firestore profile
+        */
+
+        const userRef =
+            doc(db, "users", user.uid);
+
+        const userSnap =
+            await getDoc(userRef);
 
 
-            const userRef =
-                doc(
-                    db,
-                    "users",
-                    uid
-                );
+        /*
+            No Firestore profile
+        */
 
+        if (!userSnap.exists()) {
 
-            const userSnap =
-                await getDoc(
-                    userRef
-                );
+            await signOut(auth);
 
-
-            if(!userSnap.exists()){
-
-                await signOut(auth);
-
-                throw new Error(
-                    "Admin profile not found in Firestore."
-                );
-
-            }
-
-
-            const userData =
-                userSnap.data();
-
-
-            if(
-                userData.role !==
-                "admin"
-            ){
-
-                await signOut(auth);
-
-                throw new Error(
-                    "This account does not have administrator access."
-                );
-
-            }
-
-
-            if(
-                userData.status ===
-                "disabled"
-            ){
-
-                await signOut(auth);
-
-                throw new Error(
-                    "This administrator account is disabled."
-                );
-
-            }
-
-
-            localStorage.setItem(
-                "adminLoggedIn",
-                "true"
+            showStatus(
+                "Your Firebase account does not have a Talent Exchange profile."
             );
 
+            setLoading(false);
 
-            localStorage.setItem(
-                "adminUser",
-                JSON.stringify({
-                    uid,
-                    email:
-                        credential.user.email,
-                    name:
-                        userData.name ||
-                        "Administrator",
-                    role:
-                        userData.role,
-                    status:
-                        userData.status ||
-                        "approved"
-                })
+            return;
+        }
+
+
+        const profile =
+            userSnap.data();
+
+
+        /*
+            STEP 3
+            Check admin role
+        */
+
+        if (profile.role !== "admin") {
+
+            await signOut(auth);
+
+            showStatus(
+                "Access denied. This account is not an administrator."
             );
 
+            setLoading(false);
+
+            return;
+        }
+
+
+        /*
+            STEP 4
+            Check account status
+        */
+
+        if (profile.status !== "approved") {
+
+            await signOut(auth);
+
+            showStatus(
+                "Admin account is not approved."
+            );
+
+            setLoading(false);
+
+            return;
+        }
+
+
+        /*
+            STEP 5
+            Check disabled account
+        */
+
+        if (profile.disabled === true) {
+
+            await signOut(auth);
+
+            showStatus(
+                "This administrator account has been disabled."
+            );
+
+            setLoading(false);
+
+            return;
+        }
+
+
+        /*
+            EVERYTHING IS VALID
+        */
+
+        showStatus(
+            "Admin authentication successful. Opening dashboard...",
+            "success"
+        );
+
+
+        setTimeout(() => {
 
             window.location.href =
-                "admin-dashboard.html";
+                "./admin-dashboard.html";
 
+        }, 700);
+
+
+    } catch (error) {
+
+        console.error(
+            "ADMIN LOGIN ERROR:",
+            error
+        );
+
+
+        /*
+            Firebase error handling
+        */
+
+        let message =
+            "Unable to sign in. Please try again.";
+
+
+        switch (error.code) {
+
+            case "auth/invalid-credential":
+
+                message =
+                    "Invalid email or password. Also verify that Email/Password sign-in is enabled in Firebase Authentication.";
+
+                break;
+
+
+            case "auth/invalid-email":
+
+                message =
+                    "Please enter a valid email address.";
+
+                break;
+
+
+            case "auth/user-not-found":
+
+                message =
+                    "No Firebase Authentication account was found with this email.";
+
+                break;
+
+
+            case "auth/wrong-password":
+
+                message =
+                    "The password is incorrect.";
+
+                break;
+
+
+            case "auth/too-many-requests":
+
+                message =
+                    "Too many login attempts. Please wait and try again.";
+
+                break;
+
+
+            case "auth/network-request-failed":
+
+                message =
+                    "Network error. Please check your internet connection.";
+
+                break;
+
+
+            case "permission-denied":
+
+                message =
+                    "Firebase Firestore permission denied. Check your Firestore rules.";
+
+                break;
+
+
+            default:
+
+                message =
+                    error.message || message;
         }
-        catch(error){
-
-            console.error(
-                "ADMIN LOGIN ERROR:",
-                error
-            );
 
 
-            let message =
-                "Unable to sign in.";
+        showStatus(message);
 
-
-            if(
-                error.code ===
-                "auth/invalid-credential"
-            ){
-
-                message =
-                    "Invalid email or password.";
-
-            }
-            else if(
-                error.code ===
-                "auth/user-not-found"
-            ){
-
-                message =
-                    "Admin account was not found.";
-
-            }
-            else if(
-                error.code ===
-                "auth/wrong-password"
-            ){
-
-                message =
-                    "Incorrect password.";
-
-            }
-            else if(
-                error.code ===
-                "auth/too-many-requests"
-            ){
-
-                message =
-                    "Too many attempts. Try again later.";
-
-            }
-            else if(
-                error.message
-            ){
-
-                message =
-                    error.message;
-
-            }
-
-
-            errorBox.textContent =
-                message;
-
-        }
-        finally{
-
-            loading.classList.remove(
-                "show"
-            );
-
-            loginBtn.disabled =
-                false;
-
-        }
-
+        setLoading(false);
     }
-);
+
+});
+
+
+/* =========================
+   3D MOUSE EFFECT
+========================= */
+
+document.addEventListener("mousemove", (event) => {
+
+    const x =
+        (window.innerWidth / 2 - event.clientX) / 45;
+
+    const y =
+        (window.innerHeight / 2 - event.clientY) / 45;
+
+
+    card.style.transform =
+        `rotateY(${-x}deg) rotateX(${y}deg)`;
+});
+
+
+document.addEventListener("mouseleave", () => {
+
+    card.style.transform =
+        "rotateY(0deg) rotateX(0deg)";
+});
 
 </script>
 
 </body>
 </html>
-```
