@@ -1,1023 +1,1426 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Talent Exchange — Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Talent Exchange — Admin Control Center</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#050509;
+    --panel:rgba(16,13,29,.72);
+    --panel2:rgba(24,19,42,.82);
+    --purple:#9b5cff;
+    --purple2:#6f35ff;
+    --blue:#39a7ff;
+    --green:#3cff9b;
+    --red:#ff557d;
+    --yellow:#ffc857;
+    --text:#f5f2ff;
+    --muted:#9690aa;
+    --border:rgba(166,115,255,.18);
+}
 
 body{
-  font-family:Inter,Arial,sans-serif;
-  min-height:100vh;
-  color:#fff;
-  background:
-    radial-gradient(circle at 10% 10%,rgba(130,75,255,.18),transparent 32%),
-    radial-gradient(circle at 90% 90%,rgba(55,80,255,.12),transparent 32%),
-    #050508;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(122,57,255,.18),transparent 30%),
+        radial-gradient(circle at 80% 30%,rgba(0,148,255,.12),transparent 28%),
+        radial-gradient(circle at 50% 100%,rgba(142,42,255,.12),transparent 35%),
+        #050509;
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
-button,input{
-  font:inherit;
+/* =========================
+   BACKGROUND
+========================= */
+
+.space{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-5;
 }
 
-button{
-  cursor:pointer;
-  border:0;
+.grid{
+    position:absolute;
+    width:200%;
+    height:70%;
+    left:-50%;
+    bottom:-25%;
+    background-image:
+        linear-gradient(rgba(150,80,255,.12) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(150,80,255,.12) 1px,transparent 1px);
+    background-size:55px 55px;
+    transform:perspective(500px) rotateX(60deg);
+    opacity:.45;
 }
 
-.layout{
-  min-height:100vh;
-  display:flex;
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(2px);
+    animation:floatOrb 10s ease-in-out infinite;
 }
 
-/* SIDEBAR */
+.orb.one{
+    width:300px;
+    height:300px;
+    background:radial-gradient(circle,rgba(125,55,255,.25),transparent 68%);
+    top:-100px;
+    left:-80px;
+}
 
-.sidebar{
-  width:250px;
-  min-height:100vh;
-  padding:25px 18px;
-  border-right:1px solid rgba(255,255,255,.08);
-  background:rgba(12,12,18,.82);
-  backdrop-filter:blur(25px);
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
+.orb.two{
+    width:400px;
+    height:400px;
+    background:radial-gradient(circle,rgba(25,145,255,.14),transparent 68%);
+    right:-160px;
+    top:20%;
+    animation-delay:-3s;
+}
+
+.orb.three{
+    width:350px;
+    height:350px;
+    background:radial-gradient(circle,rgba(190,55,255,.12),transparent 68%);
+    left:35%;
+    bottom:-180px;
+    animation-delay:-6s;
+}
+
+@keyframes floatOrb{
+    0%,100%{transform:translate3d(0,0,0)}
+    50%{transform:translate3d(0,-35px,0)}
+}
+
+/* particles */
+
+.particles{
+    position:absolute;
+    inset:0;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#a974ff;
+    opacity:.5;
+    animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+    from{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+    20%{opacity:.5}
+    80%{opacity:.5}
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 34px;
+    border-bottom:1px solid rgba(170,110,255,.16);
+    background:rgba(5,5,9,.72);
+    backdrop-filter:blur(22px);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
 .logo{
-  padding:5px 12px 30px;
-  font-size:22px;
-  font-weight:800;
+    width:46px;
+    height:46px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    font-weight:900;
+    letter-spacing:-1px;
+    background:
+        linear-gradient(135deg,#a864ff,#5421d7);
+    box-shadow:
+        0 0 25px rgba(137,69,255,.45),
+        inset 0 0 20px rgba(255,255,255,.12);
+    transform:perspective(400px) rotateY(-12deg);
 }
 
-.logo span{
-  color:#9b6cff;
+.brand-text h1{
+    font-size:16px;
+    letter-spacing:2px;
+    font-weight:800;
 }
 
-.nav{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+.brand-text span{
+    display:block;
+    margin-top:3px;
+    font-size:10px;
+    color:#938ba9;
+    letter-spacing:2.5px;
 }
 
-.nav button{
-  width:100%;
-  padding:13px 15px;
-  text-align:left;
-  color:#aaa;
-  border-radius:12px;
-  background:transparent;
-  transition:.2s;
-}
-
-.nav button:hover,
-.nav button.active{
-  color:#fff;
-  background:rgba(135,85,255,.14);
-}
-
-.logout{
-  position:absolute;
-  left:18px;
-  right:18px;
-  bottom:25px;
-  padding:13px;
-  border-radius:12px;
-  color:#fff;
-  background:rgba(210,55,75,.13);
-}
-
-/* MAIN */
-
-.main{
-  width:calc(100% - 250px);
-  margin-left:250px;
-  padding:30px;
-}
-
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:30px;
-}
-
-.title h1{
-  font-size:30px;
-}
-
-.title p{
-  margin-top:5px;
-  color:#888;
-  font-size:14px;
+.admin-area{
+    display:flex;
+    align-items:center;
+    gap:13px;
 }
 
 .admin-badge{
-  padding:9px 14px;
-  border-radius:30px;
-  color:#cbbcff;
-  border:1px solid rgba(150,100,255,.25);
-  background:rgba(130,80,255,.1);
-  font-size:13px;
+    padding:8px 13px;
+    border-radius:100px;
+    border:1px solid rgba(154,90,255,.3);
+    background:rgba(130,60,255,.08);
+    color:#c8a8ff;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
 }
 
-/* STATS */
+.logout{
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.04);
+    color:#ddd8e9;
+    padding:10px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.logout:hover{
+    background:rgba(255,75,115,.12);
+    border-color:rgba(255,75,115,.3);
+    color:#ff8aa6;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    width:min(1450px,94%);
+    margin:0 auto;
+    padding:42px 0 70px;
+}
+
+.hero{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:30px;
+    margin-bottom:35px;
+}
+
+.hero h2{
+    font-size:clamp(30px,5vw,54px);
+    line-height:1;
+    letter-spacing:-2.5px;
+}
+
+.hero h2 span{
+    color:#a96cff;
+    text-shadow:0 0 35px rgba(160,91,255,.35);
+}
+
+.hero p{
+    color:var(--muted);
+    margin-top:13px;
+    font-size:14px;
+}
+
+.live{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#9bffcf;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.live-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#38ff9a;
+    box-shadow:0 0 12px #38ff9a;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:25px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:32px;
 }
 
 .stat{
-  padding:22px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-  box-shadow:0 15px 45px rgba(0,0,0,.18);
+    position:relative;
+    min-height:145px;
+    padding:23px;
+    overflow:hidden;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:
+        linear-gradient(145deg,rgba(31,24,52,.82),rgba(10,9,17,.74));
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.28),
+        inset 0 1px rgba(255,255,255,.04);
+    transform-style:preserve-3d;
+    transition:.35s ease;
+}
+
+.stat:hover{
+    transform:translateY(-7px) rotateX(3deg) rotateY(-3deg);
+    border-color:rgba(163,104,255,.4);
+    box-shadow:
+        0 25px 60px rgba(100,40,220,.18),
+        0 0 35px rgba(132,69,255,.08);
+}
+
+.stat::after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    right:-45px;
+    bottom:-55px;
+    background:rgba(144,77,255,.12);
+    filter:blur(5px);
 }
 
 .stat-label{
-  color:#888;
-  font-size:13px;
+    color:#9c96ad;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
 }
 
-.stat-value{
-  margin-top:10px;
-  font-size:28px;
-  font-weight:800;
+.stat-number{
+    margin-top:14px;
+    font-size:38px;
+    font-weight:800;
+    letter-spacing:-2px;
 }
 
-/* CONTENT */
-
-.panel{
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
-  background:rgba(255,255,255,.035);
-  overflow:hidden;
+.stat-sub{
+    margin-top:7px;
+    font-size:11px;
+    color:#777084;
 }
 
-.panel-head{
-  padding:20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  border-bottom:1px solid rgba(255,255,255,.08);
+.stat.pending .stat-number{color:var(--yellow)}
+.stat.approved .stat-number{color:var(--green)}
+.stat.rejected .stat-number{color:var(--red)}
+.stat.total .stat-number{color:#b780ff}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
 }
 
-.panel-head h2{
-  font-size:18px;
+.filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.filter{
+    padding:10px 16px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.035);
+    color:#aaa3b7;
+    cursor:pointer;
+    transition:.2s;
+    font-size:12px;
+}
+
+.filter:hover,
+.filter.active{
+    color:white;
+    border-color:rgba(160,94,255,.4);
+    background:rgba(136,65,255,.12);
 }
 
 .search{
-  width:min(300px,100%);
-  padding:11px 14px;
-  color:#fff;
-  outline:none;
-  border-radius:11px;
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.045);
+    width:280px;
+    padding:12px 16px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.09);
+    outline:none;
+    background:rgba(255,255,255,.035);
+    color:white;
 }
 
-.table-wrap{
-  overflow-x:auto;
+.search::placeholder{
+    color:#686272;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
+.search:focus{
+    border-color:rgba(158,92,255,.5);
+    box-shadow:0 0 20px rgba(126,57,255,.1);
 }
 
-th,td{
-  padding:15px 18px;
-  text-align:left;
-  white-space:nowrap;
-  border-bottom:1px solid rgba(255,255,255,.055);
+/* =========================
+   USERS
+========================= */
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
 }
 
-th{
-  color:#777;
-  font-size:12px;
-  text-transform:uppercase;
+.section-title h3{
+    font-size:18px;
 }
 
-td{
-  color:#ddd;
-  font-size:13px;
+.section-title span{
+    color:#787181;
+    font-size:12px;
 }
 
-.user-name{
-  font-weight:700;
+.users-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
-.user-email{
-  margin-top:3px;
-  color:#777;
-  font-size:11px;
+.user-card{
+    position:relative;
+    padding:20px;
+    border-radius:20px;
+    border:1px solid rgba(161,99,255,.15);
+    background:rgba(15,12,25,.72);
+    backdrop-filter:blur(16px);
+    transform-style:preserve-3d;
+    transition:.35s ease;
 }
 
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:11px;
+.user-card:hover{
+    transform:translateY(-6px) rotateX(2deg);
+    border-color:rgba(163,100,255,.4);
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
 }
 
-.pending{
-  color:#ffd37b;
-  background:rgba(255,190,70,.1);
+.user-top{
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
-.approved{
-  color:#70e0a0;
-  background:rgba(50,200,110,.1);
+.avatar{
+    width:56px;
+    height:56px;
+    flex-shrink:0;
+    border-radius:17px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(135deg,#753eff,#b277ff);
+    font-size:20px;
+    font-weight:800;
+    box-shadow:0 8px 25px rgba(104,43,255,.25);
 }
 
-.rejected,
-.disabled{
-  color:#ff8999;
-  background:rgba(220,50,75,.1);
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-.actions{
-  display:flex;
-  gap:7px;
+.user-info{
+    min-width:0;
 }
 
-.action{
-  padding:7px 10px;
-  border-radius:8px;
-  color:#fff;
-  background:rgba(255,255,255,.08);
-  font-size:11px;
+.user-info h4{
+    font-size:16px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.action:hover{
-  background:rgba(140,90,255,.2);
+.user-info p{
+    margin-top:4px;
+    font-size:11px;
+    color:#858092;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
-.action.approve{
-  background:rgba(55,190,110,.15);
-  color:#75e5a1;
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 9px;
+    margin-top:15px;
+    border-radius:100px;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
-.action.reject{
-  background:rgba(220,55,75,.13);
-  color:#ff8999;
+.status.pending{
+    color:#ffd87a;
+    background:rgba(255,194,68,.09);
+    border:1px solid rgba(255,194,68,.18);
 }
 
-.action.delete{
-  background:rgba(220,55,75,.16);
-  color:#ff7183;
+.status.approved{
+    color:#6dffb0;
+    background:rgba(60,255,155,.07);
+    border:1px solid rgba(60,255,155,.16);
 }
 
-/* EMPTY */
+.status.rejected{
+    color:#ff7f9c;
+    background:rgba(255,75,115,.07);
+    border:1px solid rgba(255,75,115,.16);
+}
+
+.status.disabled{
+    color:#aaa;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.user-skills{
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    min-height:28px;
+}
+
+.skill{
+    padding:6px 8px;
+    border-radius:7px;
+    background:rgba(138,75,255,.08);
+    border:1px solid rgba(145,83,255,.13);
+    color:#bda0ee;
+    font-size:9px;
+}
+
+.user-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:18px;
+}
+
+.btn{
+    border:none;
+    border-radius:10px;
+    padding:10px 8px;
+    cursor:pointer;
+    color:white;
+    font-size:10px;
+    transition:.2s;
+}
+
+.btn.view{
+    grid-column:1/-1;
+    background:rgba(145,78,255,.13);
+    border:1px solid rgba(154,90,255,.2);
+}
+
+.btn.view:hover{
+    background:rgba(145,78,255,.24);
+}
+
+.btn.approve{
+    background:rgba(43,208,125,.1);
+    border:1px solid rgba(43,208,125,.2);
+    color:#6dffb0;
+}
+
+.btn.reject{
+    background:rgba(255,70,110,.08);
+    border:1px solid rgba(255,70,110,.18);
+    color:#ff8aa5;
+}
+
+.btn.disable{
+    background:rgba(255,190,60,.08);
+    border:1px solid rgba(255,190,60,.17);
+    color:#ffd46d;
+}
+
+.btn.delete{
+    background:rgba(255,70,110,.06);
+    border:1px solid rgba(255,70,110,.12);
+    color:#ff718e;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.2);
+}
+
+/* =========================
+   EMPTY
+========================= */
 
 .empty{
-  padding:50px 20px;
-  text-align:center;
-  color:#777;
+    padding:65px 20px;
+    text-align:center;
+    border:1px dashed rgba(157,95,255,.18);
+    border-radius:20px;
+    color:#756e81;
 }
 
-/* MODAL */
+.empty-icon{
+    font-size:35px;
+    margin-bottom:13px;
+    color:#9c61ff;
+}
+
+.empty h4{
+    color:#b8b1c4;
+    margin-bottom:6px;
+}
+
+/* =========================
+   MODAL
+========================= */
 
 .modal{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(12px);
+    position:fixed;
+    inset:0;
+    z-index:500;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(15px);
 }
 
 .modal.show{
-  display:flex;
+    display:flex;
 }
 
 .modal-box{
-  width:min(700px,100%);
-  max-height:88vh;
-  overflow:auto;
-  padding:25px;
-  border-radius:22px;
-  border:1px solid rgba(255,255,255,.12);
-  background:#101017;
-  box-shadow:0 35px 100px rgba(0,0,0,.6);
+    width:min(850px,100%);
+    max-height:90vh;
+    overflow:auto;
+    position:relative;
+    border-radius:26px;
+    border:1px solid rgba(170,105,255,.25);
+    background:
+        radial-gradient(circle at top right,rgba(126,54,255,.12),transparent 30%),
+        #0b0912;
+    box-shadow:
+        0 40px 100px rgba(0,0,0,.65),
+        0 0 70px rgba(117,50,255,.12);
+    padding:30px;
+    animation:modalIn .3s ease;
 }
 
-.modal-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:22px;
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:perspective(800px) rotateX(-8deg) translateY(25px) scale(.96);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
 }
 
 .close{
-  width:35px;
-  height:35px;
-  border-radius:10px;
-  color:#fff;
-  background:rgba(255,255,255,.07);
+    position:absolute;
+    right:20px;
+    top:18px;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.04);
+    color:white;
+    cursor:pointer;
+    font-size:17px;
 }
 
-.profile{
-  display:grid;
-  grid-template-columns:110px 1fr;
-  gap:20px;
-  margin-bottom:25px;
+.detail-header{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    padding-right:40px;
 }
 
-.profile img{
-  width:110px;
-  height:110px;
-  object-fit:cover;
-  border-radius:22px;
-  background:#191920;
-  border:1px solid rgba(255,255,255,.1);
+.detail-avatar{
+    width:90px;
+    height:90px;
+    flex-shrink:0;
+    border-radius:25px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#6d35ff,#b16aff);
+    font-size:30px;
+    font-weight:800;
 }
 
-.profile h2{
-  margin-top:8px;
+.detail-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-.profile p{
-  margin-top:5px;
-  color:#888;
-  font-size:13px;
+.detail-header h2{
+    font-size:26px;
 }
 
-.detail{
-  padding:15px;
-  margin-top:10px;
-  border-radius:13px;
-  background:rgba(255,255,255,.045);
+.detail-header p{
+    color:#858091;
+    margin-top:5px;
+    font-size:12px;
 }
 
-.detail-label{
-  margin-bottom:7px;
-  color:#777;
-  font-size:11px;
-  text-transform:uppercase;
+.detail-section{
+    margin-top:27px;
 }
 
-.detail-value{
-  color:#ddd;
-  line-height:1.5;
-  font-size:13px;
+.detail-section h4{
+    color:#a76aff;
+    font-size:11px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+}
+
+.detail-section p{
+    color:#bbb5c5;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.detail-box{
+    padding:15px;
+    border-radius:14px;
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.detail-box label{
+    display:block;
+    color:#6f6879;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:6px;
+}
+
+.detail-box span{
+    color:#d8d1e2;
+    font-size:12px;
+    word-break:break-word;
+}
+
+.evidence{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.evidence-item{
+    padding:11px 13px;
+    border-radius:10px;
+    background:rgba(133,72,255,.06);
+    border:1px solid rgba(143,78,255,.1);
+    font-size:11px;
+    color:#c6b4e4;
 }
 
 .modal-actions{
-  display:flex;
-  gap:10px;
-  margin-top:20px;
+    display:flex;
+    gap:10px;
+    margin-top:28px;
 }
 
-.modal-actions button{
-  flex:1;
-  padding:12px;
-  border-radius:11px;
-  color:#fff;
-  background:rgba(255,255,255,.08);
+.modal-actions .btn{
+    flex:1;
+    padding:13px;
 }
 
-.modal-actions .approve-btn{
-  background:#317c51;
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    z-index:1000;
+    max-width:350px;
+    padding:15px 18px;
+    border-radius:13px;
+    border:1px solid rgba(155,91,255,.25);
+    background:rgba(15,11,26,.92);
+    backdrop-filter:blur(15px);
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
+    color:#ddd7e8;
+    font-size:12px;
+    transform:translateY(120px);
+    opacity:0;
+    transition:.3s;
 }
 
-.modal-actions .reject-btn{
-  background:#863b49;
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
 }
 
-@media(max-width:900px){
-
-  .sidebar{
-    width:210px;
-  }
-
-  .main{
-    width:calc(100% - 210px);
-    margin-left:210px;
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
+.toast.success{
+    border-color:rgba(60,255,155,.25);
 }
 
-@media(max-width:650px){
+.toast.error{
+    border-color:rgba(255,75,115,.25);
+}
 
-  .sidebar{
-    width:100%;
-    height:auto;
-    min-height:auto;
-    position:relative;
-    border-right:0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-  }
+/* =========================
+   LOADING
+========================= */
 
-  .layout{
-    display:block;
-  }
+.loading{
+    padding:50px;
+    text-align:center;
+    color:#817a8d;
+}
 
-  .nav{
-    flex-direction:row;
-    overflow-x:auto;
-  }
+.loader{
+    width:35px;
+    height:35px;
+    margin:0 auto 14px;
+    border-radius:50%;
+    border:2px solid rgba(155,91,255,.15);
+    border-top-color:#a263ff;
+    animation:spin .8s linear infinite;
+}
 
-  .nav button{
-    white-space:nowrap;
-  }
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
 
-  .logout{
-    position:static;
-    margin-top:15px;
-  }
+/* =========================
+   RESPONSIVE
+========================= */
 
-  .main{
-    width:100%;
-    margin-left:0;
-    padding:18px;
-  }
+@media(max-width:1100px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-  .stats{
-    grid-template-columns:1fr 1fr;
-  }
+    .users-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
 
-  .topbar{
-    align-items:flex-start;
-  }
+@media(max-width:700px){
 
-  .profile{
-    grid-template-columns:1fr;
-  }
+    .header{
+        padding:0 15px;
+    }
+
+    .brand-text span{
+        display:none;
+    }
+
+    .admin-badge{
+        display:none;
+    }
+
+    .container{
+        width:92%;
+        padding-top:28px;
+    }
+
+    .hero{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat{
+        min-height:120px;
+        padding:17px;
+    }
+
+    .stat-number{
+        font-size:30px;
+    }
+
+    .users-grid{
+        grid-template-columns:1fr;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .toolbar{
+        align-items:stretch;
+    }
+
+    .filters{
+        width:100%;
+        overflow-x:auto;
+        flex-wrap:nowrap;
+    }
+
+    .filter{
+        flex-shrink:0;
+    }
+
+    .detail-grid{
+        grid-template-columns:1fr;
+    }
+
+    .modal{
+        padding:10px;
+    }
+
+    .modal-box{
+        padding:22px;
+    }
+
+    .detail-header{
+        align-items:flex-start;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="layout">
+<!-- =========================
+     BACKGROUND
+========================= -->
 
-  <aside class="sidebar">
-
-    <div class="logo">
-      Talent <span>Exchange</span>
-    </div>
-
-    <nav class="nav">
-
-      <button class="active" data-section="users">
-        Users
-      </button>
-
-      <button data-section="requests">
-        Requests
-      </button>
-
-      <button data-section="activity">
-        Activity
-      </button>
-
-    </nav>
-
-    <button id="logoutBtn" class="logout">
-      Logout
-    </button>
-
-  </aside>
+<div class="space">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+    <div class="grid"></div>
+    <div class="particles" id="particles"></div>
+</div>
 
 
-  <main class="main">
+<!-- =========================
+     HEADER
+========================= -->
 
-    <div class="topbar">
+<header class="header">
 
-      <div class="title">
+    <div class="brand">
 
-        <h1>Admin Dashboard</h1>
+        <div class="logo">
+            TX
+        </div>
 
-        <p>
-          Manage Talent Exchange users and requests
-        </p>
-
-      </div>
-
-      <div class="admin-badge">
-        Administrator
-      </div>
+        <div class="brand-text">
+            <h1>TALENT EXCHANGE</h1>
+            <span>ADMIN CONTROL CENTER</span>
+        </div>
 
     </div>
 
+    <div class="admin-area">
 
-    <!-- STATS -->
+        <div class="admin-badge">
+            Administrator
+        </div>
+
+        <button class="logout" id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+    <section class="hero">
+
+        <div>
+            <h2>
+                Command <span>Center</span>
+            </h2>
+
+            <p>
+                Review registrations, verify users and control Talent Exchange access.
+            </p>
+        </div>
+
+        <div class="live">
+            <span class="live-dot"></span>
+            FIREBASE LIVE
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         STATISTICS
+    ========================= -->
 
     <section class="stats">
 
-      <div class="stat">
-
-        <div class="stat-label">
-          Total Users
+        <div class="stat total">
+            <div class="stat-label">Total Users</div>
+            <div class="stat-number" id="totalCount">0</div>
+            <div class="stat-sub">Registered profiles</div>
         </div>
 
-        <div id="totalUsers" class="stat-value">
-          0
+        <div class="stat pending">
+            <div class="stat-label">Pending</div>
+            <div class="stat-number" id="pendingCount">0</div>
+            <div class="stat-sub">Awaiting review</div>
         </div>
 
-      </div>
-
-
-      <div class="stat">
-
-        <div class="stat-label">
-          Pending
+        <div class="stat approved">
+            <div class="stat-label">Approved</div>
+            <div class="stat-number" id="approvedCount">0</div>
+            <div class="stat-sub">Access granted</div>
         </div>
 
-        <div id="pendingUsers" class="stat-value">
-          0
+        <div class="stat rejected">
+            <div class="stat-label">Rejected</div>
+            <div class="stat-number" id="rejectedCount">0</div>
+            <div class="stat-sub">Access denied</div>
         </div>
-
-      </div>
-
-
-      <div class="stat">
-
-        <div class="stat-label">
-          Approved
-        </div>
-
-        <div id="approvedUsers" class="stat-value">
-          0
-        </div>
-
-      </div>
-
-
-      <div class="stat">
-
-        <div class="stat-label">
-          Requests
-        </div>
-
-        <div id="totalRequests" class="stat-value">
-          0
-        </div>
-
-      </div>
 
     </section>
 
 
-    <!-- USERS -->
+    <!-- =========================
+         TOOLBAR
+    ========================= -->
 
-    <section id="usersSection" class="panel">
+    <section class="toolbar">
 
-      <div class="panel-head">
+        <div class="filters">
 
-        <h2>Registered Users</h2>
+            <button class="filter active" data-filter="all">
+                All
+            </button>
+
+            <button class="filter" data-filter="pending">
+                Pending
+            </button>
+
+            <button class="filter" data-filter="approved">
+                Approved
+            </button>
+
+            <button class="filter" data-filter="rejected">
+                Rejected
+            </button>
+
+            <button class="filter" data-filter="disabled">
+                Disabled
+            </button>
+
+        </div>
 
         <input
-          id="searchInput"
-          class="search"
-          placeholder="Search users...">
-
-      </div>
-
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>User</th>
-              <th>Skills</th>
-              <th>Status</th>
-              <th>Role</th>
-              <th>Actions</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody id="usersTable">
-
-          </tbody>
-
-        </table>
-
-      </div>
+            type="text"
+            class="search"
+            id="searchInput"
+            placeholder="Search users..."
+        >
 
     </section>
 
 
-    <!-- REQUESTS -->
+    <!-- =========================
+         USERS
+    ========================= -->
 
-    <section
-      id="requestsSection"
-      class="panel"
-      style="display:none">
+    <section>
 
-      <div class="panel-head">
+        <div class="section-title">
 
-        <h2>Exchange Requests</h2>
+            <h3>User Management</h3>
 
-      </div>
+            <span id="resultCount">
+                Loading...
+            </span>
 
-      <div class="table-wrap">
+        </div>
 
-        <table>
+        <div id="usersContainer">
 
-          <thead>
+            <div class="loading">
+                <div class="loader"></div>
+                Loading users from Firebase...
+            </div>
 
-            <tr>
-              <th>Sender</th>
-              <th>Receiver</th>
-              <th>Skill</th>
-              <th>Status</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="requestsTable">
-
-          </tbody>
-
-        </table>
-
-      </div>
+        </div>
 
     </section>
 
+</main>
 
-    <!-- ACTIVITY -->
 
-    <section
-      id="activitySection"
-      class="panel"
-      style="display:none">
+<!-- =========================
+     USER DETAIL MODAL
+========================= -->
 
-      <div class="panel-head">
+<div class="modal" id="userModal">
 
-        <h2>Recent Activity</h2>
+    <div class="modal-box">
 
-      </div>
+        <button class="close" id="closeModal">
+            ×
+        </button>
 
-      <div id="activityList" class="empty">
-        Activity information will appear here.
-      </div>
+        <div id="modalContent"></div>
 
-    </section>
-
-  </main>
+    </div>
 
 </div>
 
 
-<!-- PROFILE MODAL -->
+<!-- =========================
+     TOAST
+========================= -->
 
-<div id="profileModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-top">
-
-      <h2>User Profile</h2>
-
-      <button
-        id="closeModal"
-        class="close">
-        ✕
-      </button>
-
-    </div>
+<div class="toast" id="toast"></div>
 
 
-    <div class="profile">
-
-      <img
-        id="modalPhoto"
-        alt="Profile">
-
-      <div>
-
-        <h2 id="modalName">
-          User
-        </h2>
-
-        <p id="modalEmail">
-          —
-        </p>
-
-        <p id="modalStatus">
-          —
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <div class="detail">
-
-      <div class="detail-label">
-        Bio
-      </div>
-
-      <div
-        id="modalBio"
-        class="detail-value">
-        —
-      </div>
-
-    </div>
-
-
-    <div class="detail">
-
-      <div class="detail-label">
-        Skills Offered
-      </div>
-
-      <div
-        id="modalOffered"
-        class="detail-value">
-        —
-      </div>
-
-    </div>
-
-
-    <div class="detail">
-
-      <div class="detail-label">
-        Skills Wanted
-      </div>
-
-      <div
-        id="modalLearning"
-        class="detail-value">
-        —
-      </div>
-
-    </div>
-
-
-    <div class="detail">
-
-      <div class="detail-label">
-        Skill Evidence
-      </div>
-
-      <div
-        id="modalEvidence"
-        class="detail-value">
-        —
-      </div>
-
-    </div>
-
-
-    <div class="modal-actions">
-
-      <button
-        id="modalApprove"
-        class="approve-btn">
-        Approve
-      </button>
-
-      <button
-        id="modalReject"
-        class="reject-btn">
-        Reject
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script type="module">
 
-import {
-  auth,
-  db
-} from "./js/firebase-config.js";
+import { auth, db } from "./js/firebase-config.js";
 
 import {
-  onAuthStateChanged,
-  signOut
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  updateDoc,
-  deleteDoc
+    collection,
+    getDocs,
+    doc,
+    updateDoc,
+    deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-let currentAdmin = null;
-let users = [];
-let requests = [];
-let selectedUser = null;
+/* =========================================
+   ADMIN UID
+========================================= */
+
+const ADMIN_UID = "6YdtWvQ8l5UnAnYakySWZmMUlXy2";
+
+
+/* =========================================
+   GLOBAL STATE
+========================================= */
+
+let allUsers = [];
+let currentFilter = "all";
+let searchTerm = "";
 
 
 /* =========================================
    ELEMENTS
 ========================================= */
 
-const usersTable =
-  document.getElementById("usersTable");
+const usersContainer =
+    document.getElementById("usersContainer");
 
-const requestsTable =
-  document.getElementById("requestsTable");
+const totalCount =
+    document.getElementById("totalCount");
+
+const pendingCount =
+    document.getElementById("pendingCount");
+
+const approvedCount =
+    document.getElementById("approvedCount");
+
+const rejectedCount =
+    document.getElementById("rejectedCount");
+
+const resultCount =
+    document.getElementById("resultCount");
 
 const searchInput =
-  document.getElementById("searchInput");
+    document.getElementById("searchInput");
+
+const userModal =
+    document.getElementById("userModal");
+
+const modalContent =
+    document.getElementById("modalContent");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+const toast =
+    document.getElementById("toast");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 
 /* =========================================
    AUTH CHECK
 ========================================= */
 
-onAuthStateChanged(
-  auth,
-  async user => {
+onAuthStateChanged(auth, async (user) => {
 
-    if(!user){
+    if (!user) {
 
-      window.location.href =
-        "admin-login.html";
+        window.location.href = "admin-login.html";
 
-      return;
-
+        return;
     }
 
-
-    currentAdmin =
-      user;
-
-
-    try{
-
-      const snap =
-        await getDoc(
-          doc(
-            db,
-            "users",
-            user.uid
-          )
-        );
-
-
-      if(!snap.exists()){
+    if (user.uid !== ADMIN_UID) {
 
         await signOut(auth);
 
-        window.location.href =
-          "admin-login.html";
+        alert("Administrator access required.");
+
+        window.location.href = "admin-login.html";
 
         return;
-
-      }
-
-
-      const admin =
-        snap.data();
-
-
-      if(
-        admin.role !== "admin" ||
-        admin.status === "disabled"
-      ){
-
-        await signOut(auth);
-
-        window.location.href =
-          "admin-login.html";
-
-        return;
-
-      }
-
-
-      await loadData();
-
-    }
-    catch(error){
-
-      console.error(error);
-
-      alert(
-        "Unable to load admin dashboard."
-      );
-
     }
 
-  }
-);
+    await loadUsers();
+
+});
 
 
 /* =========================================
-   LOAD DATA
+   LOAD USERS
 ========================================= */
 
-async function loadData(){
+async function loadUsers(){
 
-  const usersSnap =
-    await getDocs(
-      collection(
-        db,
-        "users"
-      )
-    );
+    try{
 
+        usersContainer.innerHTML = `
+            <div class="loading">
+                <div class="loader"></div>
+                Loading users from Firebase...
+            </div>
+        `;
 
-  users =
-    usersSnap.docs.map(
-      item => ({
-        id:item.id,
-        ...item.data()
-      })
-    );
+        const snapshot =
+            await getDocs(collection(db, "users"));
 
+        allUsers = [];
 
-  const requestsSnap =
-    await getDocs(
-      collection(
-        db,
-        "Requests"
-      )
-    );
+        snapshot.forEach((documentSnapshot) => {
 
+            const data = documentSnapshot.data();
 
-  requests =
-    requestsSnap.docs.map(
-      item => ({
-        id:item.id,
-        ...item.data()
-      })
-    );
+            allUsers.push({
+                id: documentSnapshot.id,
+                ...data
+            });
 
+        });
 
-  updateStats();
+        updateStatistics();
 
-  renderUsers();
+        renderUsers();
 
-  renderRequests();
+    }catch(error){
+
+        console.error(error);
+
+        usersContainer.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">!</div>
+                <h4>Unable to load users</h4>
+                <p>${escapeHtml(error.message)}</p>
+            </div>
+        `;
+
+        showToast(
+            "Unable to load users from Firebase.",
+            "error"
+        );
+
+    }
 
 }
 
 
 /* =========================================
-   STATS
+   STATISTICS
 ========================================= */
 
-function updateStats(){
+function updateStatistics(){
 
-  document.getElementById(
-    "totalUsers"
-  ).textContent =
-    users.length;
+    const total =
+        allUsers.length;
+
+    const pending =
+        allUsers.filter(
+            user => user.status === "pending"
+        ).length;
+
+    const approved =
+        allUsers.filter(
+            user => user.status === "approved"
+        ).length;
+
+    const rejected =
+        allUsers.filter(
+            user => user.status === "rejected"
+        ).length;
+
+    totalCount.textContent = total;
+
+    pendingCount.textContent = pending;
+
+    approvedCount.textContent = approved;
+
+    rejectedCount.textContent = rejected;
+}
 
 
-  document.getElementById(
-    "pendingUsers"
-  ).textContent =
-    users.filter(
-      user =>
-        user.status === "pending"
-    ).length;
+/* =========================================
+   FILTER
+========================================= */
 
+function getFilteredUsers(){
 
-  document.getElementById(
-    "approvedUsers"
-  ).textContent =
-    users.filter(
-      user =>
-        user.status === "approved"
-    ).length;
+    let users = [...allUsers];
 
+    if(currentFilter !== "all"){
 
-  document.getElementById(
-    "totalRequests"
-  ).textContent =
-    requests.length;
+        if(currentFilter === "disabled"){
 
+            users = users.filter(
+                user => user.disabled === true
+            );
+
+        }else{
+
+            users = users.filter(
+                user => user.status === currentFilter
+            );
+
+        }
+
+    }
+
+    if(searchTerm){
+
+        const search =
+            searchTerm.toLowerCase();
+
+        users = users.filter(user => {
+
+            const name =
+                String(user.name || "").toLowerCase();
+
+            const email =
+                String(user.email || "").toLowerCase();
+
+            const bio =
+                String(user.bio || "").toLowerCase();
+
+            const offered =
+                getSkills(user.offeredSkills)
+                    .join(" ")
+                    .toLowerCase();
+
+            const learning =
+                getSkills(
+                    user.learningSkills ||
+                    user.learningSkill
+                )
+                .join(" ")
+                .toLowerCase();
+
+            return (
+                name.includes(search) ||
+                email.includes(search) ||
+                bio.includes(search) ||
+                offered.includes(search) ||
+                learning.includes(search)
+            );
+
+        });
+
+    }
+
+    return users;
 }
 
 
@@ -1027,806 +1430,686 @@ function updateStats(){
 
 function renderUsers(){
 
-  const search =
-    searchInput.value
-      .trim()
-      .toLowerCase();
+    const users =
+        getFilteredUsers();
 
+    resultCount.textContent =
+        `${users.length} user${users.length === 1 ? "" : "s"}`;
 
-  const filtered =
-    users.filter(
-      user => {
+    if(users.length === 0){
 
-        const text =
-          [
-            user.name,
-            user.email,
-            ...(Array.isArray(
-              user.offeredSkills
-            )
-              ? user.offeredSkills
-              : [])
-          ]
-          .join(" ")
-          .toLowerCase();
+        usersContainer.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">◈</div>
+                <h4>No users found</h4>
+                <p>There are no users matching your current filter.</p>
+            </div>
+        `;
 
+        return;
+    }
 
-        return text.includes(search);
-
-      }
-    );
-
-
-  usersTable.innerHTML =
-    "";
-
-
-  if(!filtered.length){
-
-    usersTable.innerHTML = `
-      <tr>
-        <td colspan="5">
-          <div class="empty">
-            No users found.
-          </div>
-        </td>
-      </tr>
+    usersContainer.innerHTML = `
+        <div class="users-grid">
+            ${users.map(createUserCard).join("")}
+        </div>
     `;
 
-    return;
+    document
+        .querySelectorAll("[data-view-user]")
+        .forEach(button => {
 
-  }
+            button.addEventListener(
+                "click",
+                () => openUserModal(button.dataset.viewUser)
+            );
 
+        });
 
-  filtered.forEach(
-    user => {
+    document
+        .querySelectorAll("[data-action]")
+        .forEach(button => {
 
-      const row =
-        document.createElement(
-          "tr"
-        );
+            button.addEventListener(
+                "click",
+                () => {
 
+                    const action =
+                        button.dataset.action;
 
-      const skills =
-        Array.isArray(
-          user.offeredSkills
-        )
-          ? user.offeredSkills.join(", ")
-          : user.skill || "—";
+                    const id =
+                        button.dataset.id;
 
+                    handleAction(action, id);
 
-      const status =
-        user.status ||
-        "pending";
+                }
+            );
 
-
-      const statusClass =
-        status === "approved"
-          ? "approved"
-          : status === "rejected"
-            ? "rejected"
-            : status === "disabled"
-              ? "disabled"
-              : "pending";
-
-
-      row.innerHTML = `
-
-        <td>
-
-          <div class="user-name">
-            ${escapeHTML(
-              user.name ||
-              "Unnamed User"
-            )}
-          </div>
-
-          <div class="user-email">
-            ${escapeHTML(
-              user.email ||
-              "No email"
-            )}
-          </div>
-
-        </td>
-
-
-        <td>
-          ${escapeHTML(
-            skills || "—"
-          )}
-        </td>
-
-
-        <td>
-
-          <span class="badge ${statusClass}">
-            ${escapeHTML(status)}
-          </span>
-
-        </td>
-
-
-        <td>
-          ${escapeHTML(
-            user.role ||
-            "user"
-          )}
-        </td>
-
-
-        <td>
-
-          <div class="actions">
-
-            <button
-              class="action"
-              data-action="view"
-              data-id="${user.id}">
-              View
-            </button>
-
-            ${
-              status === "pending"
-                ? `
-                  <button
-                    class="action approve"
-                    data-action="approve"
-                    data-id="${user.id}">
-                    Approve
-                  </button>
-
-                  <button
-                    class="action reject"
-                    data-action="reject"
-                    data-id="${user.id}">
-                    Reject
-                  </button>
-                `
-                : ""
-            }
-
-            ${
-              status === "approved"
-                ? `
-                  <button
-                    class="action"
-                    data-action="disable"
-                    data-id="${user.id}">
-                    Disable
-                  </button>
-                `
-                : ""
-            }
-
-            ${
-              status === "disabled"
-                ? `
-                  <button
-                    class="action approve"
-                    data-action="enable"
-                    data-id="${user.id}">
-                    Enable
-                  </button>
-                `
-                : ""
-            }
-
-            ${
-              user.id !== currentAdmin.uid
-                ? `
-                  <button
-                    class="action delete"
-                    data-action="delete"
-                    data-id="${user.id}">
-                    Delete
-                  </button>
-                `
-                : ""
-            }
-
-          </div>
-
-        </td>
-
-      `;
-
-
-      usersTable.appendChild(
-        row
-      );
-
-    }
-  );
+        });
 
 }
 
 
 /* =========================================
-   USER ACTIONS
+   USER CARD
 ========================================= */
 
-usersTable.addEventListener(
-  "click",
-  async event => {
+function createUserCard(user){
 
-    const button =
-      event.target.closest(
-        "button[data-action]"
-      );
+    const name =
+        user.name || "Unnamed User";
 
+    const email =
+        user.email || "No email";
 
-    if(!button)
-      return;
+    const status =
+        user.status || "pending";
 
+    const skills =
+        getSkills(user.offeredSkills);
 
-    const action =
-      button.dataset.action;
+    const initials =
+        getInitials(name);
 
-    const id =
-      button.dataset.id;
+    const photo =
+        user.profilePhoto || "";
 
+    const avatar =
+        photo
+        ? `<img src="${escapeAttribute(photo)}" alt="Profile">`
+        : initials;
 
-    if(action === "view"){
+    let actions = `
+        <button
+            class="btn view"
+            data-view-user="${escapeAttribute(user.id)}">
+            View Full Details
+        </button>
+    `;
 
-      openProfile(id);
+    if(status === "pending"){
 
-      return;
+        actions += `
+            <button
+                class="btn approve"
+                data-action="approve"
+                data-id="${escapeAttribute(user.id)}">
+                Approve
+            </button>
+
+            <button
+                class="btn reject"
+                data-action="reject"
+                data-id="${escapeAttribute(user.id)}">
+                Reject
+            </button>
+        `;
+
+    }else if(status === "approved"){
+
+        actions += `
+            <button
+                class="btn disable"
+                data-action="disable"
+                data-id="${escapeAttribute(user.id)}">
+                Disable
+            </button>
+
+            <button
+                class="btn delete"
+                data-action="delete"
+                data-id="${escapeAttribute(user.id)}">
+                Delete
+            </button>
+        `;
+
+    }else if(status === "rejected"){
+
+        actions += `
+            <button
+                class="btn approve"
+                data-action="approve"
+                data-id="${escapeAttribute(user.id)}">
+                Approve
+            </button>
+
+            <button
+                class="btn delete"
+                data-action="delete"
+                data-id="${escapeAttribute(user.id)}">
+                Delete
+            </button>
+        `;
 
     }
+
+    if(user.disabled === true){
+
+        actions = `
+            <button
+                class="btn view"
+                data-view-user="${escapeAttribute(user.id)}">
+                View Full Details
+            </button>
+
+            <button
+                class="btn approve"
+                data-action="enable"
+                data-id="${escapeAttribute(user.id)}">
+                Enable User
+            </button>
+
+            <button
+                class="btn delete"
+                data-action="delete"
+                data-id="${escapeAttribute(user.id)}">
+                Delete
+            </button>
+        `;
+
+    }
+
+    return `
+        <article class="user-card">
+
+            <div class="user-top">
+
+                <div class="avatar">
+                    ${avatar}
+                </div>
+
+                <div class="user-info">
+
+                    <h4>
+                        ${escapeHtml(name)}
+                    </h4>
+
+                    <p>
+                        ${escapeHtml(email)}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="status ${escapeAttribute(status)}">
+
+                ${status === "pending" ? "● Pending Review" : ""}
+                ${status === "approved" ? "● Approved" : ""}
+                ${status === "rejected" ? "● Rejected" : ""}
+
+                ${user.disabled === true ? "● Disabled" : ""}
+
+            </div>
+
+            <div class="user-skills">
+
+                ${
+                    skills.length
+                    ? skills
+                        .slice(0,5)
+                        .map(skill =>
+                            `<span class="skill">
+                                ${escapeHtml(skill)}
+                            </span>`
+                        )
+                        .join("")
+                    : `<span class="skill">No skills added</span>`
+                }
+
+            </div>
+
+            <div class="user-actions">
+                ${actions}
+            </div>
+
+        </article>
+    `;
+}
+
+
+/* =========================================
+   VIEW USER
+========================================= */
+
+function openUserModal(userId){
+
+    const user =
+        allUsers.find(
+            item => item.id === userId
+        );
+
+    if(!user) return;
+
+    const name =
+        user.name || "Unnamed User";
+
+    const email =
+        user.email || "No email";
+
+    const offeredSkills =
+        getSkills(user.offeredSkills);
+
+    const learningSkills =
+        getSkills(
+            user.learningSkills ||
+            user.learningSkill
+        );
+
+    const evidence =
+        Array.isArray(user.evidence)
+        ? user.evidence
+        : [];
+
+    const photo =
+        user.profilePhoto || "";
+
+    const avatar =
+        photo
+        ? `<img src="${escapeAttribute(photo)}" alt="Profile">`
+        : getInitials(name);
+
+    modalContent.innerHTML = `
+
+        <div class="detail-header">
+
+            <div class="detail-avatar">
+                ${avatar}
+            </div>
+
+            <div>
+
+                <h2>
+                    ${escapeHtml(name)}
+                </h2>
+
+                <p>
+                    ${escapeHtml(email)}
+                </p>
+
+                <div class="status ${escapeAttribute(user.status || "pending")}">
+                    ${escapeHtml(user.status || "pending")}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h4>
+                User Information
+            </h4>
+
+            <div class="detail-grid">
+
+                <div class="detail-box">
+                    <label>User ID</label>
+                    <span>${escapeHtml(user.uid || user.id)}</span>
+                </div>
+
+                <div class="detail-box">
+                    <label>Role</label>
+                    <span>${escapeHtml(user.role || "user")}</span>
+                </div>
+
+                <div class="detail-box">
+                    <label>Email</label>
+                    <span>${escapeHtml(email)}</span>
+                </div>
+
+                <div class="detail-box">
+                    <label>Status</label>
+                    <span>${escapeHtml(user.status || "pending")}</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h4>
+                Bio
+            </h4>
+
+            <p>
+                ${escapeHtml(user.bio || "No bio provided.")}
+            </p>
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h4>
+                Skills Offered
+            </h4>
+
+            <div class="user-skills">
+
+                ${
+                    offeredSkills.length
+                    ? offeredSkills.map(skill =>
+                        `<span class="skill">
+                            ${escapeHtml(skill)}
+                        </span>`
+                    ).join("")
+                    : `<span class="skill">
+                        No skills provided
+                    </span>`
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h4>
+                Skills They Want To Learn
+            </h4>
+
+            <div class="user-skills">
+
+                ${
+                    learningSkills.length
+                    ? learningSkills.map(skill =>
+                        `<span class="skill">
+                            ${escapeHtml(skill)}
+                        </span>`
+                    ).join("")
+                    : `<span class="skill">
+                        No learning skills provided
+                    </span>`
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h4>
+                Skill Evidence
+            </h4>
+
+            <div class="evidence">
+
+                ${
+                    evidence.length
+                    ? evidence.map((item,index) => {
+
+                        if(typeof item === "string"){
+
+                            return `
+                                <div class="evidence-item">
+                                    Evidence ${index + 1}: 
+                                    ${escapeHtml(item)}
+                                </div>
+                            `;
+
+                        }
+
+                        return `
+                            <div class="evidence-item">
+                                ${
+                                    escapeHtml(
+                                        item.name ||
+                                        item.title ||
+                                        `Evidence ${index + 1}`
+                                    )
+                                }
+
+                                ${
+                                    item.type
+                                    ? ` — ${escapeHtml(item.type)}`
+                                    : ""
+                                }
+                            </div>
+                        `;
+
+                    }).join("")
+                    : `
+                        <div class="evidence-item">
+                            No skill evidence submitted.
+                        </div>
+                    `
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            ${
+                user.status !== "approved"
+                ? `
+                    <button
+                        class="btn approve"
+                        id="modalApprove">
+                        Approve User
+                    </button>
+                `
+                : ""
+            }
+
+            ${
+                user.status !== "rejected"
+                ? `
+                    <button
+                        class="btn reject"
+                        id="modalReject">
+                        Reject User
+                    </button>
+                `
+                : ""
+            }
+
+        </div>
+
+    `;
+
+    userModal.classList.add("show");
+
+
+    const approve =
+        document.getElementById("modalApprove");
+
+    const reject =
+        document.getElementById("modalReject");
+
+
+    if(approve){
+
+        approve.onclick = async () => {
+
+            await handleAction(
+                "approve",
+                user.id
+            );
+
+            closeUserModal();
+
+        };
+
+    }
+
+
+    if(reject){
+
+        reject.onclick = async () => {
+
+            await handleAction(
+                "reject",
+                user.id
+            );
+
+            closeUserModal();
+
+        };
+
+    }
+
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+async function handleAction(action,userId){
+
+    const user =
+        allUsers.find(
+            item => item.id === userId
+        );
+
+    if(!user) return;
+
+
+    let message = "";
 
 
     if(action === "approve"){
-
-      await changeStatus(
-        id,
-        "approved"
-      );
-
-      return;
-
+        message = `Approve ${user.name || "this user"}?`;
     }
-
 
     if(action === "reject"){
-
-      await changeStatus(
-        id,
-        "rejected"
-      );
-
-      return;
-
+        message = `Reject ${user.name || "this user"}?`;
     }
-
 
     if(action === "disable"){
-
-      await changeStatus(
-        id,
-        "disabled"
-      );
-
-      return;
-
+        message = `Disable ${user.name || "this user"}?`;
     }
-
 
     if(action === "enable"){
-
-      await changeStatus(
-        id,
-        "approved"
-      );
-
-      return;
-
+        message = `Enable ${user.name || "this user"}?`;
     }
-
 
     if(action === "delete"){
-
-      await deleteUser(
-        id
-      );
-
+        message =
+            `Delete the Firestore profile of ${user.name || "this user"}?`;
     }
 
-  }
-);
 
-
-/* =========================================
-   CHANGE STATUS
-========================================= */
-
-async function changeStatus(
-  id,
-  status
-){
-
-  if(id === currentAdmin.uid){
-
-    alert(
-      "You cannot change your own admin status."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    await updateDoc(
-      doc(
-        db,
-        "users",
-        id
-      ),
-      {
-        status
-      }
-    );
-
-
-    await loadData();
-
-  }
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Unable to update user."
-    );
-
-  }
-
-}
-
-
-/* =========================================
-   DELETE USER
-========================================= */
-
-async function deleteUser(id){
-
-  if(id === currentAdmin.uid){
-
-    alert(
-      "You cannot delete your own admin account."
-    );
-
-    return;
-
-  }
-
-
-  const user =
-    users.find(
-      item =>
-        item.id === id
-    );
-
-
-  if(!user)
-    return;
-
-
-  const confirmed =
-    confirm(
-      `Delete ${user.name || "this user"}?`
-    );
-
-
-  if(!confirmed)
-    return;
-
-
-  try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "users",
-        id
-      )
-    );
-
-
-    await loadData();
-
-  }
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Unable to delete user profile."
-    );
-
-  }
-
-}
-
-
-/* =========================================
-   PROFILE MODAL
-========================================= */
-
-function openProfile(id){
-
-  selectedUser =
-    users.find(
-      user =>
-        user.id === id
-    );
-
-
-  if(!selectedUser)
-    return;
-
-
-  document.getElementById(
-    "modalName"
-  ).textContent =
-    selectedUser.name ||
-    "Unnamed User";
-
-
-  document.getElementById(
-    "modalEmail"
-  ).textContent =
-    selectedUser.email ||
-    "No email";
-
-
-  document.getElementById(
-    "modalStatus"
-  ).textContent =
-    "Status: " +
-    (
-      selectedUser.status ||
-      "pending"
-    );
-
-
-  document.getElementById(
-    "modalBio"
-  ).textContent =
-    selectedUser.bio ||
-    "No bio provided.";
-
-
-  const offered =
-    Array.isArray(
-      selectedUser.offeredSkills
-    )
-      ? selectedUser.offeredSkills.join(", ")
-      : selectedUser.skill ||
-        "No skills listed";
-
-
-  const learning =
-    Array.isArray(
-      selectedUser.learningSkills
-    )
-      ? selectedUser.learningSkills.join(", ")
-      : Array.isArray(
-          selectedUser.learningSkill
-        )
-          ? selectedUser.learningSkill.join(", ")
-          : selectedUser.learningSkill ||
-            "No learning skills listed";
-
-
-  document.getElementById(
-    "modalOffered"
-  ).textContent =
-    offered;
-
-
-  document.getElementById(
-    "modalLearning"
-  ).textContent =
-    learning;
-
-
-  const evidence =
-    selectedUser.evidence;
-
-
-  if(
-    Array.isArray(evidence) &&
-    evidence.length
-  ){
-
-    document.getElementById(
-      "modalEvidence"
-    ).textContent =
-      evidence
-        .map(
-          item =>
-            item.fileName ||
-            item.name ||
-            "Evidence file"
-        )
-        .join(", ");
-
-  }
-  else{
-
-    document.getElementById(
-      "modalEvidence"
-    ).textContent =
-      "No evidence uploaded.";
-
-  }
-
-
-  const photo =
-    document.getElementById(
-      "modalPhoto"
-    );
-
-
-  if(selectedUser.profilePhoto){
-
-    photo.src =
-      selectedUser.profilePhoto;
-
-  }
-  else{
-
-    photo.removeAttribute(
-      "src"
-    );
-
-  }
-
-
-  document.getElementById(
-    "profileModal"
-  )
-  .classList
-  .add("show");
-
-}
-
-
-/* =========================================
-   MODAL ACTIONS
-========================================= */
-
-document.getElementById(
-  "modalApprove"
-).addEventListener(
-  "click",
-  async () => {
-
-    if(!selectedUser)
-      return;
-
-    await changeStatus(
-      selectedUser.id,
-      "approved"
-    );
-
-    closeModal();
-
-  }
-);
-
-
-document.getElementById(
-  "modalReject"
-).addEventListener(
-  "click",
-  async () => {
-
-    if(!selectedUser)
-      return;
-
-    await changeStatus(
-      selectedUser.id,
-      "rejected"
-    );
-
-    closeModal();
-
-  }
-);
-
-
-function closeModal(){
-
-  document.getElementById(
-    "profileModal"
-  )
-  .classList
-  .remove("show");
-
-}
-
-
-document.getElementById(
-  "closeModal"
-).addEventListener(
-  "click",
-  closeModal
-);
-
-
-document.getElementById(
-  "profileModal"
-).addEventListener(
-  "click",
-  event => {
-
-    if(
-      event.target.id ===
-      "profileModal"
-    ){
-
-      closeModal();
-
+    if(!confirm(message)){
+        return;
     }
 
-  }
-);
+
+    try{
+
+        const userRef =
+            doc(db,"users",userId);
 
 
-/* =========================================
-   REQUESTS
-========================================= */
+        if(action === "approve"){
 
-function renderRequests(){
-
-  requestsTable.innerHTML =
-    "";
-
-
-  if(!requests.length){
-
-    requestsTable.innerHTML = `
-      <tr>
-        <td colspan="4">
-          <div class="empty">
-            No exchange requests found.
-          </div>
-        </td>
-      </tr>
-    `;
-
-    return;
-
-  }
-
-
-  requests.forEach(
-    request => {
-
-      const row =
-        document.createElement(
-          "tr"
-        );
-
-
-      row.innerHTML = `
-
-        <td>
-          ${escapeHTML(
-            request.senderName ||
-            request.senderId ||
-            "Unknown"
-          )}
-        </td>
-
-        <td>
-          ${escapeHTML(
-            request.receiverName ||
-            request.receiverId ||
-            "Unknown"
-          )}
-        </td>
-
-        <td>
-          ${escapeHTML(
-            request.skill ||
-            "—"
-          )}
-        </td>
-
-        <td>
-          <span class="badge ${
-            request.status === "accepted"
-              ? "approved"
-              : request.status === "rejected"
-                ? "rejected"
-                : "pending"
-          }">
-            ${escapeHTML(
-              request.status ||
-              "pending"
-            )}
-          </span>
-        </td>
-
-      `;
-
-
-      requestsTable.appendChild(
-        row
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================
-   NAVIGATION
-========================================= */
-
-document
-  .querySelectorAll(".nav button")
-  .forEach(
-    button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          document
-            .querySelectorAll(
-              ".nav button"
-            )
-            .forEach(
-              item =>
-                item.classList
-                  .remove("active")
+            await updateDoc(
+                userRef,
+                {
+                    status:"approved",
+                    disabled:false
+                }
             );
 
-
-          button.classList
-            .add("active");
-
-
-          const section =
-            button.dataset.section;
-
-
-          document.getElementById(
-            "usersSection"
-          ).style.display =
-            section === "users"
-              ? "block"
-              : "none";
-
-
-          document.getElementById(
-            "requestsSection"
-          ).style.display =
-            section === "requests"
-              ? "block"
-              : "none";
-
-
-          document.getElementById(
-            "activitySection"
-          ).style.display =
-            section === "activity"
-              ? "block"
-              : "none";
+            showToast(
+                `${user.name || "User"} approved successfully.`,
+                "success"
+            );
 
         }
 
-      );
+
+        if(action === "reject"){
+
+            await updateDoc(
+                userRef,
+                {
+                    status:"rejected"
+                }
+            );
+
+            showToast(
+                `${user.name || "User"} rejected.`,
+                "success"
+            );
+
+        }
+
+
+        if(action === "disable"){
+
+            await updateDoc(
+                userRef,
+                {
+                    disabled:true
+                }
+            );
+
+            showToast(
+                `${user.name || "User"} disabled.`,
+                "success"
+            );
+
+        }
+
+
+        if(action === "enable"){
+
+            await updateDoc(
+                userRef,
+                {
+                    disabled:false,
+                    status:"approved"
+                }
+            );
+
+            showToast(
+                `${user.name || "User"} enabled.`,
+                "success"
+            );
+
+        }
+
+
+        if(action === "delete"){
+
+            await deleteDoc(userRef);
+
+            showToast(
+                "Firestore user profile deleted.",
+                "success"
+            );
+
+        }
+
+
+        await loadUsers();
+
+
+    }catch(error){
+
+        console.error(
+            "Admin action error:",
+            error
+        );
+
+        showToast(
+            `Unable to ${action}: ${error.message}`,
+            "error"
+        );
 
     }
-  );
+
+}
 
 
 /* =========================================
@@ -1834,81 +2117,270 @@ document
 ========================================= */
 
 searchInput.addEventListener(
-  "input",
-  renderUsers
+    "input",
+    event => {
+
+        searchTerm =
+            event.target.value.trim();
+
+        renderUsers();
+
+    }
 );
+
+
+/* =========================================
+   FILTER BUTTONS
+========================================= */
+
+document
+    .querySelectorAll(".filter")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".filter")
+                    .forEach(btn =>
+                        btn.classList.remove("active")
+                    );
+
+                button.classList.add("active");
+
+                currentFilter =
+                    button.dataset.filter;
+
+                renderUsers();
+
+            }
+        );
+
+    });
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+closeModal.addEventListener(
+    "click",
+    closeUserModal
+);
+
+userModal.addEventListener(
+    "click",
+    event => {
+
+        if(event.target === userModal){
+            closeUserModal();
+        }
+
+    }
+);
+
+function closeUserModal(){
+
+    userModal.classList.remove("show");
+
+}
 
 
 /* =========================================
    LOGOUT
 ========================================= */
 
-document.getElementById(
-  "logoutBtn"
-).addEventListener(
-  "click",
-  async () => {
+logoutBtn.addEventListener(
+    "click",
+    async () => {
 
-    try{
+        try{
 
-      await signOut(
-        auth
-      );
+            await signOut(auth);
 
-    }
-    finally{
+            window.location.href =
+                "admin-login.html";
 
-      localStorage.removeItem(
-        "adminLoggedIn"
-      );
+        }catch(error){
 
-      localStorage.removeItem(
-        "adminUser"
-      );
+            console.error(error);
 
-      window.location.href =
-        "admin-login.html";
+        }
 
     }
-
-  }
 );
 
 
 /* =========================================
-   HTML ESCAPE
+   SKILLS HELPER
 ========================================= */
 
-function escapeHTML(value){
+function getSkills(value){
 
-  return String(
-    value ?? ""
-  )
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
-  .replaceAll(
-    '"',
-    "&quot;"
-  )
-  .replaceAll(
-    "'",
-    "&#039;"
-  );
+    if(Array.isArray(value)){
+        return value
+            .filter(Boolean)
+            .map(item => {
+
+                if(typeof item === "string"){
+                    return item;
+                }
+
+                return item.name ||
+                       item.skill ||
+                       String(item);
+
+            });
+    }
+
+    if(typeof value === "string" && value.trim()){
+
+        return value
+            .split(",")
+            .map(item => item.trim())
+            .filter(Boolean);
+
+    }
+
+    return [];
 
 }
+
+
+/* =========================================
+   INITIALS
+========================================= */
+
+function getInitials(name){
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(word =>
+            word.charAt(0).toUpperCase()
+        )
+        .join("") || "U";
+
+}
+
+
+/* =========================================
+   ESCAPE HELPERS
+========================================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+function escapeAttribute(value){
+
+    return escapeHtml(value);
+
+}
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+function showToast(message,type="success"){
+
+    clearTimeout(toastTimer);
+
+    toast.textContent =
+        message;
+
+    toast.className =
+        `toast ${type} show`;
+
+    toastTimer =
+        setTimeout(
+            () => {
+                toast.classList.remove("show");
+            },
+            3500
+        );
+
+}
+
+
+/* =========================================
+   PARTICLES
+========================================= */
+
+const particles =
+    document.getElementById("particles");
+
+for(let i=0;i<65;i++){
+
+    const particle =
+        document.createElement("div");
+
+    particle.className =
+        "particle";
+
+    particle.style.left =
+        Math.random()*100 + "%";
+
+    particle.style.animationDuration =
+        (8 + Math.random()*15) + "s";
+
+    particle.style.animationDelay =
+        (-Math.random()*20) + "s";
+
+    particle.style.opacity =
+        (0.15 + Math.random()*0.5);
+
+    particles.appendChild(particle);
+
+}
+
+
+/* =========================================
+   MOUSE 3D EFFECT
+========================================= */
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        const x =
+            (event.clientX /
+            window.innerWidth - .5);
+
+        const y =
+            (event.clientY /
+            window.innerHeight - .5);
+
+        document
+            .querySelectorAll(".stat")
+            .forEach((card,index) => {
+
+                const strength =
+                    2 + index * .15;
+
+                card.style.transform =
+                    `perspective(800px)
+                     rotateY(${x * strength}deg)
+                     rotateX(${-y * strength}deg)`;
+
+            });
+
+    }
+);
 
 </script>
 
 </body>
 </html>
-```
