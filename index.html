@@ -36,16 +36,20 @@
             justify-content: center;
 
             position: relative;
-
-            animation: fadeIn 0.8s ease forwards;
         }
 
         .title {
-            color: #fff;
+            color: white;
             font-size: clamp(32px, 7vw, 58px);
             font-weight: 600;
             letter-spacing: -1px;
-            text-align: center;
+
+            opacity: 0;
+            transform: translateY(10px);
+
+            animation:
+                titleAppear 1s ease forwards,
+                titleDisappear 0.8s ease forwards 3s;
         }
 
         .credit {
@@ -54,29 +58,41 @@
 
             color: #777;
             font-size: 14px;
-            font-weight: 400;
             letter-spacing: 0.3px;
 
-            animation: creditFade 1.2s ease forwards;
+            opacity: 0;
+            transform: translateY(8px);
+
+            animation:
+                creditAppear 1s ease forwards 0.5s,
+                creditDisappear 0.8s ease forwards 3s;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
+        @keyframes titleAppear {
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @keyframes creditFade {
-            from {
+        @keyframes titleDisappear {
+            to {
                 opacity: 0;
+                transform: translateY(-10px);
             }
+        }
 
+        @keyframes creditAppear {
             to {
                 opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes creditDisappear {
+            to {
+                opacity: 0;
+                transform: translateY(8px);
             }
         }
     </style>
@@ -99,7 +115,7 @@
     <script>
         setTimeout(() => {
             window.location.href = "login.html";
-        }, 2500);
+        }, 3800);
     </script>
 
 </body>
