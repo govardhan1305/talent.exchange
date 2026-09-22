@@ -2,258 +2,640 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
 <title>Talent Exchange</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
-    font-family:Arial,Helvetica,sans-serif;
     background:#020207;
     color:white;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-/* =========================
+/* ================================
    SPLASH
-========================= */
+================================ */
 
 #splash{
+
     position:fixed;
+
     inset:0;
-    z-index:9999;
+
+    width:100vw;
+    height:100vh;
+
     overflow:hidden;
-    background:
-        radial-gradient(circle at center,
-        #17103a 0%,
-        #08051b 28%,
-        #020207 65%,
-        #000 100%);
+
     display:flex;
+
     align-items:center;
     justify-content:center;
-    perspective:1200px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #1b1045 0%,
+            #0b0622 25%,
+            #03030b 60%,
+            #000 100%
+        );
+
+    perspective:1400px;
+
+    z-index:99999;
+
+    transition:
+        opacity 1.2s ease,
+        transform 1.2s ease;
 }
 
-canvas{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-}
 
-/* Stars */
+/* ================================
+   STAR FIELD
+================================ */
 
 .stars{
+
     position:absolute;
-    inset:0;
+
+    inset:-20%;
+
     background-image:
-        radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 1px),
-        radial-gradient(circle,rgba(130,80,255,.7) 1px,transparent 1px);
-    background-size:90px 90px,140px 140px;
-    animation:starMove 12s linear infinite;
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.9) 1px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle,
+            rgba(130,80,255,.8) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        80px 80px,
+        140px 140px;
+
     opacity:.35;
+
+    animation:
+        starMove 14s linear infinite;
+
+    pointer-events:none;
 }
 
 @keyframes starMove{
-    from{
-        transform:translateY(0) scale(1);
-    }
-    to{
-        transform:translateY(-180px) scale(1.15);
-    }
-}
 
-/* Energy glow */
-
-.energy{
-    position:absolute;
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    background:white;
-    box-shadow:
-        0 0 20px #fff,
-        0 0 60px #7c3cff,
-        0 0 130px #5b21ff,
-        0 0 250px #3210ff;
-    animation:
-        energyAppear 1s ease forwards,
-        energyPulse 1.5s ease-in-out infinite 1s;
-}
-
-@keyframes energyAppear{
-    from{
-        transform:scale(0);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-}
-
-@keyframes energyPulse{
-    0%,100%{
-        transform:scale(1);
-    }
-    50%{
-        transform:scale(2);
-    }
-}
-
-/* Rings */
-
-.ring{
-    position:absolute;
-    width:420px;
-    height:420px;
-    border-radius:50%;
-    border:1px solid rgba(130,80,255,.5);
-    box-shadow:
-        0 0 25px rgba(100,50,255,.5),
-        inset 0 0 25px rgba(100,50,255,.25);
-    opacity:0;
-    transform:rotateX(70deg) scale(.1);
-}
-
-.ring1{
-    animation:ringIn 1.4s ease forwards 1s,
-              ringRotate 8s linear infinite 2.4s;
-}
-
-.ring2{
-    width:600px;
-    height:600px;
-    border-color:rgba(0,200,255,.25);
-    animation:ringIn 1.6s ease forwards 1.2s,
-              ringRotate2 12s linear infinite 2.8s;
-}
-
-@keyframes ringIn{
-    to{
-        opacity:1;
-        transform:rotateX(70deg) scale(1);
-    }
-}
-
-@keyframes ringRotate{
-    to{
-        transform:rotateX(70deg) rotateZ(360deg);
-    }
-}
-
-@keyframes ringRotate2{
-    to{
-        transform:rotateX(70deg) rotateZ(-360deg);
-    }
-}
-
-/* Main logo */
-
-.logoScene{
-    position:relative;
-    z-index:10;
-    text-align:center;
-    transform-style:preserve-3d;
-    animation:logoEntrance 1.2s cubic-bezier(.16,1,.3,1) forwards 1.5s;
-    opacity:0;
-}
-
-@keyframes logoEntrance{
     0%{
-        opacity:0;
         transform:
-            translateZ(-800px)
-            rotateX(35deg)
-            scale(.2);
-        filter:blur(20px);
+            translate3d(0,0,0)
+            scale(1);
     }
 
-    70%{
-        opacity:1;
+    50%{
         transform:
-            translateZ(80px)
-            rotateX(-5deg)
-            scale(1.08);
-        filter:blur(0);
+            translate3d(-30px,-80px,0)
+            scale(1.05);
     }
 
     100%{
-        opacity:1;
         transform:
-            translateZ(0)
-            rotateX(0)
-            scale(1);
+            translate3d(0,-160px,0)
+            scale(1.1);
     }
+
 }
 
-/* Logo symbol */
+
+/* ================================
+   PARTICLES
+================================ */
+
+#particles{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    pointer-events:none;
+
+}
+
+
+/* ================================
+   ENERGY CORE
+================================ */
+
+.energy{
+
+    position:absolute;
+
+    width:18px;
+    height:18px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+
+        0 0 15px white,
+
+        0 0 40px #8b5cf6,
+
+        0 0 90px #6d28d9,
+
+        0 0 180px #4c1d95,
+
+        0 0 300px #312e81;
+
+    animation:
+
+        energyAppear 1s ease forwards,
+
+        energyPulse 2s ease-in-out infinite 1s;
+
+}
+
+
+@keyframes energyAppear{
+
+    from{
+
+        transform:scale(0);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+
+@keyframes energyPulse{
+
+    0%,
+    100%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(2.5);
+
+    }
+
+}
+
+
+/* ================================
+   ENERGY RINGS
+================================ */
+
+.ring{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    border:1px solid rgba(139,92,246,.5);
+
+    box-shadow:
+
+        0 0 25px rgba(124,58,237,.4),
+
+        inset 0 0 25px rgba(124,58,237,.2);
+
+    opacity:0;
+
+    transform:
+        rotateX(70deg)
+        scale(.1);
+
+    pointer-events:none;
+
+}
+
+
+.ring1{
+
+    width:420px;
+    height:420px;
+
+    animation:
+
+        ringAppear 1.5s ease forwards 1s,
+
+        ringRotate 8s linear infinite 2.5s;
+
+}
+
+
+.ring2{
+
+    width:620px;
+    height:620px;
+
+    border-color:
+        rgba(0,200,255,.25);
+
+    animation:
+
+        ringAppear 1.8s ease forwards 1.2s,
+
+        ringRotateReverse 12s linear infinite 2.8s;
+
+}
+
+
+.ring3{
+
+    width:800px;
+    height:800px;
+
+    border-color:
+        rgba(255,255,255,.08);
+
+    animation:
+
+        ringAppear 2s ease forwards 1.4s,
+
+        ringRotate 18s linear infinite 3s;
+
+}
+
+
+@keyframes ringAppear{
+
+    to{
+
+        opacity:1;
+
+        transform:
+            rotateX(70deg)
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes ringRotate{
+
+    to{
+
+        transform:
+            rotateX(70deg)
+            rotateZ(360deg);
+
+    }
+
+}
+
+
+@keyframes ringRotateReverse{
+
+    to{
+
+        transform:
+            rotateX(70deg)
+            rotateZ(-360deg);
+
+    }
+
+}
+
+
+/* ================================
+   PORTAL
+================================ */
+
+.portal{
+
+    position:absolute;
+
+    width:900px;
+    height:900px;
+
+    border-radius:50%;
+
+    border:
+
+        2px solid
+        rgba(124,58,237,.25);
+
+    box-shadow:
+
+        0 0 60px #4c1d95,
+
+        0 0 120px rgba(76,29,149,.3),
+
+        inset 0 0 120px rgba(99,102,241,.25);
+
+    animation:
+
+        portalSpin 12s linear infinite,
+
+        portalPulse 3s ease-in-out infinite;
+
+    opacity:.75;
+
+    pointer-events:none;
+
+}
+
+
+.portal::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:8%;
+
+    border-radius:50%;
+
+    border:
+
+        1px solid
+        rgba(96,165,250,.3);
+
+}
+
+
+.portal::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:20%;
+
+    border-radius:50%;
+
+    border:
+
+        1px solid
+        rgba(168,85,247,.4);
+
+}
+
+
+@keyframes portalSpin{
+
+    to{
+
+        transform:
+            rotateZ(360deg);
+
+    }
+
+}
+
+
+@keyframes portalPulse{
+
+    0%,
+    100%{
+
+        scale:1;
+
+    }
+
+    50%{
+
+        scale:1.05;
+
+    }
+
+}
+
+
+/* ================================
+   LOGO SCENE
+================================ */
+
+.logoScene{
+
+    position:relative;
+
+    z-index:20;
+
+    text-align:center;
+
+    transform-style:preserve-3d;
+
+    opacity:0;
+
+    animation:
+
+        logoEntrance
+        1.4s
+        cubic-bezier(.16,1,.3,1)
+        forwards
+        1.5s;
+
+    transition:
+
+        transform .25s ease-out;
+
+}
+
+
+@keyframes logoEntrance{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+
+            translateZ(-900px)
+
+            rotateX(40deg)
+
+            scale(.15);
+
+        filter:blur(30px);
+
+    }
+
+
+    60%{
+
+        opacity:1;
+
+        transform:
+
+            translateZ(100px)
+
+            rotateX(-8deg)
+
+            scale(1.08);
+
+        filter:blur(0);
+
+    }
+
+
+    100%{
+
+        opacity:1;
+
+        transform:
+
+            translateZ(0)
+
+            rotateX(0)
+
+            scale(1);
+
+    }
+
+}
+
+
+/* ================================
+   TX LOGO
+================================ */
 
 .symbol{
-    width:80px;
-    height:80px;
-    margin:0 auto 25px;
+
+    width:82px;
+    height:82px;
+
+    margin:
+
+        0 auto
+        25px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
-    font-size:50px;
+    border-radius:22px;
+
+    font-size:44px;
+
     font-weight:900;
 
     color:white;
 
-    border-radius:22px;
-
     background:
-        linear-gradient(135deg,
-        #7c3cff,
-        #3210ff 50%,
-        #00c8ff);
+
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #4f21d8 50%,
+            #06b6d4
+        );
 
     box-shadow:
-        0 0 20px #713cff,
-        0 0 70px rgba(100,50,255,.8),
-        inset 0 0 20px rgba(255,255,255,.3);
 
-    transform:rotateX(15deg) rotateY(-15deg);
+        0 0 20px #7c3aed,
 
-    animation:symbolFloat 3s ease-in-out infinite;
+        0 0 60px rgba(124,58,237,.7),
+
+        0 0 120px rgba(6,182,212,.3),
+
+        inset 0 0 25px rgba(255,255,255,.3);
+
+    transform-style:preserve-3d;
+
+    animation:
+
+        symbolFloat
+        3s
+        ease-in-out
+        infinite;
+
 }
 
+
 @keyframes symbolFloat{
-    0%,100%{
+
+    0%,
+    100%{
+
         transform:
+
             rotateX(15deg)
+
             rotateY(-15deg)
+
             translateY(0);
+
     }
 
     50%{
+
         transform:
+
             rotateX(-15deg)
+
             rotateY(15deg)
-            translateY(-10px);
+
+            translateY(-12px);
+
     }
+
 }
 
-/* Main title */
+
+/* ================================
+   TITLE
+================================ */
 
 .title{
-    font-size:clamp(42px,7vw,92px);
+
+    font-size:
+
+        clamp(
+            42px,
+            7vw,
+            92px
+        );
+
     font-weight:900;
+
     letter-spacing:12px;
 
+    line-height:1.05;
+
     background:
+
         linear-gradient(
             90deg,
             #ffffff,
@@ -265,226 +647,464 @@ canvas{
     background-size:300% auto;
 
     -webkit-background-clip:text;
+
     background-clip:text;
+
     color:transparent;
 
     text-shadow:
-        0 0 25px rgba(124,58,237,.7),
-        0 0 70px rgba(59,130,246,.35);
 
-    animation:textShine 4s linear infinite;
-}
+        0 0 25px
+        rgba(124,58,237,.7),
 
-@keyframes textShine{
-    to{
-        background-position:300% center;
-    }
-}
-
-.subtitle{
-    margin-top:14px;
-    font-size:clamp(12px,1.5vw,18px);
-    letter-spacing:8px;
-    color:#c4b5fd;
-    opacity:.9;
-}
-
-/* Signature */
-
-.signature{
-    margin-top:25px;
-    font-size:13px;
-    letter-spacing:4px;
-    color:#aaa;
-}
-
-/* Portal */
-
-.portal{
-    position:absolute;
-    width:900px;
-    height:900px;
-    border-radius:50%;
-
-    border:2px solid rgba(124,58,237,.25);
-
-    box-shadow:
-        0 0 60px #4c1d95,
-        inset 0 0 100px rgba(99,102,241,.2);
+        0 0 70px
+        rgba(59,130,246,.35);
 
     animation:
-        portalSpin 8s linear infinite,
-        portalPulse 2s ease-in-out infinite;
 
-    opacity:.7;
+        textShine
+        4s
+        linear
+        infinite;
+
 }
 
-.portal:before,
-.portal:after{
-    content:"";
-    position:absolute;
-    inset:8%;
-    border-radius:50%;
-    border:1px solid rgba(96,165,250,.25);
-}
 
-.portal:after{
-    inset:20%;
-    border-color:rgba(168,85,247,.35);
-}
+@keyframes textShine{
 
-@keyframes portalSpin{
     to{
-        transform:rotateZ(360deg);
+
+        background-position:
+            300% center;
+
     }
+
 }
 
-@keyframes portalPulse{
-    0%,100%{
-        transform:scale(1);
-    }
 
-    50%{
-        transform:scale(1.04);
-    }
+/* ================================
+   SUBTITLE
+================================ */
+
+.subtitle{
+
+    margin-top:18px;
+
+    font-size:
+
+        clamp(
+            11px,
+            1.5vw,
+            18px
+        );
+
+    letter-spacing:8px;
+
+    color:#c4b5fd;
+
+    opacity:.9;
+
 }
 
-/* Bottom text */
+
+/* ================================
+   SIGNATURE
+================================ */
+
+.signature{
+
+    margin-top:25px;
+
+    font-size:12px;
+
+    letter-spacing:4px;
+
+    color:#999;
+
+}
+
+
+/* ================================
+   LOADING
+================================ */
 
 .loading{
+
     position:absolute;
+
     bottom:35px;
+
     left:50%;
-    transform:translateX(-50%);
-    font-size:10px;
+
+    transform:
+        translateX(-50%);
+
+    font-size:9px;
+
     letter-spacing:5px;
+
     color:#777;
+
+    white-space:nowrap;
+
 }
 
-/* =========================
+
+/* ================================
    MAIN PAGE
-========================= */
+================================ */
 
 #main{
+
+    position:fixed;
+
+    inset:0;
+
     width:100%;
     height:100%;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     background:
-        radial-gradient(circle at 20% 20%,#21104a,transparent 35%),
-        radial-gradient(circle at 80% 80%,#101d4a,transparent 35%),
+
+        radial-gradient(
+            circle at 20% 20%,
+            #21104a,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 80% 80%,
+            #101d4a,
+            transparent 35%
+        ),
+
         #050509;
 
     opacity:0;
+
     transform:scale(1.08);
+
     transition:
+
         opacity 1.2s ease,
+
         transform 1.2s ease;
+
 }
+
 
 #main.show{
+
     opacity:1;
+
     transform:scale(1);
+
 }
+
+
+/* ================================
+   LOGIN BOX
+================================ */
 
 .loginBox{
-    width:min(430px,90%);
+
+    width:
+
+        min(
+            430px,
+            90%
+        );
+
     padding:45px;
+
     border-radius:28px;
 
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
+    background:
 
-    backdrop-filter:blur(25px);
+        rgba(
+            255,
+            255,
+            255,
+            .06
+        );
+
+    border:
+
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .12
+        );
+
+    backdrop-filter:
+        blur(25px);
 
     box-shadow:
-        0 30px 100px rgba(0,0,0,.6),
-        0 0 50px rgba(99,50,255,.18);
+
+        0 30px 100px
+        rgba(0,0,0,.6),
+
+        0 0 50px
+        rgba(99,50,255,.18);
 
     text-align:center;
+
 }
+
 
 .loginBox h1{
+
     font-size:32px;
+
     margin-bottom:10px;
+
 }
+
 
 .loginBox p{
+
     color:#aaa;
+
     margin-bottom:30px;
+
 }
 
+
 .btn{
+
     width:100%;
+
     padding:16px;
+
     margin-top:12px;
 
     border-radius:14px;
-    border:1px solid rgba(255,255,255,.15);
 
-    background:linear-gradient(
-        135deg,
-        #7c3cff,
-        #4f21d8
-    );
+    border:
+
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .15
+        );
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #7c3cff,
+            #4f21d8
+        );
 
     color:white;
+
     font-size:16px;
+
     font-weight:bold;
 
     cursor:pointer;
 
     transition:.3s;
+
 }
+
 
 .btn:hover{
-    transform:translateY(-4px) scale(1.02);
+
+    transform:
+        translateY(-4px)
+        scale(1.02);
 
     box-shadow:
-        0 15px 40px rgba(124,58,237,.4);
+
+        0 15px 40px
+        rgba(
+            124,
+            58,
+            237,
+            .4
+        );
+
 }
+
 
 .btn.secondary{
-    background:rgba(255,255,255,.05);
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            .05
+        );
+
 }
 
-/* Mobile */
+
+/* ================================
+   MOBILE
+================================ */
 
 @media(max-width:600px){
 
-    .title{
-        letter-spacing:5px;
-        font-size:42px;
+    #splash{
+
+        perspective:900px;
+
     }
+
+
+    .title{
+
+        font-size:
+
+            clamp(
+                34px,
+                11vw,
+                52px
+            );
+
+        letter-spacing:5px;
+
+    }
+
 
     .subtitle{
+
+        font-size:10px;
+
         letter-spacing:4px;
+
+        margin-top:14px;
+
     }
 
-    .ring{
-        width:300px;
-        height:300px;
+
+    .signature{
+
+        font-size:10px;
+
+        letter-spacing:3px;
+
     }
+
+
+    .symbol{
+
+        width:68px;
+
+        height:68px;
+
+        font-size:35px;
+
+        border-radius:18px;
+
+    }
+
+
+    .ring1{
+
+        width:280px;
+
+        height:280px;
+
+    }
+
+
+    .ring2{
+
+        width:410px;
+
+        height:410px;
+
+    }
+
+
+    .ring3{
+
+        width:540px;
+
+        height:540px;
+
+    }
+
 
     .portal{
+
         width:500px;
+
         height:500px;
+
     }
 
-    .loginBox{
-        padding:30px 22px;
+
+    .loading{
+
+        bottom:24px;
+
+        font-size:7px;
+
+        letter-spacing:3px;
+
     }
+
+
+    .loginBox{
+
+        width:88%;
+
+        padding:32px 22px;
+
+    }
+
+
+    .loginBox h1{
+
+        font-size:27px;
+
+    }
+
 }
+
+
+/* ================================
+   REDUCED MOTION
+================================ */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+
+        animation-duration:.01ms !important;
+
+        animation-iteration-count:1 !important;
+
+        transition-duration:.01ms !important;
+
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- =========================
-     SPLASH SCREEN
-========================= -->
+
+<!-- ==================================
+     SPLASH
+================================== -->
 
 <section id="splash">
 
@@ -495,13 +1115,19 @@ canvas{
     <div class="portal"></div>
 
     <div class="ring ring1"></div>
+
     <div class="ring ring2"></div>
+
+    <div class="ring ring3"></div>
 
     <div class="energy"></div>
 
-    <div class="logoScene">
 
-        <div class="symbol">TX</div>
+    <div class="logoScene" id="logoScene">
+
+        <div class="symbol">
+            TX
+        </div>
 
         <div class="title">
             TALENT
@@ -521,6 +1147,7 @@ canvas{
 
     </div>
 
+
     <div class="loading">
         ENTERING THE TALENT UNIVERSE
     </div>
@@ -528,39 +1155,51 @@ canvas{
 </section>
 
 
-<!-- =========================
-     MAIN PAGE
-========================= -->
+
+<!-- ==================================
+     MAIN
+================================== -->
 
 <section id="main">
 
     <div class="loginBox">
 
-        <div style="
-            font-size:50px;
-            margin-bottom:15px;
-            filter:drop-shadow(0 0 20px #7c3cff);
-        ">
+        <div
+            style="
+                font-size:50px;
+                margin-bottom:15px;
+                filter:
+                    drop-shadow(
+                        0 0 20px #7c3cff
+                    );
+            "
+        >
             TX
         </div>
+
 
         <h1>
             Talent Exchange
         </h1>
 
+
         <p>
             Connect. Share. Learn.
         </p>
 
+
         <button
             class="btn"
-            onclick="location.href='login.html'">
+            onclick="location.href='login.html'"
+        >
             Login
         </button>
 
+
         <button
             class="btn secondary"
-            onclick="location.href='register.html'">
+            onclick="location.href='register.html'"
+        >
             Create Account
         </button>
 
@@ -569,66 +1208,373 @@ canvas{
 </section>
 
 
+
 <script>
 
-/* ==================================
-   PARTICLE UNIVERSE
-================================== */
+/* ==========================================
+   PARTICLE ENGINE
+========================================== */
 
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+const canvas =
+    document.getElementById("particles");
+
+const ctx =
+    canvas.getContext("2d");
+
 
 let particles = [];
 
-function resize(){
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+function resizeCanvas(){
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
 
 }
 
-resize();
 
-window.addEventListener("resize",resize);
+resizeCanvas();
 
 
-/* Create particles */
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
 
-for(let i=0;i<900;i++){
+
+/* ==========================================
+   MOBILE DETECTION
+========================================== */
+
+const isMobile =
+    window.matchMedia(
+        "(max-width:600px)"
+    ).matches;
+
+
+/*
+   Desktop:
+   ~900 particles
+
+   Mobile:
+   ~450 particles
+*/
+
+const particleCount =
+    isMobile ? 450 : 900;
+
+
+for(
+    let i = 0;
+    i < particleCount;
+    i++
+){
 
     particles.push({
 
-        x:(Math.random()-.5)*window.innerWidth*2,
+        x:
+            (Math.random() - .5)
+            *
+            window.innerWidth
+            * 2,
 
-        y:(Math.random()-.5)*window.innerHeight*2,
+        y:
+            (Math.random() - .5)
+            *
+            window.innerHeight
+            * 2,
 
-        z:Math.random()*2000,
+        z:
+            Math.random()
+            * 2000,
 
-        size:Math.random()*2+0.5,
+        size:
+            Math.random()
+            * 2
+            + .5,
 
-        speed:Math.random()*2+0.5
+        speed:
+            Math.random()
+            * 2
+            + .5
 
     });
 
 }
 
 
-/* Mouse */
+/* ==========================================
+   DEVICE MOVEMENT
+========================================== */
 
-let mouseX=0;
-let mouseY=0;
+let motionX = 0;
 
-window.addEventListener("mousemove",e=>{
+let motionY = 0;
 
-    mouseX=(e.clientX-window.innerWidth/2)*0.0005;
-    mouseY=(e.clientY-window.innerHeight/2)*0.0005;
+let targetMotionX = 0;
 
-});
+let targetMotionY = 0;
 
 
-/* Animation */
+/*
+   Desktop mouse
+*/
 
-function animate(){
+window.addEventListener(
+    "mousemove",
+    event => {
+
+        targetMotionX =
+            (
+                event.clientX
+                -
+                window.innerWidth / 2
+            )
+            * .0005;
+
+
+        targetMotionY =
+            (
+                event.clientY
+                -
+                window.innerHeight / 2
+            )
+            * .0005;
+
+    }
+);
+
+
+/*
+   Mobile touch
+*/
+
+window.addEventListener(
+    "touchmove",
+    event => {
+
+        if(!event.touches.length)
+            return;
+
+
+        const touch =
+            event.touches[0];
+
+
+        targetMotionX =
+            (
+                touch.clientX
+                -
+                window.innerWidth / 2
+            )
+            * .0007;
+
+
+        targetMotionY =
+            (
+                touch.clientY
+                -
+                window.innerHeight / 2
+            )
+            * .0007;
+
+    },
+    {passive:true}
+);
+
+
+/*
+   Gyroscope / Device orientation
+*/
+
+function handleOrientation(event){
+
+    if(
+        typeof event.gamma !== "number" ||
+        typeof event.beta !== "number"
+    ){
+
+        return;
+
+    }
+
+
+    /*
+       gamma:
+       left/right tilt
+
+       beta:
+       front/back tilt
+    */
+
+    targetMotionX =
+        Math.max(
+            -0.08,
+            Math.min(
+                0.08,
+                event.gamma / 250
+            )
+        );
+
+
+    targetMotionY =
+        Math.max(
+            -0.08,
+            Math.min(
+                0.08,
+                event.beta / 250
+            )
+        );
+
+}
+
+
+/*
+   Some iPhones require
+   permission for motion sensors.
+*/
+
+async function enableMotion(){
+
+    try{
+
+        if(
+            typeof DeviceOrientationEvent !==
+            "undefined" &&
+
+            typeof DeviceOrientationEvent
+                .requestPermission ===
+                "function"
+        ){
+
+            const permission =
+                await DeviceOrientationEvent
+                    .requestPermission();
+
+
+            if(
+                permission ===
+                "granted"
+            ){
+
+                window.addEventListener(
+                    "deviceorientation",
+                    handleOrientation
+                );
+
+            }
+
+        }else{
+
+            window.addEventListener(
+                "deviceorientation",
+                handleOrientation
+            );
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "Motion sensor unavailable:",
+            error
+        );
+
+    }
+
+}
+
+
+/*
+   Try enabling motion.
+
+   On browsers that require
+   user interaction, touching
+   the splash enables it.
+*/
+
+window.addEventListener(
+    "touchstart",
+    enableMotion,
+    {
+        once:true,
+        passive:true
+    }
+);
+
+
+/* ==========================================
+   LOGO PARALLAX
+========================================== */
+
+const logoScene =
+    document.getElementById(
+        "logoScene"
+    );
+
+
+function updateScene(){
+
+    /*
+       Smooth movement
+    */
+
+    motionX +=
+        (
+            targetMotionX
+            -
+            motionX
+        )
+        * .06;
+
+
+    motionY +=
+        (
+            targetMotionY
+            -
+            motionY
+        )
+        * .06;
+
+
+    /*
+       Move logo
+    */
+
+    logoScene.style.transform =
+        `
+        translate3d(
+            ${motionX * 180}px,
+            ${motionY * 100}px,
+            0
+        )
+        rotateX(
+            ${motionY * -12}deg
+        )
+        rotateY(
+            ${motionX * 12}deg
+        )
+        `;
+
+
+    requestAnimationFrame(
+        updateScene
+    );
+
+}
+
+
+updateScene();
+
+
+/* ==========================================
+   PARTICLE ANIMATION
+========================================== */
+
+function animateParticles(){
 
     ctx.clearRect(
         0,
@@ -637,95 +1583,214 @@ function animate(){
         canvas.height
     );
 
-    const cx=canvas.width/2;
-    const cy=canvas.height/2;
 
-    for(const p of particles){
+    const centerX =
+        canvas.width / 2;
 
-        p.z-=p.speed*8;
 
-        if(p.z<1){
+    const centerY =
+        canvas.height / 2;
 
-            p.z=2000;
 
-            p.x=(Math.random()-.5)*
-                window.innerWidth*2;
+    for(
+        const particle
+        of particles
+    ){
 
-            p.y=(Math.random()-.5)*
-                window.innerHeight*2;
+        /*
+           Move particle
+           toward camera
+        */
+
+        particle.z -=
+            particle.speed *
+            (
+                isMobile
+                ? 5
+                : 8
+            );
+
+
+        /*
+           Reset particle
+        */
+
+        if(
+            particle.z < 1
+        ){
+
+            particle.z =
+                2000;
+
+
+            particle.x =
+                (
+                    Math.random()
+                    -
+                    .5
+                )
+                *
+                window.innerWidth
+                * 2;
+
+
+            particle.y =
+                (
+                    Math.random()
+                    -
+                    .5
+                )
+                *
+                window.innerHeight
+                * 2;
 
         }
 
-        const scale=500/p.z;
 
-        const x=
-            cx+
-            p.x*scale+
-            mouseX*p.z;
+        /*
+           Perspective
+        */
 
-        const y=
-            cy+
-            p.y*scale+
-            mouseY*p.z;
+        const scale =
+            500 /
+            particle.z;
 
-        const size=
-            Math.max(.2,p.size*scale*2);
 
-        const opacity=
-            Math.min(1,(2000-p.z)/900);
+        const x =
+            centerX
+            +
+            particle.x *
+            scale
+            +
+            motionX *
+            particle.z;
+
+
+        const y =
+            centerY
+            +
+            particle.y *
+            scale
+            +
+            motionY *
+            particle.z;
+
+
+        const size =
+            Math.max(
+                .2,
+                particle.size *
+                scale *
+                2
+            );
+
+
+        const opacity =
+            Math.min(
+                1,
+                (
+                    2000
+                    -
+                    particle.z
+                )
+                /
+                900
+            );
+
+
+        /*
+           Particle
+        */
 
         ctx.beginPath();
+
 
         ctx.arc(
             x,
             y,
             size,
             0,
-            Math.PI*2
+            Math.PI * 2
         );
 
-        ctx.fillStyle=
-            `rgba(140,100,255,${opacity})`;
+
+        /*
+           Purple / blue
+        */
+
+        ctx.fillStyle =
+            `rgba(
+                ${100 + Math.random()*60},
+                ${70 + Math.random()*50},
+                255,
+                ${opacity}
+            )`;
+
 
         ctx.fill();
 
     }
 
-    requestAnimationFrame(animate);
+
+    requestAnimationFrame(
+        animateParticles
+    );
 
 }
 
-animate();
+
+animateParticles();
 
 
-/* ==================================
-   SPLASH → MAIN TRANSITION
-================================== */
+/* ==========================================
+   SPLASH TRANSITION
+========================================== */
 
-setTimeout(()=>{
+setTimeout(
 
-    document.getElementById("splash")
-        .style.transition="opacity 1.2s ease, transform 1.2s ease";
+    () => {
 
-    document.getElementById("splash")
-        .style.opacity="0";
+        const splash =
+            document.getElementById(
+                "splash"
+            );
 
-    document.getElementById("splash")
-        .style.transform="scale(1.8)";
 
-    document.getElementById("main")
-        .classList.add("show");
+        splash.style.opacity =
+            "0";
 
-    setTimeout(()=>{
 
-        document.getElementById("splash")
-            .remove();
+        splash.style.transform =
+            "scale(1.8)";
 
-        document.body.style.overflow="auto";
 
-    },1300);
+        document
+            .getElementById("main")
+            .classList
+            .add("show");
 
-},4500);
+
+        setTimeout(
+
+            () => {
+
+                splash.remove();
+
+                document.body.style
+                    .overflow =
+                    "auto";
+
+            },
+
+            1300
+
+        );
+
+    },
+
+    4500
+
+);
 
 </script>
 
