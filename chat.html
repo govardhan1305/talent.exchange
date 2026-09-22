@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -361,6 +360,48 @@ button{
     width:auto;
   }
 }
+
+/* ====== ADVANCED 3D CHAT UPGRADE ====== */
+.message-row{position:relative;display:flex;align-items:flex-end;gap:7px;max-width:min(78%,620px);animation:msgIn .22s ease}
+.message-row.mine{align-self:flex-end;flex-direction:row-reverse}
+.message-row.theirs{align-self:flex-start}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.message{position:relative;max-width:100%;padding:12px 15px;border-radius:18px;line-height:1.45;font-size:14px;word-break:break-word;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.message.mine{background:linear-gradient(135deg,#7548e5,#5130aa);border:1px solid rgba(190,160,255,.18);border-bottom-right-radius:5px}
+.message.theirs{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:5px}
+.message.deleted{color:#9696a4;font-style:italic;background:rgba(255,255,255,.035)!important;border:1px dashed rgba(255,255,255,.10)!important}
+.message-text{white-space:pre-wrap}
+.message-meta{display:flex;justify-content:flex-end;align-items:center;gap:5px;margin-top:6px}
+.message-time{font-size:10px;opacity:.58}
+.edited-label{font-size:9px;opacity:.5}
+.seen-label{font-size:10px;color:#cfc4ff}
+.message-menu-trigger{width:28px;height:28px;border-radius:9px;opacity:0;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);transition:.2s;font-size:16px}
+.message-row:hover .message-menu-trigger,.message-menu-trigger:focus{opacity:1}
+.message-menu{position:absolute;z-index:30;min-width:180px;padding:7px;border-radius:15px;background:rgba(17,17,27,.97);border:1px solid rgba(255,255,255,.12);box-shadow:0 22px 55px rgba(0,0,0,.55);backdrop-filter:blur(20px)}
+.message-row.mine .message-menu{right:0;top:calc(100% + 6px)}
+.message-row.theirs .message-menu{left:0;top:calc(100% + 6px)}
+.message-menu button{width:100%;padding:10px 11px;text-align:left;border-radius:10px;background:transparent;color:#eee;font-size:13px}
+.message-menu button:hover{background:rgba(139,92,246,.14)}
+.message-menu button.danger:hover{background:rgba(217,65,89,.14);color:#ff8b9b}
+.attach-btn{width:50px;height:50px;flex:0 0 50px;border-radius:15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);font-size:19px}
+.attach-btn:hover{background:rgba(139,92,246,.16)}
+.input-wrap{position:relative;flex:1}
+.char-count{position:absolute;right:13px;bottom:-18px;font-size:9px;color:#686875}
+.edit-modal{position:fixed;inset:0;z-index:2500;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(12px)}
+.edit-modal.show{display:flex}
+.edit-card{width:min(500px,95%);padding:22px;border-radius:22px;background:#11111a;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.edit-card h3{margin-bottom:15px}
+#editInput{width:100%;min-height:110px;resize:vertical;padding:13px;border-radius:13px;outline:none;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:#fff}
+.edit-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:15px}
+.edit-actions button{padding:10px 16px;border-radius:11px;background:rgba(255,255,255,.07)}
+.edit-actions .save{background:linear-gradient(135deg,#8958ff,#5834c7)}
+@media(max-width:760px){
+  .message-row{max-width:88%}
+  .message-menu-trigger{opacity:1}
+  .attach-btn{width:45px;height:45px;flex-basis:45px}
+  .input-wrap input{padding-right:50px}
+}
+
 </style>
 </head>
 
@@ -427,6 +468,13 @@ button{
           ▣
         </button>
 
+        <button
+          id="moreChatBtn"
+          class="call-btn"
+          title="Chat options">
+          ⋮
+        </button>
+
       </div>
 
     </header>
@@ -443,14 +491,19 @@ button{
 
     <form id="messageForm" class="input-area">
 
-      <input
-        id="messageInput"
-        type="text"
-        placeholder="Type a message..."
-        maxlength="2000"
-        autocomplete="off">
+      <button type="button" id="attachBtn" class="attach-btn" title="Attachments">＋</button>
 
-      <button class="send-btn" type="submit">
+      <div class="input-wrap">
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="Type a message..."
+          maxlength="2000"
+          autocomplete="off">
+        <span id="charCount" class="char-count">0/2000</span>
+      </div>
+
+      <button id="sendBtn" class="send-btn" type="submit">
         Send
       </button>
 
@@ -536,6 +589,17 @@ button{
 </div>
 
 
+<div id="editModal" class="edit-modal">
+  <div class="edit-card">
+    <h3>Edit message</h3>
+    <textarea id="editInput" maxlength="2000"></textarea>
+    <div class="edit-actions">
+      <button type="button" id="cancelEditBtn">Cancel</button>
+      <button type="button" id="saveEditBtn" class="save">Save changes</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 
@@ -577,6 +641,20 @@ const messageForm =
 
 const messageInput =
   document.getElementById("messageInput");
+
+const sendBtn =
+  document.getElementById("sendBtn");
+
+const charCount =
+  document.getElementById("charCount");
+
+const editModal =
+  document.getElementById("editModal");
+
+const editInput =
+  document.getElementById("editInput");
+
+let editingMessageId = null;
 
 const sideName =
   document.getElementById("sideName");
@@ -864,32 +942,15 @@ function setupChat(){
     .sort()
     .join("_");
 
-
   if(unsubscribeMessages)
     unsubscribeMessages();
 
-
   const messagesQuery =
     query(
-
-      collection(
-        db,
-        "messages"
-      ),
-
-      where(
-        "chatId",
-        "==",
-        chatId
-      ),
-
-      orderBy(
-        "createdAt",
-        "asc"
-      )
-
+      collection(db,"messages"),
+      where("chatId","==",chatId),
+      orderBy("createdAt","asc")
     );
-
 
   unsubscribeMessages =
     onSnapshot(
@@ -897,100 +958,297 @@ function setupChat(){
 
       snapshot => {
 
-        messagesBox.innerHTML =
-          "";
-
+        messagesBox.innerHTML = "";
 
         if(snapshot.empty){
 
           messagesBox.innerHTML = `
             <div class="empty">
-              Start your conversation.
+              <strong>Start your conversation.</strong>
+              <span>Exchange knowledge, skills and ideas.</span>
             </div>
           `;
 
           return;
-
         }
 
+        let visibleCount = 0;
 
-        snapshot.forEach(
-          messageDoc => {
+        snapshot.forEach(messageDoc => {
 
-            const data =
-              messageDoc.data();
+          const data = messageDoc.data();
 
+          /*
+            Delete for me:
+            hidden only for the current user.
+          */
+          if(
+            data.deletedFor &&
+            data.deletedFor[currentUser.uid] === true
+          ){
+            return;
+          }
 
-            const bubble =
-              document.createElement(
-                "div"
-              );
+          const mine =
+            data.senderId === currentUser.uid;
 
+          const deleted =
+            data.deletedForEveryone === true;
 
-            bubble.className =
-              "message " +
-              (
-                data.senderId ===
-                currentUser.uid
-                  ? "mine"
-                  : "theirs"
-              );
+          const row =
+            document.createElement("div");
 
+          row.className =
+            "message-row " +
+            (mine ? "mine" : "theirs");
 
-            const text =
-              document.createElement(
-                "div"
-              );
+          const bubble =
+            document.createElement("div");
 
+          bubble.className =
+            "message " +
+            (mine ? "mine" : "theirs");
 
-            text.textContent =
-              data.message || "";
+          if(deleted)
+            bubble.classList.add("deleted");
 
+          const text =
+            document.createElement("div");
 
-            const time =
-              document.createElement(
-                "span"
-              );
+          text.className =
+            "message-text";
 
+          text.textContent =
+            deleted
+              ? "This message was deleted"
+              : (data.message || "");
 
-            time.className =
-              "message-time";
+          bubble.appendChild(text);
 
+          const meta =
+            document.createElement("div");
 
-            if(
-              data.createdAt &&
-              data.createdAt.toDate
-            ){
+          meta.className =
+            "message-meta";
 
-              time.textContent =
-                data.createdAt
-                  .toDate()
-                  .toLocaleTimeString(
-                    [],
-                    {
-                      hour:"2-digit",
-                      minute:"2-digit"
+          const time =
+            document.createElement("span");
+
+          time.className =
+            "message-time";
+
+          if(
+            data.createdAt &&
+            data.createdAt.toDate
+          ){
+            time.textContent =
+              data.createdAt
+                .toDate()
+                .toLocaleTimeString(
+                  [],
+                  {
+                    hour:"2-digit",
+                    minute:"2-digit"
+                  }
+                );
+          }
+
+          meta.appendChild(time);
+
+          if(data.edited && !deleted){
+
+            const edited =
+              document.createElement("span");
+
+            edited.className =
+              "edited-label";
+
+            edited.textContent =
+              "edited";
+
+            meta.appendChild(edited);
+
+          }
+
+          if(
+            mine &&
+            data.seen === true &&
+            !deleted
+          ){
+
+            const seen =
+              document.createElement("span");
+
+            seen.className =
+              "seen-label";
+
+            seen.textContent =
+              "✓✓";
+
+            meta.appendChild(seen);
+
+          }
+
+          bubble.appendChild(meta);
+          row.appendChild(bubble);
+
+          /*
+            Message options.
+          */
+          if(!deleted){
+
+            const menuButton =
+              document.createElement("button");
+
+            menuButton.className =
+              "message-menu-trigger";
+
+            menuButton.textContent =
+              "⋮";
+
+            menuButton.title =
+              "Message options";
+
+            menuButton.addEventListener(
+              "click",
+              event => {
+
+                event.stopPropagation();
+
+                closeMessageMenus();
+
+                const menu =
+                  document.createElement("div");
+
+                menu.className =
+                  "message-menu";
+
+                addMenuButton(
+                  menu,
+                  "Copy message",
+                  async () => {
+
+                    try{
+                      await navigator.clipboard.writeText(
+                        data.message || ""
+                      );
+                      showToast("Message copied.");
+                    }
+                    catch{
+                      showToast("Unable to copy message.");
+                    }
+
+                    menu.remove();
+
+                  }
+                );
+
+                if(mine){
+
+                  addMenuButton(
+                    menu,
+                    "Edit message",
+                    () => {
+
+                      openEditModal(
+                        messageDoc.id,
+                        data.message || ""
+                      );
+
+                      menu.remove();
+
                     }
                   );
 
-            }
+                }
 
+                addMenuButton(
+                  menu,
+                  "Delete for me",
+                  async () => {
 
-            bubble.appendChild(
-              text
+                    await deleteForMe(
+                      messageDoc.id
+                    );
+
+                    menu.remove();
+
+                  }
+                );
+
+                if(mine){
+
+                  addMenuButton(
+                    menu,
+                    "Delete for everyone",
+                    async () => {
+
+                      if(
+                        !confirm(
+                          "Delete this message for everyone?"
+                        )
+                      )
+                        return;
+
+                      await deleteForEveryone(
+                        messageDoc.id
+                      );
+
+                      menu.remove();
+
+                    },
+                    true
+                  );
+
+                }
+
+                row.appendChild(menu);
+
+              }
             );
 
-            bubble.appendChild(
-              time
-            );
-
-            messagesBox.appendChild(
-              bubble
-            );
+            row.appendChild(menuButton);
 
           }
-        );
 
+          messagesBox.appendChild(row);
+          visibleCount++;
+
+          /*
+            Seen status using the existing message document.
+          */
+          if(
+            !mine &&
+            data.seen !== true
+          ){
+
+            updateDoc(
+              doc(
+                db,
+                "messages",
+                messageDoc.id
+              ),
+              {
+                seen:true
+              }
+            ).catch(error => {
+              console.warn("Seen update:",error);
+            });
+
+          }
+
+        });
+
+        if(visibleCount === 0){
+
+          messagesBox.innerHTML = `
+            <div class="empty">
+              <strong>No visible messages.</strong>
+              <span>Deleted messages are hidden for you.</span>
+            </div>
+          `;
+
+        }
 
         messagesBox.scrollTop =
           messagesBox.scrollHeight;
@@ -1009,10 +1267,43 @@ function setupChat(){
         );
 
       }
-
     );
 
 }
+
+function addMenuButton(
+  menu,
+  label,
+  action,
+  danger=false
+){
+
+  const button =
+    document.createElement("button");
+
+  button.textContent =
+    label;
+
+  if(danger)
+    button.classList.add("danger");
+
+  button.addEventListener(
+    "click",
+    action
+  );
+
+  menu.appendChild(button);
+
+}
+
+function closeMessageMenus(){
+
+  document
+    .querySelectorAll(".message-menu")
+    .forEach(menu => menu.remove());
+
+}
+
 
 
 /* ================================
@@ -1033,48 +1324,32 @@ messageForm.addEventListener(
 
     if(!currentUser || !targetUser){
 
-      showToast(
-        "Chat is not ready."
-      );
-
+      showToast("Chat is not ready.");
       return;
 
     }
 
-
-    messageInput.disabled =
-      true;
-
+    messageInput.disabled = true;
+    sendBtn.disabled = true;
 
     try{
 
       await addDoc(
-        collection(
-          db,
-          "messages"
-        ),
+        collection(db,"messages"),
         {
-
           chatId,
-
-          senderId:
-            currentUser.uid,
-
-          receiverId:
-            targetUser.id,
-
-          message:
-            text,
-
-          createdAt:
-            serverTimestamp()
-
+          senderId:currentUser.uid,
+          receiverId:targetUser.id,
+          message:text,
+          createdAt:serverTimestamp(),
+          edited:false,
+          deletedForEveryone:false,
+          seen:false
         }
       );
 
-
-      messageInput.value =
-        "";
+      messageInput.value = "";
+      updateCharCount();
 
     }
     catch(error){
@@ -1091,15 +1366,251 @@ messageForm.addEventListener(
     }
     finally{
 
-      messageInput.disabled =
-        false;
-
+      messageInput.disabled = false;
+      sendBtn.disabled = false;
       messageInput.focus();
 
     }
 
   }
 );
+
+
+/* =================================
+   EDIT / DELETE
+================================= */
+
+function openEditModal(messageId,text){
+
+  editingMessageId = messageId;
+  editInput.value = text;
+  editModal.classList.add("show");
+  setTimeout(() => editInput.focus(),50);
+
+}
+
+function closeEditModal(){
+
+  editingMessageId = null;
+  editInput.value = "";
+  editModal.classList.remove("show");
+
+}
+
+async function saveEditedMessage(){
+
+  if(!editingMessageId)
+    return;
+
+  const newText =
+    editInput.value.trim();
+
+  if(!newText){
+
+    showToast("Message cannot be empty.");
+    return;
+
+  }
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "messages",
+        editingMessageId
+      ),
+      {
+        message:newText,
+        edited:true
+      }
+    );
+
+    closeEditModal();
+    showToast("Message updated.");
+
+  }
+  catch(error){
+
+    console.error(
+      "Edit message:",
+      error
+    );
+
+    showToast(
+      "Unable to edit message."
+    );
+
+  }
+
+}
+
+async function deleteForMe(messageId){
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "messages",
+        messageId
+      ),
+      {
+        [`deletedFor.${currentUser.uid}`]:true
+      }
+    );
+
+    showToast(
+      "Message deleted for you."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Delete for me:",
+      error
+    );
+
+    showToast(
+      "Unable to delete message."
+    );
+
+  }
+
+}
+
+async function deleteForEveryone(messageId){
+
+  try{
+
+    await updateDoc(
+      doc(
+        db,
+        "messages",
+        messageId
+      ),
+      {
+        message:"",
+        deletedForEveryone:true,
+        edited:false
+      }
+    );
+
+    showToast(
+      "Message deleted for everyone."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "Delete for everyone:",
+      error
+    );
+
+    showToast(
+      "Unable to delete message."
+    );
+
+  }
+
+}
+
+function updateCharCount(){
+
+  charCount.textContent =
+    messageInput.value.length +
+    "/2000";
+
+}
+
+messageInput.addEventListener(
+  "input",
+  updateCharCount
+);
+
+messageInput.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key === "Enter" &&
+      !event.shiftKey
+    ){
+
+      event.preventDefault();
+      messageForm.requestSubmit();
+
+    }
+
+  }
+);
+
+document
+  .getElementById("cancelEditBtn")
+  .addEventListener(
+    "click",
+    closeEditModal
+  );
+
+document
+  .getElementById("saveEditBtn")
+  .addEventListener(
+    "click",
+    saveEditedMessage
+  );
+
+editModal.addEventListener(
+  "click",
+  event => {
+
+    if(event.target === editModal)
+      closeEditModal();
+
+  }
+);
+
+document.addEventListener(
+  "click",
+  event => {
+
+    if(
+      !event.target.closest(".message-menu") &&
+      !event.target.closest(".message-menu-trigger")
+    ){
+      closeMessageMenus();
+    }
+
+  }
+);
+
+document
+  .getElementById("attachBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "File attachments need a storage service. Your current Firebase backend is unchanged."
+      );
+
+    }
+  );
+
+document
+  .getElementById("moreChatBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "Use ⋮ on a message for message options."
+      );
+
+    }
+  );
+
 
 
 /* ================================
@@ -2230,4 +2741,3 @@ window.addEventListener(
 
 </body>
 </html>
-```
